@@ -9,6 +9,7 @@ touch "$cron_file"
 if [[ "${RECREATE_VPN_CRON}" ]]; then
     echo "Create cron file"
     echo "$RECREATE_VPN_CRON /app/reconnect.sh" >> "$cron_file"
+    echo "* * * * * /app/check_and_restart.sh" >> "$cron_file"
 fi
 
 exit 0

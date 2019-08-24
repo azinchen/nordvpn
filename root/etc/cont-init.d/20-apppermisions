@@ -3,5 +3,7 @@
 echo "Set app permisions"
 chmod +x /app/createvpnconfig.sh
 chmod +x /app/reconnect.sh
+chmod +x /app/check_and_restart.sh
+
 
 exit 0
