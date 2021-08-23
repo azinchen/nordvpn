@@ -88,7 +88,7 @@ jobs:
       - name: Create Pull Request, Bump ${{ matrix.repository }} from ${{ steps.config_version.outputs.version }} to ${{ steps.repository_version.outputs.version }}
         if: (steps.config_version.outputs.version != steps.repository_version.outputs.version) &&
             (steps.branch.outputs.from_pr == 'false')
-        uses: peter-evans/create-pull-request@v3.10.0
+        uses: peter-evans/create-pull-request@v3.10.1
         with:
           token: ${{ secrets.NORDVPN_REPO_PAT }}
           branch: ${{ steps.repository_version.outputs.branch }}
