@@ -29,6 +29,8 @@ RUN echo "**** upgrade packages ****" && \
 # ovpn builder
 FROM alpine:3.14 AS ovpn-builder
 
+COPY /ovpn.zip /tmp/ovpn.zip
+
 RUN echo "**** upgrade packages ****" && \
     apk --no-cache --no-progress add openssl=1.1.1l-r0 && \
     echo "**** install mandatory packages ****" && \
@@ -36,7 +38,6 @@ RUN echo "**** upgrade packages ****" && \
     echo "**** create folders ****" && \
     mkdir -p /ovpn && \
     echo "**** download NordVPN OpenVPN config files ****" && \
-    wget -q https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip -qO /tmp/ovpn.zip && \
     unzip -q /tmp/ovpn.zip -d /tmp/ovpn && \
     mv /tmp/ovpn/*/*.ovpn /ovpn
 
