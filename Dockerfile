@@ -39,7 +39,7 @@ RUN echo "**** upgrade packages ****" && \
     mkdir -p /ovpn && \
     echo "**** download NordVPN OpenVPN config files ****" && \
     unzip -q /tmp/ovpn.zip -d /tmp/ovpn && \
-    mv /tmp/ovpn/*/*.ovpn /ovpn
+    mv /tmp/ovpn/*/*.ovpn /ovpn/
 
 # rootfs builder
 FROM alpine:3.14 AS rootfs-builder
