@@ -54,7 +54,7 @@ RUN echo "**** upgrade packages ****" && \
     apk --no-cache --no-progress add openssl=1.1.1l-r0 && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add bash=5.1.4-r0 \
-        curl=7.78.0-r0 \
+        curl=7.79.0-r0 \
         unzip=6.0-r9 \
         iptables=1.8.7-r1 \
         ip6tables=1.8.7-r1 \
