@@ -32,13 +32,14 @@ jobs:
           echo "Base branch=${BRANCH}, from_pr=${FROM_PR}, date=${DATE}"
 
       - name: Update ovpn.zip
+        if: ${{ steps.branch.outputs.from_pr == 'false' }}
         shell: bash
         run: |
           rm ovpn.zip
           wget -q https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip -qO ovpn.zip
 
       - name: Create Pull Request, Bump ovpn.zip, date ${{ steps.branch.outputs.date }}
-        if: (steps.branch.outputs.from_pr == 'false')
+        if: ${{ steps.branch.outputs.from_pr == 'false' }}
         uses: peter-evans/create-pull-request@v3.10.1
         with:
           token: ${{ secrets.NORDVPN_REPO_PAT }}
