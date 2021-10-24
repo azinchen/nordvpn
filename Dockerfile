@@ -55,9 +55,6 @@ RUN echo "**** upgrade packages ****" && \
         ip6tables=1.8.7-r1 \
         jq=1.6-r1 \
         openvpn=2.5.2-r0 && \
-    echo "**** create folders ****" && \
-    mkdir -p /vpn && \
-    mkdir -p /ovpn && \
     echo "**** cleanup ****" && \
     rm -rf /tmp/* && \
     rm -rf /var/cache/apk/*
