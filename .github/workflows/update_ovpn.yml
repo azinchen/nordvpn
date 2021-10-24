@@ -16,13 +16,17 @@ jobs:
         id: downloadovpn
         shell: bash
         run: |
-          rm ovpn.zip
-          wget -q https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip -qO ovpn.zip
+          wget -q https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip -qO /tmp/ovpn.zip
+          unzip -q /tmp/ovpn.zip -d /tmp/ovpn
+
+          cp $(find /tmp/ovpn -type f | shuf -n 1) root/etc/nordvpn/template.ovpn
+          sed -i '/proto /c\proto __PROTOCOL__' root/etc/nordvpn/template.ovpn
+          sed -i '/remote /c\remote __IP__ __PORT__' root/etc/nordvpn/template.ovpn
 
           DATE=$(date +%y%m%d)
           echo "::set-output name=date::${DATE}"
 
-          MD5=($(md5sum ovpn.zip))
+          MD5=($(md5sum /tmp/ovpn.zip))
           PR_BRANCH="ovpnupdaterbot/ovpnupdate-${MD5}"
           echo "::set-output name=pr_branch::${PR_BRANCH}"
 

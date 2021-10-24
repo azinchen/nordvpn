@@ -24,21 +24,6 @@ RUN echo "**** upgrade packages ****" && \
     wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-${PACKAGEPLATFORM}.tar.gz" -qO /tmp/s6-overlay.tar.gz && \
     tar xfz /tmp/s6-overlay.tar.gz -C /s6/
 
-# ovpn builder
-FROM alpine:3.14 AS ovpn-builder
-
-COPY /ovpn.zip /tmp/ovpn.zip
-
-RUN echo "**** upgrade packages ****" && \
-    apk --no-cache --no-progress add openssl=1.1.1l-r0 && \
-    echo "**** install mandatory packages ****" && \
-    apk --no-cache --no-progress add unzip=6.0-r9 && \
-    echo "**** create folders ****" && \
-    mkdir -p /ovpn && \
-    echo "**** download NordVPN OpenVPN config files ****" && \
-    unzip -q /tmp/ovpn.zip -d /tmp/ovpn && \
-    mv /tmp/ovpn/*/*.ovpn /ovpn
-
 # rootfs builder
 FROM alpine:3.14 AS rootfs-builder
 
@@ -50,7 +35,6 @@ RUN echo "**** upgrade packages ****" && \
 COPY root/ /rootfs/
 RUN chmod +x /rootfs/usr/bin/*
 COPY --from=s6-builder /s6/ /rootfs/
-COPY --from=ovpn-builder /ovpn/ /rootfs/ovpn/
 
 # Main image
 FROM alpine:3.14
