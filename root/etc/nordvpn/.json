@@ -1,0 +1,268 @@
+[
+  {
+    "id": 1,
+    "created_at": "2017-06-13 13:41:00",
+    "updated_at": "2017-06-13 13:41:00",
+    "title": "Double VPN",
+    "identifier": "legacy_double_vpn",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 3,
+    "created_at": "2017-06-13 13:41:22",
+    "updated_at": "2017-11-06 10:16:14",
+    "title": "Onion Over VPN",
+    "identifier": "legacy_onion_over_vpn",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 5,
+    "created_at": "2017-06-13 13:41:42",
+    "updated_at": "2017-06-13 13:41:42",
+    "title": "Ultra fast TV",
+    "identifier": "legacy_ultra_fast_tv",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 7,
+    "created_at": "2017-06-13 13:42:08",
+    "updated_at": "2017-06-13 13:42:08",
+    "title": "Anti DDoS",
+    "identifier": "legacy_anti_ddos",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 9,
+    "created_at": "2017-06-13 13:42:36",
+    "updated_at": "2018-08-22 12:54:48",
+    "title": "Dedicated IP",
+    "identifier": "legacy_dedicated_ip",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 11,
+    "created_at": "2017-06-13 13:43:00",
+    "updated_at": "2017-06-13 13:43:00",
+    "title": "Standard VPN servers",
+    "identifier": "legacy_standard",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 13,
+    "created_at": "2017-06-13 13:43:20",
+    "updated_at": "2017-06-13 13:43:20",
+    "title": "Netflix USA",
+    "identifier": "legacy_netflix_usa",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 15,
+    "created_at": "2017-06-13 13:43:38",
+    "updated_at": "2017-06-13 13:43:38",
+    "title": "P2P",
+    "identifier": "legacy_p2p",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 17,
+    "created_at": "2017-06-13 13:44:10",
+    "updated_at": "2017-06-13 13:44:10",
+    "title": "Obfuscated Servers",
+    "identifier": "legacy_obfuscated_servers",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 19,
+    "created_at": "2017-10-27 14:17:17",
+    "updated_at": "2017-10-27 14:17:17",
+    "title": "Europe",
+    "identifier": "europe",
+    "type": {
+      "id": 5,
+      "created_at": "2017-10-27 14:16:30",
+      "updated_at": "2017-10-27 14:16:30",
+      "title": "Regions",
+      "identifier": "regions"
+    }
+  },
+  {
+    "id": 21,
+    "created_at": "2017-10-27 14:23:03",
+    "updated_at": "2017-10-30 08:09:48",
+    "title": "The Americas",
+    "identifier": "the_americas",
+    "type": {
+      "id": 5,
+      "created_at": "2017-10-27 14:16:30",
+      "updated_at": "2017-10-27 14:16:30",
+      "title": "Regions",
+      "identifier": "regions"
+    }
+  },
+  {
+    "id": 23,
+    "created_at": "2017-10-27 14:23:51",
+    "updated_at": "2017-10-30 08:09:57",
+    "title": "Asia Pacific",
+    "identifier": "asia_pacific",
+    "type": {
+      "id": 5,
+      "created_at": "2017-10-27 14:16:30",
+      "updated_at": "2017-10-27 14:16:30",
+      "title": "Regions",
+      "identifier": "regions"
+    }
+  },
+  {
+    "id": 25,
+    "created_at": "2017-10-27 14:40:12",
+    "updated_at": "2017-10-30 08:10:20",
+    "title": "Africa, the Middle East and India",
+    "identifier": "africa_the_middle_east_and_india",
+    "type": {
+      "id": 5,
+      "created_at": "2017-10-27 14:16:30",
+      "updated_at": "2017-10-27 14:16:30",
+      "title": "Regions",
+      "identifier": "regions"
+    }
+  },
+  {
+    "id": 233,
+    "created_at": "2020-08-06 08:40:18",
+    "updated_at": "2020-08-06 08:40:18",
+    "title": "Anycast DNS",
+    "identifier": "anycast-dns",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 236,
+    "created_at": "2020-08-18 07:22:50",
+    "updated_at": "2020-08-18 07:22:50",
+    "title": "Geo DNS",
+    "identifier": "geo_dns",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 239,
+    "created_at": "2020-08-26 08:21:18",
+    "updated_at": "2020-08-26 08:21:18",
+    "title": "Grafana",
+    "identifier": "grafana",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 242,
+    "created_at": "2020-08-26 08:22:54",
+    "updated_at": "2020-08-26 08:22:54",
+    "title": "Kapacitor",
+    "identifier": "kapacitor",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 245,
+    "created_at": "2020-11-18 12:10:45",
+    "updated_at": "2020-11-18 12:10:45",
+    "title": "Socks5 Proxy",
+    "identifier": "legacy_socks5_proxy",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  },
+  {
+    "id": 248,
+    "created_at": "2020-12-02 12:30:50",
+    "updated_at": "2020-12-02 12:30:50",
+    "title": "FastNetMon",
+    "identifier": "fastnetmon",
+    "type": {
+      "id": 3,
+      "created_at": "2017-06-13 13:40:17",
+      "updated_at": "2017-06-13 13:40:23",
+      "title": "Legacy category",
+      "identifier": "legacy_group_category"
+    }
+  }
+]
