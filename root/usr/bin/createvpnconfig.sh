@@ -183,14 +183,16 @@ done
 
 servers=""
 
+echo "Request list of recommended servers"
 if [ -z "$COUNTRY" ]; then
     servers=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?""$filterserver" | jq -c '.[]')
+    echo "Request nearest servers, "$(echo "$servers" | jq -s 'length')" servers received"
 else
     read -ra RA_COUNTRIES <<< $COUNTRY
     for value in "${RA_COUNTRIES[@]}"; do
         if [ ! -z "$value" ]; then
             serversincountry=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?""$filterserver""&filters\[country_id\]=$(getcountryid "$value")" | jq -c '.[]')
-            echo ""$(echo "$serversincountry" | jq -s 'length')" recommended servers in \"$(getcountryname "$value")\""
+            echo "Request servers in \"$(getcountryname "$value")\", "$(echo "$serversincountry" | jq -s 'length')" servers received"
             servers="$servers""$serversincountry"
         fi
     done
@@ -216,7 +218,7 @@ if [[ !($poollength -eq 0) ]]; then
 fi
 
 if [[ $poollength -eq 0 ]]; then
-    echo "ERROR: selected server list is empty"
+    echo "ERROR: list of selected servers is empty"
 fi
 
 serverip=$(echo $servers | jq -r '.station' | head -n 1)

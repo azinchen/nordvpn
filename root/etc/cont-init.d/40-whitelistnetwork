@@ -11,7 +11,7 @@ if [[ -n ${WHITELIST} ]]; then
     done
 fi
 
-echo "Bypass requests to NordVPN thru regular connection"
+echo "Bypass requests to NordVPN API thru regular connection"
 sg nordvpn -c "iptables  -A OUTPUT -o eth0 -d "api.nordvpn.com" -j ACCEPT"
 sg nordvpn -c "ip6tables -A OUTPUT -o eth0 -d "api.nordvpn.com" -j ACCEPT 2> /dev/null"
 
