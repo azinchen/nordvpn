@@ -53,6 +53,9 @@ RUN echo "**** upgrade packages ****" && \
         ip6tables=1.8.7-r1 \
         jq=1.6-r1 \
         openvpn=2.5.2-r0 && \
+    echo "**** create process user ****" && \
+    addgroup --system nordvpn && \
+    adduser --system --disabled-password --no-create-home --ingroup nordvpn nordvpn && \
     echo "**** cleanup ****" && \
     rm -rf /tmp/* && \
     rm -rf /var/cache/apk/*
