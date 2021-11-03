@@ -40,7 +40,7 @@ getcountryname()
         name=$(echo "$nvcountries" | jq -r --argjson ID $input 'select(.id == $ID) | .name')
     else
         name=$(echo "$nvcountries" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .name')
-        if [ ! -z "$name" ]; then
+        if [ -z "$name" ]; then
             name=$(echo "$nvcountries" | jq -r --arg CODE "$input" 'select(.code == $CODE) | .name')
         fi
     fi
