@@ -187,13 +187,14 @@ servers=""
 
 echo "Request list of recommended servers"
 if [ -z "$COUNTRY" ]; then
-    servers=$(sg nordvpn -c "curl -s "https://api.nordvpn.com/v1/servers/recommendations?""$filterserver"" | jq -c '.[]')
+    servers=$(sg nordvpn -c "curl -s "https://api.nordvpn.com/v1/servers/recommendations?$filterserver" | jq -c '.[]')
     echo "Request nearest servers, "$(echo "$servers" | jq -s 'length')" servers received"
 else
     read -ra RA_COUNTRIES <<< $COUNTRY
     for value in "${RA_COUNTRIES[@]}"; do
         if [ ! -z "$value" ]; then
-            serversincountry=$(sg nordvpn -c "curl -s "https://api.nordvpn.com/v1/servers/recommendations?""$filterserver""&filters\[country_id\]=$(getcountryid "$value")"" | jq -c '.[]')
+            countryid=$(getcountryid $value)
+            serversincountry=$(sg nordvpn -c "curl -s "https://api.nordvpn.com/v1/servers/recommendations?$filterserver&filters\[country_id\]=$countryid"" | jq -c '.[]')
             echo "Request servers in \"$(getcountryname "$value")\", "$(echo "$serversincountry" | jq -s 'length')" servers received"
             servers="$servers""$serversincountry"
         fi
