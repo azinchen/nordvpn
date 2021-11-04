@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bash
 
+[ "${DEBUG,,}" == trace* ]] && set -x
+
 echo "Firewall is up, everything has to go through the vpn"
 iptables -P OUTPUT DROP
 iptables -P INPUT DROP

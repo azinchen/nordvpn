@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bash
 
+[ "${DEBUG,,}" == trace* ]] && set -x
+
 PUID=${PUID:-912}
 PGID=${PGID:-912}
 

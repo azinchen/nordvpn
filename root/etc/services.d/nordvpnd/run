@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bash
 
+[ "${DEBUG,,}" == trace* ]] && set -x
+
 authfile="/tmp/auth"
 ovpnfile="/tmp/nordvpn.ovpn"
 

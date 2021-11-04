@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bash
 
+[ "${DEBUG,,}" == trace* ]] && set -x
+
 echo "Bypass requests to domains from whitelist thru regular connection"
 
 if [[ -n ${WHITELIST} ]]; then

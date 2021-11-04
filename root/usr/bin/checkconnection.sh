@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bash
 
+[ "${DEBUG,,}" == trace* ]] && set -x
+
 echo "`date` Check VPN Internet connection"
 
 function httpreq

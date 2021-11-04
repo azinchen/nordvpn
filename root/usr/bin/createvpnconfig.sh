@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bash
 
+[ "${DEBUG,,}" == trace* ]] && set -x
+
 nvcountries=$(cat /etc/nordvpn/countries.json | jq -c '.[]')
 nvgroups=$(cat /etc/nordvpn/groups.json | jq -c '.[]')
 nvtechnologies=$(cat /etc/nordvpn/technologies.json | jq -c '.[]')
