@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.4.0
 
       - name: Update template.ovpn
         id: downloadovpn
@@ -31,7 +31,7 @@ jobs:
           echo "Base date=${DATE}"
 
       - name: Create Pull Request, update template.ovpn, date ${{ steps.downloadovpn.outputs.date }}
-        uses: peter-evans/create-pull-request@v3.10.1
+        uses: peter-evans/create-pull-request@v3.11.0
         with:
           branch: ovpnupdaterbot/ovpnupdate
           commit-message: Update template.ovpn, date ${{ steps.downloadovpn.outputs.date }}
@@ -53,7 +53,7 @@ jobs:
         url: ["https://api.nordvpn.com/v1/servers/countries","https://api.nordvpn.com/v1/servers/groups","https://api.nordvpn.com/v1/technologies"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.4.0
 
       - name: Get file name
         id: file
@@ -78,7 +78,7 @@ jobs:
           echo "Base date=${DATE}"
 
       - name: Create Pull Request, update ${{ steps.file.outputs.name }}.json, date ${{ steps.getjson.outputs.date }}
-        uses: peter-evans/create-pull-request@v3.10.1
+        uses: peter-evans/create-pull-request@v3.11.0
         with:
           branch: ovpnupdaterbot/${{ steps.file.outputs.name }}json
           commit-message: Update ${{ steps.file.outputs.name }}.json, date ${{ steps.getjson.outputs.date }}

@@ -13,7 +13,7 @@ jobs:
         repository: ["just-containers/s6-overlay"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.3.5
+        uses: actions/checkout@v2.4.0
 
       - name: Read repository version
         id: repository
@@ -33,7 +33,7 @@ jobs:
           sed -i "/.*${ESCAPED_SEARCH}.*/{n;s/.*/ENV PACKAGEVERSION=\"${{ steps.repository.outputs.version }}\"/}" Dockerfile
 
       - name: Create Pull Request, Bump ${{ matrix.repository }} to ${{ steps.repository.outputs.version }}
-        uses: peter-evans/create-pull-request@v3.10.1
+        uses: peter-evans/create-pull-request@v3.11.0
         with:
           branch: ${{ steps.repository.outputs.branch }}
           commit-message: Bump ${{ matrix.repository }} to ${{ steps.repository.outputs.version }}
