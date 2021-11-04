@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-[ "${DEBUG,,}" == trace* ]] && set -x
+[[ "${DEBUG,,}" == trace* ]] && set -x
 
 createvpnconfig.sh
 

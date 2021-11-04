@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-[ "${DEBUG,,}" == trace* ]] && set -x
+[[ "${DEBUG,,}" == trace* ]] && set -x
 
 cron_dir="/var/spool/cron/crontabs"
 cron_file="$cron_dir/root"
