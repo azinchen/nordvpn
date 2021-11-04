@@ -31,7 +31,7 @@ jobs:
           echo "Base date=${DATE}"
 
       - name: Create Pull Request, update template.ovpn, date ${{ steps.downloadovpn.outputs.date }}
-        uses: peter-evans/create-pull-request@v3.10.1
+        uses: peter-evans/create-pull-request@v3.11.0
         with:
           branch: ovpnupdaterbot/ovpnupdate
           commit-message: Update template.ovpn, date ${{ steps.downloadovpn.outputs.date }}
@@ -78,7 +78,7 @@ jobs:
           echo "Base date=${DATE}"
 
       - name: Create Pull Request, update ${{ steps.file.outputs.name }}.json, date ${{ steps.getjson.outputs.date }}
-        uses: peter-evans/create-pull-request@v3.10.1
+        uses: peter-evans/create-pull-request@v3.11.0
         with:
           branch: ovpnupdaterbot/${{ steps.file.outputs.name }}json
           commit-message: Update ${{ steps.file.outputs.name }}.json, date ${{ steps.getjson.outputs.date }}

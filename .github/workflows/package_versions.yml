@@ -33,7 +33,7 @@ jobs:
           sed -i "/.*${ESCAPED_SEARCH}.*/{n;s/.*/ENV PACKAGEVERSION=\"${{ steps.repository.outputs.version }}\"/}" Dockerfile
 
       - name: Create Pull Request, Bump ${{ matrix.repository }} to ${{ steps.repository.outputs.version }}
-        uses: peter-evans/create-pull-request@v3.10.1
+        uses: peter-evans/create-pull-request@v3.11.0
         with:
           branch: ${{ steps.repository.outputs.branch }}
           commit-message: Bump ${{ matrix.repository }} to ${{ steps.repository.outputs.version }}
