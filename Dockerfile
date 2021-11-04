@@ -55,8 +55,8 @@ RUN echo "**** upgrade packages ****" && \
         shadow=4.8.1-r0 \
         openvpn=2.5.2-r0 && \
     echo "**** create process user ****" && \
-    addgroup --system nordvpn && \
-    adduser --system --disabled-password --no-create-home --ingroup nordvpn nordvpn && \
+    addgroup --system --gid 912 nordvpn && \
+    adduser --system --uid 912 --disabled-password --no-create-home --ingroup nordvpn nordvpn && \
     echo "**** cleanup ****" && \
     rm -rf /tmp/* && \
     rm -rf /var/cache/apk/*

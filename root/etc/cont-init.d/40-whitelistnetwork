@@ -5,14 +5,14 @@ echo "Bypass requests to domains from whitelist thru regular connection"
 if [[ -n ${WHITELIST} ]]; then
     for domain in ${WHITELIST//[;,]/ }; do
         domain=$(echo "$domain" | sed 's/^.*:\/\///;s/\/.*$//')
-        echo "Enabling connection to host ${domain}"
-        sg nordvpn -c "iptables  -A OUTPUT -o eth0 -d ${domain} -j ACCEPT"
-        sg nordvpn -c "ip6tables -A OUTPUT -o eth0 -d ${domain} -j ACCEPT 2>/dev/null"
+        echo "Enabling connection to host "${domain}""
+        iptables  -A OUTPUT -o eth0 -d "${domain}" -j ACCEPT
+        ip6tables -A OUTPUT -o eth0 -d "${domain}" -j ACCEPT 2>/dev/null
     done
 fi
 
 echo "Bypass requests to NordVPN API thru regular connection"
-iptables  -A OUTPUT -o eth0 -d "api.nordvpn.com" -j ACCEPT
-ip6tables -A OUTPUT -o eth0 -d "api.nordvpn.com" -j ACCEPT 2> /dev/null
+sg nordvpn -c "iptables  -A OUTPUT -o eth0 -d "api.nordvpn.com" -j ACCEPT"
+sg nordvpn -c "ip6tables -A OUTPUT -o eth0 -d "api.nordvpn.com" -j ACCEPT 2> /dev/null"
 
 exit 0
