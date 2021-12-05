@@ -5,9 +5,7 @@ ENV PACKAGE="just-containers/s6-overlay"
 ENV PACKAGEVERSION="2.2.0.3"
 ARG TARGETPLATFORM
 
-RUN echo "**** upgrade packages ****" && \
-    apk --no-cache --no-progress add openssl=1.1.1l-r0 && \
-    echo "**** install mandatory packages ****" && \
+RUN echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add tar=1.34-r0 && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
@@ -27,9 +25,6 @@ RUN echo "**** upgrade packages ****" && \
 # rootfs builder
 FROM alpine:3.14 AS rootfs-builder
 
-RUN echo "**** upgrade packages ****" && \
-    apk --no-cache --no-progress add openssl=1.1.1l-r0
-
 COPY root/ /rootfs/
 RUN chmod +x /rootfs/usr/bin/*
 COPY --from=s6-builder /s6/ /rootfs/
@@ -45,7 +40,8 @@ ENV TECHNOLOGY=openvpn_udp \
     CHECK_CONNECTION_ATTEMPT_INTERVAL=10
 
 RUN echo "**** upgrade packages ****" && \
-    apk --no-cache --no-progress add openssl=1.1.1l-r0 && \
+    apk --no-cache --no-progress add openssl=1.1.1l-r0 \
+        busybox=1.33.1-r6 && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add bash=5.1.4-r0 \
         curl=7.79.1-r0 \
