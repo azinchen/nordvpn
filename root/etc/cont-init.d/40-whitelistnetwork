@@ -23,10 +23,10 @@ fi
 
 echo "Bypass requests to NordVPN API thru regular connection"
 if [[ -n ${docker_network} ]]; then
-    sg nordvpn -c "iptables  -A OUTPUT -o eth0 -d "api.nordvpn.com" -j ACCEPT"
+    sg nordvpn -c "iptables  -A OUTPUT -d "api.nordvpn.com" -j ACCEPT"
 fi
 if [[ -n ${docker6_network} ]]; then
-    sg nordvpn -c "ip6tables -A OUTPUT -o eth0 -d "api.nordvpn.com" -j ACCEPT 2> /dev/null"
+    sg nordvpn -c "ip6tables -A OUTPUT -d "api.nordvpn.com" -j ACCEPT 2> /dev/null"
 fi
 
 exit 0
