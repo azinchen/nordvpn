@@ -288,21 +288,6 @@
     ]
   },
   {
-    "id": 73,
-    "name": "Finland",
-    "code": "FI",
-    "cities": [
-      {
-        "id": 2704343,
-        "name": "Helsinki",
-        "latitude": 60.175556,
-        "longitude": 24.934167,
-        "dns_name": "helsinki",
-        "hub_score": null
-      }
-    ]
-  },
-  {
     "id": 74,
     "name": "France",
     "code": "FR",
