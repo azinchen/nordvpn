@@ -24,7 +24,6 @@ Cyprus | CY | 56 | Nicosia | 2099627
 Czech Republic | CZ | 57 | Prague | 2144945
 Denmark | DK | 58 | Copenhagen | 2382515
 Estonia | EE | 68 | Tallinn | 2514182
-Finland | FI | 73 | Helsinki | 2704343
 France | FR | 74 | Marseille | 2867102
 France | FR | 74 | Paris | 2886284
 Georgia | GE | 80 | Tbilisi | 3032063
