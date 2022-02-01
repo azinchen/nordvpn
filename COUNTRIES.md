@@ -18,7 +18,6 @@ Cyprus | CY | 56
 Czech Republic | CZ | 57
 Denmark | DK | 58
 Estonia | EE | 68
-Finland | FI | 73
 France | FR | 74
 Georgia | GE | 80
 Germany | DE | 81
