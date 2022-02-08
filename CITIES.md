@@ -74,6 +74,7 @@ United States | US | 228 | Charlotte | 8980922
 United States | US | 228 | Chicago | 8815352
 United States | US | 228 | Dallas | 9080300
 United States | US | 228 | Denver | 8770934
+United States | US | 228 | Kansas City | 8930717
 United States | US | 228 | Los Angeles | 8761958
 United States | US | 228 | Manassas | 9113744
 United States | US | 228 | Miami | 8787782
