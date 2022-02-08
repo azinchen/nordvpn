@@ -987,6 +987,14 @@
         "hub_score": null
       },
       {
+        "id": 8930717,
+        "name": "Kansas City",
+        "latitude": 39.0997222,
+        "longitude": -94.5783333,
+        "dns_name": "kansas-city",
+        "hub_score": null
+      },
+      {
         "id": 8761958,
         "name": "Los Angeles",
         "latitude": 34.0522222,
