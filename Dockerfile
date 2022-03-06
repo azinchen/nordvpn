@@ -40,7 +40,7 @@ ENV TECHNOLOGY=openvpn_udp \
     CHECK_CONNECTION_ATTEMPT_INTERVAL=10
 
 RUN echo "**** install mandatory packages ****" && \
-    apk --no-cache --no-progress add bash=5.1.8-r0 \
+    apk --no-cache --no-progress add bash=5.1.16-r0 \
         curl=7.80.0-r0 \
         iptables=1.8.7-r1 \
         ip6tables=1.8.7-r1 \
