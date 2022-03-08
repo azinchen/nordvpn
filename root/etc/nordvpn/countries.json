@@ -930,6 +930,14 @@
         "longitude": -0.093689,
         "dns_name": "london",
         "hub_score": null
+      },
+      {
+        "id": 2991110,
+        "name": "Manchester",
+        "latitude": 53.5,
+        "longitude": -2.216667,
+        "dns_name": "manchester",
+        "hub_score": null
       }
     ]
   },
