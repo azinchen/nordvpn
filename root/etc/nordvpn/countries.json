@@ -924,6 +924,14 @@
     "code": "GB",
     "cities": [
       {
+        "id": 2975852,
+        "name": "Edinburgh",
+        "latitude": 55.95,
+        "longitude": -3.2,
+        "dns_name": "edinburgh",
+        "hub_score": null
+      },
+      {
         "id": 2989907,
         "name": "London",
         "latitude": 51.514125,
