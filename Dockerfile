@@ -1,5 +1,5 @@
 # s6 overlay builder
-FROM alpine:3.15.1 AS s6-builder
+FROM alpine:3.15.2 AS s6-builder
 
 ENV PACKAGE="just-containers/s6-overlay"
 ENV PACKAGEVERSION="2.2.0.3"
@@ -23,14 +23,14 @@ RUN echo "**** install mandatory packages ****" && \
     tar xfz /tmp/s6-overlay.tar.gz -C /s6/
 
 # rootfs builder
-FROM alpine:3.15.1 AS rootfs-builder
+FROM alpine:3.15.2 AS rootfs-builder
 
 COPY root/ /rootfs/
 RUN chmod +x /rootfs/usr/bin/*
 COPY --from=s6-builder /s6/ /rootfs/
 
 # Main image
-FROM alpine:3.15.1
+FROM alpine:3.15.2
 
 LABEL maintainer="Alexander Zinchenko <alexander@zinchenko.com>"
 
