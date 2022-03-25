@@ -23,7 +23,7 @@ This container was designed to be started first to provide a connection to other
 
 ### Supported Architectures
 
-The image supports multiple architectures such as `amd64`, `x86`, `arm/v6`, `arm/v7`, `arm64` and `ppc64le`.
+The image supports multiple architectures such as `amd64`, `x86`, `arm/v6`, `arm/v7` and `arm64`.
 
 ### Starting an NordVPN instance
 

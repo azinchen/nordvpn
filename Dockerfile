@@ -6,21 +6,23 @@ ENV PACKAGEVERSION="3.1.0.1"
 ARG TARGETPLATFORM
 
 RUN echo "**** install mandatory packages ****" && \
-    apk --no-cache --no-progress add tar=1.34-r0 && \
+    apk --no-cache --no-progress add tar=1.34-r0 \
+        xz=5.2.5-r0 && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
     echo "**** download ${PACKAGE} ****" && \
     PACKAGEPLATFORM=$(case ${TARGETPLATFORM} in \
-        "linux/amd64")    echo "amd64"    ;; \
-        "linux/386")      echo "x86"      ;; \
+        "linux/amd64")    echo "x86_64"   ;; \
+        "linux/386")      echo "i486"     ;; \
         "linux/arm64")    echo "aarch64"  ;; \
         "linux/arm/v7")   echo "armhf"    ;; \
         "linux/arm/v6")   echo "arm"      ;; \
-        "linux/ppc64le")  echo "ppc64le"  ;; \
         *)                echo ""         ;; esac) && \
     echo "Package ${PACKAGE} platform ${PACKAGEPLATFORM} version ${PACKAGEVERSION}" && \
-    wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-${PACKAGEPLATFORM}.tar.gz" -qO /tmp/s6-overlay.tar.gz && \
-    tar xfz /tmp/s6-overlay.tar.gz -C /s6/
+    wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-noarch.tar.xz" -qO /tmp/s6-overlay-noarch.tar.xz && \
+    wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-${PACKAGEPLATFORM}.tar.xz" -qO /tmp/s6-overlay-binaries.tar.xz && \
+    tar -C /s6/ -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
+    tar -C /s6/ -Jxpf /tmp/s6-overlay-binaries.tar.xz
 
 # rootfs builder
 FROM alpine:3.15.2 AS rootfs-builder
