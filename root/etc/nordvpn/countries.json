@@ -127,11 +127,11 @@
     "code": "BR",
     "cities": [
       {
-        "id": 943973,
-        "name": "San Paulo",
+        "id": 890249,
+        "name": "Sao Paulo",
         "latitude": -23.533333,
         "longitude": -46.616667,
-        "dns_name": "san-paulo",
+        "dns_name": "sao-paulo",
         "hub_score": null
       }
     ]
@@ -894,11 +894,11 @@
     "code": "UA",
     "cities": [
       {
-        "id": 8615126,
-        "name": "Kiev",
+        "id": 8626766,
+        "name": "Kyiv",
         "latitude": 50.433333,
         "longitude": 30.516667,
-        "dns_name": "kiev",
+        "dns_name": "kyiv",
         "hub_score": null
       }
     ]
