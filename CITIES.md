@@ -12,7 +12,7 @@ Australia | AU | 13 | Sydney | 479570
 Austria | AT | 14 | Vienna | 448799
 Belgium | BE | 21 | Brussels | 654293
 Bosnia and Herzegovina | BA | 27 | Sarajevo | 556823
-Brazil | BR | 30 | San Paulo | 943973
+Brazil | BR | 30 | Sao Paulo | 890249
 Bulgaria | BG | 33 | Sofia | 777368
 Canada | CA | 38 | Montreal | 1048463
 Canada | CA | 38 | Toronto | 1054250
@@ -65,7 +65,7 @@ Switzerland | CH | 209 | Zurich | 1171814
 Taiwan | TW | 211 | Taipei | 8544365
 Thailand | TH | 214 | Bangkok | 8121638
 Turkey | TR | 220 | Istanbul | 8401790
-Ukraine | UA | 225 | Kiev | 8615126
+Ukraine | UA | 225 | Kyiv | 8626766
 United Arab Emirates | AE | 226 | Dubai | 728
 United Kingdom | GB | 227 | Edinburgh | 2975852
 United Kingdom | GB | 227 | London | 2989907
