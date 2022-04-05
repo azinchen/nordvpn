@@ -932,6 +932,14 @@
         "hub_score": null
       },
       {
+        "id": 2978888,
+        "name": "Glasgow",
+        "latitude": 55.833333,
+        "longitude": -4.25,
+        "dns_name": "glasgow",
+        "hub_score": null
+      },
+      {
         "id": 2989907,
         "name": "London",
         "latitude": 51.514125,
