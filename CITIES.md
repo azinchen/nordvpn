@@ -68,6 +68,7 @@ Turkey | TR | 220 | Istanbul | 8401790
 Ukraine | UA | 225 | Kyiv | 8626766
 United Arab Emirates | AE | 226 | Dubai | 728
 United Kingdom | GB | 227 | Edinburgh | 2975852
+United Kingdom | GB | 227 | Glasgow | 2978888
 United Kingdom | GB | 227 | London | 2989907
 United Kingdom | GB | 227 | Manchester | 2991110
 United States | US | 228 | Atlanta | 8792429
