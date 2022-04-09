@@ -7,7 +7,7 @@ ARG TARGETPLATFORM
 
 RUN echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add tar=1.34-r0 \
-        xz=5.2.5-r0 && \
+        xz=5.2.5-r1 && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
     echo "**** download ${PACKAGE} ****" && \
