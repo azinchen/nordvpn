@@ -45,13 +45,13 @@ ENV TECHNOLOGY=openvpn_udp \
     CHECK_CONNECTION_ATTEMPT_INTERVAL=10
 
 RUN echo "**** install mandatory packages ****" && \
-    apk --no-cache --no-progress add bash=5.1.16-r0 \
-        curl=7.80.0-r1 \
-        iptables=1.8.7-r1 \
-        ip6tables=1.8.7-r1 \
+    apk --no-cache --no-progress add bash=5.1.16-r2 \
+        curl=7.83.1-r1 \
+        iptables=1.8.8-r1 \
+        ip6tables=1.8.8-r1 \
         jq=1.6-r1 \
-        shadow=4.8.1-r1 \
-        openvpn=2.5.6-r0 && \
+        shadow=4.10-r3 \
+        openvpn=2.5.6-r1 && \
     echo "**** create process user ****" && \
     addgroup --system --gid 912 nordvpn && \
     adduser --system --uid 912 --disabled-password --no-create-home --ingroup nordvpn nordvpn && \
