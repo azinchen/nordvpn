@@ -1,12 +1,13 @@
 #!/command/with-contenv bash
+#shellcheck shell=bash disable=SC1008
 
 [[ "${DEBUG,,}" == trace* ]] && set -x
 
-echo "`date` Check VPN Internet connection"
+echo "$(date) Check VPN Internet connection"
 
 function httpreq
 {
-    case "$(curl -s --max-time 2 -I $1 | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
+    case "$(curl -s --max-time 2 -I "$1" | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
         [23]) return 0;;
         5) return 1;;
         *) return 1;;
@@ -14,12 +15,11 @@ function httpreq
 }
 
 counter=1
-while [ $counter -le $CHECK_CONNECTION_ATTEMPTS ]; do
+while [ $counter -le "$CHECK_CONNECTION_ATTEMPTS" ]; do
     IFS=';'
     read -ra urls <<< "$CHECK_CONNECTION_URL"
     for url in "${urls[@]}"; do
-        httpreq $urls
-        if [ $? -eq 0 ]; then
+        if httpreq "$url"; then
             echo "Connection via VPN is up"
             exit 0
         else
@@ -28,7 +28,7 @@ while [ $counter -le $CHECK_CONNECTION_ATTEMPTS ]; do
     done
 
     echo "Sleep between iteration for $CHECK_CONNECTION_ATTEMPT_INTERVAL"
-    sleep $CHECK_CONNECTION_ATTEMPT_INTERVAL
+    sleep "$CHECK_CONNECTION_ATTEMPT_INTERVAL"
     ((counter++))
 done
 

@@ -1,15 +1,15 @@
 #!/command/with-contenv bash
+#shellcheck shell=bash disable=SC1008
 
 [[ "${DEBUG,,}" == trace* ]] && set -x
 
-nvcountries=$(cat /etc/nordvpn/countries.json | jq -c '.[]')
-nvgroups=$(cat /etc/nordvpn/groups.json | jq -c '.[]')
-nvtechnologies=$(cat /etc/nordvpn/technologies.json | jq -c '.[]')
+nvcountries=$(jq -c '.[]' /etc/nordvpn/countries.json)
+nvgroups=$(jq -c '.[]' /etc/nordvpn/groups.json)
+nvtechnologies=$(jq -c '.[]' /etc/nordvpn/technologies.json)
 
 numericregex="^[0-9]+$"
 
 ovpntemplatefile="/etc/nordvpn/template.ovpn"
-authfile="/tmp/auth"
 ovpnfile="/tmp/nordvpn.ovpn"
 
 getcountryid()
@@ -196,7 +196,7 @@ if [ -z "$COUNTRY" ]; then
 else
     read -ra RA_COUNTRIES <<< $COUNTRY
     for value in "${RA_COUNTRIES[@]}"; do
-        if [ ! -z "$value" ]; then
+        if [ -n "$value" ]; then
             countryid=$(getcountryid $value)
             serversincountry=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?"$filterserver"&filters\[country_id\]="$countryid"" | jq -c '.[]')
             echo "Request servers in \"$(getcountryname "$value")\", "$(echo "$serversincountry" | jq -s 'length')" servers received"
