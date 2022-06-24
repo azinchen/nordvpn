@@ -2,7 +2,7 @@
 FROM alpine:3.16.0 AS s6-builder
 
 ENV PACKAGE="just-containers/s6-overlay"
-ENV PACKAGEVERSION="3.1.1.0"
+ENV PACKAGEVERSION="3.1.1.1"
 ARG TARGETPLATFORM
 
 RUN echo "**** install mandatory packages ****" && \
