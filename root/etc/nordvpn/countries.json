@@ -424,21 +424,6 @@
     ]
   },
   {
-    "id": 100,
-    "name": "India",
-    "code": "IN",
-    "cities": [
-      {
-        "id": 4041548,
-        "name": "Mumbai",
-        "latitude": 18.975,
-        "longitude": 72.825833,
-        "dns_name": "mumbai",
-        "hub_score": null
-      }
-    ]
-  },
-  {
     "id": 101,
     "name": "Indonesia",
     "code": "ID",
