@@ -5,7 +5,9 @@ ENV PACKAGE="just-containers/s6-overlay"
 ENV PACKAGEVERSION="3.1.1.2"
 ARG TARGETPLATFORM
 
-RUN echo "**** install mandatory packages ****" && \
+RUN echo "**** install security fixes ****" && \
+    apk --no-cache --no-progress add openssl=1.1.1q-r0 && \
+    echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add tar=1.34-r0 \
         xz=5.2.5-r1 && \
     echo "**** create folders ****" && \
@@ -27,6 +29,9 @@ RUN echo "**** install mandatory packages ****" && \
 # rootfs builder
 FROM alpine:3.16.0 AS rootfs-builder
 
+RUN echo "**** install security fixes ****" && \
+    apk --no-cache --no-progress add openssl=1.1.1q-r0
+
 COPY root/ /rootfs/
 RUN chmod +x /rootfs/usr/bin/*
 RUN chmod +x /rootfs/etc/nordvpn/init/*
@@ -43,7 +48,9 @@ ENV TECHNOLOGY=openvpn_udp \
     CHECK_CONNECTION_ATTEMPT_INTERVAL=10 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=120000
 
-RUN echo "**** install mandatory packages ****" && \
+RUN echo "**** install security fixes ****" && \
+    apk --no-cache --no-progress add openssl=1.1.1q-r0 && \
+    echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add bash=5.1.16-r2 \
         curl=7.83.1-r2 \
         iptables=1.8.8-r1 \
