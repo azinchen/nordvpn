@@ -424,21 +424,6 @@
     ]
   },
   {
-    "id": 101,
-    "name": "Indonesia",
-    "code": "ID",
-    "cities": [
-      {
-        "id": 3560288,
-        "name": "Jakarta",
-        "latitude": -6.174444,
-        "longitude": 106.829444,
-        "dns_name": "jakarta",
-        "hub_score": null
-      }
-    ]
-  },
-  {
     "id": 104,
     "name": "Ireland",
     "code": "IE",
