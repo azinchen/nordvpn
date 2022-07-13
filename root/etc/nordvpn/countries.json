@@ -409,21 +409,6 @@
     ]
   },
   {
-    "id": 99,
-    "name": "Iceland",
-    "code": "IS",
-    "cities": [
-      {
-        "id": 4509791,
-        "name": "Reykjavik",
-        "latitude": 64.15,
-        "longitude": -21.95,
-        "dns_name": "reykjavik",
-        "hub_score": null
-      }
-    ]
-  },
-  {
     "id": 101,
     "name": "Indonesia",
     "code": "ID",
