@@ -33,6 +33,7 @@ Germany | DE | 81 | Frankfurt | 2215709
 Greece | GR | 84 | Athens | 3131903
 Hong Kong | HK | 97 | Hong Kong | 3232931
 Hungary | HU | 98 | Budapest | 3348344
+Iceland | IS | 99 | Reykjavik | 4509791
 Indonesia | ID | 101 | Jakarta | 3560288
 Ireland | IE | 104 | Dublin | 3939200
 Israel | IL | 105 | Tel Aviv | 3964220
