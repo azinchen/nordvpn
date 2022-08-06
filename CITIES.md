@@ -41,6 +41,7 @@ Italy | IT | 106 | Milan | 4542737
 Japan | JP | 108 | Tokyo | 4633349
 Latvia | LV | 119 | Riga | 5192828
 Lithuania | LT | 125 | Vilnius | 5166932
+Luxembourg | LU | 126 | Luxembourg | 9521876
 Luxembourg | LU | 126 | Steinsel | 5173235
 Malaysia | MY | 131 | Kuala Lumpur | 5820143
 Mexico | MX | 140 | Mexico | 5677037
