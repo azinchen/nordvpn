@@ -540,14 +540,6 @@
         "longitude": 6.13,
         "dns_name": "luxembourg",
         "hub_score": null
-      },
-      {
-        "id": 5173235,
-        "name": "Steinsel",
-        "latitude": 49.6769444,
-        "longitude": 6.1238889,
-        "dns_name": "steinsel",
-        "hub_score": null
       }
     ]
   },
