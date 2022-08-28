@@ -8,6 +8,7 @@ ARG TARGETPLATFORM
 RUN echo "**** install security fix packages ****" && \
     apk --no-cache --no-progress add \
         zlib=1.2.12-r3 \
+        busybox=1.35.0-r17 \
         && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
@@ -35,7 +36,10 @@ FROM alpine:3.16.2 AS rootfs-builder
 
 RUN echo "**** install security fix packages ****" && \
     apk --no-cache --no-progress add \
-        zlib=1.2.12-r3
+        zlib=1.2.12-r3 \
+        busybox=1.35.0-r17 \
+        && \
+    echo "**** end run statement ****"
 
 COPY root/ /rootfs/
 RUN chmod +x /rootfs/usr/bin/*
@@ -56,6 +60,7 @@ ENV TECHNOLOGY=openvpn_udp \
 RUN echo "**** install security fix packages ****" && \
     apk --no-cache --no-progress add \
         zlib=1.2.12-r3 \
+        busybox=1.35.0-r17 \
         && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
