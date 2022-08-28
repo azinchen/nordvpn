@@ -24,6 +24,13 @@ jobs:
           cp ${RANDOMFILE} root/etc/nordvpn/template.ovpn
           sed -i '/proto /c\proto __PROTOCOL__' root/etc/nordvpn/template.ovpn
           sed -i '/remote /c\remote __IP__ __PORT__' root/etc/nordvpn/template.ovpn
+          sed -i '/verify-x509-name /c\verify-x509-name CN=__X509_NAME__' root/etc/nordvpn/template.ovpn
+
+          {
+            echo "script-security 2"
+            echo "up /etc/openvpn/up.sh"
+            echo "down /etc/openvpn/down.sh"
+          } >> root/etc/nordvpn/template.ovpn
 
           DATE=$(date +%y%m%d)
           echo "::set-output name=date::${DATE}"

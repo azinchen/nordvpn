@@ -236,12 +236,10 @@ protocol=$(getopenvpnprotocol "$TECHNOLOGY")
 echo "Select server \""$name"\" hostname=\""$hostname"\" ip="$serverip" protocol=\""$protocol"\""
 
 cp "$ovpntemplatefile" "$ovpnfile"
-echo "script-security 2" >> "$ovpnfile"
-echo "up /etc/openvpn/up.sh" >> "$ovpnfile"
-echo "down /etc/openvpn/down.sh" >> "$ovpnfile"
 
 sed -i "s/__IP__/$serverip/g" "$ovpnfile"
 sed -i "s/__PROTOCOL__/$protocol/g" "$ovpnfile"
+sed -i "s/__X509_NAME__/$hostname/g" "$ovpnfile"
 
 if [[ "$protocol" == "udp" ]]; then
     sed -i "s/__PORT__/1194/g" "$ovpnfile"
