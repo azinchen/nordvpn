@@ -3,6 +3,7 @@
     "id": 2,
     "name": "Albania",
     "code": "AL",
+    "serverCount": 0,
     "cities": [
       {
         "id": 308615,
@@ -10,7 +11,8 @@
         "latitude": 41.3275,
         "longitude": 19.8188889,
         "dns_name": "tirana",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -18,6 +20,7 @@
     "id": 10,
     "name": "Argentina",
     "code": "AR",
+    "serverCount": 0,
     "cities": [
       {
         "id": 384866,
@@ -25,7 +28,8 @@
         "latitude": -34.5875,
         "longitude": -58.6725,
         "dns_name": "buenos-aires",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -33,6 +37,7 @@
     "id": 13,
     "name": "Australia",
     "code": "AU",
+    "serverCount": 0,
     "cities": [
       {
         "id": 452717,
@@ -40,7 +45,8 @@
         "latitude": -34.928661,
         "longitude": 138.598633,
         "dns_name": "adelaide",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 456494,
@@ -48,7 +54,8 @@
         "latitude": -27.47101,
         "longitude": 153.024292,
         "dns_name": "brisbane",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 470813,
@@ -56,7 +63,8 @@
         "latitude": -37.813938,
         "longitude": 144.963425,
         "dns_name": "melbourne",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 475799,
@@ -64,7 +72,8 @@
         "latitude": -31.95224,
         "longitude": 115.861397,
         "dns_name": "perth",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 479570,
@@ -72,7 +81,8 @@
         "latitude": -33.861481,
         "longitude": 151.205475,
         "dns_name": "sydney",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -80,6 +90,7 @@
     "id": 14,
     "name": "Austria",
     "code": "AT",
+    "serverCount": 0,
     "cities": [
       {
         "id": 448799,
@@ -87,7 +98,8 @@
         "latitude": 48.2,
         "longitude": 16.366667,
         "dns_name": "vienna",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -95,6 +107,7 @@
     "id": 21,
     "name": "Belgium",
     "code": "BE",
+    "serverCount": 0,
     "cities": [
       {
         "id": 654293,
@@ -102,7 +115,8 @@
         "latitude": 50.833333,
         "longitude": 4.333333,
         "dns_name": "brussels",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -110,6 +124,7 @@
     "id": 27,
     "name": "Bosnia and Herzegovina",
     "code": "BA",
+    "serverCount": 0,
     "cities": [
       {
         "id": 556823,
@@ -117,7 +132,8 @@
         "latitude": 43.85,
         "longitude": 18.3833333,
         "dns_name": "sarajevo",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -125,6 +141,7 @@
     "id": 30,
     "name": "Brazil",
     "code": "BR",
+    "serverCount": 0,
     "cities": [
       {
         "id": 890249,
@@ -132,7 +149,8 @@
         "latitude": -23.533333,
         "longitude": -46.616667,
         "dns_name": "sao-paulo",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -140,6 +158,7 @@
     "id": 33,
     "name": "Bulgaria",
     "code": "BG",
+    "serverCount": 0,
     "cities": [
       {
         "id": 777368,
@@ -147,7 +166,8 @@
         "latitude": 42.6833333,
         "longitude": 23.3166667,
         "dns_name": "sofia",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -155,6 +175,7 @@
     "id": 38,
     "name": "Canada",
     "code": "CA",
+    "serverCount": 0,
     "cities": [
       {
         "id": 1048463,
@@ -162,7 +183,8 @@
         "latitude": 45.5,
         "longitude": -73.583333,
         "dns_name": "montreal",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 1054250,
@@ -170,7 +192,8 @@
         "latitude": 43.666667,
         "longitude": -79.416667,
         "dns_name": "toronto",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 1054610,
@@ -178,7 +201,8 @@
         "latitude": 49.25,
         "longitude": -123.133333,
         "dns_name": "vancouver",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -186,6 +210,7 @@
     "id": 43,
     "name": "Chile",
     "code": "CL",
+    "serverCount": 0,
     "cities": [
       {
         "id": 1227092,
@@ -193,7 +218,8 @@
         "latitude": -33.45,
         "longitude": -70.666667,
         "dns_name": "santiago",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -201,6 +227,7 @@
     "id": 52,
     "name": "Costa Rica",
     "code": "CR",
+    "serverCount": 0,
     "cities": [
       {
         "id": 2062994,
@@ -208,7 +235,8 @@
         "latitude": 9.893385,
         "longitude": -84.105407,
         "dns_name": "san-jose",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -216,6 +244,7 @@
     "id": 54,
     "name": "Croatia",
     "code": "HR",
+    "serverCount": 0,
     "cities": [
       {
         "id": 3308120,
@@ -223,7 +252,8 @@
         "latitude": 45.8,
         "longitude": 16,
         "dns_name": "zagreb",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -231,6 +261,7 @@
     "id": 56,
     "name": "Cyprus",
     "code": "CY",
+    "serverCount": 0,
     "cities": [
       {
         "id": 2099627,
@@ -238,7 +269,8 @@
         "latitude": 35.1666667,
         "longitude": 33.3666667,
         "dns_name": "nicosia",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -246,6 +278,7 @@
     "id": 57,
     "name": "Czech Republic",
     "code": "CZ",
+    "serverCount": 0,
     "cities": [
       {
         "id": 2144945,
@@ -253,7 +286,8 @@
         "latitude": 50.083333,
         "longitude": 14.466667,
         "dns_name": "prague",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -261,6 +295,7 @@
     "id": 58,
     "name": "Denmark",
     "code": "DK",
+    "serverCount": 0,
     "cities": [
       {
         "id": 2382515,
@@ -268,7 +303,8 @@
         "latitude": 55.666667,
         "longitude": 12.583333,
         "dns_name": "copenhagen",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -276,6 +312,7 @@
     "id": 68,
     "name": "Estonia",
     "code": "EE",
+    "serverCount": 0,
     "cities": [
       {
         "id": 2514182,
@@ -283,7 +320,8 @@
         "latitude": 59.4338889,
         "longitude": 24.7280556,
         "dns_name": "tallinn",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -291,6 +329,7 @@
     "id": 73,
     "name": "Finland",
     "code": "FI",
+    "serverCount": 0,
     "cities": [
       {
         "id": 2704343,
@@ -298,7 +337,8 @@
         "latitude": 60.175556,
         "longitude": 24.934167,
         "dns_name": "helsinki",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -306,6 +346,7 @@
     "id": 74,
     "name": "France",
     "code": "FR",
+    "serverCount": 0,
     "cities": [
       {
         "id": 2867102,
@@ -313,7 +354,8 @@
         "latitude": 43.285413,
         "longitude": 5.37606,
         "dns_name": "marseille",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 2886284,
@@ -321,7 +363,8 @@
         "latitude": 48.866667,
         "longitude": 2.333333,
         "dns_name": "paris",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -329,6 +372,7 @@
     "id": 80,
     "name": "Georgia",
     "code": "GE",
+    "serverCount": 0,
     "cities": [
       {
         "id": 3032063,
@@ -336,7 +380,8 @@
         "latitude": 41.725,
         "longitude": 44.7908333,
         "dns_name": "tbilisi",
-        "hub_score": -5
+        "hub_score": -5,
+        "serverCount": 1
       }
     ]
   },
@@ -344,6 +389,7 @@
     "id": 81,
     "name": "Germany",
     "code": "DE",
+    "serverCount": 0,
     "cities": [
       {
         "id": 2181458,
@@ -351,7 +397,8 @@
         "latitude": 52.516667,
         "longitude": 13.4,
         "dns_name": "berlin",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 2215709,
@@ -359,7 +406,8 @@
         "latitude": 50.116667,
         "longitude": 8.683333,
         "dns_name": "frankfurt",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -367,6 +415,7 @@
     "id": 84,
     "name": "Greece",
     "code": "GR",
+    "serverCount": 0,
     "cities": [
       {
         "id": 3131903,
@@ -374,7 +423,8 @@
         "latitude": 37.9833333,
         "longitude": 23.7333333,
         "dns_name": "athens",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -382,6 +432,7 @@
     "id": 97,
     "name": "Hong Kong",
     "code": "HK",
+    "serverCount": 0,
     "cities": [
       {
         "id": 3232931,
@@ -389,7 +440,8 @@
         "latitude": 22.2833333,
         "longitude": 114.15,
         "dns_name": "hong-kong",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -397,6 +449,7 @@
     "id": 98,
     "name": "Hungary",
     "code": "HU",
+    "serverCount": 0,
     "cities": [
       {
         "id": 3348344,
@@ -404,7 +457,8 @@
         "latitude": 47.5,
         "longitude": 19.083333,
         "dns_name": "budapest",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -412,6 +466,7 @@
     "id": 99,
     "name": "Iceland",
     "code": "IS",
+    "serverCount": 0,
     "cities": [
       {
         "id": 4509791,
@@ -419,7 +474,8 @@
         "latitude": 64.15,
         "longitude": -21.95,
         "dns_name": "reykjavik",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -427,6 +483,7 @@
     "id": 101,
     "name": "Indonesia",
     "code": "ID",
+    "serverCount": 0,
     "cities": [
       {
         "id": 3560288,
@@ -434,7 +491,8 @@
         "latitude": -6.174444,
         "longitude": 106.829444,
         "dns_name": "jakarta",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -442,6 +500,7 @@
     "id": 104,
     "name": "Ireland",
     "code": "IE",
+    "serverCount": 0,
     "cities": [
       {
         "id": 3939200,
@@ -449,7 +508,8 @@
         "latitude": 53.3330556,
         "longitude": -6.2488889,
         "dns_name": "dublin",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -457,6 +517,7 @@
     "id": 105,
     "name": "Israel",
     "code": "IL",
+    "serverCount": 0,
     "cities": [
       {
         "id": 3964220,
@@ -464,7 +525,8 @@
         "latitude": 32.066667,
         "longitude": 34.766667,
         "dns_name": "tel-aviv",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -472,6 +534,7 @@
     "id": 106,
     "name": "Italy",
     "code": "IT",
+    "serverCount": 0,
     "cities": [
       {
         "id": 4542737,
@@ -479,7 +542,8 @@
         "latitude": 45.466667,
         "longitude": 9.2,
         "dns_name": "milan",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -487,6 +551,7 @@
     "id": 108,
     "name": "Japan",
     "code": "JP",
+    "serverCount": 0,
     "cities": [
       {
         "id": 4633349,
@@ -494,7 +559,8 @@
         "latitude": 35.685,
         "longitude": 139.751389,
         "dns_name": "tokyo",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -502,6 +568,7 @@
     "id": 119,
     "name": "Latvia",
     "code": "LV",
+    "serverCount": 0,
     "cities": [
       {
         "id": 5192828,
@@ -509,7 +576,8 @@
         "latitude": 56.95,
         "longitude": 24.1,
         "dns_name": "riga",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -517,6 +585,7 @@
     "id": 125,
     "name": "Lithuania",
     "code": "LT",
+    "serverCount": 0,
     "cities": [
       {
         "id": 5166932,
@@ -524,7 +593,8 @@
         "latitude": 54.6833333,
         "longitude": 25.3166667,
         "dns_name": "vilnius",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -532,6 +602,7 @@
     "id": 126,
     "name": "Luxembourg",
     "code": "LU",
+    "serverCount": 0,
     "cities": [
       {
         "id": 9521876,
@@ -539,7 +610,8 @@
         "latitude": 49.6117,
         "longitude": 6.13,
         "dns_name": "luxembourg",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -547,6 +619,7 @@
     "id": 131,
     "name": "Malaysia",
     "code": "MY",
+    "serverCount": 0,
     "cities": [
       {
         "id": 5820143,
@@ -554,7 +627,8 @@
         "latitude": 3.166667,
         "longitude": 101.7,
         "dns_name": "kuala-lumpur",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -562,6 +636,7 @@
     "id": 140,
     "name": "Mexico",
     "code": "MX",
+    "serverCount": 0,
     "cities": [
       {
         "id": 5677037,
@@ -569,7 +644,8 @@
         "latitude": 19.434167,
         "longitude": -99.138611,
         "dns_name": "mexico",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -577,6 +653,7 @@
     "id": 142,
     "name": "Moldova",
     "code": "MD",
+    "serverCount": 0,
     "cities": [
       {
         "id": 5295179,
@@ -584,7 +661,8 @@
         "latitude": 47.005556,
         "longitude": 28.8575,
         "dns_name": "chisinau",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -592,6 +670,7 @@
     "id": 153,
     "name": "Netherlands",
     "code": "NL",
+    "serverCount": 0,
     "cities": [
       {
         "id": 6076868,
@@ -599,7 +678,8 @@
         "latitude": 52.35,
         "longitude": 4.916667,
         "dns_name": "amsterdam",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -607,6 +687,7 @@
     "id": 156,
     "name": "New Zealand",
     "code": "NZ",
+    "serverCount": 0,
     "cities": [
       {
         "id": 6144239,
@@ -614,7 +695,8 @@
         "latitude": -36.866667,
         "longitude": 174.766667,
         "dns_name": "auckland",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -622,6 +704,7 @@
     "id": 128,
     "name": "North Macedonia",
     "code": "MK",
+    "serverCount": 0,
     "cities": [
       {
         "id": 5386019,
@@ -629,7 +712,8 @@
         "latitude": 42,
         "longitude": 21.4333333,
         "dns_name": "skopje",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -637,6 +721,7 @@
     "id": 163,
     "name": "Norway",
     "code": "NO",
+    "serverCount": 0,
     "cities": [
       {
         "id": 6127364,
@@ -644,7 +729,8 @@
         "latitude": 59.916667,
         "longitude": 10.75,
         "dns_name": "oslo",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -652,6 +738,7 @@
     "id": 174,
     "name": "Poland",
     "code": "PL",
+    "serverCount": 0,
     "cities": [
       {
         "id": 6863429,
@@ -659,7 +746,8 @@
         "latitude": 52.25,
         "longitude": 21,
         "dns_name": "warsaw",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -667,6 +755,7 @@
     "id": 175,
     "name": "Portugal",
     "code": "PT",
+    "serverCount": 0,
     "cities": [
       {
         "id": 6906665,
@@ -674,7 +763,8 @@
         "latitude": 38.716667,
         "longitude": -9.133333,
         "dns_name": "lisbon",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -682,6 +772,7 @@
     "id": 179,
     "name": "Romania",
     "code": "RO",
+    "serverCount": 0,
     "cities": [
       {
         "id": 6953096,
@@ -689,7 +780,8 @@
         "latitude": 44.433333,
         "longitude": 26.1,
         "dns_name": "bucharest",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -697,6 +789,7 @@
     "id": 192,
     "name": "Serbia",
     "code": "RS",
+    "serverCount": 0,
     "cities": [
       {
         "id": 7030907,
@@ -704,7 +797,8 @@
         "latitude": 44.818611,
         "longitude": 20.468056,
         "dns_name": "belgrad",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -712,6 +806,7 @@
     "id": 195,
     "name": "Singapore",
     "code": "SG",
+    "serverCount": 0,
     "cities": [
       {
         "id": 7867982,
@@ -719,7 +814,8 @@
         "latitude": 1.2930556,
         "longitude": 103.8558333,
         "dns_name": "singapore",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -727,6 +823,7 @@
     "id": 196,
     "name": "Slovakia",
     "code": "SK",
+    "serverCount": 0,
     "cities": [
       {
         "id": 7884305,
@@ -734,7 +831,8 @@
         "latitude": 48.15,
         "longitude": 17.1166667,
         "dns_name": "bratislava",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -742,6 +840,7 @@
     "id": 197,
     "name": "Slovenia",
     "code": "SI",
+    "serverCount": 0,
     "cities": [
       {
         "id": 7874306,
@@ -749,7 +848,8 @@
         "latitude": 46.0552778,
         "longitude": 14.5144444,
         "dns_name": "ljubljana",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -757,6 +857,7 @@
     "id": 200,
     "name": "South Africa",
     "code": "ZA",
+    "serverCount": 0,
     "cities": [
       {
         "id": 9383693,
@@ -764,7 +865,8 @@
         "latitude": -26.205171,
         "longitude": 28.049815,
         "dns_name": "johannesburg",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -772,6 +874,7 @@
     "id": 114,
     "name": "South Korea",
     "code": "KR",
+    "serverCount": 0,
     "cities": [
       {
         "id": 4879586,
@@ -779,7 +882,8 @@
         "latitude": 37.5985,
         "longitude": 126.9783,
         "dns_name": "seoul",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -787,6 +891,7 @@
     "id": 202,
     "name": "Spain",
     "code": "ES",
+    "serverCount": 0,
     "cities": [
       {
         "id": 2619989,
@@ -794,7 +899,8 @@
         "latitude": 40.408566,
         "longitude": -3.69222,
         "dns_name": "madrid",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -802,6 +908,7 @@
     "id": 208,
     "name": "Sweden",
     "code": "SE",
+    "serverCount": 0,
     "cities": [
       {
         "id": 7852919,
@@ -809,7 +916,8 @@
         "latitude": 59.333333,
         "longitude": 18.05,
         "dns_name": "stockholm",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -817,6 +925,7 @@
     "id": 209,
     "name": "Switzerland",
     "code": "CH",
+    "serverCount": 0,
     "cities": [
       {
         "id": 1171814,
@@ -824,7 +933,8 @@
         "latitude": 47.366667,
         "longitude": 8.55,
         "dns_name": "zurich",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -832,6 +942,7 @@
     "id": 211,
     "name": "Taiwan",
     "code": "TW",
+    "serverCount": 0,
     "cities": [
       {
         "id": 8544365,
@@ -839,7 +950,8 @@
         "latitude": 25.0391667,
         "longitude": 121.525,
         "dns_name": "taipei",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -847,6 +959,7 @@
     "id": 214,
     "name": "Thailand",
     "code": "TH",
+    "serverCount": 0,
     "cities": [
       {
         "id": 8121638,
@@ -854,7 +967,8 @@
         "latitude": 13.753979,
         "longitude": 100.501444,
         "dns_name": "bangkok",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -862,6 +976,7 @@
     "id": 220,
     "name": "Turkey",
     "code": "TR",
+    "serverCount": 0,
     "cities": [
       {
         "id": 8401790,
@@ -869,7 +984,8 @@
         "latitude": 41.018611,
         "longitude": 28.964722,
         "dns_name": "istanbul",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -877,6 +993,7 @@
     "id": 225,
     "name": "Ukraine",
     "code": "UA",
+    "serverCount": 0,
     "cities": [
       {
         "id": 8626766,
@@ -884,7 +1001,8 @@
         "latitude": 50.433333,
         "longitude": 30.516667,
         "dns_name": "kyiv",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -892,6 +1010,7 @@
     "id": 226,
     "name": "United Arab Emirates",
     "code": "AE",
+    "serverCount": 0,
     "cities": [
       {
         "id": 728,
@@ -899,7 +1018,8 @@
         "latitude": 25.258172,
         "longitude": 55.304717,
         "dns_name": "dubai",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -907,6 +1027,7 @@
     "id": 227,
     "name": "United Kingdom",
     "code": "GB",
+    "serverCount": 0,
     "cities": [
       {
         "id": 2975852,
@@ -914,7 +1035,8 @@
         "latitude": 55.95,
         "longitude": -3.2,
         "dns_name": "edinburgh",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 2978888,
@@ -922,7 +1044,8 @@
         "latitude": 55.833333,
         "longitude": -4.25,
         "dns_name": "glasgow",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 2989907,
@@ -930,7 +1053,8 @@
         "latitude": 51.514125,
         "longitude": -0.093689,
         "dns_name": "london",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 2991110,
@@ -938,7 +1062,8 @@
         "latitude": 53.5,
         "longitude": -2.216667,
         "dns_name": "manchester",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -946,6 +1071,7 @@
     "id": 228,
     "name": "United States",
     "code": "US",
+    "serverCount": 0,
     "cities": [
       {
         "id": 8792429,
@@ -953,7 +1079,8 @@
         "latitude": 33.7488889,
         "longitude": -84.3880556,
         "dns_name": "atlanta",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8963153,
@@ -961,7 +1088,8 @@
         "latitude": 42.8863889,
         "longitude": -78.8786111,
         "dns_name": "buffalo",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8980922,
@@ -969,7 +1097,8 @@
         "latitude": 35.2269444,
         "longitude": -80.8433333,
         "dns_name": "charlotte",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8815352,
@@ -977,7 +1106,8 @@
         "latitude": 41.85,
         "longitude": -87.65,
         "dns_name": "chicago",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 9080300,
@@ -985,7 +1115,8 @@
         "latitude": 32.7833333,
         "longitude": -96.8,
         "dns_name": "dallas",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8770934,
@@ -993,7 +1124,8 @@
         "latitude": 39.7391667,
         "longitude": -104.9841667,
         "dns_name": "denver",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8930717,
@@ -1001,7 +1133,8 @@
         "latitude": 39.0997222,
         "longitude": -94.5783333,
         "dns_name": "kansas-city",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8761958,
@@ -1009,7 +1142,8 @@
         "latitude": 34.0522222,
         "longitude": -118.2427778,
         "dns_name": "los-angeles",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 9113744,
@@ -1017,7 +1151,8 @@
         "latitude": 38.7508333,
         "longitude": -77.4755556,
         "dns_name": "manassas",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8787782,
@@ -1025,7 +1160,8 @@
         "latitude": 25.7738889,
         "longitude": -80.1938889,
         "dns_name": "miami",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8971718,
@@ -1033,7 +1169,8 @@
         "latitude": 40.7141667,
         "longitude": -74.0063889,
         "dns_name": "new-york",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8741960,
@@ -1041,7 +1178,8 @@
         "latitude": 33.4483333,
         "longitude": -112.0733333,
         "dns_name": "phoenix",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8934551,
@@ -1049,7 +1187,8 @@
         "latitude": 38.6272222,
         "longitude": -90.1977778,
         "dns_name": "saint-louis",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 9097865,
@@ -1057,7 +1196,8 @@
         "latitude": 40.7608333,
         "longitude": -111.8902778,
         "dns_name": "salt-lake-city",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 8766359,
@@ -1065,7 +1205,8 @@
         "latitude": 37.7698135,
         "longitude": -122.4660005,
         "dns_name": "san-francisco",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       },
       {
         "id": 9128402,
@@ -1073,7 +1214,8 @@
         "latitude": 47.6063889,
         "longitude": -122.3308333,
         "dns_name": "seattle",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   },
@@ -1081,6 +1223,7 @@
     "id": 234,
     "name": "Vietnam",
     "code": "VN",
+    "serverCount": 0,
     "cities": [
       {
         "id": 9270302,
@@ -1088,7 +1231,8 @@
         "latitude": 21.033333,
         "longitude": 105.85,
         "dns_name": "hanoi",
-        "hub_score": 0
+        "hub_score": 0,
+        "serverCount": 1
       }
     ]
   }
