@@ -18,23 +18,23 @@ jobs:
         id: git
         shell: bash
         run: |
-          TAG=false
+          IS_TAG=false
           if [[ ${GITHUB_REF} == *"/tags/"* ]]; then
-            TAG=true
+            IS_TAG=true
           fi
-          echo "::set-output name=tag::${TAG}"
 
-          BRANCH=$(echo ${GITHUB_REF} | sed -e "s/.*\///g")
-          echo "::set-output name=branch::${BRANCH}"
+          BRANCH_NAME=$(echo ${GITHUB_REF} | sed -e "s/.*\///g")
 
-          if [[ ${TAG} == 'true' ]]; then
-            IMAGE_TAG=${BRANCH:1}
+          if [[ ${IS_TAG} == 'true' ]]; then
+            IMAGE_TAG=${BRANCH_NAME:1}
           else
-            IMAGE_TAG=${BRANCH}
+            IMAGE_TAG=${BRANCH_NAME}
           fi
-          echo "::set-output name=image_tag::${IMAGE_TAG}"
 
-          echo "Action branch=${BRANCH} tag=${TAG} ref=${GITHUB_REF} image_tag=${IMAGE_TAG}"
+          echo "image_tag=${IMAGE_TAG}" >> $GITHUB_ENV
+          echo "is_tag=${IS_TAG}" >> $GITHUB_ENV
+
+          echo "Action branch=${BRANCH_NAME} tag=${IS_TAG} ref=${GITHUB_REF} image_tag=${IMAGE_TAG}"
 
       - name: Login to DockerHub
         uses: docker/login-action@v2.1.0
@@ -57,17 +57,17 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2.2.1
 
-      - name: Build and push ${{ github.repository }}:${{ steps.git.outputs.image_tag }}
+      - name: Build and push ${{ github.repository }}:${{ env.image_tag }}
         uses: docker/build-push-action@v3.2.0
         with:
           platforms: ${{ env.PLATFORMS }}
           push: true
           tags: |
-            ${{ github.repository }}:${{ steps.git.outputs.image_tag }}
-            ghcr.io/${{ github.repository }}:${{ steps.git.outputs.image_tag }}
+            ${{ github.repository }}:${{ env.image_tag }}
+            ghcr.io/${{ github.repository }}:${{ env.image_tag }}
 
       - name: Build and push ${{ github.repository }}:latest
-        if: ${{ steps.git.outputs.tag == 'true' }}
+        if: ${{ env.is_tag == 'true' }}
         uses: docker/build-push-action@v3.2.0
         with:
           platforms: ${{ env.PLATFORMS }}
@@ -82,7 +82,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: '${{ github.repository }}:${{ steps.git.outputs.image_tag }}'
+          image: '${{ github.repository }}:${{ env.image_tag }}'
           args: --file=Dockerfile
 
       - name: Upload result to GitHub Code Scanning
@@ -91,7 +91,7 @@ jobs:
           sarif_file: snyk.sarif
 
       - name: Update repo description
-        if: ${{ steps.git.outputs.tag == 'true' }}
+        if: ${{ env.is_tag == 'true' }}
         uses: peter-evans/dockerhub-description@v3.1.1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
