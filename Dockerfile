@@ -8,8 +8,8 @@ ARG TARGETPLATFORM
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
-        tar=1.34-r0 \
-        xz=5.2.5-r1 \
+        tar=1.34-r1 \
+        xz=5.2.8-r0 \
         && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
@@ -52,14 +52,14 @@ ENV TECHNOLOGY=openvpn_udp \
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
-        bash=5.1.16-r2 \
-        curl=7.83.1-r4 \
-        iptables=1.8.8-r1 \
-        ip6tables=1.8.8-r1 \
-        jq=1.6-r1 \
-        shadow=4.10-r3 \
-        shadow-login=4.10-r3 \
-        openvpn=2.5.6-r1 \
+        bash=5.2.9-r0 \
+        curl=7.86.0-r1 \
+        iptables=1.8.8-r2 \
+        ip6tables=1.8.8-r2 \
+        jq=1.6-r2 \
+        shadow=4.13-r0 \
+        shadow-login=4.13-r0 \
+        openvpn=2.5.8-r0 \
         && \
     echo "**** create process user ****" && \
     addgroup --system --gid 912 nordvpn && \
