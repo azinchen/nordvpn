@@ -554,6 +554,15 @@
     "serverCount": 1,
     "cities": [
       {
+        "id": 4621847,
+        "name": "Osaka",
+        "latitude": 34.6937,
+        "longitude": 135.5023,
+        "dns_name": "osaka",
+        "hub_score": 0,
+        "serverCount": 0
+      },
+      {
         "id": 4633349,
         "name": "Tokyo",
         "latitude": 35.685,
