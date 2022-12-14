@@ -551,7 +551,7 @@
     "id": 108,
     "name": "Japan",
     "code": "JP",
-    "serverCount": 1,
+    "serverCount": 2,
     "cities": [
       {
         "id": 4621847,
@@ -560,7 +560,7 @@
         "longitude": 135.5023,
         "dns_name": "osaka",
         "hub_score": 0,
-        "serverCount": 0
+        "serverCount": 1
       },
       {
         "id": 4633349,
