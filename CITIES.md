@@ -18,6 +18,7 @@ Canada | CA | 38 | Montreal | 1048463
 Canada | CA | 38 | Toronto | 1054250
 Canada | CA | 38 | Vancouver | 1054610
 Chile | CL | 43 | Santiago | 1227092
+Colombia | CO | 47 | Bogota | 1980695
 Costa Rica | CR | 52 | San Jose | 2062994
 Croatia | HR | 54 | Zagreb | 3308120
 Cyprus | CY | 56 | Nicosia | 2099627
