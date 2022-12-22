@@ -12,6 +12,7 @@ Brazil | BR | 30
 Bulgaria | BG | 33
 Canada | CA | 38
 Chile | CL | 43
+Colombia | CO | 47
 Costa Rica | CR | 52
 Croatia | HR | 54
 Cyprus | CY | 56
