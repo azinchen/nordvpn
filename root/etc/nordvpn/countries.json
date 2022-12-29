@@ -227,7 +227,7 @@
     "id": 47,
     "name": "Colombia",
     "code": "CO",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 1980695,
@@ -236,7 +236,7 @@
         "longitude": -74.062827,
         "dns_name": "bogota",
         "hub_score": 0,
-        "serverCount": 0
+        "serverCount": 1
       }
     ]
   },
