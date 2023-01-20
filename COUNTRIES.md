@@ -40,7 +40,6 @@ Mexico | MX | 140
 Moldova | MD | 142
 Netherlands | NL | 153
 New Zealand | NZ | 156
-North Macedonia | MK | 128
 Norway | NO | 163
 Poland | PL | 174
 Portugal | PT | 175
