@@ -49,7 +49,6 @@ Mexico | MX | 140 | Mexico | 5677037
 Moldova | MD | 142 | Chisinau | 5295179
 Netherlands | NL | 153 | Amsterdam | 6076868
 New Zealand | NZ | 156 | Auckland | 6144239
-North Macedonia | MK | 128 | Skopje | 5386019
 Norway | NO | 163 | Oslo | 6127364
 Poland | PL | 174 | Warsaw | 6863429
 Portugal | PT | 175 | Lisbon | 6906665
