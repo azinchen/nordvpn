@@ -1,5 +1,5 @@
 # s6 overlay builder
-FROM alpine:3.17.2 AS s6-builder
+FROM alpine:3.17.3 AS s6-builder
 
 ENV PACKAGE="just-containers/s6-overlay"
 ENV PACKAGEVERSION="3.1.4.1"
@@ -28,7 +28,7 @@ RUN echo "**** install security fix packages ****" && \
     tar -C /s6/ -Jxpf /tmp/s6-overlay-binaries.tar.xz
 
 # rootfs builder
-FROM alpine:3.17.2 AS rootfs-builder
+FROM alpine:3.17.3 AS rootfs-builder
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** end run statement ****"
@@ -39,7 +39,7 @@ RUN chmod +x /rootfs/etc/nordvpn/init/*
 COPY --from=s6-builder /s6/ /rootfs/
 
 # Main image
-FROM alpine:3.17.2
+FROM alpine:3.17.3
 
 LABEL maintainer="Alexander Zinchenko <alexander@zinchenko.com>"
 
@@ -53,7 +53,7 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
         bash=5.2.15-r0 \
-        curl=7.88.1-r0 \
+        curl=7.88.1-r1 \
         iptables=1.8.8-r2 \
         ip6tables=1.8.8-r2 \
         jq=1.6-r2 \
