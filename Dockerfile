@@ -7,7 +7,10 @@ ARG TARGETPLATFORM
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
-    apk --no-cache --no-progress add tar xz=5.2.9-r0 && \
+    apk --no-cache --no-progress add \
+        tar=1.34-r2 \
+        xz=5.2.9-r0 \
+        && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
     echo "**** download ${PACKAGE} ****" && \
@@ -30,13 +33,9 @@ FROM alpine:3.17.3 AS rootfs-builder
 RUN echo "**** install security fix packages ****" && \
     echo "**** end run statement ****"
 
-RUN apk add dos2unix
 COPY root/ /rootfs/
-
-RUN find /rootfs -type f -exec dos2unix \;
 RUN chmod +x /rootfs/usr/bin/*
 RUN chmod +x /rootfs/etc/nordvpn/init/*
-
 COPY --from=s6-builder /s6/ /rootfs/
 
 # Main image
@@ -52,7 +51,17 @@ ENV TECHNOLOGY=openvpn_udp \
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
-    apk --no-cache --no-progress add bash curl iptables ip6tables jq shadow shadow-login openvpn bind-tools && \
+    apk --no-cache --no-progress add \
+        bash=5.2.15-r0 \
+        curl=7.88.1-r1 \
+        iptables=1.8.8-r2 \
+        ip6tables=1.8.8-r2 \
+        jq=1.6-r2 \
+        shadow=4.13-r0 \
+        shadow-login=4.13-r0 \
+        openvpn=2.5.8-r0 \
+        bind-tools=9.18.11-r0 \
+        && \
     echo "**** create process user ****" && \
     addgroup --system --gid 912 nordvpn && \
     adduser --system --uid 912 --disabled-password --no-create-home --ingroup nordvpn nordvpn && \
