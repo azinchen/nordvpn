@@ -2,16 +2,14 @@
 
 [[ "${DEBUG,,}" == trace* ]] && set -x
 
-root=""  # /mnt/e/nordvpn/root"
-
-nvcountries=$(jq -c '.[]' < "$root/etc/nordvpn/countries.json")
-nvgroups=$(jq -c '.[]' < "$root/etc/nordvpn/groups.json")
-nvtechnologies=$(jq -c '.[]' < "$root/etc/nordvpn/technologies.json")
+nvcountries=$(jq -c '.[]' < "/etc/nordvpn/countries.json")
+nvgroups=$(jq -c '.[]' < "/etc/nordvpn/groups.json")
+nvtechnologies=$(jq -c '.[]' < "/etc/nordvpn/technologies.json")
 
 numericregex="^[0-9]+$"
 specific_country_regex="^[a-zA-Z]{2}[0-9]+$"
 
-ovpntemplatefile="$root/etc/nordvpn/template.ovpn"
+ovpntemplatefile="/etc/nordvpn/template.ovpn"
 ovpnfile="/tmp/nordvpn.ovpn"
 
 getcountryid()
