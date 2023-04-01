@@ -52,7 +52,7 @@ ENV TECHNOLOGY=openvpn_udp \
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
-    apk --no-cache --no-progress add bash curl iptables ip6tables jq shadow shadow-login openvpn && \
+    apk --no-cache --no-progress add bash curl iptables ip6tables jq shadow shadow-login openvpn bind-tools && \
     echo "**** create process user ****" && \
     addgroup --system --gid 912 nordvpn && \
     adduser --system --uid 912 --disabled-password --no-create-home --ingroup nordvpn nordvpn && \
