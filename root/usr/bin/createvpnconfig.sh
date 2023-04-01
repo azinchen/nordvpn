@@ -2,14 +2,16 @@
 
 [[ "${DEBUG,,}" == trace* ]] && set -x
 
-nvcountries=$(cat /etc/nordvpn/countries.json | jq -c '.[]')
-nvgroups=$(cat /etc/nordvpn/groups.json | jq -c '.[]')
-nvtechnologies=$(cat /etc/nordvpn/technologies.json | jq -c '.[]')
+root=""  # /mnt/e/nordvpn/root"
+
+nvcountries=$(jq -c '.[]' < "$root/etc/nordvpn/countries.json")
+nvgroups=$(jq -c '.[]' < "$root/etc/nordvpn/groups.json")
+nvtechnologies=$(jq -c '.[]' < "$root/etc/nordvpn/technologies.json")
 
 numericregex="^[0-9]+$"
+specific_country_regex="^[a-zA-Z]{2}[0-9]+$"
 
-ovpntemplatefile="/etc/nordvpn/template.ovpn"
-authfile="/tmp/auth"
+ovpntemplatefile="$root/etc/nordvpn/template.ovpn"
 ovpnfile="/tmp/nordvpn.ovpn"
 
 getcountryid()
@@ -17,7 +19,7 @@ getcountryid()
     input=$1
 
     if [[ "$input" =~ $numericregex ]]; then
-        id=$(echo "$nvcountries" | jq -r --argjson ID $input 'select(.id == $ID) | .id')
+        id=$(echo "$nvcountries" | jq -r --argjson ID "$input" 'select(.id == $ID) | .id')
     else
         id=$(echo "$nvcountries" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .id')
         if [ -z "$id" ]; then
@@ -25,7 +27,7 @@ getcountryid()
         fi
     fi
 
-    printf "$id"
+    printf '%s' "$id"
 
     if [ -z "$id" ]; then
         return 1
@@ -39,7 +41,7 @@ getcountryname()
     input=$1
 
     if [[ "$input" =~ $numericregex ]]; then
-        name=$(echo "$nvcountries" | jq -r --argjson ID $input 'select(.id == $ID) | .name')
+        name=$(echo "$nvcountries" | jq -r --argjson ID "$input" 'select(.id == $ID) | .name')
     else
         name=$(echo "$nvcountries" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .name')
         if [ -z "$name" ]; then
@@ -47,7 +49,7 @@ getcountryname()
         fi
     fi
 
-    printf "$name"
+    printf '%s' "$name"
 
     if [ -z "$name" ]; then
         return 1
@@ -61,7 +63,7 @@ getgroupid()
     input=$1
 
     if [[ "$input" =~ $numericregex ]]; then
-        id=$(echo "$nvgroups" | jq -r --argjson ID $input 'select(.id == $ID) | .id')
+        id=$(echo "$nvgroups" | jq -r --argjson ID "$input" 'select(.id == $ID) | .id')
     else
         id=$(echo "$nvgroups" | jq -r --arg TITLE "$input" 'select(.title == $TITLE) | .id')
         if [ -z "$id" ]; then
@@ -69,7 +71,7 @@ getgroupid()
         fi
     fi
 
-    printf "$id"
+    printf '%s' "$id"
 
     if [ -z "$id" ]; then
         return 1
@@ -83,7 +85,7 @@ getgrouptitle()
     input=$1
 
     if [[ "$input" =~ $numericregex ]]; then
-        title=$(echo "$nvgroups" | jq -r --argjson ID $input 'select(.id == $ID) | .title')
+        title=$(echo "$nvgroups" | jq -r --argjson ID "$input" 'select(.id == $ID) | .title')
     else
         title=$(echo "$nvgroups" | jq -r --arg TITLE "$input" 'select(.title == $TITLE) | .title')
         if [ -z "$id" ]; then
@@ -91,7 +93,7 @@ getgrouptitle()
         fi
     fi
 
-    printf "$title"
+    printf '%s' "$title"
 
     if [ -z "$title" ]; then
         return 1
@@ -105,7 +107,7 @@ gettechnologyid()
     input=$1
 
     if [[ "$input" =~ $numericregex ]]; then
-        id=$(echo "$nvtechnologies" | jq -r --argjson ID $input 'select(.id == $ID) | .id')
+        id=$(echo "$nvtechnologies" | jq -r --argjson ID "$input" 'select(.id == $ID) | .id')
     else
         id=$(echo "$nvtechnologies" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .id')
         if [ -z "$id" ]; then
@@ -113,7 +115,7 @@ gettechnologyid()
         fi
     fi
 
-    printf "$id"
+    printf '%s' "$id"
 
     if [ -z "$id" ]; then
         return 1
@@ -127,7 +129,7 @@ gettechnologyname()
     input=$1
 
     if [[ "$input" =~ $numericregex ]]; then
-        name=$(echo "$nvtechnologies" | jq -r --argjson ID $input 'select(.id == $ID) | .name')
+        name=$(echo "$nvtechnologies" | jq -r --argjson ID "$input" 'select(.id == $ID) | .name')
     else
         name=$(echo "$nvtechnologies" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .name')
         if [ -z "$id" ]; then
@@ -135,7 +137,7 @@ gettechnologyname()
         fi
     fi
 
-    printf "$name"
+    printf '%s' "$name"
 
     if [ -z "$name" ]; then
         return 1
@@ -151,7 +153,7 @@ getopenvpnprotocol()
     ident=$(echo "$nvtechnologies" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .identifier')
     if [ -z "$ident" ]; then
         if [[ "$input" =~ $numericregex ]]; then
-            ident=$(echo "$nvtechnologies" | jq -r --argjson ID $input 'select(.id == $ID) | .identifier')
+            ident=$(echo "$nvtechnologies" | jq -r --argjson ID "$input" 'select(.id == $ID) | .identifier')
         fi
     fi
     if [ -z "$ident" ]; then
@@ -179,10 +181,10 @@ echo "Apply filter technology \"$(gettechnologyname "$TECHNOLOGY")\""
 filterserver="filters\[servers_technologies\]\[id\]=$(gettechnologyid "$TECHNOLOGY")"
 
 IFS=';'
-read -ra RA_GROUPS <<< $GROUP
+read -ra RA_GROUPS <<< "$GROUP"
 for value in "${RA_GROUPS[@]}"; do
-    if [ ! -z "$value" ]; then
-        echo "Apply filter group \"$(getgrouptitle $value)\""
+    if [ -n "$value" ]; then
+        echo "Apply filter group \"$(getgrouptitle "$value")\""
         filterserver="$filterserver""&filters\[servers_groups\]\[id\]=$(getgroupid "$value")"
     fi
 done
@@ -191,15 +193,21 @@ servers=""
 
 echo "Request list of recommended servers"
 if [ -z "$COUNTRY" ]; then
-    servers=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?"$filterserver"" | jq -c '.[]')
-    echo "Request nearest servers, "$(echo "$servers" | jq -s 'length')" servers received"
+    servers=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?$filterserver" | jq -c '.[]')
+    echo "Request nearest servers, $(echo "$servers" | jq -s 'length') servers received"
 else
-    read -ra RA_COUNTRIES <<< $COUNTRY
+    read -ra RA_COUNTRIES <<< "$COUNTRY"
     for value in "${RA_COUNTRIES[@]}"; do
-        if [ ! -z "$value" ]; then
-            countryid=$(getcountryid $value)
-            serversincountry=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?"$filterserver"&filters\[country_id\]="$countryid"" | jq -c '.[]')
-            echo "Request servers in \"$(getcountryname "$value")\", "$(echo "$serversincountry" | jq -s 'length')" servers received"
+        if [[ "$value" =~ $specific_country_regex ]]; then
+            hostname="${value,,}.nordvpn.com"
+            ip="$(host -t A "$hostname" | awk '{print $4}')"
+            name="$(getcountryname "${value:0:2}") #${value:2}"
+            constructed_json=$(printf '{"name":"%s","hostname":"%s","load":0,"station":"%s"}' "$name" "$hostname" "$ip")
+            servers="$servers""$constructed_json"
+        elif [ -n "$value" ]; then
+            countryid=$(getcountryid "$value")
+            serversincountry=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?$filterserver&filters\[country_id\]=$countryid" | jq -c '.[]')
+            echo "Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
             servers="$servers""$serversincountry"
         fi
     done
@@ -208,19 +216,19 @@ fi
 poollength=$(echo "$servers" | jq -s 'unique | length')
 servers=$(echo "$servers" | jq -s -c 'unique | sort_by(.load) | .[]')
 
-if [[ !($RANDOM_TOP -eq 0) ]]; then
+if [[ ! ($RANDOM_TOP -eq 0) ]]; then
     if [[ $RANDOM_TOP -lt poollength ]]; then
-        filtered=$(echo $servers | head -n $RANDOM_TOP | shuf)
-        servers="$filtered"$(echo $servers | tail -n +$((RANDOM_TOP + 1)))
+        filtered=$(echo "$servers" | head -n "$RANDOM_TOP" | shuf)
+        servers="$filtered"$(echo "$servers" | tail -n +$((RANDOM_TOP + 1)))
     else
-        servers=$(echo $servers | shuf)
+        servers=$(echo "$servers" | shuf)
     fi
 fi
 
 echo "$poollength"" recommended servers in pool"
-if [[ !($poollength -eq 0) ]]; then
+if [[ ! ($poollength -eq 0) ]]; then
     echo "--- Top 20 servers in filtered pool ---"
-    echo $(echo $servers | jq -r '[.hostname, .load] | "\(.[0]): \(.[1])"' | head -n 20)
+    echo "$servers" | jq -r '[.hostname, .load] | "\(.[0]): \(.[1])"' | head -n 20
     echo "---------------------------------------"
 fi
 
@@ -228,12 +236,12 @@ if [[ $poollength -eq 0 ]]; then
     echo "ERROR: list of selected servers is empty"
 fi
 
-serverip=$(echo $servers | jq -r '.station' | head -n 1)
-name=$(echo $servers | jq -r '.name' | head -n 1)
-hostname=$(echo $servers | jq -r '.hostname' | head -n 1)
+serverip=$(echo "$servers" | jq -r '.station' | head -n 1)
+name=$(echo "$servers" | jq -r '.name' | head -n 1)
+hostname=$(echo "$servers" | jq -r '.hostname' | head -n 1)
 protocol=$(getopenvpnprotocol "$TECHNOLOGY")
 
-echo "Select server \""$name"\" hostname=\""$hostname"\" ip="$serverip" protocol=\""$protocol"\""
+echo "Select server \"$name\" hostname=\"$hostname\" ip=$serverip protocol=\"$protocol\""
 
 cp "$ovpntemplatefile" "$ovpnfile"
 
@@ -246,7 +254,7 @@ if [[ "$protocol" == "udp" ]]; then
 elif [[ "$protocol" == "tcp" ]]; then
     sed -i "s/__PORT__/443/g" "$ovpnfile"
 else
-    echo "ERROR: TECHNOLOGY environment variable contains wrong parameter \""$TECHNOLOGY"\""
+    echo "ERROR: TECHNOLOGY environment variable contains wrong parameter \"$TECHNOLOGY\""
 fi
 
 exit 0
