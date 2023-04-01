@@ -33,9 +33,13 @@ FROM alpine:3.17.3 AS rootfs-builder
 RUN echo "**** install security fix packages ****" && \
     echo "**** end run statement ****"
 
+RUN apk add dos2unix
 COPY root/ /rootfs/
+
+RUN find /rootfs -type f -exec dos2unix \;
 RUN chmod +x /rootfs/usr/bin/*
 RUN chmod +x /rootfs/etc/nordvpn/init/*
+
 COPY --from=s6-builder /s6/ /rootfs/
 
 # Main image
