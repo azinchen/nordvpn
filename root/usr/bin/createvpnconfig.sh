@@ -200,7 +200,7 @@ else
     for value in "${RA_COUNTRIES[@]}"; do
         if [[ "$value" =~ $specific_country_regex ]]; then
             hostname="${value,,}.nordvpn.com"
-            ip="$(host -t A "$hostname" | awk '{print $4}')"
+            ip="$(ping -c 1 "$hostname" | grep 'from' | awk '{print $4}' | cut -d ':' -f 1)"
             name="$(getcountryname "${value:0:2}") #${value:2}"
             constructed_json=$(printf '{"name":"%s","hostname":"%s","load":0,"station":"%s"}' "$name" "$hostname" "$ip")
             servers="$servers""$constructed_json"
@@ -241,7 +241,7 @@ name=$(echo "$servers" | jq -r '.name' | head -n 1)
 hostname=$(echo "$servers" | jq -r '.hostname' | head -n 1)
 protocol=$(getopenvpnprotocol "$TECHNOLOGY")
 
-echo "Select server \"$name\" hostname=\"$hostname\" ip=$serverip protocol=\"$protocol\""
+echo "Select server \"$name\" hostname=\"$hostname\" ip=\"$serverip\" protocol=\"$protocol\""
 
 cp "$ovpntemplatefile" "$ovpnfile"
 
