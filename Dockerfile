@@ -70,4 +70,4 @@ RUN echo "**** install security fix packages ****" && \
 
 COPY --from=rootfs-builder /rootfs/ /
 
-ENTRYPOINT ["/init"]
+ENTRYPOINT ["sh -c /usr/bin/clearfirewall.sh && /init"]
