@@ -92,7 +92,7 @@ jobs:
 
       - name: Update repo description
         if: ${{ env.is_tag == 'true' }}
-        uses: peter-evans/dockerhub-description@v3.4.0
+        uses: peter-evans/dockerhub-description@v3.4.1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
