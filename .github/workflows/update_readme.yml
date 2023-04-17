@@ -12,7 +12,7 @@ jobs:
       FILE: "CITIES.md"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v3.5.2
 
       - name: Update ${{ env.FILE }}
         id: createfile
@@ -33,7 +33,7 @@ jobs:
           echo "Base date=${DATE}"
 
       - name: Create Pull Request, update ${{ env.FILE }}, date ${{ env.cities_date }}
-        uses: peter-evans/create-pull-request@v4.2.4
+        uses: peter-evans/create-pull-request@v5.0.0
         with:
           branch: mdupdaterbot/update-${{ env.FILE }}
           branch-suffix: short-commit-hash
@@ -55,7 +55,7 @@ jobs:
       FILE: "COUNTRIES.md"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v3.5.2
 
       - name: Update ${{ env.FILE }}
         id: createfile
@@ -76,7 +76,7 @@ jobs:
           echo "Base date=${DATE}"
 
       - name: Create Pull Request, update ${{ env.FILE }}, date ${{ env.countries_date }}
-        uses: peter-evans/create-pull-request@v4.2.4
+        uses: peter-evans/create-pull-request@v5.0.0
         with:
           branch: mdupdaterbot/update-${{ env.FILE }}
           branch-suffix: short-commit-hash
@@ -98,7 +98,7 @@ jobs:
       FILE: "GROUPS.md"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v3.5.2
 
       - name: Update ${{ env.FILE }}
         id: createfile
@@ -119,7 +119,7 @@ jobs:
           echo "Base date=${DATE}"
 
       - name: Create Pull Request, update ${{ env.FILE }}, date ${{ env.groups_date }}
-        uses: peter-evans/create-pull-request@v4.2.4
+        uses: peter-evans/create-pull-request@v5.0.0
         with:
           branch: mdupdaterbot/update-${{ env.FILE }}
           branch-suffix: short-commit-hash
@@ -141,7 +141,7 @@ jobs:
       FILE: "TECHNOLOGIES.md"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v3.5.2
 
       - name: Update ${{ env.FILE }}
         id: createfile
@@ -162,7 +162,7 @@ jobs:
           echo "Base date=${DATE}"
 
       - name: Create Pull Request, update ${{ env.FILE }}, date ${{ env.technologies_date }}
-        uses: peter-evans/create-pull-request@v4.2.4
+        uses: peter-evans/create-pull-request@v5.0.0
         with:
           branch: mdupdaterbot/update-${{ env.FILE }}
           branch-suffix: short-commit-hash
