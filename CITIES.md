@@ -39,6 +39,7 @@ Indonesia | ID | 101 | Jakarta | 3560288
 Ireland | IE | 104 | Dublin | 3939200
 Israel | IL | 105 | Tel Aviv | 3964220
 Italy | IT | 106 | Milan | 4542737
+Italy | IT | 106 | Rome | 4555808
 Japan | JP | 108 | Osaka | 4621847
 Japan | JP | 108 | Tokyo | 4633349
 Latvia | LV | 119 | Riga | 5192828
