@@ -561,6 +561,15 @@
         "dns_name": "milan",
         "hub_score": 0,
         "serverCount": 1
+      },
+      {
+        "id": 4555808,
+        "name": "Rome",
+        "latitude": 41.8902,
+        "longitude": 12.4922,
+        "dns_name": "rome",
+        "hub_score": 0,
+        "serverCount": 0
       }
     ]
   },
