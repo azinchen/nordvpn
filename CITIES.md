@@ -61,6 +61,7 @@ Slovakia | SK | 196 | Bratislava | 7884305
 Slovenia | SI | 197 | Ljubljana | 7874306
 South Africa | ZA | 200 | Johannesburg | 9383693
 South Korea | KR | 114 | Seoul | 4879586
+Spain | ES | 202 | Barcelona | 2572757
 Spain | ES | 202 | Madrid | 2619989
 Sweden | SE | 208 | Stockholm | 7852919
 Switzerland | CH | 209 | Zurich | 1171814
