@@ -59,6 +59,6 @@ Thailand | TH | 214
 Turkey | TR | 220
 Ukraine | UA | 225
 United Arab Emirates | AE | 226
-United Kingdom | GB | 227
+United Kingdom | UK | 227
 United States | US | 228
 Vietnam | VN | 234
