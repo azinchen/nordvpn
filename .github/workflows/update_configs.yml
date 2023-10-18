@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Update template.ovpn
         id: downloadovpn
@@ -60,7 +60,7 @@ jobs:
         url: ["https://api.nordvpn.com/v1/servers/countries","https://api.nordvpn.com/v1/servers/groups","https://api.nordvpn.com/v1/technologies"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.0
+        uses: actions/checkout@v4.1.1
 
       - name: Get file name
         id: file
