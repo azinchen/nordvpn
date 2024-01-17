@@ -3,6 +3,7 @@
 Country | Code | ID | City | ID
 --- | --- | --- | --- | ---
 Albania | AL | 2 | Tirana | 308615
+Argentina | AR | 10 | Buenos Aires | 384866
 Australia | AU | 13 | Adelaide | 452717
 Australia | AU | 13 | Brisbane | 456494
 Australia | AU | 13 | Melbourne | 470813
