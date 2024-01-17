@@ -3,6 +3,7 @@
 Country | Code | ID
 --- | --- | ---
 Albania | AL | 2
+Argentina | AR | 10
 Australia | AU | 13
 Austria | AT | 14
 Belgium | BE | 21
