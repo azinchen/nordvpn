@@ -17,6 +17,23 @@
     ]
   },
   {
+    "id": 10,
+    "name": "Argentina",
+    "code": "AR",
+    "serverCount": 1,
+    "cities": [
+      {
+        "id": 384866,
+        "name": "Buenos Aires",
+        "latitude": -34.5875,
+        "longitude": -58.6725,
+        "dns_name": "buenos-aires",
+        "hub_score": 0,
+        "serverCount": 1
+      }
+    ]
+  },
+  {
     "id": 13,
     "name": "Australia",
     "code": "AU",
