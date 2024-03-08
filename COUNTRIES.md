@@ -18,6 +18,7 @@ Croatia | HR | 54
 Cyprus | CY | 56
 Czech Republic | CZ | 57
 Denmark | DK | 58
+Egypt | EG | 64
 Estonia | EE | 68
 Finland | FI | 73
 France | FR | 74
@@ -33,16 +34,20 @@ Ireland | IE | 104
 Israel | IL | 105
 Italy | IT | 106
 Japan | JP | 108
+Kenya | KE | 111
 Latvia | LV | 119
 Lithuania | LT | 125
 Luxembourg | LU | 126
 Malaysia | MY | 131
+Malta | MT | 134
 Mexico | MX | 140
 Moldova | MD | 142
 Netherlands | NL | 153
 New Zealand | NZ | 156
+Nigeria | NG | 159
 North Macedonia | MK | 128
 Norway | NO | 163
+Philippines | PH | 172
 Poland | PL | 174
 Portugal | PT | 175
 Romania | RO | 179
@@ -62,4 +67,5 @@ Ukraine | UA | 225
 United Arab Emirates | AE | 226
 United Kingdom | GB | 227
 United States | US | 228
+Venezuela | VE | 233
 Vietnam | VN | 234
