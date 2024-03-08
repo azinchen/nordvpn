@@ -24,6 +24,7 @@ Croatia | HR | 54 | Zagreb | 3308120
 Cyprus | CY | 56 | Nicosia | 2099627
 Czech Republic | CZ | 57 | Prague | 2144945
 Denmark | DK | 58 | Copenhagen | 2382515
+Egypt | EG | 64 | Cairo | 2528003
 Estonia | EE | 68 | Tallinn | 2514182
 Finland | FI | 73 | Helsinki | 2704343
 France | FR | 74 | Marseille | 2867102
@@ -43,16 +44,20 @@ Italy | IT | 106 | Milan | 4542737
 Italy | IT | 106 | Rome | 4555808
 Japan | JP | 108 | Osaka | 4621847
 Japan | JP | 108 | Tokyo | 4633349
+Kenya | KE | 111 | Nairobi | 4646603
 Latvia | LV | 119 | Riga | 5192828
 Lithuania | LT | 125 | Vilnius | 5166932
 Luxembourg | LU | 126 | Luxembourg | 9521876
 Malaysia | MY | 131 | Kuala Lumpur | 5820143
+Malta | MT | 134 | Valletta | 5554481
 Mexico | MX | 140 | Mexico | 5677037
 Moldova | MD | 142 | Chisinau | 5295179
 Netherlands | NL | 153 | Amsterdam | 6076868
 New Zealand | NZ | 156 | Auckland | 6144239
+Nigeria | NG | 159 | Lagos | 6010328
 North Macedonia | MK | 128 | Skopje | 5386019
 Norway | NO | 163 | Oslo | 6127364
+Philippines | PH | 172 | Manila | 6391379
 Poland | PL | 174 | Warsaw | 6863429
 Portugal | PT | 175 | Lisbon | 6906665
 Romania | RO | 179 | Bucharest | 6953096
@@ -91,4 +96,5 @@ United States | US | 228 | Saint Louis | 8934551
 United States | US | 228 | Salt Lake City | 9097865
 United States | US | 228 | San Francisco | 8766359
 United States | US | 228 | Seattle | 9128402
+Venezuela | VE | 233 | Caracas | 9176843
 Vietnam | VN | 234 | Hanoi | 9270302
