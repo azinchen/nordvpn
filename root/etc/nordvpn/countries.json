@@ -326,6 +326,23 @@
     ]
   },
   {
+    "id": 64,
+    "name": "Egypt",
+    "code": "EG",
+    "serverCount": 1,
+    "cities": [
+      {
+        "id": 2528003,
+        "name": "Cairo",
+        "latitude": 30.05,
+        "longitude": 31.25,
+        "dns_name": "cairo",
+        "hub_score": 0,
+        "serverCount": 1
+      }
+    ]
+  },
+  {
     "id": 68,
     "name": "Estonia",
     "code": "EE",
@@ -617,6 +634,23 @@
     ]
   },
   {
+    "id": 111,
+    "name": "Kenya",
+    "code": "KE",
+    "serverCount": 1,
+    "cities": [
+      {
+        "id": 4646603,
+        "name": "Nairobi",
+        "latitude": -1.2833333,
+        "longitude": 36.8166667,
+        "dns_name": "nairobi",
+        "hub_score": 0,
+        "serverCount": 1
+      }
+    ]
+  },
+  {
     "id": 119,
     "name": "Latvia",
     "code": "LV",
@@ -679,6 +713,23 @@
         "latitude": 3.166667,
         "longitude": 101.7,
         "dns_name": "kuala-lumpur",
+        "hub_score": 0,
+        "serverCount": 1
+      }
+    ]
+  },
+  {
+    "id": 134,
+    "name": "Malta",
+    "code": "MT",
+    "serverCount": 1,
+    "cities": [
+      {
+        "id": 5554481,
+        "name": "Valletta",
+        "latitude": 35.899722,
+        "longitude": 14.514722,
+        "dns_name": "valletta",
         "hub_score": 0,
         "serverCount": 1
       }
@@ -753,6 +804,23 @@
     ]
   },
   {
+    "id": 159,
+    "name": "Nigeria",
+    "code": "NG",
+    "serverCount": 1,
+    "cities": [
+      {
+        "id": 6010328,
+        "name": "Lagos",
+        "latitude": 6.453056,
+        "longitude": 3.395833,
+        "dns_name": "lagos",
+        "hub_score": 0,
+        "serverCount": 1
+      }
+    ]
+  },
+  {
     "id": 128,
     "name": "North Macedonia",
     "code": "MK",
@@ -781,6 +849,23 @@
         "latitude": 59.916667,
         "longitude": 10.75,
         "dns_name": "oslo",
+        "hub_score": 0,
+        "serverCount": 1
+      }
+    ]
+  },
+  {
+    "id": 172,
+    "name": "Philippines",
+    "code": "PH",
+    "serverCount": 1,
+    "cities": [
+      {
+        "id": 6391379,
+        "name": "Manila",
+        "latitude": 14.6042,
+        "longitude": 120.9822,
+        "dns_name": "manila",
         "hub_score": 0,
         "serverCount": 1
       }
@@ -1275,6 +1360,23 @@
         "latitude": 47.6063889,
         "longitude": -122.3308333,
         "dns_name": "seattle",
+        "hub_score": 0,
+        "serverCount": 1
+      }
+    ]
+  },
+  {
+    "id": 233,
+    "name": "Venezuela",
+    "code": "VE",
+    "serverCount": 1,
+    "cities": [
+      {
+        "id": 9176843,
+        "name": "Caracas",
+        "latitude": 10.5,
+        "longitude": -66.9166667,
+        "dns_name": "caracas",
         "hub_score": 0,
         "serverCount": 1
       }
