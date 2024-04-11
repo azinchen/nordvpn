@@ -17,7 +17,6 @@ Belize | BZ | 22
 Bermuda | BM | 24
 Bhutan | BT | 25
 Bolivia | BO | 26
-Bosnia and Herzegovina | BA | 27
 Brazil | BR | 30
 Brunei Darussalam | BN | 32
 Bulgaria | BG | 33
@@ -27,7 +26,6 @@ Cayman Islands | KY | 40
 Chile | CL | 43
 Colombia | CO | 47
 Costa Rica | CR | 52
-Croatia | HR | 54
 Cyprus | CY | 56
 Czech Republic | CZ | 57
 Denmark | DK | 58
@@ -65,11 +63,9 @@ Latvia | LV | 119
 Lebanon | LB | 120
 Liechtenstein | LI | 124
 Lithuania | LT | 125
-Luxembourg | LU | 126
 Malaysia | MY | 131
 Malta | MT | 134
 Mexico | MX | 140
-Moldova | MD | 142
 Monaco | MC | 143
 Mongolia | MN | 144
 Montenegro | ME | 146
@@ -94,7 +90,6 @@ Romania | RO | 179
 Serbia | RS | 192
 Singapore | SG | 195
 Slovakia | SK | 196
-Slovenia | SI | 197
 South Africa | ZA | 200
 South Korea | KR | 114
 Spain | ES | 202
