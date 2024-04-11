@@ -21,7 +21,6 @@ Belize | BZ | 22 | Belmopan | 1037459
 Bermuda | BM | 24 | Hamilton | 809078
 Bhutan | BT | 25 | Thimphu | 989699
 Bolivia | BO | 26 | La Paz | 838514
-Bosnia and Herzegovina | BA | 27 | Sarajevo | 556823
 Brazil | BR | 30 | Sao Paulo | 890249
 Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132
 Bulgaria | BG | 33 | Sofia | 777368
@@ -33,7 +32,6 @@ Cayman Islands | KY | 40 | George Town | 4922303
 Chile | CL | 43 | Santiago | 1227092
 Colombia | CO | 47 | Bogota | 1980695
 Costa Rica | CR | 52 | San Jose | 2062994
-Croatia | HR | 54 | Zagreb | 3308120
 Cyprus | CY | 56 | Nicosia | 2099627
 Czech Republic | CZ | 57 | Prague | 2144945
 Denmark | DK | 58 | Copenhagen | 2382515
@@ -75,11 +73,9 @@ Latvia | LV | 119 | Riga | 5192828
 Lebanon | LB | 120 | Beirut | 5022080
 Liechtenstein | LI | 124 | Vaduz | 5037212
 Lithuania | LT | 125 | Vilnius | 5166932
-Luxembourg | LU | 126 | Luxembourg | 9521876
 Malaysia | MY | 131 | Kuala Lumpur | 5820143
 Malta | MT | 134 | Valletta | 5554481
 Mexico | MX | 140 | Mexico | 5677037
-Moldova | MD | 142 | Chisinau | 5295179
 Monaco | MC | 143 | Monte Carlo | 5292332
 Mongolia | MN | 144 | Ulaanbaatar | 5543669
 Montenegro | ME | 146 | Podgorica | 5318561
@@ -104,7 +100,6 @@ Romania | RO | 179 | Bucharest | 6953096
 Serbia | RS | 192 | Belgrade | 7030907
 Singapore | SG | 195 | Singapore | 7867982
 Slovakia | SK | 196 | Bratislava | 7884305
-Slovenia | SI | 197 | Ljubljana | 7874306
 South Africa | ZA | 200 | Johannesburg | 9383693
 South Korea | KR | 114 | Seoul | 4879586
 Spain | ES | 202 | Barcelona | 2572757
@@ -119,7 +114,6 @@ Turkey | TR | 220 | Istanbul | 8401790
 Ukraine | UA | 225 | Kyiv | 8626766
 United Arab Emirates | AE | 226 | Dubai | 728
 United Kingdom | GB | 227 | Edinburgh | 2975852
-United Kingdom | GB | 227 | Glasgow | 2978888
 United Kingdom | GB | 227 | London | 2989907
 United Kingdom | GB | 227 | Manchester | 2991110
 United States | US | 228 | Atlanta | 8792429
