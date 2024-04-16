@@ -75,9 +75,11 @@ Latvia | LV | 119 | Riga | 5192828
 Lebanon | LB | 120 | Beirut | 5022080
 Liechtenstein | LI | 124 | Vaduz | 5037212
 Lithuania | LT | 125 | Vilnius | 5166932
+Luxembourg | LU | 126 | Luxembourg | 9521876
 Malaysia | MY | 131 | Kuala Lumpur | 5820143
 Malta | MT | 134 | Valletta | 5554481
 Mexico | MX | 140 | Mexico | 5677037
+Moldova | MD | 142 | Chisinau | 5295179
 Monaco | MC | 143 | Monte Carlo | 5292332
 Mongolia | MN | 144 | Ulaanbaatar | 5543669
 Montenegro | ME | 146 | Podgorica | 5318561
@@ -102,6 +104,7 @@ Romania | RO | 179 | Bucharest | 6953096
 Serbia | RS | 192 | Belgrade | 7030907
 Singapore | SG | 195 | Singapore | 7867982
 Slovakia | SK | 196 | Bratislava | 7884305
+Slovenia | SI | 197 | Ljubljana | 7874306
 South Africa | ZA | 200 | Johannesburg | 9383693
 South Korea | KR | 114 | Seoul | 4879586
 Spain | ES | 202 | Barcelona | 2572757
@@ -112,8 +115,11 @@ Switzerland | CH | 209 | Zurich | 1171814
 Taiwan | TW | 211 | Taipei | 8544365
 Thailand | TH | 214 | Bangkok | 8121638
 Trinidad and Tobago | TT | 218 | Port of Spain | 9521887
+Turkey | TR | 220 | Istanbul | 8401790
 Ukraine | UA | 225 | Kyiv | 8626766
 United Arab Emirates | AE | 226 | Dubai | 728
+United Kingdom | GB | 227 | Edinburgh | 2975852
+United Kingdom | GB | 227 | Glasgow | 2978888
 United Kingdom | GB | 227 | London | 2989907
 United Kingdom | GB | 227 | Manchester | 2991110
 United States | US | 228 | Atlanta | 8792429
