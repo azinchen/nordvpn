@@ -1491,10 +1491,10 @@
     "cities": [
       {
         "id": 9521890,
-        "name": "Asunción",
+        "name": "Asuncion",
         "latitude": -25.3,
         "longitude": -57.633333,
-        "dns_name": "asunción",
+        "dns_name": "asuncion",
         "hub_score": 0,
         "serverCount": 1
       }
