@@ -94,7 +94,7 @@ Norway | NO | 163 | Oslo | 6127364
 Pakistan | PK | 165 | Karachi | 6600485
 Panama | PA | 168 | Panama City | 6176273
 Papua New Guinea | PG | 169 | Port Moresby | 6292406
-Paraguay | PY | 170 | Asunción | 9521890
+Paraguay | PY | 170 | Asuncion | 9521890
 Peru | PE | 171 | Lima | 6222584
 Philippines | PH | 172 | Manila | 6391379
 Poland | PL | 174 | Warsaw | 6863429
