@@ -971,6 +971,15 @@
         "serverCount": 1
       },
       {
+        "id": 4548074,
+        "name": "Palermo",
+        "latitude": 38.116667,
+        "longitude": 13.366667,
+        "dns_name": "palermo",
+        "hub_score": 0,
+        "serverCount": 0
+      },
+      {
         "id": 4555808,
         "name": "Rome",
         "latitude": 41.8902,
