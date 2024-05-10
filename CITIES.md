@@ -63,6 +63,7 @@ Ireland | IE | 104 | Dublin | 3939200
 Isle of Man | IM | 243 | Douglas | 3965405
 Israel | IL | 105 | Tel Aviv | 3964220
 Italy | IT | 106 | Milan | 4542737
+Italy | IT | 106 | Palermo | 4548074
 Italy | IT | 106 | Rome | 4555808
 Jamaica | JM | 107 | Kingston | 4576328
 Japan | JP | 108 | Osaka | 4621847
