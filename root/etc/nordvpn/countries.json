@@ -959,7 +959,7 @@
     "id": 106,
     "name": "Italy",
     "code": "IT",
-    "serverCount": 2,
+    "serverCount": 3,
     "cities": [
       {
         "id": 4542737,
@@ -977,7 +977,7 @@
         "longitude": 13.366667,
         "dns_name": "palermo",
         "hub_score": 0,
-        "serverCount": 0
+        "serverCount": 1
       },
       {
         "id": 4555808,
