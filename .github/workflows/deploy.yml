@@ -58,7 +58,7 @@ jobs:
         uses: docker/setup-buildx-action@v3.3.0
 
       - name: Build and push ${{ github.repository }}:${{ env.image_tag }}
-        uses: docker/build-push-action@v5.3.0
+        uses: docker/build-push-action@v5.4.0
         with:
           platforms: ${{ env.PLATFORMS }}
           push: true
@@ -68,7 +68,7 @@ jobs:
 
       - name: Build and push ${{ github.repository }}:latest
         if: ${{ env.is_tag == 'true' }}
-        uses: docker/build-push-action@v5.3.0
+        uses: docker/build-push-action@v5.4.0
         with:
           platforms: ${{ env.PLATFORMS }}
           push: true
