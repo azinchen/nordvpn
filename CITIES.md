@@ -80,6 +80,7 @@ Luxembourg | LU | 126 | Luxembourg | 9521876
 Malaysia | MY | 131 | Kuala Lumpur | 5820143
 Malta | MT | 134 | Valletta | 5554481
 Mexico | MX | 140 | Mexico | 5677037
+Mexico | MX | 140 | Queretaro | 5699720
 Moldova | MD | 142 | Chisinau | 5295179
 Monaco | MC | 143 | Monte Carlo | 5292332
 Mongolia | MN | 144 | Ulaanbaatar | 5543669
