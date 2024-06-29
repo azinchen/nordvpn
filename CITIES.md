@@ -48,6 +48,7 @@ France | FR | 74 | Paris | 2886284
 Georgia | GE | 80 | Tbilisi | 3032063
 Germany | DE | 81 | Berlin | 2181458
 Germany | DE | 81 | Frankfurt | 2215709
+Germany | DE | 81 | Hamburg | 2234906
 Ghana | GH | 82 | Accra | 3040355
 Greece | GR | 84 | Athens | 3131903
 Greenland | GL | 85 | Nuuk | 3085001
@@ -129,6 +130,7 @@ United States | US | 228 | Charlotte | 8980922
 United States | US | 228 | Chicago | 8815352
 United States | US | 228 | Dallas | 9080300
 United States | US | 228 | Denver | 8770934
+United States | US | 228 | Detroit | 8903312
 United States | US | 228 | Kansas City | 8930717
 United States | US | 228 | Los Angeles | 8761958
 United States | US | 228 | Manassas | 9113744
