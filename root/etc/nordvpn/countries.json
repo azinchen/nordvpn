@@ -3,7 +3,7 @@
     "id": 2,
     "name": "Albania",
     "code": "AL",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 308615,
@@ -20,7 +20,7 @@
     "id": 3,
     "name": "Algeria",
     "code": "DZ",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 2438216,
@@ -37,7 +37,7 @@
     "id": 5,
     "name": "Andorra",
     "code": "AD",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 20,
@@ -54,7 +54,7 @@
     "id": 10,
     "name": "Argentina",
     "code": "AR",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 384866,
@@ -71,7 +71,7 @@
     "id": 11,
     "name": "Armenia",
     "code": "AM",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 322385,
@@ -88,7 +88,7 @@
     "id": 13,
     "name": "Australia",
     "code": "AU",
-    "serverCount": 0,
+    "serverCount": 5,
     "cities": [
       {
         "id": 452717,
@@ -141,7 +141,7 @@
     "id": 14,
     "name": "Austria",
     "code": "AT",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 448799,
@@ -158,7 +158,7 @@
     "id": 15,
     "name": "Azerbaijan",
     "code": "AZ",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 490037,
@@ -175,7 +175,7 @@
     "id": 16,
     "name": "Bahamas",
     "code": "BS",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 988382,
@@ -192,7 +192,7 @@
     "id": 18,
     "name": "Bangladesh",
     "code": "BD",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 594935,
@@ -209,7 +209,7 @@
     "id": 21,
     "name": "Belgium",
     "code": "BE",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 654293,
@@ -226,7 +226,7 @@
     "id": 22,
     "name": "Belize",
     "code": "BZ",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 1037459,
@@ -243,7 +243,7 @@
     "id": 24,
     "name": "Bermuda",
     "code": "BM",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 809078,
@@ -260,7 +260,7 @@
     "id": 25,
     "name": "Bhutan",
     "code": "BT",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 989699,
@@ -277,7 +277,7 @@
     "id": 26,
     "name": "Bolivia",
     "code": "BO",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 838514,
@@ -294,14 +294,14 @@
     "id": 27,
     "name": "Bosnia and Herzegovina",
     "code": "BA",
-    "serverCount": 0,
+    "serverCount": 2,
     "cities": [
       {
-        "id": 556823,
-        "name": "Sarajevo",
-        "latitude": 43.85,
-        "longitude": 18.3833333,
-        "dns_name": "sarajevo",
+        "id": 548462,
+        "name": "Novi Travnik",
+        "latitude": 44.1711111,
+        "longitude": 17.6575,
+        "dns_name": "novi-travnik",
         "hub_score": 0,
         "serverCount": 1
       }
@@ -311,7 +311,7 @@
     "id": 30,
     "name": "Brazil",
     "code": "BR",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 890249,
@@ -328,7 +328,7 @@
     "id": 32,
     "name": "Brunei Darussalam",
     "code": "BN",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 809132,
@@ -345,7 +345,7 @@
     "id": 33,
     "name": "Bulgaria",
     "code": "BG",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 777368,
@@ -362,7 +362,7 @@
     "id": 36,
     "name": "Cambodia",
     "code": "KH",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 4658987,
@@ -379,7 +379,7 @@
     "id": 38,
     "name": "Canada",
     "code": "CA",
-    "serverCount": 0,
+    "serverCount": 3,
     "cities": [
       {
         "id": 1048463,
@@ -414,7 +414,7 @@
     "id": 40,
     "name": "Cayman Islands",
     "code": "KY",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 4922303,
@@ -431,7 +431,7 @@
     "id": 43,
     "name": "Chile",
     "code": "CL",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 1227092,
@@ -448,7 +448,7 @@
     "id": 47,
     "name": "Colombia",
     "code": "CO",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 1980695,
@@ -465,7 +465,7 @@
     "id": 52,
     "name": "Costa Rica",
     "code": "CR",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 2062994,
@@ -482,7 +482,7 @@
     "id": 54,
     "name": "Croatia",
     "code": "HR",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3308120,
@@ -499,7 +499,7 @@
     "id": 56,
     "name": "Cyprus",
     "code": "CY",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 2099627,
@@ -516,7 +516,7 @@
     "id": 57,
     "name": "Czech Republic",
     "code": "CZ",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 2144945,
@@ -533,7 +533,7 @@
     "id": 58,
     "name": "Denmark",
     "code": "DK",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 2382515,
@@ -550,7 +550,7 @@
     "id": 61,
     "name": "Dominican Republic",
     "code": "DO",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 2434841,
@@ -567,7 +567,7 @@
     "id": 63,
     "name": "Ecuador",
     "code": "EC",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 2485688,
@@ -584,7 +584,7 @@
     "id": 64,
     "name": "Egypt",
     "code": "EG",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 2528003,
@@ -601,7 +601,7 @@
     "id": 65,
     "name": "El Salvador",
     "code": "SV",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 7990847,
@@ -618,7 +618,7 @@
     "id": 68,
     "name": "Estonia",
     "code": "EE",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 2514182,
@@ -635,7 +635,7 @@
     "id": 73,
     "name": "Finland",
     "code": "FI",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 2704343,
@@ -652,7 +652,7 @@
     "id": 74,
     "name": "France",
     "code": "FR",
-    "serverCount": 0,
+    "serverCount": 2,
     "cities": [
       {
         "id": 2867102,
@@ -678,7 +678,7 @@
     "id": 80,
     "name": "Georgia",
     "code": "GE",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3032063,
@@ -695,7 +695,7 @@
     "id": 81,
     "name": "Germany",
     "code": "DE",
-    "serverCount": 0,
+    "serverCount": 3,
     "cities": [
       {
         "id": 2181458,
@@ -722,7 +722,7 @@
         "longitude": 10,
         "dns_name": "hamburg",
         "hub_score": 0,
-        "serverCount": 0
+        "serverCount": 1
       }
     ]
   },
@@ -730,7 +730,7 @@
     "id": 82,
     "name": "Ghana",
     "code": "GH",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3040355,
@@ -747,7 +747,7 @@
     "id": 84,
     "name": "Greece",
     "code": "GR",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3131903,
@@ -764,7 +764,7 @@
     "id": 85,
     "name": "Greenland",
     "code": "GL",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3085001,
@@ -781,7 +781,7 @@
     "id": 88,
     "name": "Guam",
     "code": "GU",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 8808314,
@@ -798,7 +798,7 @@
     "id": 89,
     "name": "Guatemala",
     "code": "GT",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3202463,
@@ -815,7 +815,7 @@
     "id": 96,
     "name": "Honduras",
     "code": "HN",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3270551,
@@ -832,7 +832,7 @@
     "id": 97,
     "name": "Hong Kong",
     "code": "HK",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3232931,
@@ -849,7 +849,7 @@
     "id": 98,
     "name": "Hungary",
     "code": "HU",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3348344,
@@ -866,7 +866,7 @@
     "id": 99,
     "name": "Iceland",
     "code": "IS",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 4509791,
@@ -883,7 +883,7 @@
     "id": 100,
     "name": "India",
     "code": "IN",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 4041548,
@@ -900,7 +900,7 @@
     "id": 101,
     "name": "Indonesia",
     "code": "ID",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3560288,
@@ -917,7 +917,7 @@
     "id": 104,
     "name": "Ireland",
     "code": "IE",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3939200,
@@ -934,7 +934,7 @@
     "id": 243,
     "name": "Isle of Man",
     "code": "IM",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3965405,
@@ -951,7 +951,7 @@
     "id": 105,
     "name": "Israel",
     "code": "IL",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 3964220,
@@ -968,7 +968,7 @@
     "id": 106,
     "name": "Italy",
     "code": "IT",
-    "serverCount": 0,
+    "serverCount": 3,
     "cities": [
       {
         "id": 4542737,
@@ -1003,7 +1003,7 @@
     "id": 107,
     "name": "Jamaica",
     "code": "JM",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 4576328,
@@ -1020,7 +1020,7 @@
     "id": 108,
     "name": "Japan",
     "code": "JP",
-    "serverCount": 0,
+    "serverCount": 2,
     "cities": [
       {
         "id": 4621847,
@@ -1046,7 +1046,7 @@
     "id": 244,
     "name": "Jersey",
     "code": "JE",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 4572281,
@@ -1063,7 +1063,7 @@
     "id": 110,
     "name": "Kazakhstan",
     "code": "KZ",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 4925732,
@@ -1080,7 +1080,7 @@
     "id": 111,
     "name": "Kenya",
     "code": "KE",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 4646603,
@@ -1097,7 +1097,7 @@
     "id": 118,
     "name": "Lao People's Democratic Republic",
     "code": "LA",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5015876,
@@ -1114,7 +1114,7 @@
     "id": 119,
     "name": "Latvia",
     "code": "LV",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5192828,
@@ -1131,7 +1131,7 @@
     "id": 120,
     "name": "Lebanon",
     "code": "LB",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5022080,
@@ -1148,7 +1148,7 @@
     "id": 124,
     "name": "Liechtenstein",
     "code": "LI",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5037212,
@@ -1165,7 +1165,7 @@
     "id": 125,
     "name": "Lithuania",
     "code": "LT",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5166932,
@@ -1182,7 +1182,7 @@
     "id": 126,
     "name": "Luxembourg",
     "code": "LU",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 9521876,
@@ -1199,7 +1199,7 @@
     "id": 131,
     "name": "Malaysia",
     "code": "MY",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5820143,
@@ -1216,7 +1216,7 @@
     "id": 134,
     "name": "Malta",
     "code": "MT",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5554481,
@@ -1233,7 +1233,7 @@
     "id": 140,
     "name": "Mexico",
     "code": "MX",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5677037,
@@ -1250,7 +1250,7 @@
     "id": 142,
     "name": "Moldova",
     "code": "MD",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5295179,
@@ -1267,7 +1267,7 @@
     "id": 143,
     "name": "Monaco",
     "code": "MC",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5292332,
@@ -1284,7 +1284,7 @@
     "id": 144,
     "name": "Mongolia",
     "code": "MN",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5543669,
@@ -1301,7 +1301,7 @@
     "id": 146,
     "name": "Montenegro",
     "code": "ME",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5318561,
@@ -1318,7 +1318,7 @@
     "id": 147,
     "name": "Morocco",
     "code": "MA",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5271254,
@@ -1335,7 +1335,7 @@
     "id": 149,
     "name": "Myanmar",
     "code": "MM",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 9521893,
@@ -1352,7 +1352,7 @@
     "id": 152,
     "name": "Nepal",
     "code": "NP",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6142175,
@@ -1369,7 +1369,7 @@
     "id": 153,
     "name": "Netherlands",
     "code": "NL",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6076868,
@@ -1386,7 +1386,7 @@
     "id": 156,
     "name": "New Zealand",
     "code": "NZ",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6144239,
@@ -1403,7 +1403,7 @@
     "id": 159,
     "name": "Nigeria",
     "code": "NG",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6010328,
@@ -1420,7 +1420,7 @@
     "id": 128,
     "name": "North Macedonia",
     "code": "MK",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5386019,
@@ -1437,7 +1437,7 @@
     "id": 163,
     "name": "Norway",
     "code": "NO",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6127364,
@@ -1454,7 +1454,7 @@
     "id": 165,
     "name": "Pakistan",
     "code": "PK",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6600485,
@@ -1471,7 +1471,7 @@
     "id": 168,
     "name": "Panama",
     "code": "PA",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6176273,
@@ -1488,7 +1488,7 @@
     "id": 169,
     "name": "Papua New Guinea",
     "code": "PG",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6292406,
@@ -1505,7 +1505,7 @@
     "id": 170,
     "name": "Paraguay",
     "code": "PY",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 9521890,
@@ -1522,7 +1522,7 @@
     "id": 171,
     "name": "Peru",
     "code": "PE",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6222584,
@@ -1539,7 +1539,7 @@
     "id": 172,
     "name": "Philippines",
     "code": "PH",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6391379,
@@ -1556,7 +1556,7 @@
     "id": 174,
     "name": "Poland",
     "code": "PL",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6863429,
@@ -1573,7 +1573,7 @@
     "id": 175,
     "name": "Portugal",
     "code": "PT",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6906665,
@@ -1590,7 +1590,7 @@
     "id": 176,
     "name": "Puerto Rico",
     "code": "PR",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 9521884,
@@ -1607,7 +1607,7 @@
     "id": 179,
     "name": "Romania",
     "code": "RO",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 6953096,
@@ -1624,7 +1624,7 @@
     "id": 192,
     "name": "Serbia",
     "code": "RS",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 7030907,
@@ -1641,7 +1641,7 @@
     "id": 195,
     "name": "Singapore",
     "code": "SG",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 7867982,
@@ -1658,7 +1658,7 @@
     "id": 196,
     "name": "Slovakia",
     "code": "SK",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 7884305,
@@ -1675,7 +1675,7 @@
     "id": 197,
     "name": "Slovenia",
     "code": "SI",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 7874306,
@@ -1692,7 +1692,7 @@
     "id": 200,
     "name": "South Africa",
     "code": "ZA",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 9383693,
@@ -1709,7 +1709,7 @@
     "id": 114,
     "name": "South Korea",
     "code": "KR",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 4879586,
@@ -1726,7 +1726,7 @@
     "id": 202,
     "name": "Spain",
     "code": "ES",
-    "serverCount": 0,
+    "serverCount": 2,
     "cities": [
       {
         "id": 2572757,
@@ -1752,7 +1752,7 @@
     "id": 203,
     "name": "Sri Lanka",
     "code": "LK",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 5043197,
@@ -1769,7 +1769,7 @@
     "id": 208,
     "name": "Sweden",
     "code": "SE",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 7852919,
@@ -1786,7 +1786,7 @@
     "id": 209,
     "name": "Switzerland",
     "code": "CH",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 1171814,
@@ -1803,7 +1803,7 @@
     "id": 211,
     "name": "Taiwan",
     "code": "TW",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 8544365,
@@ -1820,7 +1820,7 @@
     "id": 214,
     "name": "Thailand",
     "code": "TH",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 8121638,
@@ -1837,7 +1837,7 @@
     "id": 218,
     "name": "Trinidad and Tobago",
     "code": "TT",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 9521887,
@@ -1854,7 +1854,7 @@
     "id": 220,
     "name": "Turkey",
     "code": "TR",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 8401790,
@@ -1871,7 +1871,7 @@
     "id": 225,
     "name": "Ukraine",
     "code": "UA",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 8626766,
@@ -1888,7 +1888,7 @@
     "id": 226,
     "name": "United Arab Emirates",
     "code": "AE",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 728,
@@ -1905,7 +1905,7 @@
     "id": 227,
     "name": "United Kingdom",
     "code": "GB",
-    "serverCount": 0,
+    "serverCount": 4,
     "cities": [
       {
         "id": 2975852,
@@ -1949,7 +1949,7 @@
     "id": 228,
     "name": "United States",
     "code": "US",
-    "serverCount": 0,
+    "serverCount": 17,
     "cities": [
       {
         "id": 8792429,
@@ -2012,7 +2012,7 @@
         "longitude": -83.0458333,
         "dns_name": "detroit",
         "hub_score": 0,
-        "serverCount": 0
+        "serverCount": 1
       },
       {
         "id": 8930717,
@@ -2110,7 +2110,7 @@
     "id": 230,
     "name": "Uruguay",
     "code": "UY",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 9150812,
@@ -2127,7 +2127,7 @@
     "id": 231,
     "name": "Uzbekistan",
     "code": "UZ",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 9166826,
@@ -2144,7 +2144,7 @@
     "id": 233,
     "name": "Venezuela",
     "code": "VE",
-    "serverCount": 0,
+    "serverCount": 1,
     "cities": [
       {
         "id": 9176843,
@@ -2161,7 +2161,7 @@
     "id": 234,
     "name": "Vietnam",
     "code": "VN",
-    "serverCount": 0,
+    "serverCount": 2,
     "cities": [
       {
         "id": 9270302,
