@@ -174,5 +174,13 @@
     "internal_identifier": "mesh-relay",
     "created_at": "2021-05-13 12:17:05",
     "updated_at": "2021-05-13 12:17:05"
+  },
+  {
+    "id": 51,
+    "name": "NordWhisper",
+    "identifier": "nordwhisper",
+    "internal_identifier": "nordwhisper",
+    "created_at": "2024-10-07 10:17:17",
+    "updated_at": "2024-10-07 10:17:17"
   }
 ]
