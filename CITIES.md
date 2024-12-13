@@ -5,6 +5,7 @@ Country | Code | ID | City | ID
 Albania | AL | 2 | Tirana | 308615
 Algeria | DZ | 3 | Algiers | 2438216
 Andorra | AD | 5 | Andorra la Vella | 20
+Angola | AO | 6 | Luanda | 351407
 Argentina | AR | 10 | Buenos Aires | 384866
 Armenia | AM | 11 | Yerevan | 322385
 Australia | AU | 13 | Adelaide | 452717
@@ -86,6 +87,7 @@ Monaco | MC | 143 | Monte Carlo | 5292332
 Mongolia | MN | 144 | Ulaanbaatar | 5543669
 Montenegro | ME | 146 | Podgorica | 5318561
 Morocco | MA | 147 | Rabat | 5271254
+Mozambique | MZ | 148 | Maputo | 5870336
 Myanmar | MM | 149 | Naypyidaw | 9521893
 Nepal | NP | 152 | Kathmandu | 6142175
 Netherlands | NL | 153 | Amsterdam | 6076868
@@ -131,9 +133,11 @@ United States | US | 228 | Chicago | 8815352
 United States | US | 228 | Dallas | 9080300
 United States | US | 228 | Denver | 8770934
 United States | US | 228 | Detroit | 8903312
+United States | US | 228 | Houston | 9083687
 United States | US | 228 | Kansas City | 8930717
 United States | US | 228 | Los Angeles | 8761958
 United States | US | 228 | Manassas | 9113744
+United States | US | 228 | McAllen | 9086162
 United States | US | 228 | Miami | 8787782
 United States | US | 228 | New York | 8971718
 United States | US | 228 | Phoenix | 8741960
