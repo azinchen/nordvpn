@@ -5,6 +5,7 @@ Country | Code | ID
 Albania | AL | 2
 Algeria | DZ | 3
 Andorra | AD | 5
+Angola | AO | 6
 Argentina | AR | 10
 Armenia | AM | 11
 Australia | AU | 13
@@ -74,6 +75,7 @@ Monaco | MC | 143
 Mongolia | MN | 144
 Montenegro | ME | 146
 Morocco | MA | 147
+Mozambique | MZ | 148
 Myanmar | MM | 149
 Nepal | NP | 152
 Netherlands | NL | 153
