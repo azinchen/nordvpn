@@ -12,6 +12,7 @@ Australia | AU | 13
 Austria | AT | 14
 Azerbaijan | AZ | 15
 Bahamas | BS | 16
+Bahrain | BH | 17
 Bangladesh | BD | 18
 Belgium | BE | 21
 Belize | BZ | 22
@@ -59,8 +60,10 @@ Italy | IT | 106
 Jamaica | JM | 107
 Japan | JP | 108
 Jersey | JE | 244
+Jordan | JO | 109
 Kazakhstan | KZ | 110
 Kenya | KE | 111
+Kuwait | KW | 116
 Lao People's Democratic Republic | LA | 118
 Latvia | LV | 119
 Lebanon | LB | 120
@@ -93,6 +96,7 @@ Poland | PL | 174
 Portugal | PT | 175
 Puerto Rico | PR | 176
 Romania | RO | 179
+Senegal | SN | 191
 Serbia | RS | 192
 Singapore | SG | 195
 Slovakia | SK | 196
@@ -106,6 +110,7 @@ Switzerland | CH | 209
 Taiwan | TW | 211
 Thailand | TH | 214
 Trinidad and Tobago | TT | 218
+Tunisia | TN | 219
 Turkey | TR | 220
 Ukraine | UA | 225
 United Arab Emirates | AE | 226
