@@ -16,6 +16,7 @@ Australia | AU | 13 | Sydney | 479570
 Austria | AT | 14 | Vienna | 448799
 Azerbaijan | AZ | 15 | Baku | 490037
 Bahamas | BS | 16 | Nassau | 988382
+Bahrain | BH | 17 | Manama | 789398
 Bangladesh | BD | 18 | Dhaka | 594935
 Belgium | BE | 21 | Brussels | 654293
 Belize | BZ | 22 | Belmopan | 1037459
@@ -71,8 +72,10 @@ Jamaica | JM | 107 | Kingston | 4576328
 Japan | JP | 108 | Osaka | 4621847
 Japan | JP | 108 | Tokyo | 4633349
 Jersey | JE | 244 | Saint Helier | 4572281
+Jordan | JO | 109 | Amman | 4581203
 Kazakhstan | KZ | 110 | Astana | 4925732
 Kenya | KE | 111 | Nairobi | 4646603
+Kuwait | KW | 116 | Kuwait City | 9521894
 Lao People's Democratic Republic | LA | 118 | Vientiane | 5015876
 Latvia | LV | 119 | Riga | 5192828
 Lebanon | LB | 120 | Beirut | 5022080
@@ -105,6 +108,7 @@ Poland | PL | 174 | Warsaw | 6863429
 Portugal | PT | 175 | Lisbon | 6906665
 Puerto Rico | PR | 176 | San Juan | 9521884
 Romania | RO | 179 | Bucharest | 6953096
+Senegal | SN | 191 | Dakar | 7924958
 Serbia | RS | 192 | Belgrade | 7030907
 Singapore | SG | 195 | Singapore | 7867982
 Slovakia | SK | 196 | Bratislava | 7884305
@@ -119,6 +123,7 @@ Switzerland | CH | 209 | Zurich | 1171814
 Taiwan | TW | 211 | Taipei | 8544365
 Thailand | TH | 214 | Bangkok | 8121638
 Trinidad and Tobago | TT | 218 | Port of Spain | 9521887
+Tunisia | TN | 219 | Tunis | 8295401
 Turkey | TR | 220 | Istanbul | 8401790
 Ukraine | UA | 225 | Kyiv | 8626766
 United Arab Emirates | AE | 226 | Dubai | 728
@@ -127,6 +132,7 @@ United Kingdom | GB | 227 | Glasgow | 2978888
 United Kingdom | GB | 227 | London | 2989907
 United Kingdom | GB | 227 | Manchester | 2991110
 United States | US | 228 | Atlanta | 8792429
+United States | US | 228 | Boston | 8895305
 United States | US | 228 | Buffalo | 8963153
 United States | US | 228 | Charlotte | 8980922
 United States | US | 228 | Chicago | 8815352
