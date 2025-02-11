@@ -7,10 +7,8 @@ Algeria | DZ | 3
 Andorra | AD | 5
 Angola | AO | 6
 Argentina | AR | 10
-Armenia | AM | 11
 Australia | AU | 13
 Austria | AT | 14
-Azerbaijan | AZ | 15
 Bahamas | BS | 16
 Bahrain | BH | 17
 Bangladesh | BD | 18
@@ -76,7 +74,6 @@ Mexico | MX | 140
 Moldova | MD | 142
 Monaco | MC | 143
 Mongolia | MN | 144
-Montenegro | ME | 146
 Morocco | MA | 147
 Mozambique | MZ | 148
 Myanmar | MM | 149
