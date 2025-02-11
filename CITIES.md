@@ -7,14 +7,12 @@ Algeria | DZ | 3 | Algiers | 2438216
 Andorra | AD | 5 | Andorra la Vella | 20
 Angola | AO | 6 | Luanda | 351407
 Argentina | AR | 10 | Buenos Aires | 384866
-Armenia | AM | 11 | Yerevan | 322385
 Australia | AU | 13 | Adelaide | 452717
 Australia | AU | 13 | Brisbane | 456494
 Australia | AU | 13 | Melbourne | 470813
 Australia | AU | 13 | Perth | 475799
 Australia | AU | 13 | Sydney | 479570
 Austria | AT | 14 | Vienna | 448799
-Azerbaijan | AZ | 15 | Baku | 490037
 Bahamas | BS | 16 | Nassau | 988382
 Bahrain | BH | 17 | Manama | 789398
 Bangladesh | BD | 18 | Dhaka | 594935
@@ -88,7 +86,6 @@ Mexico | MX | 140 | Mexico | 5677037
 Moldova | MD | 142 | Chisinau | 5295179
 Monaco | MC | 143 | Monte Carlo | 5292332
 Mongolia | MN | 144 | Ulaanbaatar | 5543669
-Montenegro | ME | 146 | Podgorica | 5318561
 Morocco | MA | 147 | Rabat | 5271254
 Mozambique | MZ | 148 | Maputo | 5870336
 Myanmar | MM | 149 | Naypyidaw | 9521893
