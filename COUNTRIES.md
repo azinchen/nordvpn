@@ -67,7 +67,6 @@ Kuwait | KW | 116
 Lao People's Democratic Republic | LA | 118
 Latvia | LV | 119
 Lebanon | LB | 120
-Liechtenstein | LI | 124
 Lithuania | LT | 125
 Luxembourg | LU | 126
 Malaysia | MY | 131
