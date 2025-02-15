@@ -79,7 +79,6 @@ Kuwait | KW | 116 | Kuwait City | 9521894
 Lao People's Democratic Republic | LA | 118 | Vientiane | 5015876
 Latvia | LV | 119 | Riga | 5192828
 Lebanon | LB | 120 | Beirut | 5022080
-Liechtenstein | LI | 124 | Vaduz | 5037212
 Lithuania | LT | 125 | Vilnius | 5166932
 Luxembourg | LU | 126 | Luxembourg | 9521876
 Malaysia | MY | 131 | Kuala Lumpur | 5820143
