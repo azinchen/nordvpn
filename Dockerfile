@@ -15,12 +15,15 @@ RUN echo "**** install security fix packages ****" && \
     mkdir -p /s6 && \
     echo "**** download ${PACKAGE} ****" && \
     PACKAGEPLATFORM=$(case ${TARGETPLATFORM} in \
-        "linux/amd64")    echo "x86_64"   ;; \
-        "linux/386")      echo "i486"     ;; \
-        "linux/arm64")    echo "aarch64"  ;; \
-        "linux/arm/v7")   echo "armhf"    ;; \
-        "linux/arm/v6")   echo "arm"      ;; \
-        *)                echo ""         ;; esac) && \
+        "linux/386")      echo "i486"        ;; \
+        "linux/amd64")    echo "x86_64"      ;; \
+        "linux/arm/v6")   echo "arm"         ;; \
+        "linux/arm/v7")   echo "armhf"       ;; \
+        "linux/arm64")    echo "aarch64"     ;; \
+        "linux/ppc64le")  echo "powerpc64le" ;; \
+        "linux/riscv64")  echo "riscv64"     ;; \
+        "linux/s390x")    echo "s390x"       ;; \
+        *)                echo ""            ;; esac) && \
     echo "Package ${PACKAGE} platform ${PACKAGEPLATFORM} version ${PACKAGEVERSION}" && \
     wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-noarch.tar.xz" -qO /tmp/s6-overlay-noarch.tar.xz && \
     wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-${PACKAGEPLATFORM}.tar.xz" -qO /tmp/s6-overlay-binaries.tar.xz && \
