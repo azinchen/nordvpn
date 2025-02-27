@@ -73,7 +73,6 @@ Japan | JP | 108 | Osaka | 4621847
 Japan | JP | 108 | Tokyo | 4633349
 Jersey | JE | 244 | Saint Helier | 4572281
 Jordan | JO | 109 | Amman | 4581203
-Kazakhstan | KZ | 110 | Astana | 4925732
 Kenya | KE | 111 | Nairobi | 4646603
 Kuwait | KW | 116 | Kuwait City | 9521894
 Lao People's Democratic Republic | LA | 118 | Vientiane | 5015876
