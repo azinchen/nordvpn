@@ -61,7 +61,6 @@ Jamaica | JM | 107
 Japan | JP | 108
 Jersey | JE | 244
 Jordan | JO | 109
-Kazakhstan | KZ | 110
 Kenya | KE | 111
 Kuwait | KW | 116
 Lao People's Democratic Republic | LA | 118
