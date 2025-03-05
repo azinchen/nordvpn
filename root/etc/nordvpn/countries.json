@@ -917,7 +917,7 @@
     "id": 100,
     "name": "India",
     "code": "IN",
-    "serverCount": 27,
+    "serverCount": 24,
     "cities": [
       {
         "id": 4041548,
@@ -926,7 +926,7 @@
         "longitude": 72.825833,
         "dns_name": "mumbai",
         "hub_score": 0,
-        "serverCount": 27
+        "serverCount": 24
       }
     ]
   },
@@ -2024,7 +2024,7 @@
     "id": 227,
     "name": "United Kingdom",
     "code": "GB",
-    "serverCount": 972,
+    "serverCount": 974,
     "cities": [
       {
         "id": 2975852,
@@ -2051,7 +2051,7 @@
         "longitude": -0.093689,
         "dns_name": "london",
         "hub_score": 0,
-        "serverCount": 791
+        "serverCount": 792
       },
       {
         "id": 2991110,
@@ -2060,7 +2060,7 @@
         "longitude": -2.216667,
         "dns_name": "manchester",
         "hub_score": 0,
-        "serverCount": 109
+        "serverCount": 110
       }
     ]
   },
@@ -2068,7 +2068,7 @@
     "id": 228,
     "name": "United States",
     "code": "US",
-    "serverCount": 2543,
+    "serverCount": 2544,
     "cities": [
       {
         "id": 8792429,
@@ -2113,7 +2113,7 @@
         "longitude": -87.65,
         "dns_name": "chicago",
         "hub_score": 0,
-        "serverCount": 262
+        "serverCount": 263
       },
       {
         "id": 9080300,
