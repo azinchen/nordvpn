@@ -77,7 +77,7 @@ jobs:
         id: getjson
         shell: bash
         run: |
-          curl -s ${{ matrix.url }} | jq '.' > root/etc/nordvpn/${{ env.json_name }}.json
+          curl -s ${{ matrix.url }} | jq '.' | jq 'del(.. | .serverCount?)' | jq 'del(.. | .hub_score?)' > root/etc/nordvpn/${{ env.json_name }}.json
 
           JSON_DATE=$(date +%y%m%d)
           echo "json_date=${JSON_DATE}" >> $GITHUB_ENV
