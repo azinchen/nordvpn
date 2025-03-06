@@ -58,7 +58,6 @@ RUN echo "**** install security fix packages ****" && \
         bash=5.2.37-r0 \
         curl=8.12.1-r0 \
         iptables=1.8.11-r1 \
-        ip6tables=1.8.11-r1 \
         jq=1.7.1-r0 \
         shadow=4.16.0-r1 \
         shadow-login=4.16.0-r1 \
