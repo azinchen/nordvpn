@@ -1,0 +1,366 @@
+# PROPOSAL: Advanced APK Update Workflow
+# This is an enhanced version with additional features for consideration
+
+name: Update APK Versions (Advanced)
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # Daily at 3 AM UTC
+    - cron: '0 15 * * 0'  # Weekly on Sunday at 3 PM UTC (more thorough check)
+  workflow_dispatch:
+    inputs:
+      dockerfile_path:
+        description: 'Path to Dockerfile'
+        required: false
+        default: 'Dockerfile'
+        type: string
+      create_pr:
+        description: 'Create Pull Request'
+        required: false
+        default: true
+        type: boolean
+      force_update:
+        description: 'Force update even if no changes detected'
+        required: false
+        default: false
+        type: boolean
+      notification_enabled:
+        description: 'Enable notifications'
+        required: false
+        default: true
+        type: boolean
+      alpine_version_check:
+        description: 'Also check for Alpine base image updates'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  DOCKERFILE_PATH: ${{ inputs.dockerfile_path || 'Dockerfile' }}
+  FORCE_UPDATE: ${{ inputs.force_update || false }}
+  NOTIFICATION_ENABLED: ${{ inputs.notification_enabled || true }}
+
+permissions:
+  contents: write
+  pull-requests: write
+  security-events: write
+  actions: read
+
+jobs:
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || inputs.alpine_version_check == true
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: 'Dockerfile'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  update-apk-versions:
+    name: Update APK Versions
+    runs-on: ubuntu-latest
+    needs: [security-scan]
+    if: always() && (needs.security-scan.result == 'success' || needs.security-scan.result == 'skipped')
+    
+    outputs:
+      changes-detected: ${{ steps.check-changes.outputs.changes-detected }}
+      updated-packages: ${{ steps.update-packages.outputs.updated-packages }}
+      alpine-update-available: ${{ steps.check-alpine.outputs.update-available }}
+      build-successful: ${{ steps.test-build.outputs.build-successful }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Validate Dockerfile exists
+        run: |
+          if [ ! -f "${{ env.DOCKERFILE_PATH }}" ]; then
+            echo "::error::Dockerfile not found at path: ${{ env.DOCKERFILE_PATH }}"
+            exit 1
+          fi
+          echo "::notice::Found Dockerfile at: ${{ env.DOCKERFILE_PATH }}"
+
+      - name: Set up environment
+        id: setup-env
+        run: |
+          TEMPLATE_DATE=$(date +%y%m%d_%H%M)
+          echo "template-date=${TEMPLATE_DATE}" >> $GITHUB_OUTPUT
+          echo "::notice::Generated template date: ${TEMPLATE_DATE}"
+          
+          # Get current Alpine version from Dockerfile
+          CURRENT_ALPINE=$(grep '^FROM alpine:' "${{ env.DOCKERFILE_PATH }}" | head -n1 | sed -E 's/FROM alpine:(.*) AS .*/\1/' | sed -E 's/FROM alpine:(.*)/\1/')
+          echo "current-alpine=${CURRENT_ALPINE}" >> $GITHUB_OUTPUT
+          echo "::notice::Current Alpine version: ${CURRENT_ALPINE}"
+
+      - name: Check for Alpine base image updates
+        id: check-alpine
+        if: inputs.alpine_version_check == true || github.event.schedule == '0 15 * * 0'
+        run: |
+          CURRENT_ALPINE="${{ steps.setup-env.outputs.current-alpine }}"
+          
+          # Get latest Alpine version
+          LATEST_ALPINE=$(curl -s https://registry.hub.docker.com/v2/repositories/library/alpine/tags/?page_size=100 | jq -r '.results[] | select(.name | test("^[0-9]+\\.[0-9]+\\.[0-9]+$")) | .name' | sort -V | tail -1)
+          
+          echo "latest-alpine=${LATEST_ALPINE}" >> $GITHUB_OUTPUT
+          echo "::notice::Latest Alpine version: ${LATEST_ALPINE}"
+          
+          if [ "$CURRENT_ALPINE" != "$LATEST_ALPINE" ]; then
+            echo "update-available=true" >> $GITHUB_OUTPUT
+            echo "::warning::Alpine update available: ${CURRENT_ALPINE} -> ${LATEST_ALPINE}"
+          else
+            echo "update-available=false" >> $GITHUB_OUTPUT
+            echo "::notice::Alpine version is up to date"
+          fi
+
+      - name: Backup original Dockerfile
+        run: |
+          cp "${{ env.DOCKERFILE_PATH }}" "${{ env.DOCKERFILE_PATH }}.backup"
+
+      - name: Run APK version update script
+        id: update-packages
+        run: |
+          echo "::group::Making script executable"
+          chmod +x ./scripts/update_apk_versions.sh
+          echo "::endgroup::"
+          
+          echo "::group::Running update script"
+          set +e  # Don't exit on error, we want to capture the output
+          
+          # Run with timeout to prevent hanging
+          timeout 600 ./scripts/update_apk_versions.sh "${{ env.DOCKERFILE_PATH }}" 2>&1 | tee update_output.log
+          EXIT_CODE=${PIPESTATUS[0]}
+          
+          # Extract updated packages from output
+          UPDATED_PACKAGES=$(grep -o "Updating '[^']*'" update_output.log | sed "s/Updating '//" | sed "s/'$//" | tr '\n' ',' | sed 's/,$//' || echo "")
+          echo "updated-packages=${UPDATED_PACKAGES}" >> $GITHUB_OUTPUT
+          
+          # Count updates
+          UPDATE_COUNT=$(echo "$UPDATED_PACKAGES" | tr ',' '\n' | wc -l)
+          if [ -z "$UPDATED_PACKAGES" ]; then
+            UPDATE_COUNT=0
+          fi
+          echo "update-count=${UPDATE_COUNT}" >> $GITHUB_OUTPUT
+          
+          if [ $EXIT_CODE -eq 124 ]; then
+            echo "::error::Script timed out after 10 minutes"
+            exit 1
+          elif [ $EXIT_CODE -ne 0 ]; then
+            echo "::error::Script failed with exit code $EXIT_CODE"
+            exit $EXIT_CODE
+          fi
+          echo "::endgroup::"
+
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet "${{ env.DOCKERFILE_PATH }}"; then
+            echo "::notice::No changes detected in Dockerfile"
+            echo "changes-detected=false" >> $GITHUB_OUTPUT
+          else
+            echo "::notice::Changes detected in Dockerfile"
+            echo "changes-detected=true" >> $GITHUB_OUTPUT
+            
+            echo "::group::Changes summary"
+            git diff "${{ env.DOCKERFILE_PATH }}"
+            echo "::endgroup::"
+          fi
+
+      - name: Test Docker build
+        id: test-build
+        if: steps.check-changes.outputs.changes-detected == 'true' || env.FORCE_UPDATE == 'true'
+        run: |
+          echo "::group::Testing Docker build"
+          set +e
+          
+          docker buildx build \
+            --platform linux/amd64 \
+            --cache-from type=local,src=/tmp/.buildx-cache \
+            --cache-to type=local,dest=/tmp/.buildx-cache-new,mode=max \
+            --file "${{ env.DOCKERFILE_PATH }}" \
+            --target rootfs-builder \
+            --tag test-build:latest \
+            . 2>&1 | tee build_output.log
+          
+          BUILD_EXIT_CODE=$?
+          
+          if [ $BUILD_EXIT_CODE -eq 0 ]; then
+            echo "build-successful=true" >> $GITHUB_OUTPUT
+            echo "::notice::Docker build successful"
+          else
+            echo "build-successful=false" >> $GITHUB_OUTPUT
+            echo "::error::Docker build failed"
+            
+            # Restore backup if build fails
+            cp "${{ env.DOCKERFILE_PATH }}.backup" "${{ env.DOCKERFILE_PATH }}"
+            git checkout -- "${{ env.DOCKERFILE_PATH }}"
+            
+            exit $BUILD_EXIT_CODE
+          fi
+          echo "::endgroup::"
+          
+          # Move cache
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+      - name: Generate change summary
+        id: generate-summary
+        if: steps.check-changes.outputs.changes-detected == 'true'
+        run: |
+          {
+            echo "## 📦 Package Updates Summary"
+            echo ""
+            echo "**Total packages updated:** ${{ steps.update-packages.outputs.update-count }}"
+            echo ""
+            if [ -n "${{ steps.update-packages.outputs.updated-packages }}" ]; then
+              echo "### Updated Packages:"
+              echo "${{ steps.update-packages.outputs.updated-packages }}" | tr ',' '\n' | sed 's/^/- /'
+              echo ""
+            fi
+            
+            if [ "${{ steps.check-alpine.outputs.update-available }}" == "true" ]; then
+              echo "### ⚠️ Additional Updates Available:"
+              echo "- Alpine base image: ${{ steps.setup-env.outputs.current-alpine }} → ${{ steps.check-alpine.outputs.latest-alpine }}"
+              echo ""
+            fi
+            
+            echo "### Build Status:"
+            if [ "${{ steps.test-build.outputs.build-successful }}" == "true" ]; then
+              echo "- ✅ Docker build: **PASSED**"
+            else
+              echo "- ❌ Docker build: **FAILED**"
+            fi
+          } > pr_summary.md
+          
+          # Set multiline output
+          echo "summary<<EOF" >> $GITHUB_OUTPUT
+          cat pr_summary.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        if: steps.check-changes.outputs.changes-detected == 'true' && steps.test-build.outputs.build-successful == 'true' && (inputs.create_pr == true || github.event_name == 'schedule')
+        uses: peter-evans/create-pull-request@v7.0.8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: apkupdaterbot/packageversionupdate-${{ steps.setup-env.outputs.template-date }}
+          commit-message: |
+            chore: update APK package versions (${{ steps.setup-env.outputs.template-date }})
+            
+            - Updated ${{ steps.update-packages.outputs.update-count }} packages
+            - Build status: ✅ PASSED
+            - Updated packages: ${{ steps.update-packages.outputs.updated-packages }}
+          delete-branch: true
+          title: "🔄 Update APK package versions (${{ steps.setup-env.outputs.template-date }})"
+          body: |
+            ${{ steps.generate-summary.outputs.summary }}
+            
+            ### Verification Checklist:
+            - [x] Automated build test passed
+            - [ ] Manual testing completed
+            - [ ] Security scan results reviewed
+            - [ ] Performance impact assessed
+            
+            ### Automation Details:
+            - **Workflow:** `${{ github.workflow }}`
+            - **Trigger:** `${{ github.event_name }}`
+            - **Runner:** `${{ runner.os }}`
+            - **Date:** ${{ steps.setup-env.outputs.template-date }}
+            
+            ---
+            🤖 Auto-generated by [create-pull-request](https://github.com/peter-evans/create-pull-request)
+            
+            /cc @${{ github.actor }}
+          labels: |
+            dependencies
+            automated
+            dockerfile
+            tested
+          assignees: ${{ github.actor }}
+          reviewers: ${{ github.actor }}
+          draft: false
+
+      - name: Notify on failure
+        if: failure() && env.NOTIFICATION_ENABLED == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue_body = `
+            ## 🚨 APK Update Workflow Failed
+            
+            **Workflow:** ${context.workflow}
+            **Run:** ${context.runNumber}
+            **Commit:** ${context.sha.substring(0, 7)}
+            **Actor:** @${context.actor}
+            
+            ### Failure Details:
+            - **Job:** ${{ github.job }}
+            - **Step:** Failed during execution
+            - **Logs:** [View run logs](${context.payload.repository.html_url}/actions/runs/${context.runId})
+            
+            Please investigate and resolve the issue.
+            `;
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 APK Update Workflow Failed - ${new Date().toISOString().split('T')[0]}`,
+              body: issue_body,
+              labels: ['bug', 'workflow-failure', 'high-priority']
+            });
+
+      - name: Clean up
+        if: always()
+        run: |
+          rm -f "${{ env.DOCKERFILE_PATH }}.backup"
+          rm -f update_output.log
+          rm -f build_output.log
+          rm -f pr_summary.md
+
+      - name: Final Summary
+        if: always()
+        run: |
+          echo "## 📋 Workflow Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Dockerfile:** \`${{ env.DOCKERFILE_PATH }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Changes detected:** ${{ steps.check-changes.outputs.changes-detected }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Updated packages:** ${{ steps.update-packages.outputs.updated-packages || 'None' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Update count:** ${{ steps.update-packages.outputs.update-count || '0' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build successful:** ${{ steps.test-build.outputs.build-successful || 'N/A' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Template date:** ${{ steps.setup-env.outputs.template-date }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Alpine update available:** ${{ steps.check-alpine.outputs.update-available || 'Not checked' }}" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.check-changes.outputs.changes-detected }}" == "true" ]; then
+            if [ "${{ steps.test-build.outputs.build-successful }}" == "true" ]; then
+              echo "- **Action:** ✅ Pull request created/updated" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "- **Action:** ❌ Changes reverted due to build failure" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "- **Action:** No changes, skipping PR creation" >> $GITHUB_STEP_SUMMARY
+          fi
