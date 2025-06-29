@@ -141,11 +141,85 @@ jobs:
           compression-level: 0
           if-no-files-found: ignore
 
+      - name: Debug step outcomes
+        if: always()
+        run: |
+          echo "=== Step Outcomes Debug ==="
+          echo "Super-Linter outcome: ${{ steps.super-linter.outcome }}"
+          echo "Super-Linter conclusion: ${{ steps.super-linter.conclusion }}"
+          echo "Trivy-config outcome: ${{ steps.trivy-config.outcome }}"
+          echo "Trivy-config conclusion: ${{ steps.trivy-config.conclusion }}"
+          echo "CodeQL outcome: ${{ steps.codeql-analyze.outcome }}"
+          echo "CodeQL conclusion: ${{ steps.codeql-analyze.conclusion }}"
+          echo "=== End Debug ==="
+
+      - name: Check for issues and create GitHub issues
+        if: always()
+        run: |
+          echo "=== Checking for security issues ==="
+          
+          # Check if Super-Linter found issues (it creates log files when issues are found)
+          if [ -d "super-linter.log" ] || [ -f "super-linter.log" ] || [[ "${{ steps.super-linter.outcome }}" == "failure" ]]; then
+            echo "SUPER_LINTER_ISSUES=true" >> $GITHUB_ENV
+            echo "Super-Linter found issues"
+          else
+            echo "SUPER_LINTER_ISSUES=false" >> $GITHUB_ENV
+            echo "No Super-Linter issues found"
+          fi
+          
+          # Check if Trivy config scan found issues
+          if [[ "${{ steps.trivy-config.outcome }}" == "failure" ]] || [[ "${{ steps.trivy-config.conclusion }}" == "failure" ]]; then
+            echo "TRIVY_CONFIG_ISSUES=true" >> $GITHUB_ENV
+            echo "Trivy config scan found issues"
+          else
+            echo "TRIVY_CONFIG_ISSUES=false" >> $GITHUB_ENV
+            echo "No Trivy config issues found"
+          fi
+          
+          # Check if CodeQL found issues
+          if [[ "${{ steps.codeql-analyze.outcome }}" == "failure" ]] || [[ "${{ steps.codeql-analyze.conclusion }}" == "failure" ]]; then
+            echo "CODEQL_ISSUES=true" >> $GITHUB_ENV
+            echo "CodeQL found issues"
+          else
+            echo "CODEQL_ISSUES=false" >> $GITHUB_ENV
+            echo "No CodeQL issues found"
+          fi
+          
+          # Check if Trivy filesystem scan found vulnerabilities
+          if [ -f "trivy-results.sarif" ]; then
+            VULN_COUNT=$(jq -r '.runs[0].results | length' trivy-results.sarif 2>/dev/null || echo "0")
+            if [ "$VULN_COUNT" -gt 0 ]; then
+              echo "TRIVY_FS_ISSUES=true" >> $GITHUB_ENV
+              echo "Trivy filesystem scan found $VULN_COUNT vulnerabilities"
+            else
+              echo "TRIVY_FS_ISSUES=false" >> $GITHUB_ENV
+              echo "No Trivy filesystem vulnerabilities found"
+            fi
+          else
+            echo "TRIVY_FS_ISSUES=false" >> $GITHUB_ENV
+            echo "No Trivy filesystem results file found"
+          fi
+
       - name: Create Super-Linter Issue
-        if: always() && steps.super-linter.outcome == 'failure'
+        if: always()
         uses: actions/github-script@v7.0.1
         with:
           script: |
+            // Check if Super-Linter actually found issues
+            const superlinterOutcome = '${{ steps.super-linter.outcome }}';
+            const superlinterConclusion = '${{ steps.super-linter.conclusion }}';
+            
+            console.log(`Super-Linter outcome: ${superlinterOutcome}`);
+            console.log(`Super-Linter conclusion: ${superlinterConclusion}`);
+            
+            // Only create issue if Super-Linter actually found problems
+            if (superlinterOutcome !== 'failure' && superlinterConclusion !== 'failure') {
+              console.log('Super-Linter did not find any issues, skipping issue creation');
+              return;
+            }
+            
+            console.log('Super-Linter found issues, creating GitHub issue...');
+            
             const fs = require('fs');
             const currentDate = new Date().toISOString().split('T')[0];
             const title = '🔍 Linting Issues Found';
@@ -250,10 +324,25 @@ jobs:
             }
 
       - name: Create Trivy Security Issue
-        if: always() && steps.trivy-config.outcome == 'failure'
+        if: always()
         uses: actions/github-script@v7.0.1
         with:
           script: |
+            // Check if Trivy config scan actually found issues
+            const trivyOutcome = '${{ steps.trivy-config.outcome }}';
+            const trivyConclusion = '${{ steps.trivy-config.conclusion }}';
+            
+            console.log(`Trivy config outcome: ${trivyOutcome}`);
+            console.log(`Trivy config conclusion: ${trivyConclusion}`);
+            
+            // Only create issue if Trivy actually found problems
+            if (trivyOutcome !== 'failure' && trivyConclusion !== 'failure') {
+              console.log('Trivy config scan did not find any issues, skipping issue creation');
+              return;
+            }
+            
+            console.log('Trivy config scan found issues, creating GitHub issue...');
+            
             const fs = require('fs');
             const currentDate = new Date().toISOString().split('T')[0];
             const title = '🛡️ Security Issues Found in Dockerfile';
@@ -360,10 +449,25 @@ jobs:
             }
 
       - name: Create CodeQL Security Issue
-        if: always() && steps.codeql-analyze.outcome == 'failure'
+        if: always()
         uses: actions/github-script@v7.0.1
         with:
           script: |
+            // Check if CodeQL actually found issues
+            const codeqlOutcome = '${{ steps.codeql-analyze.outcome }}';
+            const codeqlConclusion = '${{ steps.codeql-analyze.conclusion }}';
+            
+            console.log(`CodeQL outcome: ${codeqlOutcome}`);
+            console.log(`CodeQL conclusion: ${codeqlConclusion}`);
+            
+            // Only create issue if CodeQL actually found problems
+            if (codeqlOutcome !== 'failure' && codeqlConclusion !== 'failure') {
+              console.log('CodeQL did not find any issues, skipping issue creation');
+              return;
+            }
+            
+            console.log('CodeQL found issues, creating GitHub issue...');
+            
             const fs = require('fs');
             const currentDate = new Date().toISOString().split('T')[0];
             const title = '🔬 CodeQL Security Analysis Issues Found';
