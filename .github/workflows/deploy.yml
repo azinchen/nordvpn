@@ -34,8 +34,6 @@ jobs:
             IMAGE_TAG=${BRANCH_NAME}
           fi
 
-          echo "image_tag=${IMAGE_TAG}" >> $GITHUB_ENV
-          echo "is_tag=${IS_TAG}" >> $GITHUB_ENV
           echo "image_tag=${IMAGE_TAG}" >> $GITHUB_OUTPUT
           echo "is_tag=${IS_TAG}" >> $GITHUB_OUTPUT
 
@@ -62,17 +60,17 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.11.1
 
-      - name: Build and push ${{ github.repository }}:${{ env.image_tag }}
+      - name: Build and push ${{ github.repository }}:${{ steps.git.outputs.image_tag }}
         uses: docker/build-push-action@v6.18.0
         with:
           platforms: ${{ env.PLATFORMS }}
           push: true
           tags: |
-            ${{ github.repository }}:${{ env.image_tag }}
-            ghcr.io/${{ github.repository }}:${{ env.image_tag }}
+            ${{ github.repository }}:${{ steps.git.outputs.image_tag }}
+            ghcr.io/${{ github.repository }}:${{ steps.git.outputs.image_tag }}
 
-      - name: Build and push ${{ github.repository }}:latest
-        if: ${{ env.is_tag == 'true' }}
+      - name: Build and push latest image
+        if: ${{ steps.git.outputs.is_tag == 'true' }}
         uses: docker/build-push-action@v6.18.0
         with:
           platforms: ${{ env.PLATFORMS }}
@@ -82,7 +80,7 @@ jobs:
             ghcr.io/${{ github.repository }}:latest
 
       - name: Update repo description
-        if: ${{ env.is_tag == 'true' }}
+        if: ${{ steps.git.outputs.is_tag == 'true' }}
         uses: peter-evans/dockerhub-description@v4.0.2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
