@@ -104,7 +104,6 @@ Qatar | QA | 177
 Romania | RO | 179
 Rwanda | RW | 181
 Senegal | SN | 191
-Serbia | RS | 192
 Singapore | SG | 195
 Slovakia | SK | 196
 Slovenia | SI | 197
