@@ -32,19 +32,19 @@ jobs:
         file: 
           - name: "CITIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
-            jq_filter: '.[] | . as $parent | .cities[] | [$parent.name, $parent.code, $parent.id, .name, .id] | "\\(.[0]) | \\(.[1]) | \\(.[2]) | \\(.[3]) | \\(.[4])"'
-            header: "Country | Code | ID | City | ID"
+            jq_filter: 
+            header: "Country | Code | ID | City | ID"'.[] | . as $parent | .cities[] | [$parent.name, $parent.code, $parent.id, .name, .id] | "\(.[0]) | \(.[1]) | \(.[2]) | \(.[3]) | \(.[4])"'
           - name: "COUNTRIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
-            jq_filter: '.[] | [.name, .code, .id] | "\\(.[0]) | \\(.[1]) | \\(.[2])"'
+            jq_filter: '.[] | [.name, .code, .id] | "\(.[0]) | \(.[1]) | \(.[2])"'
             header: "Country | Code | ID"
           - name: "TECHNOLOGIES"
             url: "https://api.nordvpn.com/v1/technologies"
-            jq_filter: '.[] | [.name, .identifier, .id] | "\\(.[0]) | \\(.[1]) | \\(.[2])"'
+            jq_filter: '.[] | [.name, .identifier, .id] | "\(.[0]) | \(.[1]) | \(.[2])"'
             header: "Technology | Identifier | ID"
           - name: "GROUPS"
             url: "https://api.nordvpn.com/v1/servers/groups"
-            jq_filter: '.[] | [.title, .identifier, .id] | "\\(.[0]) | \\(.[1]) | \\(.[2])"'
+            jq_filter: '.[] | [.title, .identifier, .id] | "\(.[0]) | \(.[1]) | \(.[2])"'
             header: "Group | Identifier | ID"
     
     steps:
