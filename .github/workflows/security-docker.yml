@@ -70,9 +70,14 @@ jobs:
               echo "🔧 Development build scan: Checking GHCR"
             fi
           else
-            # Fallback to Docker Hub
-            REGISTRY="dockerhub"
-            echo "❓ Unknown trigger: Defaulting to Docker Hub"
+            # Fallback: For development branches, use GHCR; for production, use Docker Hub
+            if [[ "${{ inputs.is_production_build }}" == "true" ]]; then
+              REGISTRY="dockerhub"
+              echo "⚠️  Fallback to Docker Hub for production build"
+            else
+              REGISTRY="ghcr"
+              echo "⚠️  Fallback to GHCR for development build"
+            fi
           fi
           
           # Set the full image reference
@@ -87,9 +92,19 @@ jobs:
           echo "image_ref=${IMAGE_REF}" >> $GITHUB_OUTPUT
           
           echo "📋 Scan Configuration:"
+          echo "  Event: ${{ github.event_name }}"
           echo "  Registry: ${REGISTRY}"
           echo "  Image Tag: ${IMAGE_TAG}"
           echo "  Full Image Reference: ${IMAGE_REF}"
+          echo "  Production Build: ${{ inputs.is_production_build }}"
+
+      - name: Login to GitHub Container Registry
+        if: ${{ steps.config.outputs.registry == 'ghcr' }}
+        uses: docker/login-action@v3.5.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
 
       - name: Run Trivy security scan
         id: trivy-image
@@ -102,7 +117,7 @@ jobs:
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3.30.0
-        if: always()
+        if: ${{ always() && hashFiles('trivy-image-results.sarif') != '' }}
         with:
           sarif_file: 'trivy-image-results.sarif'
           category: 'trivy-docker-image'
