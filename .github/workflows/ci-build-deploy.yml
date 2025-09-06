@@ -2,9 +2,8 @@ name: CI - Build and Deploy
 
 on:
   push:
-    # Deploy on master (production) and all other branches (dev)
-    # Production builds: master branch and tags -> push to both registries
-    # Development builds: other branches -> push only to GHCR with branch name as tag
+    # Production builds: tags only -> push to both registries with latest tag
+    # Development builds: master and other branches -> push only to GHCR
     branches: [ '**' ]
     tags: [ '**' ]
   pull_request:
@@ -40,8 +39,8 @@ jobs:
         run: |
           echo "🔐 Validating required secrets and environment..."
           
-          # Check if required secrets are available for production builds
-          if [[ "${{ github.ref_name }}" == "master" ]] || [[ "${{ github.ref_type }}" == "tag" ]]; then
+          # Check if required secrets are available for production builds (tags only)
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
             if [[ -z "${{ secrets.DOCKERHUB_USERNAME }}" ]] || [[ -z "${{ secrets.DOCKERHUB_TOKEN }}" ]]; then
               echo "❌ DockerHub credentials not available for production build"
               exit 1
@@ -67,9 +66,9 @@ jobs:
             PLATFORMS="${{ env.PLATFORMS }}"  # Build all platforms for tags
             PUSH_TO_PROD=true
           elif [[ "$GITHUB_REF_NAME" == "master" ]]; then
-            IMAGE_TAG="master"
+            IMAGE_TAG="dev"  # Master branch tagged as 'dev'
             PLATFORMS="${{ env.PLATFORMS }}"  # Build all platforms for master
-            PUSH_TO_PROD=true
+            PUSH_TO_PROD=false
           else
             # Sanitize branch name for Docker tag (replace / and other invalid chars with -)
             IMAGE_TAG=$(echo "${GITHUB_REF_NAME}" | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/^-\+\|-\+$//g')
@@ -129,24 +128,14 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            ghcr.io/${{ github.repository }}:${{ steps.git.outputs.image_tag }}
             ${{ github.repository }}:${{ steps.git.outputs.image_tag }}
-
-      - name: Build and push latest image
-        if: ${{ steps.git.outputs.is_tag == 'true' }}
-        uses: docker/build-push-action@v6.18.0
-        with:
-          platforms: ${{ steps.git.outputs.platforms }}
-          push: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          tags: |
+            ghcr.io/${{ github.repository }}:${{ steps.git.outputs.image_tag }}
             ${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:latest
 
       # === MONITORING AND METADATA PHASE ===
       - name: Get image size and metadata
-        if: ${{ always() && steps.git.outputs.push_to_prod == 'true' }}
+        if: ${{ always() }}
         shell: bash
         run: |
           echo "📊 Image Build Metrics:"
