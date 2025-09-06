@@ -91,6 +91,15 @@ jobs:
           echo "=== Capturing Super-Linter logs ==="
           mkdir -p super-linter-output
           
+          # Verify directory creation and permissions
+          if [ ! -d "super-linter-output" ]; then
+            echo "❌ Failed to create super-linter-output directory"
+            exit 1
+          fi
+          
+          echo "✅ super-linter-output directory created successfully"
+          ls -la super-linter-output/ || echo "Directory is empty"
+          
           # Capture general logs
           if [ -d "super-linter-logs" ]; then
             echo "Found super-linter-logs directory"
@@ -117,7 +126,13 @@ jobs:
           done
           
           # Create a comprehensive log file with all findings
-          echo "# Super-Linter Results Summary" > super-linter-output/summary.md
+          echo "Creating summary file..."
+          if ! echo "# Super-Linter Results Summary" > super-linter-output/summary.md; then
+            echo "❌ Failed to create summary.md file"
+            ls -la super-linter-output/
+            exit 1
+          fi
+          
           echo "Generated: $(date)" >> super-linter-output/summary.md
           echo "" >> super-linter-output/summary.md
           
