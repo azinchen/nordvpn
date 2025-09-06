@@ -1,7 +1,7 @@
-# List of server groups
+# List of GROUPS with NordVPN servers
 
-Name | Identifier | ID
---- | --- | ---
+Group | Identifier | ID
+------|------------|---
 Double VPN | legacy_double_vpn | 1
 Onion Over VPN | legacy_onion_over_vpn | 3
 Ultra fast TV | legacy_ultra_fast_tv | 5
