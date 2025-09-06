@@ -91,6 +91,10 @@ jobs:
           echo "=== Capturing Super-Linter logs ==="
           mkdir -p super-linter-output
           
+          # Fix ownership/permissions for the directory
+          sudo chown -R runner:docker super-linter-output
+          sudo chmod -R 755 super-linter-output
+          
           # Verify directory creation and permissions
           if [ ! -d "super-linter-output" ]; then
             echo "❌ Failed to create super-linter-output directory"
