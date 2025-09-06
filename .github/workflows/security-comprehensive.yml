@@ -205,29 +205,37 @@ jobs:
           
           # Add dynamic content
           ANALYSIS_DATE="$(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+          REPOSITORY="${{ github.repository }}"
+          COMMIT="${{ github.sha }}"
+          BRANCH="${{ github.ref_name }}"
+          RUN_ID="${{ github.run_id }}"
+          CODEQL_STATUS="${{ steps.codeql-analysis.outcome }}"
+          SUPERLINTER_STATUS="${{ steps.super-linter.outcome }}"
+          TRIVY_CONFIG_STATUS="${{ steps.trivy-config.outcome }}"
+          
           cat >> scan-results/security-analysis-summary.md << EOF
           
           **Analysis Date:** ${ANALYSIS_DATE}
-          **Repository:** ${{ github.repository }}
-          **Commit:** ${{ github.sha }}
-          **Branch:** ${{ github.ref_name }}
-          **Run ID:** ${{ github.run_id }}
+          **Repository:** ${REPOSITORY}
+          **Commit:** ${COMMIT}
+          **Branch:** ${BRANCH}
+          **Run ID:** ${RUN_ID}
           
           ## 🔍 Analysis Components
           
           ### 🔬 CodeQL Static Analysis
-          - **Status:** ${{ steps.codeql-analysis.outcome }}
+          - **Status:** ${CODEQL_STATUS}
           - **Language:** JavaScript (with generic security patterns)
           - **Queries:** security-extended + security-and-quality
           - **Scope:** Shell scripts, configs, GitHub Actions workflows
           
           ### 🧹 Super-Linter Code Quality
-          - **Status:** ${{ steps.super-linter.outcome }}
+          - **Status:** ${SUPERLINTER_STATUS}
           - **Languages:** Bash, Dockerfile, Markdown, JSON, YAML
           - **Validation:** Syntax, style, and best practices
           
           ### 🛡️ Trivy Vulnerability Scanning
-          - **Config Analysis Status:** ${{ steps.trivy-config.outcome }}
+          - **Config Analysis Status:** ${TRIVY_CONFIG_STATUS}
           - **Scope:** Dependencies, container vulnerabilities, misconfigurations
           
           ## 📊 Summary Statistics
@@ -264,10 +272,10 @@ jobs:
           cat >> scan-results/security-analysis-summary.md << EOF
           
           ## 🔗 View Results
-          - [Workflow Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-          - [Security Tab](https://github.com/${{ github.repository }}/security/code-scanning)
-          - [CodeQL Results](https://github.com/${{ github.repository }}/security/code-scanning?tool=CodeQL)
-          - [Trivy Results](https://github.com/${{ github.repository }}/security/code-scanning?tool=Trivy)
+          - [Workflow Run](https://github.com/${REPOSITORY}/actions/runs/${RUN_ID})
+          - [Security Tab](https://github.com/${REPOSITORY}/security/code-scanning)
+          - [CodeQL Results](https://github.com/${REPOSITORY}/security/code-scanning?tool=CodeQL)
+          - [Trivy Results](https://github.com/${REPOSITORY}/security/code-scanning?tool=Trivy)
           
           ## 🛠️ Tools Information
           - **CodeQL:** Advanced static analysis for security vulnerabilities
