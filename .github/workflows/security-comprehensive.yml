@@ -185,9 +185,10 @@ jobs:
           EOF
           
           # Add dynamic content
+          ANALYSIS_DATE="$(date -u +"%Y-%m-%d %H:%M:%S UTC")"
           cat >> scan-results/security-analysis-summary.md << EOF
           
-          **Analysis Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Analysis Date:** ${ANALYSIS_DATE}
           **Repository:** ${{ github.repository }}
           **Commit:** ${{ github.sha }}
           **Branch:** ${{ github.ref_name }}
@@ -207,12 +208,18 @@ jobs:
           - **Validation:** Syntax, style, and best practices
           
           ### 🛡️ Trivy Vulnerability Scanning
-          - **Filesystem Status:** $([ -f "trivy-results.sarif" ] && echo "✅ Completed" || echo "❌ No results")
           - **Config Analysis Status:** ${{ steps.trivy-config.outcome }}
           - **Scope:** Dependencies, container vulnerabilities, misconfigurations
           
           ## 📊 Summary Statistics
           EOF
+          
+          # Add Trivy filesystem scan status
+          if [ -f "trivy-results.sarif" ]; then
+            echo "- **Filesystem Status:** ✅ Completed" >> scan-results/security-analysis-summary.md
+          else
+            echo "- **Filesystem Status:** ❌ No results" >> scan-results/security-analysis-summary.md
+          fi
           
           # Add Trivy results count if available
           if [ -f "trivy-results.sarif" ] && command -v jq >/dev/null 2>&1; then
@@ -250,7 +257,8 @@ jobs:
           EOF
           
           # Create archive
-          ZIP_FILENAME="comprehensive-security-analysis-$(date +%Y%m%d-%H%M%S).zip"
+          TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
+          ZIP_FILENAME="comprehensive-security-analysis-${TIMESTAMP}.zip"
           zip -r "$ZIP_FILENAME" scan-results/
 
       # ============================================================================
@@ -278,12 +286,32 @@ jobs:
           echo "|-----------|---------|---------|" >> $GITHUB_STEP_SUMMARY
           echo "| 🔬 CodeQL Analysis | ${{ steps.codeql-analysis.outcome }} | Static security analysis |" >> $GITHUB_STEP_SUMMARY
           echo "| 🧹 Super-Linter | ${{ steps.super-linter.outcome }} | Code quality validation |" >> $GITHUB_STEP_SUMMARY
-          echo "| 🛡️ Trivy Filesystem | $([ -f "trivy-results.sarif" ] && echo "✅ success" || echo "❌ failed") | Vulnerability scanning |" >> $GITHUB_STEP_SUMMARY
+          
+          # Check Trivy filesystem status
+          if [ -f "trivy-results.sarif" ]; then
+            echo "| 🛡️ Trivy Filesystem | ✅ success | Vulnerability scanning |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| 🛡️ Trivy Filesystem | ❌ failed | Vulnerability scanning |" >> $GITHUB_STEP_SUMMARY
+          fi
+          
           echo "| 🔧 Trivy Config | ${{ steps.trivy-config.outcome }} | Configuration analysis |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📊 SARIF Files Generated" >> $GITHUB_STEP_SUMMARY
-          echo "- **CodeQL SARIF:** $([ -f "codeql-results.sarif" ] && echo "✅ Available" || echo "❌ Not generated")" >> $GITHUB_STEP_SUMMARY
-          echo "- **Trivy SARIF:** $([ -f "trivy-results.sarif" ] && echo "✅ Available" || echo "❌ Not generated")" >> $GITHUB_STEP_SUMMARY
+          
+          # Check CodeQL SARIF
+          if [ -f "codeql-results.sarif" ]; then
+            echo "- **CodeQL SARIF:** ✅ Available" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **CodeQL SARIF:** ❌ Not generated" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Check Trivy SARIF
+          if [ -f "trivy-results.sarif" ]; then
+            echo "- **Trivy SARIF:** ✅ Available" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Trivy SARIF:** ❌ Not generated" >> $GITHUB_STEP_SUMMARY
+          fi
+          
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📋 Quick Links" >> $GITHUB_STEP_SUMMARY
           echo "- [Security Tab](https://github.com/${{ github.repository }}/security/code-scanning)" >> $GITHUB_STEP_SUMMARY
