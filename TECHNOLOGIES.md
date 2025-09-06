@@ -1,7 +1,7 @@
-# List of technologies
+# List of TECHNOLOGIES with NordVPN servers
 
-Name | Identifier | ID
---- | --- | ---
+Technology | Identifier | ID
+-----------|------------|---
 IKEv2/IPSec | ikev2 | 1
 OpenVPN UDP | openvpn_udp | 3
 OpenVPN TCP | openvpn_tcp | 5
