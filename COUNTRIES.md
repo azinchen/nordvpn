@@ -1,7 +1,7 @@
-# List of countries with NordVPN servers
+# List of COUNTRIES with NordVPN servers
 
 Country | Code | ID
---- | --- | ---
+--------|------|---
 Afghanistan | AF | 1
 Albania | AL | 2
 Algeria | DZ | 3
