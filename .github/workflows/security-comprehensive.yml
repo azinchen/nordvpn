@@ -568,6 +568,7 @@ jobs:
           script: |
             const currentDate = new Date().toISOString().split('T')[0];
             const fs = require('fs');
+            const superLinterOutcome = '${{ steps.super-linter.outcome }}';
             
             // Parse Super-Linter logs for specific error details
             let linterFindings = "";
@@ -729,7 +730,7 @@ jobs:
             **Analysis Date:** ${currentDate}
             **Run ID:** ${context.runId}
             **Commit:** ${context.sha.substring(0, 8)}
-            **Status:** ${{ steps.super-linter.outcome }}
+            **Status:** ${superLinterOutcome}
             
             ## 📊 Analysis Summary
             
