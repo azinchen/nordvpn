@@ -37,8 +37,8 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** end run statement ****"
 
 COPY root/ /rootfs/
-RUN chmod +x /rootfs/usr/bin/*
-RUN chmod +x /rootfs/etc/nordvpn/init/*
+RUN chmod +x /rootfs/usr/bin/* && \
+    chmod +x /rootfs/etc/nordvpn/init/*
 COPY --from=s6-builder /s6/ /rootfs/
 
 # Main image

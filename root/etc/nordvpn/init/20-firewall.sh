@@ -1,6 +1,8 @@
 #!/command/with-contenv bash
+# shellcheck shell=bash
 
 [[ "${DEBUG,,}" == trace* ]] && set -x
+set -euo pipefail
 
 echo "Firewall is up, everything has to go through the vpn"
 iptables -P OUTPUT DROP

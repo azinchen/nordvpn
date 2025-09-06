@@ -1,6 +1,8 @@
 #!/command/with-contenv bash
+# shellcheck shell=bash
 
 [[ "${DEBUG,,}" == trace* ]] && set -x
+set -euo pipefail
 
 echo "Bypass requests to local network thru regular connection"
 

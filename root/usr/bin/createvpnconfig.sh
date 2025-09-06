@@ -1,6 +1,8 @@
 #!/command/with-contenv bash
+# shellcheck shell=bash
 
 [[ "${DEBUG,,}" == trace* ]] && set -x
+set -euo pipefail
 
 nvcountries=$(jq -c '.[]' < "/etc/nordvpn/countries.json")
 nvgroups=$(jq -c '.[]' < "/etc/nordvpn/groups.json")

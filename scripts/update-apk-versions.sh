@@ -1,10 +1,13 @@
 #!/bin/bash
+# shellcheck shell=bash
 # scripts/update-apk-versions.sh
 # This script extracts package names and versions from a specified Dockerfile,
 # checks for updates from Alpine package repositories (main first, then community),
 # and updates the Dockerfile if necessary.
 # Usage: ./scripts/update-apk-versions.sh <path/to/Dockerfile>
 # If no argument is provided, it defaults to "Dockerfile" in the current directory.
+
+set -euo pipefail
 
 DOCKERFILE="${1:-Dockerfile}"
 
@@ -118,33 +121,37 @@ fi
 
 # Set GitHub Actions environment variables and outputs (only if running in GitHub Actions)
 if [ -n "$GITHUB_ENV" ]; then
-    echo "TOTAL_PACKAGES=$TOTAL_PACKAGES" >> $GITHUB_ENV
-    echo "UPDATED_COUNT=$UPDATED_COUNT" >> $GITHUB_ENV
-    
-    if [ $UPDATED_COUNT -gt 0 ]; then
-        echo "PACKAGES_UPDATED<<EOF" >> $GITHUB_ENV
-        echo "$UPDATED_PACKAGES" >> $GITHUB_ENV
-        echo "EOF" >> $GITHUB_ENV
-        echo "HAS_UPDATES=true" >> $GITHUB_ENV
-    else
-        echo "PACKAGES_UPDATED=No packages needed updates" >> $GITHUB_ENV
-        echo "HAS_UPDATES=false" >> $GITHUB_ENV
-    fi
+    {
+        echo "TOTAL_PACKAGES=$TOTAL_PACKAGES"
+        echo "UPDATED_COUNT=$UPDATED_COUNT"
+        
+        if [ $UPDATED_COUNT -gt 0 ]; then
+            echo "PACKAGES_UPDATED<<EOF"
+            echo "$UPDATED_PACKAGES"
+            echo "EOF"
+            echo "HAS_UPDATES=true"
+        else
+            echo "PACKAGES_UPDATED=No packages needed updates"
+            echo "HAS_UPDATES=false"
+        fi
+    } >> "$GITHUB_ENV"
 fi
 
 if [ -n "$GITHUB_OUTPUT" ]; then
-    echo "total_packages=$TOTAL_PACKAGES" >> $GITHUB_OUTPUT
-    echo "updated_count=$UPDATED_COUNT" >> $GITHUB_OUTPUT
-    
-    if [ $UPDATED_COUNT -gt 0 ]; then
-        echo "packages_updated<<EOF" >> $GITHUB_OUTPUT
-        echo "$UPDATED_PACKAGES" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
-        echo "has_updates=true" >> $GITHUB_OUTPUT
-    else
-        echo "packages_updated=No packages needed updates" >> $GITHUB_OUTPUT
-        echo "has_updates=false" >> $GITHUB_OUTPUT
-    fi
+    {
+        echo "total_packages=$TOTAL_PACKAGES"
+        echo "updated_count=$UPDATED_COUNT"
+        
+        if [ $UPDATED_COUNT -gt 0 ]; then
+            echo "packages_updated<<EOF"
+            echo "$UPDATED_PACKAGES"
+            echo "EOF"
+            echo "has_updates=true"
+        else
+            echo "packages_updated=No packages needed updates"
+            echo "has_updates=false"
+        fi
+    } >> "$GITHUB_OUTPUT"
 fi
 
 # Exit with appropriate code
