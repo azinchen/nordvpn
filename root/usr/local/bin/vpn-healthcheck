@@ -1,11 +1,11 @@
-#!/command/with-contenv bash
-# shellcheck shell=bash
+#!/command/with-contenv sh
+# shellcheck shell=sh
 
-set -euo pipefail
+set -eu
 
 echo "$(date) Check VPN Internet connection"
 
-function httpreq
+httpreq()
 {
     case "$(curl -s --max-time 2 -I "$1" | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
         [23]) return 0;;
@@ -16,9 +16,9 @@ function httpreq
 
 counter=1
 while [ $counter -le "$CHECK_CONNECTION_ATTEMPTS" ]; do
-    IFS=';'
-    read -ra urls <<< "$CHECK_CONNECTION_URL"
-    for url in "${urls[@]}"; do
+    # Convert semicolon separated list to space separated
+    urls=$(echo "$CHECK_CONNECTION_URL" | tr ';,' ' ')
+    for url in $urls; do
         if httpreq "$url"; then
             echo "Connection via VPN is up"
             exit 0
@@ -29,12 +29,10 @@ while [ $counter -le "$CHECK_CONNECTION_ATTEMPTS" ]; do
 
     echo "Sleep between iteration for $CHECK_CONNECTION_ATTEMPT_INTERVAL"
     sleep "$CHECK_CONNECTION_ATTEMPT_INTERVAL"
-    ((counter++))
+    counter=$((counter + 1))
 done
 
 echo "Connection via VPN is down, recreate VPN"
 vpn-reconnect
-
-exit 1
 
 exit 1

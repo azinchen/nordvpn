@@ -1,7 +1,7 @@
-#!/command/with-contenv bash
-# shellcheck shell=bash
+#!/command/with-contenv sh
+# shellcheck shell=sh
 
-set -euo pipefail
+set -eu
 
 authfile="/tmp/auth"
 

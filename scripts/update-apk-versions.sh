@@ -1,5 +1,5 @@
-#!/bin/bash
-# shellcheck shell=bash
+#!/bin/sh
+# shellcheck shell=sh
 # scripts/update-apk-versions.sh
 # This script extracts package names and versions from a specified Dockerfile,
 # checks for updates from Alpine package repositories (main first, then community),
@@ -7,7 +7,7 @@
 # Usage: ./scripts/update-apk-versions.sh <path/to/Dockerfile>
 # If no argument is provided, it defaults to "Dockerfile" in the current directory.
 
-set -euo pipefail
+set -eu
 
 DOCKERFILE="${1:-Dockerfile}"
 
@@ -55,7 +55,7 @@ update_package_with_tracking() {
     pkg_with_version="$1"  # e.g., tar=1.35-r2
     TOTAL_PACKAGES=$((TOTAL_PACKAGES + 1))
     
-    if [[ "$pkg_with_version" == *"="* ]]; then
+    if [ -n "$pkg_with_version" ] && [ "${pkg_with_version#*=}" != "$pkg_with_version" ]; then
         pkg=$(echo "$pkg_with_version" | cut -d'=' -f1)
         current_version=$(echo "$pkg_with_version" | cut -d'=' -f2)
     else
@@ -99,9 +99,9 @@ update_package_with_tracking() {
 }
 
 # --- 6. Loop Over All Packages and Update ---
-while IFS= read -r package; do
+echo "$packages" | while IFS= read -r package; do
     update_package_with_tracking "$package"
-done <<< "$packages"
+done
 
 # --- 7. Output summary ---
 echo "=== UPDATE SUMMARY ==="
@@ -120,7 +120,7 @@ else
 fi
 
 # Set GitHub Actions environment variables and outputs (only if running in GitHub Actions)
-if [ -n "$GITHUB_ENV" ]; then
+if [ -n "${GITHUB_ENV:-}" ]; then
     {
         echo "TOTAL_PACKAGES=$TOTAL_PACKAGES"
         echo "UPDATED_COUNT=$UPDATED_COUNT"
@@ -137,7 +137,7 @@ if [ -n "$GITHUB_ENV" ]; then
     } >> "$GITHUB_ENV"
 fi
 
-if [ -n "$GITHUB_OUTPUT" ]; then
+if [ -n "${GITHUB_OUTPUT:-}" ]; then
     {
         echo "total_packages=$TOTAL_PACKAGES"
         echo "updated_count=$UPDATED_COUNT"

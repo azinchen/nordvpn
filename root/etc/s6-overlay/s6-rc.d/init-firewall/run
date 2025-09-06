@@ -1,7 +1,7 @@
-#!/command/with-contenv bash
-# shellcheck shell=bash
+#!/command/with-contenv sh
+# shellcheck shell=sh
 
-set -euo pipefail
+set -eu
 
 echo "Firewall is up, everything has to go through the vpn"
 iptables -P OUTPUT DROP
@@ -19,7 +19,7 @@ docker_network="$(ip -o addr show dev eth0 | awk '$3 == "inet" {print $4}')"
 docker6_network="$(ip -o addr show dev eth0 | awk '$3 == "inet6" {print $4; exit}')"
 
 echo "Enabling connection to secure interfaces"
-if [[ -n ${docker_network} ]]; then
+if [ -n "${docker_network}" ]; then
     iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
     iptables -A INPUT -i lo -j ACCEPT
     iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
@@ -31,7 +31,7 @@ if [[ -n ${docker_network} ]]; then
     iptables -t nat -A POSTROUTING -o tap+ -j MASQUERADE
     iptables -t nat -A POSTROUTING -o tun+ -j MASQUERADE
 fi
-if [[ -n ${docker6_network} ]]; then
+if [ -n "${docker6_network}" ]; then
     ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
     ip6tables -A INPUT -p icmp -j ACCEPT
     ip6tables -A INPUT -i lo -j ACCEPT
@@ -47,7 +47,7 @@ if [[ -n ${docker6_network} ]]; then
 fi
 
 echo "Enabling connection to nordvpn group"
-if [[ -n ${docker_network} ]]; then
+if [ -n "${docker_network}" ]; then
     iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
     iptables -A OUTPUT -m owner --gid-owner nordvpn -j ACCEPT || {
         echo "group match failed, fallback to open necessary ports"
@@ -55,7 +55,7 @@ if [[ -n ${docker_network} ]]; then
         iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
     }
 fi
-if [[ -n ${docker6_network} ]]; then
+if [ -n "${docker6_network}" ]; then
     ip6tables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
     ip6tables -A OUTPUT -m owner --gid-owner nordvpn -j ACCEPT || {
         echo "ip6 group match failed, fallback to open necessary ports"

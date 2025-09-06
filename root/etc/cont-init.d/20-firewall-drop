@@ -1,4 +1,4 @@
-#!/command/with-contenv bash
+#!/bin/sh
 
 echo "Firewall is up, everything has to go through the vpn"
 iptables -P OUTPUT DROP
