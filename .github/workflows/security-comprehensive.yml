@@ -326,6 +326,7 @@ jobs:
         with:
           script: |
             const currentDate = new Date().toISOString().split('T')[0];
+            const analysisOutcome = '${{ steps.codeql-analysis.outcome }}';
             
             // Get CodeQL alerts for detailed reporting
             let codeqlFindings = "No specific findings data available through API in workflow context.";
@@ -367,7 +368,7 @@ jobs:
             **Analysis Date:** ${currentDate}
             **Run ID:** ${context.runId}
             **Commit:** ${context.sha.substring(0, 8)}
-            **Status:** ${{ steps.codeql-analysis.outcome }}
+            **Status:** ${analysisOutcome}
             
             ## 📊 Analysis Details
             - **Language:** JavaScript (with generic security patterns)
@@ -748,7 +749,7 @@ jobs:
             ### 4. ✅ Test Before Committing
             \`\`\`bash
             # Run Super-Linter locally (optional)
-            docker run --rm -v "\$(pwd)":/tmp/lint \\
+            docker run --rm -v "$(pwd)":/tmp/lint \\
               -e DEFAULT_BRANCH=master \\
               -e RUN_LOCAL=true \\
               github/super-linter:latest
