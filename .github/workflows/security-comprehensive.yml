@@ -777,9 +777,9 @@ jobs:
             ### 4. ✅ Test Before Committing
             \`\`\`bash
             # Run Super-Linter locally (optional)
-            docker run --rm -v "$(pwd)":/tmp/lint \\
-              -e DEFAULT_BRANCH=master \\
-              -e RUN_LOCAL=true \\
+            docker run --rm -v "\\$(pwd)":/tmp/lint \\\\
+              -e DEFAULT_BRANCH=master \\\\
+              -e RUN_LOCAL=true \\\\
               github/super-linter:latest
             \`\`\`
             
@@ -795,7 +795,7 @@ jobs:
             **Shell Scripts:**
             \`\`\`bash
             # Quote variables
-            echo "\$variable" instead of echo $variable
+            echo "\\$variable" instead of echo \\$variable
             
             # Add error handling
             set -euo pipefail  # at top of script
