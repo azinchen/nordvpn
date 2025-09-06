@@ -714,6 +714,7 @@ jobs:
               linterFindings += `- Missing or extra commas/colons\n`;
               linterFindings += `- Trailing whitespace\n`;
               linterFindings += `- Syntax errors or malformed structures\n\n`;
+            }
             
             // Add file-specific guidance  
             linterFindings += `### 🎯 Files Likely Affected\n\n`;
