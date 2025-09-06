@@ -1,7 +1,7 @@
-# List of locations with NordVPN servers
+# List of CITIES with NordVPN servers
 
 Country | Code | ID | City | ID
---- | --- | --- | --- | ---
+--------|------|----|------|---
 Afghanistan | AF | 1 | Kabul | 98270
 Albania | AL | 2 | Tirana | 308615
 Algeria | DZ | 3 | Algiers | 2438216
