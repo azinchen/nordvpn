@@ -169,4 +169,5 @@ jobs:
     uses: ./.github/workflows/security-docker.yml
     with:
       image_tag: ${{ needs.build-and-deploy.outputs.image_tag }}
+      is_production_build: ${{ needs.build-and-deploy.outputs.is_tag == 'true' }}
     secrets: inherit
