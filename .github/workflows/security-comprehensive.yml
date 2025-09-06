@@ -232,8 +232,7 @@ jobs:
           ## 📁 Included Files
           EOF
           
-          ls -la scan-results/ | grep -v "^total" | grep -v "^d" | \
-            awk '{print "- " $9 " (" $5 " bytes)"}' >> scan-results/security-analysis-summary.md
+          ls -la scan-results/ | grep -v "^total" | grep -v "^d" | awk '{print "- " $9 " (" $5 " bytes)"}' >> scan-results/security-analysis-summary.md
           
           # Add links section
           cat >> scan-results/security-analysis-summary.md << EOF
