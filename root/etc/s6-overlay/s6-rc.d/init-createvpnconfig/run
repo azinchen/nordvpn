@@ -3,6 +3,6 @@
 
 set -euo pipefail
 
-echo "Run crond service"
+vpn-config
 
-crond -f
+exit 0

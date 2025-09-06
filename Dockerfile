@@ -37,8 +37,11 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** end run statement ****"
 
 COPY root/ /rootfs/
-RUN chmod +x /rootfs/usr/bin/* && \
-    chmod +x /rootfs/etc/nordvpn/init/*
+RUN chmod +x /rootfs/usr/local/bin/* && \
+    chmod +x /rootfs/etc/nordvpn/init/* && \
+    chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/run && \
+    chmod 644 /rootfs/etc/nordvpn/*.json && \
+    chmod 644 /rootfs/etc/nordvpn/template.ovpn
 COPY --from=s6-builder /s6/ /rootfs/
 
 # Main image
