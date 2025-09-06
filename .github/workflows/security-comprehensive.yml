@@ -529,7 +529,7 @@ jobs:
               const summaryFile = `${logDir}/summary.md`;
               if (fs.existsSync(summaryFile)) {
                 const summaryContent = fs.readFileSync(summaryFile, 'utf8');
-                linterFindings += `## � Detailed Findings\n\n${summaryContent}\n\n`;
+                linterFindings += `## 📋 Detailed Findings\n\n${summaryContent}\n\n`;
               }
               
               // Process individual log files
@@ -630,7 +630,7 @@ jobs:
             
             // Fallback to generic guidance if no specific logs found
             if (!linterFindings.trim()) {
-              linterFindings = `## � Super-Linter Issues Detected\n\n`;
+              linterFindings = `## 🔧 Super-Linter Issues Detected\n\n`;
               linterFindings += `Super-Linter detected code quality issues. View the [workflow logs](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for detailed information.\n\n`;
               
               // Add common issue categories as before
