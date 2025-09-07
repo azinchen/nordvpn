@@ -1,1 +1,7 @@
-container-init
+init-adduser
+init-firewall
+init-localnetwork
+init-whitelistnetwork
+init-createvpnconfig
+init-setupcron
+init-createauth
