@@ -7,8 +7,6 @@ echo "[INIT-CREATEAUTH] Starting init-createauth script..."
 
 authfile="/tmp/auth"
 
-echo "[INIT-CREATEAUTH] Creating auth file at $authfile"
-
 echo "$USER" > "$authfile"
 echo "$PASS" >> "$authfile"
 chmod 0600 "$authfile"

@@ -8,8 +8,6 @@ echo "[INIT-ADDUSER] Starting init-adduser script..."
 PUID=${PUID:-912}
 PGID=${PGID:-912}
 
-echo "[INIT-ADDUSER] Setting nordvpn user uid $PUID and nordvpn group gid $PGID"
-
 groupmod --non-unique --gid "$PGID" nordvpn
 usermod --non-unique --uid "$PUID" nordvpn
 

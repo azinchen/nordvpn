@@ -4,20 +4,15 @@
 set -eu
 
 echo "[INIT-WHITELISTNETWORK] Starting init-whitelistnetwork script..."
-echo "[INIT-WHITELISTNETWORK] Setting up bypass rules for domains from whitelist through regular connection"
 
 docker_network="$(ip -o addr show dev eth0 | awk '$3 == "inet" {print $4}')"
 docker6_network="$(ip -o addr show dev eth0 | awk '$3 == "inet6" {print $4; exit}')"
-echo "[INIT-WHITELISTNETWORK] Detected Docker IPv4 network: ${docker_network:-none}"
-echo "[INIT-WHITELISTNETWORK] Detected Docker IPv6 network: ${docker6_network:-none}"
 
 if [ -n "${WHITELIST:-}" ]; then
-    echo "[INIT-WHITELISTNETWORK] Processing whitelist domains: ${WHITELIST}"
     # Convert semicolon/comma separated list to space separated
     domains=$(echo "$WHITELIST" | tr ';,' ' ')
     for domain in $domains; do
         domain=$(echo "$domain" | sed 's/^.*:\/\///;s/\/.*$//')
-        echo "[INIT-WHITELISTNETWORK] Enabling connection to host $domain"
         if [ -n "${docker_network}" ]; then
             iptables -A OUTPUT -o eth0 -d $domain -j ACCEPT
         fi
@@ -25,7 +20,6 @@ if [ -n "${WHITELIST:-}" ]; then
             ip6tables -A OUTPUT -o eth0 -d $domain -j ACCEPT 2>/dev/null
         fi
     done
-    echo "[INIT-WHITELISTNETWORK] Whitelist domains configured"
 else
     echo "[INIT-WHITELISTNETWORK] No whitelist domains specified"
 fi

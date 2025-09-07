@@ -8,8 +8,4 @@ echo "[SERVICE-NORDVPND] Starting nordvpnd service..."
 authfile="/tmp/auth"
 ovpnfile="/tmp/nordvpn.ovpn"
 
-echo "[SERVICE-NORDVPND] Using auth file: $authfile"
-echo "[SERVICE-NORDVPND] Using OpenVPN config file: $ovpnfile"
-echo "[SERVICE-NORDVPND] Starting OpenVPN with options: ${OPENVPN_OPTS:-none}"
-
 exec sg nordvpn -c "openvpn --config $ovpnfile --auth-user-pass $authfile --auth-nocache ${OPENVPN_OPTS}"

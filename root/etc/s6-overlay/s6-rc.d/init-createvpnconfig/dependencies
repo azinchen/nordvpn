@@ -1,3 +1,4 @@
 init-createauth
 init-firewall
 init-localnetwork
+init-whitelistnetwork

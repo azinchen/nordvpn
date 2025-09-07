@@ -4,7 +4,6 @@
 set -eu
 
 echo "[INIT-CREATEVPNCONFIG] Starting init-createvpnconfig script..."
-echo "[INIT-CREATEVPNCONFIG] Calling vpn-config to generate VPN configuration..."
 
 vpn-config
 
