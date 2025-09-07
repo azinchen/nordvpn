@@ -528,7 +528,7 @@ fi
 echo "[VPN-CONFIG] $poollength recommended servers in pool"
 if [ "$poollength" -ne 0 ]; then
     echo "[VPN-CONFIG] --- Top 20 servers in filtered pool ---"
-    echo "$servers" | jq -r '[.hostname, .load] | "\(.[0]): \(.[1])"' | head -n 20
+    echo "$servers" | jq -r '[.hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[0]): \(.[1])% load - \(.[2]), \(.[3])"' | head -n 20
     echo "[VPN-CONFIG] ---------------------------------------"
 fi
 
@@ -541,7 +541,12 @@ name=$(echo "$servers" | jq -r '.name' | head -n 1)
 hostname=$(echo "$servers" | jq -r '.hostname' | head -n 1)
 protocol=$(getopenvpnprotocol "$TECHNOLOGY")
 
-echo "[VPN-CONFIG] Select server \"$name\" hostname=\"$hostname\" ip=\"$serverip\" protocol=\"$protocol\""
+# Extract location information
+country_name=$(echo "$servers" | jq -r '.locations[0].country.name' | head -n 1)
+city_name=$(echo "$servers" | jq -r '.locations[0].country.city.name' | head -n 1)
+echo "[VPN-CONFIG] Server location: $country_name, $city_name"
+
+echo "[VPN-CONFIG] Select server \"$name\" hostname=\"$hostname\" ip=\"$serverip\" protocol=\"$protocol\" location=\"$country_name, $city_name\""
 
 cp "$ovpntemplatefile" "$ovpnfile"
 chmod 0600 "$ovpnfile"
