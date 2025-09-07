@@ -354,6 +354,13 @@ else
 fi
 
 echo "[VPN-CONFIG] Filters built successfully"
+echo "[VPN-CONFIG] Testing basic API connectivity..."
+test_response=$(curl -sG --connect-timeout 5 --max-time 10 "https://api.nordvpn.com/v1/servers/recommendations" --data-urlencode "limit=1" 2>/dev/null || echo "")
+if [ -n "$test_response" ]; then
+    echo "[VPN-CONFIG] API connectivity test successful"
+else
+    echo "[VPN-CONFIG] WARNING: API connectivity test failed - no response from NordVPN API"
+fi
 echo "[VPN-CONFIG] Starting location processing..."
 servers=""
 locations_count=0
@@ -386,8 +393,8 @@ if [ -n "$COUNTRY" ]; then
                 
                 # Execute curl with built parameters
                 echo "[VPN-CONFIG] Executing API call for country: $value"
-                serversincountry=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
-                    $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+                echo "[VPN-CONFIG] DEBUG: curl command: curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" $curl_params"
+                serversincountry=$(eval "curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincountry" ]; then
                     echo "[VPN-CONFIG] Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
                     servers="$servers""$serversincountry"
@@ -432,8 +439,8 @@ if [ -n "$CITY" ]; then
                 
                 # Execute curl with built parameters
                 echo "[VPN-CONFIG] Executing API call for city: $value"
-                serversincity=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
-                    $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+                echo "[VPN-CONFIG] DEBUG: curl command: curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" $curl_params"
+                serversincity=$(eval "curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincity" ]; then
                     echo "[VPN-CONFIG] Request servers in \"$(getcityname "$value")\", $(echo "$serversincity" | jq -s 'length') servers received"
                     servers="$servers""$serversincity"
@@ -468,8 +475,8 @@ if [ "$poollength" -eq 0 ]; then
     fi
     
     echo "[VPN-CONFIG] Executing fallback API call"
-    servers=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
-        $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+    echo "[VPN-CONFIG] DEBUG: fallback curl command: curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" $curl_params"
+    servers=$(eval "curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
     
     if [ -n "$servers" ]; then
         poollength=$(echo "$servers" | jq -s 'unique | length')
