@@ -30,8 +30,8 @@ The image supports multiple architectures such as `amd64`, `x86`, `arm/v6`, `arm
 docker run -ti --cap-add=NET_ADMIN --device /dev/net/tun --name vpn \
            -e USER=user@email.com -e PASS=password \
            -e RANDOM_TOP=n -e RECREATE_VPN_CRON=string \
-           -e COUNTRY=country1;country2 -e GROUP=group \
-           -e TECHNOLOGY=technology -d azinchen/nordvpn
+           -e COUNTRY=country1;country2 -e CITY=city1;city2 \
+           -e GROUP=group -e TECHNOLOGY=technology -d azinchen/nordvpn
 ```
 
 Once it's up other containers can be started using it's network connection:
@@ -55,6 +55,7 @@ services:
       - USER=user@email.com
       - PASS=password
       - COUNTRY=Spain;Hong Kong;IE;131
+      - CITY=London;Paris
       - GROUP=Standard VPN servers
       - RANDOM_TOP=10
       - RECREATE_VPN_CRON=5 */3 * * *
@@ -71,7 +72,13 @@ services:
 
 ### Filter NordVPN servers
 
-This container selects recommended. The list of recommended servers can be filtered by setting `COUNTRY`, `GROUP` and/or `TECHNOLOGY` environment variables.
+This container selects recommended servers. The list of recommended servers can be filtered by setting `COUNTRY`, `CITY`, `GROUP` and/or `TECHNOLOGY` environment variables.
+
+**Server Selection Behavior:**
+- When **multiple countries or cities** are specified, the container requests recommended servers for each location separately, then combines and sorts them by server load (lowest load first)
+- When **no location is specified** or **only one country/city** is set, the recommended server list is used as-is to preserve NordVPN's optimization
+- This sorting and selection are performed **before** the `RANDOM_TOP` feature is applied
+- This ensures optimal performance: single locations maintain NordVPN's recommended order, while multiple locations are sorted to prefer less loaded servers
 
 ### Reconnect by cron
 
@@ -155,6 +162,7 @@ docker run -it --name web -p 80:80 -p 443:443 --link vpn:bit \
 Container images are configured using environment variables passed at runtime.
 
 * `COUNTRY`           - Use servers from countries in the list (IE Australia;New Zeland). Several countries can be selected using semicolon. Country can be defined by Country name, Code or ID [full list][nordvpn-countries].
+* `CITY`              - Use servers from cities in the list (IE London;Paris). Several cities can be selected using semicolon. City can be defined by City name, DNS name or ID [full list][nordvpn-cities].
 * `GROUP`             - Use servers from specific group. Only one group can be selected. Group can be defined by Name, Identifier or ID [full list][nordvpn-groups].
 * `TECHNOLOGY`        - User servers with specific technology supported. Only one technololgy can be selected. Technology can be defined by Name, Identifier or ID [full list][nordvpn-technologies]. NOTE: Only OpenVPN servers are supported by this container.
 * `RANDOM_TOP`        - Place n servers from filtered list in random order. Useful with `RECREATE_VPN_CRON`.
