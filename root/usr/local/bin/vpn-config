@@ -173,6 +173,11 @@ getgroupid()
 {
     input=$1
 
+    # Check for empty input
+    if [ -z "$input" ]; then
+        return 1
+    fi
+
     if is_numeric "$input"; then
         id=$(echo "$nvgroups" | jq -r --argjson ID "$input" 'select(.id == $ID) | .id')
     else
@@ -216,6 +221,11 @@ getgrouptitle()
 gettechnologyid()
 {
     input=$1
+
+    # Check for empty input
+    if [ -z "$input" ]; then
+        return 1
+    fi
 
     if is_numeric "$input"; then
         id=$(echo "$nvtechnologies" | jq -r --argjson ID "$input" 'select(.id == $ID) | .id')
@@ -312,8 +322,10 @@ echo "[VPN-CONFIG] Request list of recommended servers"
 echo "[VPN-CONFIG] Configuration - COUNTRY: ${COUNTRY:-none}, CITY: ${CITY:-none}"
 
 # Validate technology and group IDs and build filter strings
+echo "[VPN-CONFIG] Building technology filter..."
 tech_filter=""
 if [ -n "$TECHNOLOGY" ]; then
+    echo "[VPN-CONFIG] Resolving technology: $TECHNOLOGY"
     tech_id=$(gettechnologyid "$TECHNOLOGY")
     if [ -z "$tech_id" ]; then
         echo "[VPN-CONFIG] Warning: Could not find technology \"$TECHNOLOGY\""
@@ -321,10 +333,15 @@ if [ -n "$TECHNOLOGY" ]; then
         tech_filter=" --data-urlencode \"filters[servers_technologies][id]=$tech_id\""
         echo "[VPN-CONFIG] Technology filter: $TECHNOLOGY (ID: $tech_id)"
     fi
+else
+    echo "[VPN-CONFIG] No technology filter specified"
 fi
 
+echo "[VPN-CONFIG] Building group filter..."
+
 group_filter=""
-if [ -n "$GROUP" ]; then
+if [ -n "$GROUP" ] && [ "$GROUP" != "" ]; then
+    echo "[VPN-CONFIG] Resolving group: $GROUP"
     group_id=$(getgroupid "$GROUP")
     if [ -z "$group_id" ]; then
         echo "[VPN-CONFIG] Warning: Could not find group \"$GROUP\""
@@ -333,17 +350,22 @@ if [ -n "$GROUP" ]; then
         echo "[VPN-CONFIG] Group filter: $GROUP (ID: $group_id)"
     fi
 else
-    echo "[VPN-CONFIG] No group filter specified"
+    echo "[VPN-CONFIG] No group filter specified (GROUP='${GROUP:-}')"
 fi
 
+echo "[VPN-CONFIG] Filters built successfully"
+echo "[VPN-CONFIG] Starting location processing..."
 servers=""
 locations_count=0
 
 # Process COUNTRY if set
 if [ -n "$COUNTRY" ]; then
+    echo "[VPN-CONFIG] Processing COUNTRY parameter: $COUNTRY"
     # Convert semicolon/comma separated list to space separated  
     countries=$(echo "$COUNTRY" | tr ';,' ' ')
+    echo "[VPN-CONFIG] Split countries: $countries"
     for value in $countries; do
+        echo "[VPN-CONFIG] Processing country value: '$value'"
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))
         fi
@@ -369,10 +391,13 @@ if [ -n "$COUNTRY" ]; then
             fi
         fi
     done
+else
+    echo "[VPN-CONFIG] No COUNTRY parameter specified"
 fi
 
 # Process CITY if set
 if [ -n "$CITY" ]; then
+    echo "[VPN-CONFIG] Processing CITY parameter: $CITY"
     # Convert semicolon/comma separated list to space separated  
     cities=$(echo "$CITY" | tr ';,' ' ')
     for value in $cities; do
