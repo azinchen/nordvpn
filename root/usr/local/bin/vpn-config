@@ -321,6 +321,21 @@ locations_count=0
 echo "[VPN-CONFIG] Request list of recommended servers"
 echo "[VPN-CONFIG] Configuration - COUNTRY: ${COUNTRY:-none}, CITY: ${CITY:-none}"
 
+# Check network connectivity and firewall state before API calls
+echo "[VPN-CONFIG] Checking network connectivity and firewall state..."
+echo "[VPN-CONFIG] === Current iptables rules (filter table) ==="
+iptables -L -n -v 2>/dev/null || echo "[VPN-CONFIG] Failed to get iptables rules"
+echo "[VPN-CONFIG] === Current iptables rules (nat table) ==="
+iptables -t nat -L -n -v 2>/dev/null || echo "[VPN-CONFIG] Failed to get NAT rules"
+echo "[VPN-CONFIG] === Current routing table ==="
+ip route 2>/dev/null || echo "[VPN-CONFIG] Failed to get routing table"
+echo "[VPN-CONFIG] === DNS configuration ==="
+cat /etc/resolv.conf 2>/dev/null || echo "[VPN-CONFIG] Failed to get DNS config"
+echo "[VPN-CONFIG] === Testing basic connectivity ==="
+ping -c 1 -W 3 8.8.8.8 >/dev/null 2>&1 && echo "[VPN-CONFIG] Ping to 8.8.8.8: SUCCESS" || echo "[VPN-CONFIG] Ping to 8.8.8.8: FAILED"
+nslookup api.nordvpn.com >/dev/null 2>&1 && echo "[VPN-CONFIG] DNS lookup for api.nordvpn.com: SUCCESS" || echo "[VPN-CONFIG] DNS lookup for api.nordvpn.com: FAILED"
+echo "[VPN-CONFIG] === End network diagnostics ==="
+
 # Validate technology and group IDs and build filter strings
 echo "[VPN-CONFIG] Building technology filter..."
 tech_filter=""
