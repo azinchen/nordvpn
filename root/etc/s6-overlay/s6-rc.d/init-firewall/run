@@ -61,21 +61,17 @@ echo "[INIT-FIREWALL] Enabling connection to nordvpn group"
 if [ -n "${docker_network}" ]; then
     echo "[INIT-FIREWALL] Setting up IPv4 nordvpn group rules"
     iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
-    iptables -A OUTPUT -m owner --gid-owner nordvpn -j ACCEPT || {
-        echo "[INIT-FIREWALL] IPv4 group match failed, fallback to open necessary ports"
-        iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
-        iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
-    }
+    echo "[INIT-FIREWALL] Allowing VPN ports instead of broad GID rule for better security"
+    iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
+    iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
     echo "[INIT-FIREWALL] IPv4 nordvpn group rules configured"
 fi
 if [ -n "${docker6_network}" ]; then
     echo "[INIT-FIREWALL] Setting up IPv6 nordvpn group rules"
     ip6tables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
-    ip6tables -A OUTPUT -m owner --gid-owner nordvpn -j ACCEPT || {
-        echo "[INIT-FIREWALL] IPv6 group match failed, fallback to open necessary ports"
-        ip6tables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
-        ip6tables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
-    }
+    echo "[INIT-FIREWALL] Allowing VPN ports instead of broad GID rule for better security"
+    ip6tables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
+    ip6tables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
     echo "[INIT-FIREWALL] IPv6 nordvpn group rules configured"
 fi
 
