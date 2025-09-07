@@ -3,32 +3,32 @@
 
 set -eu
 
-echo "[INIT] Starting init-setupcron script..."
-echo "[INIT] Setting up crond service configuration"
+echo "[INIT-SETUPCRON] Starting init-setupcron script..."
+echo "[INIT-SETUPCRON] Setting up crond service configuration"
 
 cron_dir="/var/spool/cron/crontabs"
 cron_file="$cron_dir/root"
-echo "[INIT] Using cron file: $cron_file"
+echo "[INIT-SETUPCRON] Using cron file: $cron_file"
 
-echo "[INIT] Cleaning existing cron file"
+echo "[INIT-SETUPCRON] Cleaning existing cron file"
 rm -f "$cron_file"
 touch "$cron_file"
 
 if [ -n "${RECREATE_VPN_CRON:-}" ]; then
-    echo "[INIT] Creating reconnection cron: $RECREATE_VPN_CRON"
+    echo "[INIT-SETUPCRON] Creating reconnection cron: $RECREATE_VPN_CRON"
     echo "$RECREATE_VPN_CRON vpn-reconnect" >> "$cron_file"
-    echo "[INIT] VPN reconnection cron configured"
+    echo "[INIT-SETUPCRON] VPN reconnection cron configured"
 else
-    echo "[INIT] No VPN reconnection cron specified"
+    echo "[INIT-SETUPCRON] No VPN reconnection cron specified"
 fi
 
 if [ -n "${CHECK_CONNECTION_CRON:-}" ]; then
-    echo "[INIT] Creating connectivity check cron: $CHECK_CONNECTION_CRON"
+    echo "[INIT-SETUPCRON] Creating connectivity check cron: $CHECK_CONNECTION_CRON"
     echo "$CHECK_CONNECTION_CRON vpn-healthcheck" >> "$cron_file"
-    echo "[INIT] VPN health check cron configured"
+    echo "[INIT-SETUPCRON] VPN health check cron configured"
 else
-    echo "[INIT] No VPN health check cron specified"
+    echo "[INIT-SETUPCRON] No VPN health check cron specified"
 fi
 
-echo "[INIT] init-setupcron script completed successfully"
+echo "[INIT-SETUPCRON] init-setupcron script completed successfully"
 exit 0
