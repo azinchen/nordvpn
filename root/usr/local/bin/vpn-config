@@ -26,14 +26,16 @@ ovpntemplatefile="/etc/nordvpn/template.ovpn"
 ovpnfile="/tmp/nordvpn.ovpn"
 
 # Helper functions for pattern matching (sh-compatible)
-is_numeric() {
+is_numeric()
+{
     case "$1" in
         ''|*[!0-9]*) return 1 ;;
         *) return 0 ;;
     esac
 }
 
-is_specific_server() {
+is_specific_server()
+{
     case "$1" in
         [a-zA-Z][a-zA-Z][0-9]*)
             # Check if it's exactly 2 letters followed by numbers
@@ -52,7 +54,8 @@ is_specific_server() {
     esac
 }
 
-contains_substring() {
+contains_substring()
+{
     case "$1" in
         *"$2"*) return 0 ;;
         *) return 1 ;;
