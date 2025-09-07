@@ -38,7 +38,6 @@ RUN echo "**** install security fix packages ****" && \
 
 COPY root/ /rootfs/
 RUN chmod +x /rootfs/usr/local/bin/* && \
-    chmod +x /rootfs/etc/cont-init.d/* && \
     chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/run && \
     chmod 644 /rootfs/etc/nordvpn/*.json && \
     chmod 644 /rootfs/etc/nordvpn/template.ovpn
@@ -75,4 +74,4 @@ RUN echo "**** install security fix packages ****" && \
 
 COPY --from=rootfs-builder /rootfs/ /
 
-ENTRYPOINT ["/init"]
+ENTRYPOINT ["/usr/local/bin/entrypoint"]
