@@ -3,49 +3,63 @@
 
 set -eu
 
-echo "Bypass requests to local network thru regular connection"
+echo "[INIT] Starting init-localnetwork script..."
+echo "[INIT] Setting up bypass rules for local network through regular connection"
 
 docker_network="$(ip -o addr show dev eth0 | awk '$3 == "inet" {print $4}')"
 docker6_network="$(ip -o addr show dev eth0 | awk '$3 == "inet6" {print $4; exit}')"
+echo "[INIT] Detected Docker IPv4 network: ${docker_network:-none}"
+echo "[INIT] Detected Docker IPv6 network: ${docker6_network:-none}"
 
 if [ -n "${docker_network}" ]; then
+    echo "[INIT] Setting up IPv4 local network bypass rules for ${docker_network}"
     iptables -A INPUT -s "${docker_network}" -j ACCEPT
     iptables -A FORWARD -d "${docker_network}" -j ACCEPT
     iptables -A FORWARD -s "${docker_network}" -j ACCEPT
     iptables -A OUTPUT -d "${docker_network}" -j ACCEPT
+    echo "[INIT] IPv4 local network rules configured"
 fi
 if [ -n "${docker6_network}" ]; then
+    echo "[INIT] Setting up IPv6 local network bypass rules for ${docker6_network}"
     ip6tables -A INPUT -s "${docker6_network}" -j ACCEPT 2>/dev/null
     ip6tables -A FORWARD -d "${docker6_network}" -j ACCEPT 2>/dev/null
     ip6tables -A FORWARD -s "${docker6_network}" -j ACCEPT 2>/dev/null
     ip6tables -A OUTPUT -d "${docker6_network}" -j ACCEPT 2>/dev/null
+    echo "[INIT] IPv6 local network rules configured"
 fi
 
 if [ -n "${docker_network}" ] && [ -n "${NETWORK:-}" ]; then
+    echo "[INIT] Processing custom IPv4 networks from NETWORK variable: ${NETWORK}"
     gw=$(ip route | awk '/default/ {print $3}')
+    echo "[INIT] Using gateway: ${gw}"
     # Convert semicolon/comma separated list to space separated
     networks=$(echo "$NETWORK" | tr ';,' ' ')
     for net in $networks; do
-        echo "Enabling connection to network ${net}"
+        echo "[INIT] Enabling connection to network ${net}"
         ip route | grep -q "$net" || ip route add to "$net" via "$gw" dev eth0
         iptables -A INPUT -s "$net" -j ACCEPT
         iptables -A FORWARD -d "$net" -j ACCEPT
         iptables -A FORWARD -s "$net" -j ACCEPT
         iptables -A OUTPUT -d "$net" -j ACCEPT
     done
+    echo "[INIT] Custom IPv4 networks configured"
 fi
 if [ -n "${docker6_network}" ] && [ -n "${NETWORK6:-}" ]; then
+    echo "[INIT] Processing custom IPv6 networks from NETWORK6 variable: ${NETWORK6}"
     gw6=$(ip -6 route | awk '/default/{print $3}')
+    echo "[INIT] Using IPv6 gateway: ${gw6}"
     # Convert semicolon/comma separated list to space separated
     networks6=$(echo "$NETWORK6" | tr ';,' ' ')
     for net6 in $networks6; do
-        echo "Enabling connection to network ${net6}"
+        echo "[INIT] Enabling connection to network ${net6}"
         ip -6 route | grep -q "$net6" || ip -6 route add to "$net6" via "$gw6" dev eth0
         ip6tables -A INPUT -s "$net6" -j ACCEPT
         ip6tables -A FORWARD -d "$net6" -j ACCEPT
         ip6tables -A FORWARD -s "$net6" -j ACCEPT
         ip6tables -A OUTPUT -d "$net6" -j ACCEPT
     done
+    echo "[INIT] Custom IPv6 networks configured"
 fi
 
+echo "[INIT] init-localnetwork script completed successfully"
 exit 0

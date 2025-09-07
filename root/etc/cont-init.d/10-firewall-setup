@@ -3,6 +3,8 @@
 
 set -eu
 
-echo "Firewall drop is disabled at this stage"
+echo "[INIT] Starting 10-firewall-setup script..."
+echo "[INIT] Firewall drop is disabled at this stage"
+echo "[INIT] 10-firewall-setup script completed successfully"
 
 exit 0

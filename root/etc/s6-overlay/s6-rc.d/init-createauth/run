@@ -3,13 +3,16 @@
 
 set -eu
 
+echo "[INIT] Starting init-createauth script..."
+
 authfile="/tmp/auth"
 
-echo "Create auth file"
+echo "[INIT] Creating auth file at $authfile"
 
 echo "$USER" > "$authfile"
 echo "$PASS" >> "$authfile"
 chmod 0600 "$authfile"
 chown nordvpn:nordvpn "$authfile"
 
+echo "[INIT] init-createauth script completed successfully"
 exit 0

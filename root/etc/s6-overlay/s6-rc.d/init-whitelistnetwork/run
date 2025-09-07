@@ -3,33 +3,42 @@
 
 set -eu
 
-echo "Bypass requests to domains from whitelist thru regular connection"
+echo "[INIT] Starting init-whitelistnetwork script..."
+echo "[INIT] Setting up bypass rules for domains from whitelist through regular connection"
 
 docker_network="$(ip -o addr show dev eth0 | awk '$3 == "inet" {print $4}')"
 docker6_network="$(ip -o addr show dev eth0 | awk '$3 == "inet6" {print $4; exit}')"
+echo "[INIT] Detected Docker IPv4 network: ${docker_network:-none}"
+echo "[INIT] Detected Docker IPv6 network: ${docker6_network:-none}"
 
 if [ -n "${WHITELIST:-}" ]; then
+    echo "[INIT] Processing whitelist domains: ${WHITELIST}"
     # Convert semicolon/comma separated list to space separated
     domains=$(echo "$WHITELIST" | tr ';,' ' ')
     for domain in $domains; do
         domain=$(echo "$domain" | sed 's/^.*:\/\///;s/\/.*$//')
-        echo "Enabling connection to host $domain"
+        echo "[INIT] Enabling connection to host $domain"
         if [ -n "${docker_network}" ]; then
-            sg nordvpn -c "iptables  -A OUTPUT -o eth0 -d $domain -j ACCEPT"
+            iptables -A OUTPUT -o eth0 -d $domain -j ACCEPT
         fi
         if [ -n "${docker6_network}" ]; then
-            sg nordvpn -c "ip6tables -A OUTPUT -o eth0 -d $domain -j ACCEPT 2>/dev/null"
+            ip6tables -A OUTPUT -o eth0 -d $domain -j ACCEPT 2>/dev/null
         fi
-
     done
+    echo "[INIT] Whitelist domains configured"
+else
+    echo "[INIT] No whitelist domains specified"
 fi
 
-echo "Bypass requests to NordVPN API thru regular connection"
+echo "[INIT] Setting up bypass for NordVPN API through regular connection"
 if [ -n "${docker_network}" ]; then
-    sg nordvpn -c "iptables  -A OUTPUT -d api.nordvpn.com -j ACCEPT"
+    echo "[INIT] Adding IPv4 rule for api.nordvpn.com"
+    iptables -A OUTPUT -d api.nordvpn.com -j ACCEPT
 fi
 if [ -n "${docker6_network}" ]; then
-    sg nordvpn -c "ip6tables -A OUTPUT -d api.nordvpn.com -j ACCEPT 2> /dev/null"
+    echo "[INIT] Adding IPv6 rule for api.nordvpn.com"
+    ip6tables -A OUTPUT -d api.nordvpn.com -j ACCEPT 2> /dev/null
 fi
 
+echo "[INIT] init-whitelistnetwork script completed successfully"
 exit 0

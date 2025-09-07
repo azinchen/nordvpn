@@ -3,6 +3,9 @@
 
 set -eu
 
+echo "[VPN-CONFIG] Starting vpn-config script..."
+echo "[VPN-CONFIG] Environment: COUNTRY=${COUNTRY:-}, CITY=${CITY:-}, TECHNOLOGY=${TECHNOLOGY:-OpenVPN UDP}, GROUP=${GROUP:-}, RANDOM_TOP=${RANDOM_TOP:-0}"
+
 # Set default values for environment variables
 COUNTRY="${COUNTRY:-}"
 CITY="${CITY:-}"
@@ -10,9 +13,11 @@ TECHNOLOGY="${TECHNOLOGY:-OpenVPN UDP}"
 GROUP="${GROUP:-}"
 RANDOM_TOP="${RANDOM_TOP:-0}"
 
+echo "[VPN-CONFIG] Loading NordVPN configuration data..."
 nvcountries=$(jq -c '.[]' < "/etc/nordvpn/countries.json")
 nvgroups=$(jq -c '.[]' < "/etc/nordvpn/groups.json")
 nvtechnologies=$(jq -c '.[]' < "/etc/nordvpn/technologies.json")
+echo "[VPN-CONFIG] Configuration data loaded successfully"
 
 numericregex="^[0-9]+$"
 specific_server_regex="^[a-zA-Z]{2}[0-9]+$"
@@ -443,11 +448,15 @@ sed -i "s/__PROTOCOL__/$protocol/g" "$ovpnfile"
 sed -i "s/__X509_NAME__/$hostname/g" "$ovpnfile"
 
 if [ "$protocol" = "udp" ]; then
+    echo "[VPN-CONFIG] Setting port 1194 for UDP protocol"
     sed -i "s/__PORT__/1194/g" "$ovpnfile"
 elif [ "$protocol" = "tcp" ]; then
+    echo "[VPN-CONFIG] Setting port 443 for TCP protocol"
     sed -i "s/__PORT__/443/g" "$ovpnfile"
 else
     echo "ERROR: TECHNOLOGY environment variable contains wrong parameter \"$TECHNOLOGY\""
 fi
 
+echo "[VPN-CONFIG] VPN configuration file created successfully at $ovpnfile"
+echo "[VPN-CONFIG] vpn-config script completed successfully"
 exit 0

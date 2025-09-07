@@ -3,6 +3,7 @@
 
 set -eu
 
-echo "Run crond service"
+echo "[SERVICE] Starting crond service..."
+echo "[SERVICE] Running cron daemon in foreground"
 
 exec crond -f
