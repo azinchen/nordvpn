@@ -330,7 +330,7 @@ if [ -n "$TECHNOLOGY" ]; then
     if [ -z "$tech_id" ]; then
         echo "[VPN-CONFIG] Warning: Could not find technology \"$TECHNOLOGY\""
     else
-        tech_filter=" --data-urlencode \"filters[servers_technologies][id]=$tech_id\""
+        tech_filter="--data-urlencode filters[servers_technologies][id]=$tech_id"
         echo "[VPN-CONFIG] Technology filter: $TECHNOLOGY (ID: $tech_id)"
     fi
 else
@@ -346,7 +346,7 @@ if [ -n "$GROUP" ] && [ "$GROUP" != "" ]; then
     if [ -z "$group_id" ]; then
         echo "[VPN-CONFIG] Warning: Could not find group \"$GROUP\""
     else
-        group_filter=" --data-urlencode \"filters[servers_groups][id]=$group_id\""
+        group_filter="--data-urlencode filters[servers_groups][id]=$group_id"
         echo "[VPN-CONFIG] Group filter: $GROUP (ID: $group_id)"
     fi
 else
@@ -375,11 +375,24 @@ if [ -n "$COUNTRY" ]; then
             countryid=$(getcountryid "$value")
             if [ -n "$countryid" ]; then
                 echo "[VPN-CONFIG] Processing country: $value (ID: $countryid)"
-                # Build curl command with country filter and technology/group filters
-                curl_cmd="curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" --data-urlencode \"filters[country_id]=$countryid\"$tech_filter$group_filter"
-                
+                # Execute curl with proper arguments
                 echo "[VPN-CONFIG] Executing API call for country: $value"
-                serversincountry=$(eval "$curl_cmd" 2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+                if [ -n "$tech_filter" ] && [ -n "$group_filter" ]; then
+                    serversincountry=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
+                        --data-urlencode "filters[country_id]=$countryid" \
+                        --data-urlencode "filters[servers_technologies][id]=$tech_id" \
+                        --data-urlencode "filters[servers_groups][id]=$group_id" \
+                        2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+                elif [ -n "$tech_filter" ]; then
+                    serversincountry=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
+                        --data-urlencode "filters[country_id]=$countryid" \
+                        --data-urlencode "filters[servers_technologies][id]=$tech_id" \
+                        2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+                else
+                    serversincountry=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
+                        --data-urlencode "filters[country_id]=$countryid" \
+                        2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+                fi
                 if [ -n "$serversincountry" ]; then
                     echo "[VPN-CONFIG] Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
                     servers="$servers""$serversincountry"
@@ -413,11 +426,27 @@ if [ -n "$CITY" ]; then
                 longitude=$(echo "$coords" | cut -d',' -f2)
                 echo "[VPN-CONFIG] Processing city: $value (coordinates: $coords)"
                 
-                # Build curl command with coordinates and technology/group filters
-                curl_cmd="curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" --data-urlencode \"coordinates[latitude]=$latitude\" --data-urlencode \"coordinates[longitude]=$longitude\"$tech_filter$group_filter"
-                
+                # Execute curl with proper arguments
                 echo "[VPN-CONFIG] Executing API call for city: $value"
-                serversincity=$(eval "$curl_cmd" 2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+                if [ -n "$tech_filter" ] && [ -n "$group_filter" ]; then
+                    serversincity=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
+                        --data-urlencode "coordinates[latitude]=$latitude" \
+                        --data-urlencode "coordinates[longitude]=$longitude" \
+                        --data-urlencode "filters[servers_technologies][id]=$tech_id" \
+                        --data-urlencode "filters[servers_groups][id]=$group_id" \
+                        2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+                elif [ -n "$tech_filter" ]; then
+                    serversincity=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
+                        --data-urlencode "coordinates[latitude]=$latitude" \
+                        --data-urlencode "coordinates[longitude]=$longitude" \
+                        --data-urlencode "filters[servers_technologies][id]=$tech_id" \
+                        2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+                else
+                    serversincity=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
+                        --data-urlencode "coordinates[latitude]=$latitude" \
+                        --data-urlencode "coordinates[longitude]=$longitude" \
+                        2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+                fi
                 if [ -n "$serversincity" ]; then
                     echo "[VPN-CONFIG] Request servers in \"$(getcityname "$value")\", $(echo "$serversincity" | jq -s 'length') servers received"
                     servers="$servers""$serversincity"
@@ -441,11 +470,22 @@ fi
 # If no servers found, fallback to default recommended servers
 if [ "$poollength" -eq 0 ]; then
     echo "[VPN-CONFIG] No servers found for specified criteria, requesting default recommended servers"
-    # Build curl command with technology and group filters only
-    curl_cmd="curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\"$tech_filter$group_filter"
     
     echo "[VPN-CONFIG] Executing fallback API call"
-    servers=$(eval "$curl_cmd" 2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+    if [ -n "$tech_filter" ] && [ -n "$group_filter" ]; then
+        servers=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
+            --data-urlencode "filters[servers_technologies][id]=$tech_id" \
+            --data-urlencode "filters[servers_groups][id]=$group_id" \
+            2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+    elif [ -n "$tech_filter" ]; then
+        servers=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
+            --data-urlencode "filters[servers_technologies][id]=$tech_id" \
+            2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+    else
+        servers=$(curl -sG --connect-timeout 10 --max-time 30 "https://api.nordvpn.com/v1/servers/recommendations" \
+            2>/dev/null | jq -c '.[]' 2>/dev/null || echo "")
+    fi
+    
     if [ -n "$servers" ]; then
         poollength=$(echo "$servers" | jq -s 'unique | length')
         echo "[VPN-CONFIG] Default recommended servers: $(echo "$servers" | jq -s 'length') servers received"
