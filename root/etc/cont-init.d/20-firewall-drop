@@ -1,7 +1,7 @@
 #!/command/with-contenv sh
 # shellcheck shell=sh
 
-echo "Firewall is up, everything has to go through the vpn"
+echo "Dropping all firewall rules"
 iptables -P OUTPUT DROP
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
