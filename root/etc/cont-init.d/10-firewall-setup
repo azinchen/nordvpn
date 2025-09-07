@@ -1,0 +1,8 @@
+#!/command/with-contenv sh
+# shellcheck shell=sh
+
+set -eu
+
+echo "Firewall drop is disabled at this stage"
+
+exit 0
