@@ -4,7 +4,7 @@
 set -eu
 
 echo "[VPN-HEALTHCHECK] Starting VPN healthcheck script..."
-echo "$(date) Check VPN Internet connection"
+echo "[VPN-HEALTHCHECK] $(date) Check VPN Internet connection"
 
 httpreq()
 {
@@ -36,7 +36,7 @@ while [ $counter -le "$CHECK_CONNECTION_ATTEMPTS" ]; do
 done
 
 echo "[VPN-HEALTHCHECK] All connection attempts failed, initiating VPN reconnection"
-echo "Connection via VPN is down, recreate VPN"
+echo "[VPN-HEALTHCHECK] Connection via VPN is down, recreate VPN"
 vpn-reconnect
 
 echo "[VPN-HEALTHCHECK] VPN healthcheck completed with failure"
