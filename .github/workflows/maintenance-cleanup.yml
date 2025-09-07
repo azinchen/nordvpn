@@ -21,6 +21,15 @@ on:
         required: false
         default: '90'
         type: string
+      protect_latest_per:
+        description: 'Protection level for latest tags'
+        required: false
+        default: 'patch'
+        type: choice
+        options:
+          - none
+          - minor
+          - patch
 
 jobs:
   cleanup-registries:
@@ -69,27 +78,37 @@ jobs:
           DRY_RUN="false"
           MAX_RELEASE_DAYS="365"  # Keep release tags for 1 year
           MAX_DEV_DAYS="90"       # Keep dev tags for 3 months
+          PROTECT_LATEST_PER="patch"  # Default protection level
           
           # Override with manual inputs if workflow_dispatch
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             DRY_RUN="${{ inputs.dry_run }}"
             MAX_RELEASE_DAYS="${{ inputs.max_release_days }}"
             MAX_DEV_DAYS="${{ inputs.max_dev_days }}"
+            PROTECT_LATEST_PER="${{ inputs.protect_latest_per }}"
           fi
           
           echo "dry_run=${DRY_RUN}" >> $GITHUB_OUTPUT
           echo "max_release_days=${MAX_RELEASE_DAYS}" >> $GITHUB_OUTPUT
           echo "max_dev_days=${MAX_DEV_DAYS}" >> $GITHUB_OUTPUT
+          echo "protect_latest_per=${PROTECT_LATEST_PER}" >> $GITHUB_OUTPUT
           
           echo "Configuration:"
           echo "  Dry run: ${DRY_RUN}"
           echo "  Max release days: ${MAX_RELEASE_DAYS}"
           echo "  Max dev days: ${MAX_DEV_DAYS}"
+          echo "  Protect latest per: ${PROTECT_LATEST_PER}"
 
       - name: Run registry cleanup (dry-run preview)
         if: steps.params.outputs.dry_run == 'true'
         run: |
           echo "🔍 Running in DRY-RUN mode - no images will be deleted"
+          
+          # Prepare protect-latest-per argument
+          PROTECT_ARG=""
+          if [ "${{ steps.params.outputs.protect_latest_per }}" != "none" ]; then
+            PROTECT_ARG="--protect-latest-per ${{ steps.params.outputs.protect_latest_per }}"
+          fi
           
           # Always cleanup GHCR
           echo "Cleaning up GHCR..."
@@ -100,7 +119,7 @@ jobs:
             --ghcr-package nordvpn \
             --max-release-days ${{ steps.params.outputs.max_release_days }} \
             --max-dev-days ${{ steps.params.outputs.max_dev_days }} \
-            --protect-latest-per patch
+            ${PROTECT_ARG}
           
           # Only cleanup Docker Hub if secrets are available
           if [ "${{ steps.check_dockerhub.outputs.dockerhub_available }}" == "true" ]; then
@@ -112,7 +131,7 @@ jobs:
               --docker-repo nordvpn \
               --max-release-days ${{ steps.params.outputs.max_release_days }} \
               --max-dev-days ${{ steps.params.outputs.max_dev_days }} \
-              --protect-latest-per patch
+              ${PROTECT_ARG}
           else
             echo "⚠️  Skipping Docker Hub cleanup - secrets not available"
           fi
@@ -121,6 +140,12 @@ jobs:
         if: steps.params.outputs.dry_run == 'false'
         run: |
           echo "🗑️  Running in EXECUTE mode - images will be deleted"
+          
+          # Prepare protect-latest-per argument
+          PROTECT_ARG=""
+          if [ "${{ steps.params.outputs.protect_latest_per }}" != "none" ]; then
+            PROTECT_ARG="--protect-latest-per ${{ steps.params.outputs.protect_latest_per }}"
+          fi
           
           # Always cleanup GHCR
           echo "Cleaning up GHCR..."
@@ -131,7 +156,7 @@ jobs:
             --ghcr-package nordvpn \
             --max-release-days ${{ steps.params.outputs.max_release_days }} \
             --max-dev-days ${{ steps.params.outputs.max_dev_days }} \
-            --protect-latest-per patch \
+            ${PROTECT_ARG} \
             --execute \
             --yes
           
@@ -145,7 +170,7 @@ jobs:
               --docker-repo nordvpn \
               --max-release-days ${{ steps.params.outputs.max_release_days }} \
               --max-dev-days ${{ steps.params.outputs.max_dev_days }} \
-              --protect-latest-per patch \
+              ${PROTECT_ARG} \
               --execute \
               --yes
           else
@@ -160,7 +185,7 @@ jobs:
           echo "Settings used:"
           echo "  - Max release tag age: ${{ steps.params.outputs.max_release_days }} days"
           echo "  - Max dev tag age: ${{ steps.params.outputs.max_dev_days }} days"
-          echo "  - Protected tags: latest (default) + highest patch per version"
+          echo "  - Protected tags: latest (default) + ${{ steps.params.outputs.protect_latest_per == 'none' && 'no version protection' || format('highest {0} per version', steps.params.outputs.protect_latest_per) }}"
           echo "  - GHCR cleanup: enabled"
           echo "  - Docker Hub cleanup: ${{ steps.check_dockerhub.outputs.dockerhub_available == 'true' && 'enabled' || 'skipped (secrets missing)' }}"
           echo "Registries processed:"
