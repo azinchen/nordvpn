@@ -30,26 +30,5 @@ else
     echo "[INIT-WHITELISTNETWORK] No whitelist domains specified"
 fi
 
-echo "[INIT-WHITELISTNETWORK] Setting up bypass for NordVPN API through regular connection"
-if [ -n "${docker_network}" ]; then
-    echo "[INIT-WHITELISTNETWORK] Resolving api.nordvpn.com IP addresses..."
-    api_ips=$(nslookup api.nordvpn.com 2>/dev/null | grep "Address:" | grep -v "#53" | awk '{print $2}' | head -5)
-    if [ -n "$api_ips" ]; then
-        for api_ip in $api_ips; do
-            echo "[INIT-WHITELISTNETWORK] Adding IPv4 rule for api.nordvpn.com IP: $api_ip"
-            iptables -A OUTPUT -d "$api_ip" -j ACCEPT
-        done
-    else
-        echo "[INIT-WHITELISTNETWORK] Fallback: Adding IPv4 rule for api.nordvpn.com by name"
-        iptables -A OUTPUT -d api.nordvpn.com -j ACCEPT
-    fi
-fi
-if [ -n "${docker6_network}" ]; then
-    echo "[INIT-WHITELISTNETWORK] Adding IPv6 rule for api.nordvpn.com"
-    ip6tables -A OUTPUT -d api.nordvpn.com -j ACCEPT 2> /dev/null
-fi
-
 echo "[INIT-WHITELISTNETWORK] init-whitelistnetwork script completed successfully"
-echo "[INIT-WHITELISTNETWORK] DEBUG: Final OUTPUT rules with api.nordvpn.com:"
-iptables -L OUTPUT -n -v | grep -E "(api\.nordvpn\.com|104\.19\.|104\.16\.)" || echo "[INIT-WHITELISTNETWORK] No api.nordvpn.com rules found in OUTPUT chain"
 exit 0

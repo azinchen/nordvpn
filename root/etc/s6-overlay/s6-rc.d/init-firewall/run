@@ -75,5 +75,15 @@ if [ -n "${docker6_network}" ]; then
     echo "[INIT-FIREWALL] IPv6 nordvpn group rules configured"
 fi
 
+echo "[INIT-FIREWALL] Setting up bypass for NordVPN API through regular connection"
+if [ -n "${docker_network}" ]; then
+    echo "[INIT-FIREWALL] Adding IPv4 rule for api.nordvpn.com by domain name"
+    iptables -A OUTPUT -d api.nordvpn.com -j ACCEPT
+fi
+if [ -n "${docker6_network}" ]; then
+    echo "[INIT-FIREWALL] Adding IPv6 rule for api.nordvpn.com by domain name"
+    ip6tables -A OUTPUT -d api.nordvpn.com -j ACCEPT 2> /dev/null
+fi
+
 echo "[INIT-FIREWALL] init-firewall script completed successfully"
 exit 0
