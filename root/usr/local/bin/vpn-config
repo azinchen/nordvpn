@@ -297,6 +297,27 @@ handle_specific_server()
     printf '%s' "$constructed_json"
 }
 
+request_servers()
+{
+    local filters="$1"
+    local description="$2"
+    
+    if [ -n "$filters" ]; then
+        curl_cmd="curl -sG \"https://api.nordvpn.com/v1/servers/recommendations\"$filters"
+    else
+        curl_cmd="curl -sG \"https://api.nordvpn.com/v1/servers/recommendations\""
+    fi
+    
+    local result=$(eval "$curl_cmd" | jq -c '.[]')
+    local count=$(echo "$result" | jq -s 'length')
+    
+    if [ -n "$description" ]; then
+        echo "Request servers$description, $count servers received"
+    fi
+    
+    printf '%s' "$result"
+}
+
 echo "Select NordVPN server and create config file"
 echo "Apply filter technology \"$(gettechnologyname "$TECHNOLOGY")\", group \"$(getgrouptitle "$GROUP")\""
 
@@ -342,11 +363,9 @@ if [ -n "$COUNTRY" ]; then
         elif [ -n "$value" ]; then
             countryid=$(getcountryid "$value")
             if [ -n "$countryid" ]; then
-                # Build curl command with country filter and technology/group filters
-                curl_cmd="curl -sG \"https://api.nordvpn.com/v1/servers/recommendations\" --data-urlencode \"filters[country_id]=$countryid\"$tech_filter$group_filter"
-                
-                serversincountry=$(eval "$curl_cmd" | jq -c '.[]')
-                echo "Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
+                # Build filter string and request servers
+                country_filter=" --data-urlencode \"filters[country_id]=$countryid\""
+                serversincountry=$(request_servers "$country_filter$tech_filter$group_filter" " in \"$(getcountryname "$value")\"")
                 servers="$servers""$serversincountry"
             else
                 echo "Warning: Could not find country \"$value\""
@@ -371,11 +390,9 @@ if [ -n "$CITY" ]; then
                 latitude=$(echo "$coords" | cut -d',' -f1)
                 longitude=$(echo "$coords" | cut -d',' -f2)
                 
-                # Build curl command with coordinates and technology/group filters
-                curl_cmd="curl -sG \"https://api.nordvpn.com/v1/servers/recommendations\" --data-urlencode \"coordinates[latitude]=$latitude\" --data-urlencode \"coordinates[longitude]=$longitude\"$tech_filter$group_filter"
-                
-                serversincity=$(eval "$curl_cmd" | jq -c '.[]')
-                echo "Request servers in \"$(getcityname "$value")\", $(echo "$serversincity" | jq -s 'length') servers received"
+                # Build filter string and request servers
+                coords_filter=" --data-urlencode \"coordinates[latitude]=$latitude\" --data-urlencode \"coordinates[longitude]=$longitude\""
+                serversincity=$(request_servers "$coords_filter$tech_filter$group_filter" " in \"$(getcityname "$value")\"")
                 servers="$servers""$serversincity"
             else
                 echo "Warning: Could not find coordinates for city \"$value\""
@@ -389,10 +406,12 @@ poollength=$(echo "$servers" | jq -s 'unique | length')
 # If no servers found, fallback to default recommended servers
 if [ "$poollength" -eq 0 ]; then
     echo "No servers found for specified criteria, requesting default recommended servers"
-    # Build curl command with technology and group filters only
-    curl_cmd="curl -sG \"https://api.nordvpn.com/v1/servers/recommendations\"$tech_filter$group_filter"
-    
-    servers=$(eval "$curl_cmd" | jq -c '.[]')
+    # Try with technology and group filters first
+    servers=$(request_servers "$tech_filter$group_filter" "")
+    if [ -z "$servers" ]; then
+        echo "Warning: Fallback API request failed, trying without filters"
+        servers=$(request_servers "" "")
+    fi
     poollength=$(echo "$servers" | jq -s 'unique | length')
     echo "Default recommended servers: $(echo "$servers" | jq -s 'length') servers received"
 fi
@@ -425,6 +444,7 @@ fi
 
 if [ "$poollength" -eq 0 ]; then
     echo "ERROR: list of selected servers is empty"
+    exit 1
 fi
 
 serverip=$(echo "$servers" | jq -r '.station' | head -n 1)
