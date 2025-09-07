@@ -3,12 +3,19 @@
 
 set -eu
 
+# Set default values for environment variables
+COUNTRY="${COUNTRY:-}"
+CITY="${CITY:-}"
+TECHNOLOGY="${TECHNOLOGY:-OpenVPN UDP}"
+GROUP="${GROUP:-}"
+RANDOM_TOP="${RANDOM_TOP:-0}"
+
 nvcountries=$(jq -c '.[]' < "/etc/nordvpn/countries.json")
 nvgroups=$(jq -c '.[]' < "/etc/nordvpn/groups.json")
 nvtechnologies=$(jq -c '.[]' < "/etc/nordvpn/technologies.json")
 
 numericregex="^[0-9]+$"
-specific_country_regex="^[a-zA-Z]{2}[0-9]+$"
+specific_server_regex="^[a-zA-Z]{2}[0-9]+$"
 
 ovpntemplatefile="/etc/nordvpn/template.ovpn"
 ovpnfile="/tmp/nordvpn.ovpn"
@@ -21,7 +28,7 @@ is_numeric() {
     esac
 }
 
-is_specific_country() {
+is_specific_server() {
     case "$1" in
         [a-zA-Z][a-zA-Z][0-9]*)
             # Check if it's exactly 2 letters followed by numbers
@@ -91,6 +98,72 @@ getcountryname()
     return 0
 }
 
+getcityid()
+{
+    input=$1
+
+    if is_numeric "$input"; then
+        id=$(echo "$nvcountries" | jq -r --argjson ID "$input" 'select(.cities[]? | .id == $ID) | .cities[] | select(.id == $ID) | .id' | head -n 1)
+    else
+        id=$(echo "$nvcountries" | jq -r --arg NAME "$input" 'select(.cities[]? | .name == $NAME) | .cities[] | select(.name == $NAME) | .id' | head -n 1)
+        if [ -z "$id" ]; then
+            id=$(echo "$nvcountries" | jq -r --arg DNS_NAME "$input" 'select(.cities[]? | .dns_name == $DNS_NAME) | .cities[] | select(.dns_name == $DNS_NAME) | .id' | head -n 1)
+        fi
+    fi
+
+    printf '%s' "$id"
+
+    if [ -z "$id" ]; then
+        return 1
+    fi
+
+    return 0
+}
+
+getcityname()
+{
+    input=$1
+
+    if is_numeric "$input"; then
+        name=$(echo "$nvcountries" | jq -r --argjson ID "$input" 'select(.cities[]? | .id == $ID) | .cities[] | select(.id == $ID) | .name' | head -n 1)
+    else
+        name=$(echo "$nvcountries" | jq -r --arg NAME "$input" 'select(.cities[]? | .name == $NAME) | .cities[] | select(.name == $NAME) | .name' | head -n 1)
+        if [ -z "$name" ]; then
+            name=$(echo "$nvcountries" | jq -r --arg DNS_NAME "$input" 'select(.cities[]? | .dns_name == $DNS_NAME) | .cities[] | select(.dns_name == $DNS_NAME) | .name' | head -n 1)
+        fi
+    fi
+
+    printf '%s' "$name"
+
+    if [ -z "$name" ]; then
+        return 1
+    fi
+
+    return 0
+}
+
+getcitycoordinates()
+{
+    input=$1
+
+    # First get the city ID using existing function
+    cityid=$(getcityid "$input")
+    if [ -z "$cityid" ]; then
+        return 1
+    fi
+
+    # Then get coordinates using the city ID
+    coords=$(echo "$nvcountries" | jq -r --argjson ID "$cityid" 'select(.cities[]? | .id == $ID) | .cities[] | select(.id == $ID) | "\(.latitude),\(.longitude)"' | head -n 1)
+
+    printf '%s' "$coords"
+
+    if [ -z "$coords" ] || [ "$coords" = "null,null" ]; then
+        return 1
+    fi
+
+    return 0
+}
+
 getgroupid()
 {
     input=$1
@@ -121,7 +194,7 @@ getgrouptitle()
         title=$(echo "$nvgroups" | jq -r --argjson ID "$input" 'select(.id == $ID) | .title')
     else
         title=$(echo "$nvgroups" | jq -r --arg TITLE "$input" 'select(.title == $TITLE) | .title')
-        if [ -z "$id" ]; then
+        if [ -z "$title" ]; then
             title=$(echo "$nvgroups" | jq -r --arg IDENTIFIER "$input" 'select(.identifier == $IDENTIFIER) | .title')
         fi
     fi
@@ -165,7 +238,7 @@ gettechnologyname()
         name=$(echo "$nvtechnologies" | jq -r --argjson ID "$input" 'select(.id == $ID) | .name')
     else
         name=$(echo "$nvtechnologies" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .name')
-        if [ -z "$id" ]; then
+        if [ -z "$name" ]; then
             name=$(echo "$nvtechnologies" | jq -r --arg IDENTIFIER "$input" 'select(.identifier == $IDENTIFIER) | .name')
         fi
     fi
@@ -208,51 +281,131 @@ getopenvpnprotocol()
     fi
 }
 
+handle_specific_server()
+{
+    value=$1
+    
+    # Convert to lowercase using tr instead of ${value,,}
+    hostname="$(echo "$value" | tr '[:upper:]' '[:lower:]').nordvpn.com"
+    ip="$(host -t A "$hostname" | awk '{print $4}')"
+    # Extract country code (first 2 chars) and number part
+    country_code=$(echo "$value" | cut -c1-2)
+    country_num=$(echo "$value" | cut -c3-)
+    name="$(getcountryname "$country_code") #$country_num"
+    constructed_json=$(printf '{"name":"%s","hostname":"%s","load":0,"station":"%s"}' "$name" "$hostname" "$ip")
+    
+    printf '%s' "$constructed_json"
+}
+
 echo "Select NordVPN server and create config file"
-
-echo "Apply filter technology \"$(gettechnologyname "$TECHNOLOGY")\""
-filterserver="filters\[servers_technologies\]\[id\]=$(gettechnologyid "$TECHNOLOGY")"
-
-# Convert semicolon separated GROUP list to space separated
-groups=$(echo "$GROUP" | tr ';,' ' ')
-for value in $groups; do
-    if [ -n "$value" ]; then
-        echo "Apply filter group \"$(getgrouptitle "$value")\""
-        filterserver="$filterserver""&filters\[servers_groups\]\[id\]=$(getgroupid "$value")"
-    fi
-done
+echo "Apply filter technology \"$(gettechnologyname "$TECHNOLOGY")\", group \"$(getgrouptitle "$GROUP")\""
 
 servers=""
+locations_count=0
 
 echo "Request list of recommended servers"
-if [ -z "$COUNTRY" ]; then
-    servers=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?$filterserver" | jq -c '.[]')
-    echo "Request nearest servers, $(echo "$servers" | jq -s 'length') servers received"
-else
+
+# Validate technology and group IDs and build filter strings
+tech_filter=""
+if [ -n "$TECHNOLOGY" ]; then
+    tech_id=$(gettechnologyid "$TECHNOLOGY")
+    if [ -z "$tech_id" ]; then
+        echo "Warning: Could not find technology \"$TECHNOLOGY\""
+    else
+        tech_filter=" --data-urlencode \"filters[servers_technologies][id]=$tech_id\""
+    fi
+fi
+
+group_filter=""
+if [ -n "$GROUP" ]; then
+    group_id=$(getgroupid "$GROUP")
+    if [ -z "$group_id" ]; then
+        echo "Warning: Could not find group \"$GROUP\""
+    else
+        group_filter=" --data-urlencode \"filters[servers_groups][id]=$group_id\""
+    fi
+fi
+
+servers=""
+locations_count=0
+
+# Process COUNTRY if set
+if [ -n "$COUNTRY" ]; then
     # Convert semicolon/comma separated list to space separated  
     countries=$(echo "$COUNTRY" | tr ';,' ' ')
     for value in $countries; do
-        if is_specific_country "$value"; then
-            # Convert to lowercase using tr instead of ${value,,}
-            hostname="$(echo "$value" | tr '[:upper:]' '[:lower:]').nordvpn.com"
-            ip="$(host -t A "$hostname" | awk '{print $4}')"
-            # Extract country code (first 2 chars) and number part
-            country_code=$(echo "$value" | cut -c1-2)
-            country_num=$(echo "$value" | cut -c3-)
-            name="$(getcountryname "$country_code") #$country_num"
-            constructed_json=$(printf '{"name":"%s","hostname":"%s","load":0,"station":"%s"}' "$name" "$hostname" "$ip")
-            servers="$servers""$constructed_json"
+        if [ -n "$value" ]; then
+            locations_count=$((locations_count + 1))
+        fi
+        if is_specific_server "$value"; then
+            servers="$servers$(handle_specific_server "$value")"
         elif [ -n "$value" ]; then
             countryid=$(getcountryid "$value")
-            serversincountry=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?$filterserver&filters\[country_id\]=$countryid" | jq -c '.[]')
-            echo "Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
-            servers="$servers""$serversincountry"
+            if [ -n "$countryid" ]; then
+                # Build curl command with country filter and technology/group filters
+                curl_cmd="curl -sG \"https://api.nordvpn.com/v1/servers/recommendations\" --data-urlencode \"filters[country_id]=$countryid\"$tech_filter$group_filter"
+                
+                serversincountry=$(eval "$curl_cmd" | jq -c '.[]')
+                echo "Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
+                servers="$servers""$serversincountry"
+            else
+                echo "Warning: Could not find country \"$value\""
+            fi
+        fi
+    done
+fi
+
+# Process CITY if set
+if [ -n "$CITY" ]; then
+    # Convert semicolon/comma separated list to space separated  
+    cities=$(echo "$CITY" | tr ';,' ' ')
+    for value in $cities; do
+        if [ -n "$value" ]; then
+            locations_count=$((locations_count + 1))
+        fi
+        if is_specific_server "$value"; then
+            servers="$servers$(handle_specific_server "$value")"
+        elif [ -n "$value" ]; then
+            coords=$(getcitycoordinates "$value")
+            if [ -n "$coords" ]; then
+                latitude=$(echo "$coords" | cut -d',' -f1)
+                longitude=$(echo "$coords" | cut -d',' -f2)
+                
+                # Build curl command with coordinates and technology/group filters
+                curl_cmd="curl -sG \"https://api.nordvpn.com/v1/servers/recommendations\" --data-urlencode \"coordinates[latitude]=$latitude\" --data-urlencode \"coordinates[longitude]=$longitude\"$tech_filter$group_filter"
+                
+                serversincity=$(eval "$curl_cmd" | jq -c '.[]')
+                echo "Request servers in \"$(getcityname "$value")\", $(echo "$serversincity" | jq -s 'length') servers received"
+                servers="$servers""$serversincity"
+            else
+                echo "Warning: Could not find coordinates for city \"$value\""
+            fi
         fi
     done
 fi
 
 poollength=$(echo "$servers" | jq -s 'unique | length')
-servers=$(echo "$servers" | jq -s -c 'unique | sort_by(.load) | .[]')
+
+# If no servers found, fallback to default recommended servers
+if [ "$poollength" -eq 0 ]; then
+    echo "No servers found for specified criteria, requesting default recommended servers"
+    # Build curl command with technology and group filters only
+    curl_cmd="curl -sG \"https://api.nordvpn.com/v1/servers/recommendations\"$tech_filter$group_filter"
+    
+    servers=$(eval "$curl_cmd" | jq -c '.[]')
+    poollength=$(echo "$servers" | jq -s 'unique | length')
+    echo "Default recommended servers: $(echo "$servers" | jq -s 'length') servers received"
+fi
+
+# Only sort by load if multiple locations are specified, otherwise keep recommended order
+if [ \( -n "$COUNTRY" \) -o \( -n "$CITY" \) ] && [ "$locations_count" -gt 1 ] && [ "$poollength" -gt 0 ]; then
+    # Multiple locations - sort by load and remove duplicates
+    servers=$(echo "$servers" | jq -s -c 'unique | sort_by(.load) | .[]')
+    echo "Sort servers by load"
+else
+    # Single location or no location specified - keep recommended order as is
+    servers=$(echo "$servers" | jq -s -c '.[]')
+fi
 
 if [ "$RANDOM_TOP" -ne 0 ]; then
     if [ "$RANDOM_TOP" -lt "$poollength" ]; then
