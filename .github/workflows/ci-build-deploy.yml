@@ -62,7 +62,8 @@ jobs:
           
           # Get clean branch/tag name
           if [[ "$IS_TAG" == "true" ]]; then
-            IMAGE_TAG=${GITHUB_REF_NAME}
+            # Remove 'v' prefix from tag name for production releases
+            IMAGE_TAG=${GITHUB_REF_NAME#v}
             PLATFORMS="${{ env.PLATFORMS }}"  # Build all platforms for tags
             PUSH_TO_PROD=true
           elif [[ "$GITHUB_REF_NAME" == "master" ]]; then
