@@ -5,16 +5,8 @@ set -eu
 
 echo "[INIT-FIREWALL] Starting init-firewall script..."
 echo "[INIT-FIREWALL] Setting up firewall - everything has to go through the VPN"
-iptables -P OUTPUT DROP
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
-ip6tables -P OUTPUT DROP 2>/dev/null
-ip6tables -P INPUT DROP 2>/dev/null
-ip6tables -P FORWARD DROP 2>/dev/null
-iptables -F
-iptables -X
-ip6tables -F 2>/dev/null
-ip6tables -X 2>/dev/null
+
+# Note: Basic DROP policies and rule flushing now handled by early-firewall script
 
 docker_network="$(ip -o addr show dev eth0 | awk '$3 == "inet" {print $4}')"
 docker6_network="$(ip -o addr show dev eth0 | awk '$3 == "inet6" {print $4; exit}')"

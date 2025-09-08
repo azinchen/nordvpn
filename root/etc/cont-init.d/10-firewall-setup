@@ -1,9 +1,0 @@
-#!/command/with-contenv sh
-# shellcheck shell=sh
-
-set -eu
-
-echo "[INIT-10-FIREWALL-SETUP] Starting 10-firewall-setup script..."
-echo "[INIT-10-FIREWALL-SETUP] 10-firewall-setup script completed successfully"
-
-exit 0

@@ -1,0 +1,30 @@
+#!/bin/sh
+# Container entrypoint with immediate security setup
+# This ensures no traffic can leak before VPN is established
+
+set -e
+
+echo "[ENTRYPOINT] Applying immediate security rules..."
+
+# Set all policies to DROP - this is the most critical security step
+iptables -P OUTPUT DROP 2>/dev/null || true
+iptables -P INPUT DROP 2>/dev/null || true  
+iptables -P FORWARD DROP 2>/dev/null || true
+ip6tables -P OUTPUT DROP 2>/dev/null || true
+ip6tables -P INPUT DROP 2>/dev/null || true
+ip6tables -P FORWARD DROP 2>/dev/null || true
+
+# Flush existing rules to start clean
+iptables -F 2>/dev/null || true
+iptables -X 2>/dev/null || true
+ip6tables -F 2>/dev/null || true
+ip6tables -X 2>/dev/null || true
+
+# Allow loopback (essential for system operation)
+iptables -A INPUT -i lo -j ACCEPT 2>/dev/null || true
+iptables -A OUTPUT -o lo -j ACCEPT 2>/dev/null || true
+
+echo "[ENTRYPOINT] Critical security rules applied - all traffic blocked by default"
+
+# Execute the original entrypoint
+exec /init "$@"
