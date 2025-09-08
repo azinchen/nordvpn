@@ -3,7 +3,6 @@ FROM alpine:3.22.1 AS s6-builder
 
 ENV PACKAGE="just-containers/s6-overlay"
 ENV PACKAGEVERSION="3.2.1.0"
-ARG TARGETPLATFORM
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
@@ -14,19 +13,19 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
     echo "**** download ${PACKAGE} ****" && \
-    PACKAGEPLATFORM=$(case ${TARGETPLATFORM} in \
-        "linux/386")      echo "i486"        ;; \
-        "linux/amd64")    echo "x86_64"      ;; \
-        "linux/arm/v6")   echo "arm"         ;; \
-        "linux/arm/v7")   echo "armhf"       ;; \
-        "linux/arm64")    echo "aarch64"     ;; \
-        "linux/ppc64le")  echo "powerpc64le" ;; \
-        "linux/riscv64")  echo "riscv64"     ;; \
-        "linux/s390x")    echo "s390x"       ;; \
-        *)                echo ""            ;; esac) && \
+    s6_arch=$(case $(uname -m) in \
+        i?86)           echo "i486"        ;; \
+        x86_64)         echo "x86_64"      ;; \
+        aarch64)        echo "aarch64"     ;; \
+        armv6l)         echo "arm"         ;; \
+        armv7l)         echo "armhf"       ;; \
+        ppc64le)        echo "powerpc64le" ;; \
+        riscv64)        echo "riscv64"     ;; \
+        s390x)          echo "s390x"       ;; \
+        *)              echo ""            ;; esac) && \
     echo "Package ${PACKAGE} platform ${PACKAGEPLATFORM} version ${PACKAGEVERSION}" && \
     wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-noarch.tar.xz" -qO /tmp/s6-overlay-noarch.tar.xz && \
-    wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-${PACKAGEPLATFORM}.tar.xz" -qO /tmp/s6-overlay-binaries.tar.xz && \
+    wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-${s6_arch}.tar.xz" -qO /tmp/s6-overlay-binaries.tar.xz && \
     tar -C /s6/ -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
     tar -C /s6/ -Jxpf /tmp/s6-overlay-binaries.tar.xz
 
