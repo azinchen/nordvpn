@@ -62,19 +62,28 @@ fi
 if [ -n "${docker_network}" ]; then
     if nordvpn_ips=$(nslookup api.nordvpn.com 2>/dev/null | awk '/^Address: / { print $2 }' | grep -v '#' | grep -v ':'); then
         for ip in $nordvpn_ips; do
+            iptables -A OUTPUT -d "$ip" -p tcp --dport 443 -j ACCEPT 2>/dev/null || true
+            iptables -A OUTPUT -d "$ip" -p tcp --dport 80 -j ACCEPT 2>/dev/null || true
             iptables -A OUTPUT -d "$ip" -j ACCEPT 2>/dev/null || true
         done
+        echo "[INIT-FIREWALL] Added rules for NordVPN API IPs: $nordvpn_ips"
     else
         echo "[INIT-FIREWALL] Warning: Could not resolve api.nordvpn.com IPv4, allowing by hostname"
+        iptables -A OUTPUT -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT 2>/dev/null || true
+        iptables -A OUTPUT -d api.nordvpn.com -p tcp --dport 80 -j ACCEPT 2>/dev/null || true
         iptables -A OUTPUT -d api.nordvpn.com -j ACCEPT 2>/dev/null || true
     fi
 fi
 if [ -n "${docker6_network}" ]; then
     if nordvpn_ipv6s=$(nslookup api.nordvpn.com 2>/dev/null | awk '/^Address: / { print $2 }' | grep ':'); then
         for ip in $nordvpn_ipv6s; do
+            ip6tables -A OUTPUT -d "$ip" -p tcp --dport 443 -j ACCEPT 2>/dev/null || true
+            ip6tables -A OUTPUT -d "$ip" -p tcp --dport 80 -j ACCEPT 2>/dev/null || true
             ip6tables -A OUTPUT -d "$ip" -j ACCEPT 2>/dev/null || true
         done
     else
+        ip6tables -A OUTPUT -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT 2>/dev/null || true
+        ip6tables -A OUTPUT -d api.nordvpn.com -p tcp --dport 80 -j ACCEPT 2>/dev/null || true
         ip6tables -A OUTPUT -d api.nordvpn.com -j ACCEPT 2>/dev/null || true
     fi
 fi
