@@ -110,7 +110,7 @@ jobs:
           
           # Download and process countries.json with beautiful formatting
           curl -s "https://api.nordvpn.com/v1/servers/countries" \
-            | jq '.[] | .cities = [.cities[]? | del(.hub_score)] | .' \
+            | jq '.[] | del(.serverCount) | .cities = [.cities[]? | del(.serverCount, .hub_score)] | .' \
             > root/etc/nordvpn/countries.json
 
           UPDATE_DATE=$(date +%y%m%d)
@@ -133,8 +133,7 @@ jobs:
             ### Changes:
             - Updated countries data from NordVPN API
             - Beautifully formatted JSON with proper indentation
-            - Included server count information for countries and cities
-            - Removed hub_score field (frequently changing metric)
+            - Removed serverCount and hub_score fields (frequently changing metrics)
             - Optimized for both readability and runtime performance
             
             ---
