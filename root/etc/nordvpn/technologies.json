@@ -1,186 +1,184 @@
-[
-  {
-    "id": 1,
-    "name": "IKEv2/IPSec",
-    "identifier": "ikev2",
-    "internal_identifier": "ikev2-ipsec",
-    "created_at": "2017-03-21 12:00:24",
-    "updated_at": "2017-09-05 14:20:16"
-  },
-  {
-    "id": 3,
-    "name": "OpenVPN UDP",
-    "identifier": "openvpn_udp",
-    "internal_identifier": "openvpn-udp",
-    "created_at": "2017-05-04 08:03:24",
-    "updated_at": "2017-05-09 19:27:37"
-  },
-  {
-    "id": 5,
-    "name": "OpenVPN TCP",
-    "identifier": "openvpn_tcp",
-    "internal_identifier": "openvpn-tcp",
-    "created_at": "2017-05-09 19:28:14",
-    "updated_at": "2017-05-09 19:28:14"
-  },
-  {
-    "id": 7,
-    "name": "Socks 5",
-    "identifier": "socks",
-    "internal_identifier": "socks",
-    "created_at": "2017-05-09 19:28:57",
-    "updated_at": "2017-06-13 14:27:05"
-  },
-  {
-    "id": 9,
-    "name": "HTTP Proxy",
-    "identifier": "proxy",
-    "internal_identifier": "proxy",
-    "created_at": "2017-05-09 19:29:09",
-    "updated_at": "2017-06-13 14:25:29"
-  },
-  {
-    "id": 11,
-    "name": "PPTP",
-    "identifier": "pptp",
-    "internal_identifier": "pptp",
-    "created_at": "2017-05-09 19:29:16",
-    "updated_at": "2017-05-09 19:29:16"
-  },
-  {
-    "id": 13,
-    "name": "L2TP/IPSec",
-    "identifier": "l2tp",
-    "internal_identifier": "l2tp-ipsec",
-    "created_at": "2017-05-09 19:29:26",
-    "updated_at": "2017-09-05 14:19:42"
-  },
-  {
-    "id": 15,
-    "name": "OpenVPN UDP Obfuscated",
-    "identifier": "openvpn_xor_udp",
-    "internal_identifier": "openvpn-xor-udp",
-    "created_at": "2017-05-26 14:04:04",
-    "updated_at": "2017-11-07 08:37:53"
-  },
-  {
-    "id": 17,
-    "name": "OpenVPN TCP Obfuscated",
-    "identifier": "openvpn_xor_tcp",
-    "internal_identifier": "openvpn-xor-tcp",
-    "created_at": "2017-05-26 14:04:27",
-    "updated_at": "2017-11-07 08:38:16"
-  },
-  {
-    "id": 19,
-    "name": "HTTP CyberSec Proxy",
-    "identifier": "proxy_cybersec",
-    "internal_identifier": "proxy-cybersec",
-    "created_at": "2017-08-22 12:44:49",
-    "updated_at": "2017-08-22 12:44:49"
-  },
-  {
-    "id": 21,
-    "name": "HTTP Proxy (SSL)",
-    "identifier": "proxy_ssl",
-    "internal_identifier": "proxy-ssl",
-    "created_at": "2017-10-02 12:45:14",
-    "updated_at": "2017-10-02 12:45:14"
-  },
-  {
-    "id": 23,
-    "name": "HTTP CyberSec Proxy (SSL)",
-    "identifier": "proxy_ssl_cybersec",
-    "internal_identifier": "proxy-ssl-cybersec",
-    "created_at": "2017-10-02 12:50:49",
-    "updated_at": "2017-10-02 12:50:49"
-  },
-  {
-    "id": 26,
-    "name": "IKEv2/IPSec IPv6",
-    "identifier": "ikev2_v6",
-    "internal_identifier": "ikev2-ipsec-v6",
-    "created_at": "2018-09-18 13:35:16",
-    "updated_at": "2018-09-18 13:35:16"
-  },
-  {
-    "id": 29,
-    "name": "OpenVPN UDP IPv6",
-    "identifier": "openvpn_udp_v6",
-    "internal_identifier": "openvpn-udp-v6",
-    "created_at": "2018-09-18 13:35:38",
-    "updated_at": "2018-09-18 13:35:38"
-  },
-  {
-    "id": 32,
-    "name": "OpenVPN TCP IPv6",
-    "identifier": "openvpn_tcp_v6",
-    "internal_identifier": "openvpn-tcp-v6",
-    "created_at": "2018-09-18 13:36:02",
-    "updated_at": "2018-09-18 13:36:02"
-  },
-  {
-    "id": 35,
-    "name": "Wireguard",
-    "identifier": "wireguard_udp",
-    "internal_identifier": "wireguard-udp",
-    "created_at": "2019-02-14 14:08:43",
-    "updated_at": "2019-02-14 14:08:43"
-  },
-  {
-    "id": 38,
-    "name": "OpenVPN UDP TLS Crypt",
-    "identifier": "openvpn_udp_tls_crypt",
-    "internal_identifier": "openvpn-udp-tls-crypt",
-    "created_at": "2019-03-21 14:52:42",
-    "updated_at": "2019-03-21 14:52:42"
-  },
-  {
-    "id": 41,
-    "name": "OpenVPN TCP TLS Crypt",
-    "identifier": "openvpn_tcp_tls_crypt",
-    "internal_identifier": "openvpn-tcp-tls-crypt",
-    "created_at": "2019-03-21 14:53:05",
-    "updated_at": "2019-03-21 14:53:05"
-  },
-  {
-    "id": 42,
-    "name": "OpenVPN UDP Dedicated",
-    "identifier": "openvpn_dedicated_udp",
-    "internal_identifier": "openvpn-dedicated-udp",
-    "created_at": "2019-09-19 14:49:18",
-    "updated_at": "2019-09-19 14:49:18"
-  },
-  {
-    "id": 45,
-    "name": "OpenVPN TCP Dedicated",
-    "identifier": "openvpn_dedicated_tcp",
-    "internal_identifier": "openvpn-dedicated-tcp",
-    "created_at": "2019-09-19 14:49:54",
-    "updated_at": "2019-09-19 14:49:54"
-  },
-  {
-    "id": 48,
-    "name": "Skylark",
-    "identifier": "skylark",
-    "internal_identifier": "skylark",
-    "created_at": "2019-10-28 13:29:37",
-    "updated_at": "2021-12-27 05:35:17"
-  },
-  {
-    "id": 50,
-    "name": "Mesh Relay",
-    "identifier": "mesh_relay",
-    "internal_identifier": "mesh-relay",
-    "created_at": "2021-05-13 12:17:05",
-    "updated_at": "2021-05-13 12:17:05"
-  },
-  {
-    "id": 51,
-    "name": "NordWhisper",
-    "identifier": "nordwhisper",
-    "internal_identifier": "nordwhisper",
-    "created_at": "2024-10-07 10:17:17",
-    "updated_at": "2024-10-07 10:17:17"
-  }
-]
+{
+  "id": 1,
+  "name": "IKEv2/IPSec",
+  "identifier": "ikev2",
+  "internal_identifier": "ikev2-ipsec",
+  "created_at": "2017-03-21 12:00:24",
+  "updated_at": "2017-09-05 14:20:16"
+}
+{
+  "id": 3,
+  "name": "OpenVPN UDP",
+  "identifier": "openvpn_udp",
+  "internal_identifier": "openvpn-udp",
+  "created_at": "2017-05-04 08:03:24",
+  "updated_at": "2017-05-09 19:27:37"
+}
+{
+  "id": 5,
+  "name": "OpenVPN TCP",
+  "identifier": "openvpn_tcp",
+  "internal_identifier": "openvpn-tcp",
+  "created_at": "2017-05-09 19:28:14",
+  "updated_at": "2017-05-09 19:28:14"
+}
+{
+  "id": 7,
+  "name": "Socks 5",
+  "identifier": "socks",
+  "internal_identifier": "socks",
+  "created_at": "2017-05-09 19:28:57",
+  "updated_at": "2017-06-13 14:27:05"
+}
+{
+  "id": 9,
+  "name": "HTTP Proxy",
+  "identifier": "proxy",
+  "internal_identifier": "proxy",
+  "created_at": "2017-05-09 19:29:09",
+  "updated_at": "2017-06-13 14:25:29"
+}
+{
+  "id": 11,
+  "name": "PPTP",
+  "identifier": "pptp",
+  "internal_identifier": "pptp",
+  "created_at": "2017-05-09 19:29:16",
+  "updated_at": "2017-05-09 19:29:16"
+}
+{
+  "id": 13,
+  "name": "L2TP/IPSec",
+  "identifier": "l2tp",
+  "internal_identifier": "l2tp-ipsec",
+  "created_at": "2017-05-09 19:29:26",
+  "updated_at": "2017-09-05 14:19:42"
+}
+{
+  "id": 15,
+  "name": "OpenVPN UDP Obfuscated",
+  "identifier": "openvpn_xor_udp",
+  "internal_identifier": "openvpn-xor-udp",
+  "created_at": "2017-05-26 14:04:04",
+  "updated_at": "2017-11-07 08:37:53"
+}
+{
+  "id": 17,
+  "name": "OpenVPN TCP Obfuscated",
+  "identifier": "openvpn_xor_tcp",
+  "internal_identifier": "openvpn-xor-tcp",
+  "created_at": "2017-05-26 14:04:27",
+  "updated_at": "2017-11-07 08:38:16"
+}
+{
+  "id": 19,
+  "name": "HTTP CyberSec Proxy",
+  "identifier": "proxy_cybersec",
+  "internal_identifier": "proxy-cybersec",
+  "created_at": "2017-08-22 12:44:49",
+  "updated_at": "2017-08-22 12:44:49"
+}
+{
+  "id": 21,
+  "name": "HTTP Proxy (SSL)",
+  "identifier": "proxy_ssl",
+  "internal_identifier": "proxy-ssl",
+  "created_at": "2017-10-02 12:45:14",
+  "updated_at": "2017-10-02 12:45:14"
+}
+{
+  "id": 23,
+  "name": "HTTP CyberSec Proxy (SSL)",
+  "identifier": "proxy_ssl_cybersec",
+  "internal_identifier": "proxy-ssl-cybersec",
+  "created_at": "2017-10-02 12:50:49",
+  "updated_at": "2017-10-02 12:50:49"
+}
+{
+  "id": 26,
+  "name": "IKEv2/IPSec IPv6",
+  "identifier": "ikev2_v6",
+  "internal_identifier": "ikev2-ipsec-v6",
+  "created_at": "2018-09-18 13:35:16",
+  "updated_at": "2018-09-18 13:35:16"
+}
+{
+  "id": 29,
+  "name": "OpenVPN UDP IPv6",
+  "identifier": "openvpn_udp_v6",
+  "internal_identifier": "openvpn-udp-v6",
+  "created_at": "2018-09-18 13:35:38",
+  "updated_at": "2018-09-18 13:35:38"
+}
+{
+  "id": 32,
+  "name": "OpenVPN TCP IPv6",
+  "identifier": "openvpn_tcp_v6",
+  "internal_identifier": "openvpn-tcp-v6",
+  "created_at": "2018-09-18 13:36:02",
+  "updated_at": "2018-09-18 13:36:02"
+}
+{
+  "id": 35,
+  "name": "Wireguard",
+  "identifier": "wireguard_udp",
+  "internal_identifier": "wireguard-udp",
+  "created_at": "2019-02-14 14:08:43",
+  "updated_at": "2019-02-14 14:08:43"
+}
+{
+  "id": 38,
+  "name": "OpenVPN UDP TLS Crypt",
+  "identifier": "openvpn_udp_tls_crypt",
+  "internal_identifier": "openvpn-udp-tls-crypt",
+  "created_at": "2019-03-21 14:52:42",
+  "updated_at": "2019-03-21 14:52:42"
+}
+{
+  "id": 41,
+  "name": "OpenVPN TCP TLS Crypt",
+  "identifier": "openvpn_tcp_tls_crypt",
+  "internal_identifier": "openvpn-tcp-tls-crypt",
+  "created_at": "2019-03-21 14:53:05",
+  "updated_at": "2019-03-21 14:53:05"
+}
+{
+  "id": 42,
+  "name": "OpenVPN UDP Dedicated",
+  "identifier": "openvpn_dedicated_udp",
+  "internal_identifier": "openvpn-dedicated-udp",
+  "created_at": "2019-09-19 14:49:18",
+  "updated_at": "2019-09-19 14:49:18"
+}
+{
+  "id": 45,
+  "name": "OpenVPN TCP Dedicated",
+  "identifier": "openvpn_dedicated_tcp",
+  "internal_identifier": "openvpn-dedicated-tcp",
+  "created_at": "2019-09-19 14:49:54",
+  "updated_at": "2019-09-19 14:49:54"
+}
+{
+  "id": 48,
+  "name": "Skylark",
+  "identifier": "skylark",
+  "internal_identifier": "skylark",
+  "created_at": "2019-10-28 13:29:37",
+  "updated_at": "2021-12-27 05:35:17"
+}
+{
+  "id": 50,
+  "name": "Mesh Relay",
+  "identifier": "mesh_relay",
+  "internal_identifier": "mesh-relay",
+  "created_at": "2021-05-13 12:17:05",
+  "updated_at": "2021-05-13 12:17:05"
+}
+{
+  "id": 51,
+  "name": "NordWhisper",
+  "identifier": "nordwhisper",
+  "internal_identifier": "nordwhisper",
+  "created_at": "2024-10-07 10:17:17",
+  "updated_at": "2024-10-07 10:17:17"
+}

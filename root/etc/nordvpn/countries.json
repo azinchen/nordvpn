@@ -1,2039 +1,2037 @@
-[
-  {
-    "id": 1,
-    "name": "Afghanistan",
-    "code": "AF",
-    "cities": [
-      {
-        "id": 98270,
-        "name": "Kabul",
-        "latitude": 34.516667,
-        "longitude": 69.183333,
-        "dns_name": "kabul"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "name": "Albania",
-    "code": "AL",
-    "cities": [
-      {
-        "id": 308615,
-        "name": "Tirana",
-        "latitude": 41.3275,
-        "longitude": 19.8188889,
-        "dns_name": "tirana"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "name": "Algeria",
-    "code": "DZ",
-    "cities": [
-      {
-        "id": 2438216,
-        "name": "Algiers",
-        "latitude": 36.7630556,
-        "longitude": 3.0505556,
-        "dns_name": "algiers"
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "name": "Andorra",
-    "code": "AD",
-    "cities": [
-      {
-        "id": 20,
-        "name": "Andorra la Vella",
-        "latitude": 42.5,
-        "longitude": 1.5166667,
-        "dns_name": "andorra-la-vella"
-      }
-    ]
-  },
-  {
-    "id": 6,
-    "name": "Angola",
-    "code": "AO",
-    "cities": [
-      {
-        "id": 351407,
-        "name": "Luanda",
-        "latitude": -8.836804,
-        "longitude": 13.233174,
-        "dns_name": "luanda"
-      }
-    ]
-  },
-  {
-    "id": 10,
-    "name": "Argentina",
-    "code": "AR",
-    "cities": [
-      {
-        "id": 384866,
-        "name": "Buenos Aires",
-        "latitude": -34.5875,
-        "longitude": -58.6725,
-        "dns_name": "buenos-aires"
-      }
-    ]
-  },
-  {
-    "id": 11,
-    "name": "Armenia",
-    "code": "AM",
-    "cities": [
-      {
-        "id": 322385,
-        "name": "Yerevan",
-        "latitude": 40.1811111,
-        "longitude": 44.5136111,
-        "dns_name": "yerevan"
-      }
-    ]
-  },
-  {
-    "id": 13,
-    "name": "Australia",
-    "code": "AU",
-    "cities": [
-      {
-        "id": 452717,
-        "name": "Adelaide",
-        "latitude": -34.928661,
-        "longitude": 138.598633,
-        "dns_name": "adelaide"
-      },
-      {
-        "id": 456494,
-        "name": "Brisbane",
-        "latitude": -27.47101,
-        "longitude": 153.024292,
-        "dns_name": "brisbane"
-      },
-      {
-        "id": 470813,
-        "name": "Melbourne",
-        "latitude": -37.813938,
-        "longitude": 144.963425,
-        "dns_name": "melbourne"
-      },
-      {
-        "id": 475799,
-        "name": "Perth",
-        "latitude": -31.95224,
-        "longitude": 115.861397,
-        "dns_name": "perth"
-      },
-      {
-        "id": 479570,
-        "name": "Sydney",
-        "latitude": -33.861481,
-        "longitude": 151.205475,
-        "dns_name": "sydney"
-      }
-    ]
-  },
-  {
-    "id": 14,
-    "name": "Austria",
-    "code": "AT",
-    "cities": [
-      {
-        "id": 448799,
-        "name": "Vienna",
-        "latitude": 48.2,
-        "longitude": 16.366667,
-        "dns_name": "vienna"
-      }
-    ]
-  },
-  {
-    "id": 15,
-    "name": "Azerbaijan",
-    "code": "AZ",
-    "cities": [
-      {
-        "id": 490037,
-        "name": "Baku",
-        "latitude": 40.395278,
-        "longitude": 49.882222,
-        "dns_name": "baku"
-      }
-    ]
-  },
-  {
-    "id": 16,
-    "name": "Bahamas",
-    "code": "BS",
-    "cities": [
-      {
-        "id": 988382,
-        "name": "Nassau",
-        "latitude": 25.078056,
-        "longitude": -77.338611,
-        "dns_name": "nassau"
-      }
-    ]
-  },
-  {
-    "id": 17,
-    "name": "Bahrain",
-    "code": "BH",
-    "cities": [
-      {
-        "id": 789398,
-        "name": "Manama",
-        "latitude": 26.2361111,
-        "longitude": 50.5830556,
-        "dns_name": "manama"
-      }
-    ]
-  },
-  {
-    "id": 18,
-    "name": "Bangladesh",
-    "code": "BD",
-    "cities": [
-      {
-        "id": 594935,
-        "name": "Dhaka",
-        "latitude": 23.7230556,
-        "longitude": 90.4086111,
-        "dns_name": "dhaka"
-      }
-    ]
-  },
-  {
-    "id": 21,
-    "name": "Belgium",
-    "code": "BE",
-    "cities": [
-      {
-        "id": 654293,
-        "name": "Brussels",
-        "latitude": 50.833333,
-        "longitude": 4.333333,
-        "dns_name": "brussels"
-      }
-    ]
-  },
-  {
-    "id": 22,
-    "name": "Belize",
-    "code": "BZ",
-    "cities": [
-      {
-        "id": 1037459,
-        "name": "Belmopan",
-        "latitude": 17.25,
-        "longitude": -88.7666667,
-        "dns_name": "belmopan"
-      }
-    ]
-  },
-  {
-    "id": 24,
-    "name": "Bermuda",
-    "code": "BM",
-    "cities": [
-      {
-        "id": 809078,
-        "name": "Hamilton",
-        "latitude": 32.2941667,
-        "longitude": -64.7838889,
-        "dns_name": "hamilton"
-      }
-    ]
-  },
-  {
-    "id": 25,
-    "name": "Bhutan",
-    "code": "BT",
-    "cities": [
-      {
-        "id": 989699,
-        "name": "Thimphu",
-        "latitude": 27.472222,
-        "longitude": 89.636111,
-        "dns_name": "thimphu"
-      }
-    ]
-  },
-  {
-    "id": 26,
-    "name": "Bolivia",
-    "code": "BO",
-    "cities": [
-      {
-        "id": 838514,
-        "name": "La Paz",
-        "latitude": -16.5,
-        "longitude": -68.15,
-        "dns_name": "la-paz"
-      }
-    ]
-  },
-  {
-    "id": 27,
-    "name": "Bosnia and Herzegovina",
-    "code": "BA",
-    "cities": [
-      {
-        "id": 548462,
-        "name": "Novi Travnik",
-        "latitude": 44.1711111,
-        "longitude": 17.6575,
-        "dns_name": "novi-travnik"
-      }
-    ]
-  },
-  {
-    "id": 30,
-    "name": "Brazil",
-    "code": "BR",
-    "cities": [
-      {
-        "id": 890249,
-        "name": "Sao Paulo",
-        "latitude": -23.533333,
-        "longitude": -46.616667,
-        "dns_name": "sao-paulo"
-      }
-    ]
-  },
-  {
-    "id": 32,
-    "name": "Brunei Darussalam",
-    "code": "BN",
-    "cities": [
-      {
-        "id": 809132,
-        "name": "Bandar Seri Begawan",
-        "latitude": 4.8833333,
-        "longitude": 114.9333333,
-        "dns_name": "bandar-seri-begawan"
-      }
-    ]
-  },
-  {
-    "id": 33,
-    "name": "Bulgaria",
-    "code": "BG",
-    "cities": [
-      {
-        "id": 777368,
-        "name": "Sofia",
-        "latitude": 42.6833333,
-        "longitude": 23.3166667,
-        "dns_name": "sofia"
-      }
-    ]
-  },
-  {
-    "id": 36,
-    "name": "Cambodia",
-    "code": "KH",
-    "cities": [
-      {
-        "id": 4658987,
-        "name": "Phnom Penh",
-        "latitude": 11.55,
-        "longitude": 104.9166667,
-        "dns_name": "phnom-penh"
-      }
-    ]
-  },
-  {
-    "id": 38,
-    "name": "Canada",
-    "code": "CA",
-    "cities": [
-      {
-        "id": 1048463,
-        "name": "Montreal",
-        "latitude": 45.5,
-        "longitude": -73.583333,
-        "dns_name": "montreal"
-      },
-      {
-        "id": 1054250,
-        "name": "Toronto",
-        "latitude": 43.666667,
-        "longitude": -79.416667,
-        "dns_name": "toronto"
-      },
-      {
-        "id": 1054610,
-        "name": "Vancouver",
-        "latitude": 49.25,
-        "longitude": -123.133333,
-        "dns_name": "vancouver"
-      }
-    ]
-  },
-  {
-    "id": 40,
-    "name": "Cayman Islands",
-    "code": "KY",
-    "cities": [
-      {
-        "id": 4922303,
-        "name": "George Town",
-        "latitude": 19.3,
-        "longitude": -81.3833333,
-        "dns_name": "george-town"
-      }
-    ]
-  },
-  {
-    "id": 43,
-    "name": "Chile",
-    "code": "CL",
-    "cities": [
-      {
-        "id": 1227092,
-        "name": "Santiago",
-        "latitude": -33.45,
-        "longitude": -70.666667,
-        "dns_name": "santiago"
-      }
-    ]
-  },
-  {
-    "id": 47,
-    "name": "Colombia",
-    "code": "CO",
-    "cities": [
-      {
-        "id": 1980695,
-        "name": "Bogota",
-        "latitude": 4.649178,
-        "longitude": -74.062827,
-        "dns_name": "bogota"
-      }
-    ]
-  },
-  {
-    "id": 48,
-    "name": "Comoros",
-    "code": "KM",
-    "cities": [
-      {
-        "id": 4698371,
-        "name": "Moroni",
-        "latitude": -11.7041667,
-        "longitude": 43.2402778,
-        "dns_name": "moroni"
-      }
-    ]
-  },
-  {
-    "id": 52,
-    "name": "Costa Rica",
-    "code": "CR",
-    "cities": [
-      {
-        "id": 2062994,
-        "name": "San Jose",
-        "latitude": 9.893385,
-        "longitude": -84.105407,
-        "dns_name": "san-jose"
-      }
-    ]
-  },
-  {
-    "id": 54,
-    "name": "Croatia",
-    "code": "HR",
-    "cities": [
-      {
-        "id": 3308120,
-        "name": "Zagreb",
-        "latitude": 45.8,
-        "longitude": 16,
-        "dns_name": "zagreb"
-      }
-    ]
-  },
-  {
-    "id": 56,
-    "name": "Cyprus",
-    "code": "CY",
-    "cities": [
-      {
-        "id": 2099627,
-        "name": "Nicosia",
-        "latitude": 35.1666667,
-        "longitude": 33.3666667,
-        "dns_name": "nicosia"
-      }
-    ]
-  },
-  {
-    "id": 57,
-    "name": "Czech Republic",
-    "code": "CZ",
-    "cities": [
-      {
-        "id": 2144945,
-        "name": "Prague",
-        "latitude": 50.083333,
-        "longitude": 14.466667,
-        "dns_name": "prague"
-      }
-    ]
-  },
-  {
-    "id": 58,
-    "name": "Denmark",
-    "code": "DK",
-    "cities": [
-      {
-        "id": 2382515,
-        "name": "Copenhagen",
-        "latitude": 55.666667,
-        "longitude": 12.583333,
-        "dns_name": "copenhagen"
-      }
-    ]
-  },
-  {
-    "id": 61,
-    "name": "Dominican Republic",
-    "code": "DO",
-    "cities": [
-      {
-        "id": 2434841,
-        "name": "Santo Domingo",
-        "latitude": 18.4666667,
-        "longitude": -69.9,
-        "dns_name": "santo-domingo"
-      }
-    ]
-  },
-  {
-    "id": 63,
-    "name": "Ecuador",
-    "code": "EC",
-    "cities": [
-      {
-        "id": 2485688,
-        "name": "Quito",
-        "latitude": -0.2166667,
-        "longitude": -78.5,
-        "dns_name": "quito"
-      }
-    ]
-  },
-  {
-    "id": 64,
-    "name": "Egypt",
-    "code": "EG",
-    "cities": [
-      {
-        "id": 2528003,
-        "name": "Cairo",
-        "latitude": 30.05,
-        "longitude": 31.25,
-        "dns_name": "cairo"
-      }
-    ]
-  },
-  {
-    "id": 65,
-    "name": "El Salvador",
-    "code": "SV",
-    "cities": [
-      {
-        "id": 7990847,
-        "name": "San Salvador",
-        "latitude": 13.7086111,
-        "longitude": -89.2030556,
-        "dns_name": "san-salvador"
-      }
-    ]
-  },
-  {
-    "id": 68,
-    "name": "Estonia",
-    "code": "EE",
-    "cities": [
-      {
-        "id": 2514182,
-        "name": "Tallinn",
-        "latitude": 59.4338889,
-        "longitude": 24.7280556,
-        "dns_name": "tallinn"
-      }
-    ]
-  },
-  {
-    "id": 73,
-    "name": "Finland",
-    "code": "FI",
-    "cities": [
-      {
-        "id": 2704343,
-        "name": "Helsinki",
-        "latitude": 60.175556,
-        "longitude": 24.934167,
-        "dns_name": "helsinki"
-      }
-    ]
-  },
-  {
-    "id": 74,
-    "name": "France",
-    "code": "FR",
-    "cities": [
-      {
-        "id": 2867102,
-        "name": "Marseille",
-        "latitude": 43.285413,
-        "longitude": 5.37606,
-        "dns_name": "marseille"
-      },
-      {
-        "id": 2886284,
-        "name": "Paris",
-        "latitude": 48.866667,
-        "longitude": 2.333333,
-        "dns_name": "paris"
-      },
-      {
-        "id": 2929151,
-        "name": "Strasbourg",
-        "latitude": 48.600381,
-        "longitude": 7.787355,
-        "dns_name": "strasbourg"
-      }
-    ]
-  },
-  {
-    "id": 80,
-    "name": "Georgia",
-    "code": "GE",
-    "cities": [
-      {
-        "id": 3032063,
-        "name": "Tbilisi",
-        "latitude": 41.725,
-        "longitude": 44.7908333,
-        "dns_name": "tbilisi"
-      }
-    ]
-  },
-  {
-    "id": 81,
-    "name": "Germany",
-    "code": "DE",
-    "cities": [
-      {
-        "id": 2181458,
-        "name": "Berlin",
-        "latitude": 52.516667,
-        "longitude": 13.4,
-        "dns_name": "berlin"
-      },
-      {
-        "id": 2215709,
-        "name": "Frankfurt",
-        "latitude": 50.116667,
-        "longitude": 8.683333,
-        "dns_name": "frankfurt"
-      },
-      {
-        "id": 2234906,
-        "name": "Hamburg",
-        "latitude": 53.55,
-        "longitude": 10,
-        "dns_name": "hamburg"
-      }
-    ]
-  },
-  {
-    "id": 82,
-    "name": "Ghana",
-    "code": "GH",
-    "cities": [
-      {
-        "id": 3040355,
-        "name": "Accra",
-        "latitude": 5.55,
-        "longitude": -0.2166667,
-        "dns_name": "accra"
-      }
-    ]
-  },
-  {
-    "id": 84,
-    "name": "Greece",
-    "code": "GR",
-    "cities": [
-      {
-        "id": 3131903,
-        "name": "Athens",
-        "latitude": 37.9833333,
-        "longitude": 23.7333333,
-        "dns_name": "athens"
-      }
-    ]
-  },
-  {
-    "id": 85,
-    "name": "Greenland",
-    "code": "GL",
-    "cities": [
-      {
-        "id": 3085001,
-        "name": "Nuuk",
-        "latitude": 64.1833333,
-        "longitude": -51.75,
-        "dns_name": "nuuk"
-      }
-    ]
-  },
-  {
-    "id": 88,
-    "name": "Guam",
-    "code": "GU",
-    "cities": [
-      {
-        "id": 8808314,
-        "name": "Hagatna",
-        "latitude": 13.4741667,
-        "longitude": 144.7477778,
-        "dns_name": "hagatna"
-      }
-    ]
-  },
-  {
-    "id": 89,
-    "name": "Guatemala",
-    "code": "GT",
-    "cities": [
-      {
-        "id": 3202463,
-        "name": "Guatemala City",
-        "latitude": 14.621111,
-        "longitude": -90.526944,
-        "dns_name": "guatemala-city"
-      }
-    ]
-  },
-  {
-    "id": 96,
-    "name": "Honduras",
-    "code": "HN",
-    "cities": [
-      {
-        "id": 3270551,
-        "name": "Tegucigalpa",
-        "latitude": 14.1,
-        "longitude": -87.2166667,
-        "dns_name": "tegucigalpa"
-      }
-    ]
-  },
-  {
-    "id": 97,
-    "name": "Hong Kong",
-    "code": "HK",
-    "cities": [
-      {
-        "id": 3232931,
-        "name": "Hong Kong",
-        "latitude": 22.2833333,
-        "longitude": 114.15,
-        "dns_name": "hong-kong"
-      }
-    ]
-  },
-  {
-    "id": 98,
-    "name": "Hungary",
-    "code": "HU",
-    "cities": [
-      {
-        "id": 3348344,
-        "name": "Budapest",
-        "latitude": 47.5,
-        "longitude": 19.083333,
-        "dns_name": "budapest"
-      }
-    ]
-  },
-  {
-    "id": 99,
-    "name": "Iceland",
-    "code": "IS",
-    "cities": [
-      {
-        "id": 4509791,
-        "name": "Reykjavik",
-        "latitude": 64.15,
-        "longitude": -21.95,
-        "dns_name": "reykjavik"
-      }
-    ]
-  },
-  {
-    "id": 100,
-    "name": "India",
-    "code": "IN",
-    "cities": [
-      {
-        "id": 4041548,
-        "name": "Mumbai",
-        "latitude": 18.975,
-        "longitude": 72.825833,
-        "dns_name": "mumbai"
-      }
-    ]
-  },
-  {
-    "id": 101,
-    "name": "Indonesia",
-    "code": "ID",
-    "cities": [
-      {
-        "id": 3560288,
-        "name": "Jakarta",
-        "latitude": -6.174444,
-        "longitude": 106.829444,
-        "dns_name": "jakarta"
-      }
-    ]
-  },
-  {
-    "id": 103,
-    "name": "Iraq",
-    "code": "IQ",
-    "cities": [
-      {
-        "id": 4093955,
-        "name": "Baghdad",
-        "latitude": 33.3386111,
-        "longitude": 44.3938889,
-        "dns_name": "baghdad"
-      }
-    ]
-  },
-  {
-    "id": 104,
-    "name": "Ireland",
-    "code": "IE",
-    "cities": [
-      {
-        "id": 3939200,
-        "name": "Dublin",
-        "latitude": 53.3330556,
-        "longitude": -6.2488889,
-        "dns_name": "dublin"
-      }
-    ]
-  },
-  {
-    "id": 243,
-    "name": "Isle of Man",
-    "code": "IM",
-    "cities": [
-      {
-        "id": 3965405,
-        "name": "Douglas",
-        "latitude": 54.15,
-        "longitude": -4.483333,
-        "dns_name": "douglas"
-      }
-    ]
-  },
-  {
-    "id": 105,
-    "name": "Israel",
-    "code": "IL",
-    "cities": [
-      {
-        "id": 3964220,
-        "name": "Tel Aviv",
-        "latitude": 32.066667,
-        "longitude": 34.766667,
-        "dns_name": "tel-aviv"
-      }
-    ]
-  },
-  {
-    "id": 106,
-    "name": "Italy",
-    "code": "IT",
-    "cities": [
-      {
-        "id": 4542737,
-        "name": "Milan",
-        "latitude": 45.466667,
-        "longitude": 9.2,
-        "dns_name": "milan"
-      },
-      {
-        "id": 4548074,
-        "name": "Palermo",
-        "latitude": 38.116667,
-        "longitude": 13.366667,
-        "dns_name": "palermo"
-      },
-      {
-        "id": 4555808,
-        "name": "Rome",
-        "latitude": 41.8902,
-        "longitude": 12.4922,
-        "dns_name": "rome"
-      }
-    ]
-  },
-  {
-    "id": 107,
-    "name": "Jamaica",
-    "code": "JM",
-    "cities": [
-      {
-        "id": 4576328,
-        "name": "Kingston",
-        "latitude": 18,
-        "longitude": -76.8,
-        "dns_name": "kingston"
-      }
-    ]
-  },
-  {
-    "id": 108,
-    "name": "Japan",
-    "code": "JP",
-    "cities": [
-      {
-        "id": 4621847,
-        "name": "Osaka",
-        "latitude": 34.6937,
-        "longitude": 135.5023,
-        "dns_name": "osaka"
-      },
-      {
-        "id": 4633349,
-        "name": "Tokyo",
-        "latitude": 35.685,
-        "longitude": 139.751389,
-        "dns_name": "tokyo"
-      }
-    ]
-  },
-  {
-    "id": 244,
-    "name": "Jersey",
-    "code": "JE",
-    "cities": [
-      {
-        "id": 4572281,
-        "name": "Saint Helier",
-        "latitude": 49.183333,
-        "longitude": -2.1,
-        "dns_name": "saint-helier"
-      }
-    ]
-  },
-  {
-    "id": 109,
-    "name": "Jordan",
-    "code": "JO",
-    "cities": [
-      {
-        "id": 4581203,
-        "name": "Amman",
-        "latitude": 31.95,
-        "longitude": 35.933333,
-        "dns_name": "amman"
-      }
-    ]
-  },
-  {
-    "id": 110,
-    "name": "Kazakhstan",
-    "code": "KZ",
-    "cities": [
-      {
-        "id": 4925732,
-        "name": "Astana",
-        "latitude": 51.181111,
-        "longitude": 71.427778,
-        "dns_name": "astana"
-      }
-    ]
-  },
-  {
-    "id": 111,
-    "name": "Kenya",
-    "code": "KE",
-    "cities": [
-      {
-        "id": 4646603,
-        "name": "Nairobi",
-        "latitude": -1.2833333,
-        "longitude": 36.8166667,
-        "dns_name": "nairobi"
-      }
-    ]
-  },
-  {
-    "id": 116,
-    "name": "Kuwait",
-    "code": "KW",
-    "cities": [
-      {
-        "id": 9521894,
-        "name": "Kuwait City",
-        "latitude": 29.3759,
-        "longitude": 47.9774,
-        "dns_name": "kuwait-city"
-      }
-    ]
-  },
-  {
-    "id": 118,
-    "name": "Lao People's Democratic Republic",
-    "code": "LA",
-    "cities": [
-      {
-        "id": 5015876,
-        "name": "Vientiane",
-        "latitude": 17.966667,
-        "longitude": 102.6,
-        "dns_name": "vientiane"
-      }
-    ]
-  },
-  {
-    "id": 119,
-    "name": "Latvia",
-    "code": "LV",
-    "cities": [
-      {
-        "id": 5192828,
-        "name": "Riga",
-        "latitude": 56.95,
-        "longitude": 24.1,
-        "dns_name": "riga"
-      }
-    ]
-  },
-  {
-    "id": 120,
-    "name": "Lebanon",
-    "code": "LB",
-    "cities": [
-      {
-        "id": 5022080,
-        "name": "Beirut",
-        "latitude": 33.8719444,
-        "longitude": 35.5097222,
-        "dns_name": "beirut"
-      }
-    ]
-  },
-  {
-    "id": 123,
-    "name": "Libyan Arab Jamahiriya",
-    "code": "LY",
-    "cities": [
-      {
-        "id": 5206697,
-        "name": "Tripoli",
-        "latitude": 32.8925,
-        "longitude": 13.18,
-        "dns_name": "tripoli"
-      }
-    ]
-  },
-  {
-    "id": 124,
-    "name": "Liechtenstein",
-    "code": "LI",
-    "cities": [
-      {
-        "id": 5037212,
-        "name": "Vaduz",
-        "latitude": 47.1333333,
-        "longitude": 9.5166667,
-        "dns_name": "vaduz"
-      }
-    ]
-  },
-  {
-    "id": 125,
-    "name": "Lithuania",
-    "code": "LT",
-    "cities": [
-      {
-        "id": 5166932,
-        "name": "Vilnius",
-        "latitude": 54.6833333,
-        "longitude": 25.3166667,
-        "dns_name": "vilnius"
-      }
-    ]
-  },
-  {
-    "id": 126,
-    "name": "Luxembourg",
-    "code": "LU",
-    "cities": [
-      {
-        "id": 9521876,
-        "name": "Luxembourg",
-        "latitude": 49.6117,
-        "longitude": 6.13,
-        "dns_name": "luxembourg"
-      }
-    ]
-  },
-  {
-    "id": 131,
-    "name": "Malaysia",
-    "code": "MY",
-    "cities": [
-      {
-        "id": 5820143,
-        "name": "Kuala Lumpur",
-        "latitude": 3.166667,
-        "longitude": 101.7,
-        "dns_name": "kuala-lumpur"
-      }
-    ]
-  },
-  {
-    "id": 134,
-    "name": "Malta",
-    "code": "MT",
-    "cities": [
-      {
-        "id": 5554481,
-        "name": "Valletta",
-        "latitude": 35.899722,
-        "longitude": 14.514722,
-        "dns_name": "valletta"
-      }
-    ]
-  },
-  {
-    "id": 137,
-    "name": "Mauritania",
-    "code": "MR",
-    "cities": [
-      {
-        "id": 5551598,
-        "name": "Nouakchott",
-        "latitude": 18.0863889,
-        "longitude": -15.9752778,
-        "dns_name": "nouakchott"
-      }
-    ]
-  },
-  {
-    "id": 140,
-    "name": "Mexico",
-    "code": "MX",
-    "cities": [
-      {
-        "id": 5677037,
-        "name": "Mexico",
-        "latitude": 19.434167,
-        "longitude": -99.138611,
-        "dns_name": "mexico"
-      }
-    ]
-  },
-  {
-    "id": 142,
-    "name": "Moldova",
-    "code": "MD",
-    "cities": [
-      {
-        "id": 5295179,
-        "name": "Chisinau",
-        "latitude": 47.005556,
-        "longitude": 28.8575,
-        "dns_name": "chisinau"
-      }
-    ]
-  },
-  {
-    "id": 143,
-    "name": "Monaco",
-    "code": "MC",
-    "cities": [
-      {
-        "id": 5292332,
-        "name": "Monte Carlo",
-        "latitude": 43.739722,
-        "longitude": 7.427222,
-        "dns_name": "monte-carlo"
-      }
-    ]
-  },
-  {
-    "id": 144,
-    "name": "Mongolia",
-    "code": "MN",
-    "cities": [
-      {
-        "id": 5543669,
-        "name": "Ulaanbaatar",
-        "latitude": 47.9166667,
-        "longitude": 106.9166667,
-        "dns_name": "ulaanbaatar"
-      }
-    ]
-  },
-  {
-    "id": 146,
-    "name": "Montenegro",
-    "code": "ME",
-    "cities": [
-      {
-        "id": 5318561,
-        "name": "Podgorica",
-        "latitude": 42.441111,
-        "longitude": 19.263611,
-        "dns_name": "podgorica"
-      }
-    ]
-  },
-  {
-    "id": 147,
-    "name": "Morocco",
-    "code": "MA",
-    "cities": [
-      {
-        "id": 5271254,
-        "name": "Rabat",
-        "latitude": 34.013784,
-        "longitude": -6.844268,
-        "dns_name": "rabat"
-      }
-    ]
-  },
-  {
-    "id": 148,
-    "name": "Mozambique",
-    "code": "MZ",
-    "cities": [
-      {
-        "id": 5870336,
-        "name": "Maputo",
-        "latitude": -25.9652778,
-        "longitude": 32.5891667,
-        "dns_name": "maputo"
-      }
-    ]
-  },
-  {
-    "id": 149,
-    "name": "Myanmar",
-    "code": "MM",
-    "cities": [
-      {
-        "id": 9521893,
-        "name": "Naypyidaw",
-        "latitude": 19.7475,
-        "longitude": 96.115,
-        "dns_name": "naypyidaw"
-      }
-    ]
-  },
-  {
-    "id": 152,
-    "name": "Nepal",
-    "code": "NP",
-    "cities": [
-      {
-        "id": 6142175,
-        "name": "Kathmandu",
-        "latitude": 27.7166667,
-        "longitude": 85.3166667,
-        "dns_name": "kathmandu"
-      }
-    ]
-  },
-  {
-    "id": 153,
-    "name": "Netherlands",
-    "code": "NL",
-    "cities": [
-      {
-        "id": 6076868,
-        "name": "Amsterdam",
-        "latitude": 52.35,
-        "longitude": 4.916667,
-        "dns_name": "amsterdam"
-      }
-    ]
-  },
-  {
-    "id": 156,
-    "name": "New Zealand",
-    "code": "NZ",
-    "cities": [
-      {
-        "id": 6144239,
-        "name": "Auckland",
-        "latitude": -36.866667,
-        "longitude": 174.766667,
-        "dns_name": "auckland"
-      }
-    ]
-  },
-  {
-    "id": 159,
-    "name": "Nigeria",
-    "code": "NG",
-    "cities": [
-      {
-        "id": 6010328,
-        "name": "Lagos",
-        "latitude": 6.453056,
-        "longitude": 3.395833,
-        "dns_name": "lagos"
-      }
-    ]
-  },
-  {
-    "id": 128,
-    "name": "North Macedonia",
-    "code": "MK",
-    "cities": [
-      {
-        "id": 5386019,
-        "name": "Skopje",
-        "latitude": 42,
-        "longitude": 21.4333333,
-        "dns_name": "skopje"
-      }
-    ]
-  },
-  {
-    "id": 163,
-    "name": "Norway",
-    "code": "NO",
-    "cities": [
-      {
-        "id": 6127364,
-        "name": "Oslo",
-        "latitude": 59.916667,
-        "longitude": 10.75,
-        "dns_name": "oslo"
-      }
-    ]
-  },
-  {
-    "id": 165,
-    "name": "Pakistan",
-    "code": "PK",
-    "cities": [
-      {
-        "id": 6600485,
-        "name": "Karachi",
-        "latitude": 24.9056,
-        "longitude": 67.0822,
-        "dns_name": "karachi"
-      }
-    ]
-  },
-  {
-    "id": 168,
-    "name": "Panama",
-    "code": "PA",
-    "cities": [
-      {
-        "id": 6176273,
-        "name": "Panama City",
-        "latitude": 8.9666667,
-        "longitude": -79.5333333,
-        "dns_name": "panama-city"
-      }
-    ]
-  },
-  {
-    "id": 169,
-    "name": "Papua New Guinea",
-    "code": "PG",
-    "cities": [
-      {
-        "id": 6292406,
-        "name": "Port Moresby",
-        "latitude": -9.4647222,
-        "longitude": 147.1925,
-        "dns_name": "port-moresby"
-      }
-    ]
-  },
-  {
-    "id": 170,
-    "name": "Paraguay",
-    "code": "PY",
-    "cities": [
-      {
-        "id": 9521890,
-        "name": "Asuncion",
-        "latitude": -25.3,
-        "longitude": -57.633333,
-        "dns_name": "asuncion"
-      }
-    ]
-  },
-  {
-    "id": 171,
-    "name": "Peru",
-    "code": "PE",
-    "cities": [
-      {
-        "id": 6222584,
-        "name": "Lima",
-        "latitude": -12.05,
-        "longitude": -77.05,
-        "dns_name": "lima"
-      }
-    ]
-  },
-  {
-    "id": 172,
-    "name": "Philippines",
-    "code": "PH",
-    "cities": [
-      {
-        "id": 6391379,
-        "name": "Manila",
-        "latitude": 14.6042,
-        "longitude": 120.9822,
-        "dns_name": "manila"
-      }
-    ]
-  },
-  {
-    "id": 174,
-    "name": "Poland",
-    "code": "PL",
-    "cities": [
-      {
-        "id": 6863429,
-        "name": "Warsaw",
-        "latitude": 52.25,
-        "longitude": 21,
-        "dns_name": "warsaw"
-      }
-    ]
-  },
-  {
-    "id": 175,
-    "name": "Portugal",
-    "code": "PT",
-    "cities": [
-      {
-        "id": 6906665,
-        "name": "Lisbon",
-        "latitude": 38.716667,
-        "longitude": -9.133333,
-        "dns_name": "lisbon"
-      }
-    ]
-  },
-  {
-    "id": 176,
-    "name": "Puerto Rico",
-    "code": "PR",
-    "cities": [
-      {
-        "id": 9521884,
-        "name": "San Juan",
-        "latitude": 18.406389,
-        "longitude": -66.063889,
-        "dns_name": "san-juan"
-      }
-    ]
-  },
-  {
-    "id": 177,
-    "name": "Qatar",
-    "code": "QA",
-    "cities": [
-      {
-        "id": 6940529,
-        "name": "Doha",
-        "latitude": 25.286667,
-        "longitude": 51.533333,
-        "dns_name": "doha"
-      }
-    ]
-  },
-  {
-    "id": 179,
-    "name": "Romania",
-    "code": "RO",
-    "cities": [
-      {
-        "id": 6953096,
-        "name": "Bucharest",
-        "latitude": 44.433333,
-        "longitude": 26.1,
-        "dns_name": "bucharest"
-      }
-    ]
-  },
-  {
-    "id": 181,
-    "name": "Rwanda",
-    "code": "RW",
-    "cities": [
-      {
-        "id": 7723910,
-        "name": "Kigali",
-        "latitude": -1.9536111,
-        "longitude": 30.0605556,
-        "dns_name": "kigali"
-      }
-    ]
-  },
-  {
-    "id": 191,
-    "name": "Senegal",
-    "code": "SN",
-    "cities": [
-      {
-        "id": 7924958,
-        "name": "Dakar",
-        "latitude": 14.6708333,
-        "longitude": -17.4380556,
-        "dns_name": "dakar"
-      }
-    ]
-  },
-  {
-    "id": 192,
-    "name": "Serbia",
-    "code": "RS",
-    "cities": [
-      {
-        "id": 7030907,
-        "name": "Belgrade",
-        "latitude": 44.818611,
-        "longitude": 20.468056,
-        "dns_name": "belgrad"
-      }
-    ]
-  },
-  {
-    "id": 195,
-    "name": "Singapore",
-    "code": "SG",
-    "cities": [
-      {
-        "id": 7867982,
-        "name": "Singapore",
-        "latitude": 1.2930556,
-        "longitude": 103.8558333,
-        "dns_name": "singapore"
-      }
-    ]
-  },
-  {
-    "id": 196,
-    "name": "Slovakia",
-    "code": "SK",
-    "cities": [
-      {
-        "id": 7884305,
-        "name": "Bratislava",
-        "latitude": 48.15,
-        "longitude": 17.1166667,
-        "dns_name": "bratislava"
-      }
-    ]
-  },
-  {
-    "id": 197,
-    "name": "Slovenia",
-    "code": "SI",
-    "cities": [
-      {
-        "id": 7874306,
-        "name": "Ljubljana",
-        "latitude": 46.0552778,
-        "longitude": 14.5144444,
-        "dns_name": "ljubljana"
-      }
-    ]
-  },
-  {
-    "id": 199,
-    "name": "Somalia",
-    "code": "SO",
-    "cities": [
-      {
-        "id": 7971170,
-        "name": "Mogadishu",
-        "latitude": 2.0666667,
-        "longitude": 45.3666667,
-        "dns_name": "mogadishu"
-      }
-    ]
-  },
-  {
-    "id": 200,
-    "name": "South Africa",
-    "code": "ZA",
-    "cities": [
-      {
-        "id": 9383693,
-        "name": "Johannesburg",
-        "latitude": -26.205171,
-        "longitude": 28.049815,
-        "dns_name": "johannesburg"
-      }
-    ]
-  },
-  {
-    "id": 114,
-    "name": "South Korea",
-    "code": "KR",
-    "cities": [
-      {
-        "id": 4879586,
-        "name": "Seoul",
-        "latitude": 37.5985,
-        "longitude": 126.9783,
-        "dns_name": "seoul"
-      }
-    ]
-  },
-  {
-    "id": 202,
-    "name": "Spain",
-    "code": "ES",
-    "cities": [
-      {
-        "id": 2572757,
-        "name": "Barcelona",
-        "latitude": 41.398371,
-        "longitude": 2.1741,
-        "dns_name": "barcelona"
-      },
-      {
-        "id": 2619989,
-        "name": "Madrid",
-        "latitude": 40.408566,
-        "longitude": -3.69222,
-        "dns_name": "madrid"
-      }
-    ]
-  },
-  {
-    "id": 203,
-    "name": "Sri Lanka",
-    "code": "LK",
-    "cities": [
-      {
-        "id": 5043197,
-        "name": "Colombo",
-        "latitude": 6.9319444,
-        "longitude": 79.8477778,
-        "dns_name": "colombo"
-      }
-    ]
-  },
-  {
-    "id": 208,
-    "name": "Sweden",
-    "code": "SE",
-    "cities": [
-      {
-        "id": 7852919,
-        "name": "Stockholm",
-        "latitude": 59.333333,
-        "longitude": 18.05,
-        "dns_name": "stockholm"
-      }
-    ]
-  },
-  {
-    "id": 209,
-    "name": "Switzerland",
-    "code": "CH",
-    "cities": [
-      {
-        "id": 1171814,
-        "name": "Zurich",
-        "latitude": 47.366667,
-        "longitude": 8.55,
-        "dns_name": "zurich"
-      }
-    ]
-  },
-  {
-    "id": 211,
-    "name": "Taiwan",
-    "code": "TW",
-    "cities": [
-      {
-        "id": 8544365,
-        "name": "Taipei",
-        "latitude": 25.0391667,
-        "longitude": 121.525,
-        "dns_name": "taipei"
-      }
-    ]
-  },
-  {
-    "id": 214,
-    "name": "Thailand",
-    "code": "TH",
-    "cities": [
-      {
-        "id": 8121638,
-        "name": "Bangkok",
-        "latitude": 13.753979,
-        "longitude": 100.501444,
-        "dns_name": "bangkok"
-      }
-    ]
-  },
-  {
-    "id": 218,
-    "name": "Trinidad and Tobago",
-    "code": "TT",
-    "cities": [
-      {
-        "id": 9521887,
-        "name": "Port of Spain",
-        "latitude": 10.666667,
-        "longitude": -61.516667,
-        "dns_name": "port-of-spain"
-      }
-    ]
-  },
-  {
-    "id": 219,
-    "name": "Tunisia",
-    "code": "TN",
-    "cities": [
-      {
-        "id": 8295401,
-        "name": "Tunis",
-        "latitude": 36.806112,
-        "longitude": 10.171078,
-        "dns_name": "tunis"
-      }
-    ]
-  },
-  {
-    "id": 220,
-    "name": "Turkey",
-    "code": "TR",
-    "cities": [
-      {
-        "id": 8401790,
-        "name": "Istanbul",
-        "latitude": 41.018611,
-        "longitude": 28.964722,
-        "dns_name": "istanbul"
-      }
-    ]
-  },
-  {
-    "id": 225,
-    "name": "Ukraine",
-    "code": "UA",
-    "cities": [
-      {
-        "id": 8626766,
-        "name": "Kyiv",
-        "latitude": 50.433333,
-        "longitude": 30.516667,
-        "dns_name": "kyiv"
-      }
-    ]
-  },
-  {
-    "id": 226,
-    "name": "United Arab Emirates",
-    "code": "AE",
-    "cities": [
-      {
-        "id": 728,
-        "name": "Dubai",
-        "latitude": 25.258172,
-        "longitude": 55.304717,
-        "dns_name": "dubai"
-      }
-    ]
-  },
-  {
-    "id": 227,
-    "name": "United Kingdom",
-    "code": "GB",
-    "cities": [
-      {
-        "id": 2975852,
-        "name": "Edinburgh",
-        "latitude": 55.95,
-        "longitude": -3.2,
-        "dns_name": "edinburgh"
-      },
-      {
-        "id": 2978888,
-        "name": "Glasgow",
-        "latitude": 55.833333,
-        "longitude": -4.25,
-        "dns_name": "glasgow"
-      },
-      {
-        "id": 2989907,
-        "name": "London",
-        "latitude": 51.514125,
-        "longitude": -0.093689,
-        "dns_name": "london"
-      },
-      {
-        "id": 2991110,
-        "name": "Manchester",
-        "latitude": 53.5,
-        "longitude": -2.216667,
-        "dns_name": "manchester"
-      }
-    ]
-  },
-  {
-    "id": 228,
-    "name": "United States",
-    "code": "US",
-    "cities": [
-      {
-        "id": 9103211,
-        "name": "Ashburn",
-        "latitude": 39.0436111,
-        "longitude": -77.4877778,
-        "dns_name": "ashburn"
-      },
-      {
-        "id": 8792429,
-        "name": "Atlanta",
-        "latitude": 33.7488889,
-        "longitude": -84.3880556,
-        "dns_name": "atlanta"
-      },
-      {
-        "id": 8895305,
-        "name": "Boston",
-        "latitude": 42.3583333,
-        "longitude": -71.0602778,
-        "dns_name": "boston"
-      },
-      {
-        "id": 8963153,
-        "name": "Buffalo",
-        "latitude": 42.8863889,
-        "longitude": -78.8786111,
-        "dns_name": "buffalo"
-      },
-      {
-        "id": 8980922,
-        "name": "Charlotte",
-        "latitude": 35.2269444,
-        "longitude": -80.8433333,
-        "dns_name": "charlotte"
-      },
-      {
-        "id": 8815352,
-        "name": "Chicago",
-        "latitude": 41.85,
-        "longitude": -87.65,
-        "dns_name": "chicago"
-      },
-      {
-        "id": 9080300,
-        "name": "Dallas",
-        "latitude": 32.7833333,
-        "longitude": -96.8,
-        "dns_name": "dallas"
-      },
-      {
-        "id": 8770934,
-        "name": "Denver",
-        "latitude": 39.7391667,
-        "longitude": -104.9841667,
-        "dns_name": "denver"
-      },
-      {
-        "id": 9083687,
-        "name": "Houston",
-        "latitude": 29.7630556,
-        "longitude": -95.3630556,
-        "dns_name": "houston"
-      },
-      {
-        "id": 8930717,
-        "name": "Kansas City",
-        "latitude": 39.0997222,
-        "longitude": -94.5783333,
-        "dns_name": "kansas-city"
-      },
-      {
-        "id": 8761958,
-        "name": "Los Angeles",
-        "latitude": 34.0522222,
-        "longitude": -118.2427778,
-        "dns_name": "los-angeles"
-      },
-      {
-        "id": 9113744,
-        "name": "Manassas",
-        "latitude": 38.7508333,
-        "longitude": -77.4755556,
-        "dns_name": "manassas"
-      },
-      {
-        "id": 9086162,
-        "name": "McAllen",
-        "latitude": 26.2030556,
-        "longitude": -98.2297222,
-        "dns_name": "mcallen"
-      },
-      {
-        "id": 8787782,
-        "name": "Miami",
-        "latitude": 25.7738889,
-        "longitude": -80.1938889,
-        "dns_name": "miami"
-      },
-      {
-        "id": 9071273,
-        "name": "Nashville",
-        "latitude": 36.1658333,
-        "longitude": -86.7844444,
-        "dns_name": "nashville"
-      },
-      {
-        "id": 8971718,
-        "name": "New York",
-        "latitude": 40.7141667,
-        "longitude": -74.0063889,
-        "dns_name": "new-york"
-      },
-      {
-        "id": 8943887,
-        "name": "Omaha",
-        "latitude": 41.2586111,
-        "longitude": -95.9375,
-        "dns_name": "omaha"
-      },
-      {
-        "id": 8741960,
-        "name": "Phoenix",
-        "latitude": 33.4483333,
-        "longitude": -112.0733333,
-        "dns_name": "phoenix"
-      },
-      {
-        "id": 8934551,
-        "name": "Saint Louis",
-        "latitude": 38.6272222,
-        "longitude": -90.1977778,
-        "dns_name": "saint-louis"
-      },
-      {
-        "id": 9097865,
-        "name": "Salt Lake City",
-        "latitude": 40.7608333,
-        "longitude": -111.8902778,
-        "dns_name": "salt-lake-city"
-      },
-      {
-        "id": 8766359,
-        "name": "San Francisco",
-        "latitude": 37.7698135,
-        "longitude": -122.4660005,
-        "dns_name": "san-francisco"
-      },
-      {
-        "id": 9128402,
-        "name": "Seattle",
-        "latitude": 47.6063889,
-        "longitude": -122.3308333,
-        "dns_name": "seattle"
-      }
-    ]
-  },
-  {
-    "id": 230,
-    "name": "Uruguay",
-    "code": "UY",
-    "cities": [
-      {
-        "id": 9150812,
-        "name": "Montevideo",
-        "latitude": -34.8580556,
-        "longitude": -56.1708333,
-        "dns_name": "montevideo"
-      }
-    ]
-  },
-  {
-    "id": 231,
-    "name": "Uzbekistan",
-    "code": "UZ",
-    "cities": [
-      {
-        "id": 9166826,
-        "name": "Tashkent",
-        "latitude": 41.3166667,
-        "longitude": 69.25,
-        "dns_name": "tashkent"
-      }
-    ]
-  },
-  {
-    "id": 233,
-    "name": "Venezuela",
-    "code": "VE",
-    "cities": [
-      {
-        "id": 9176843,
-        "name": "Caracas",
-        "latitude": 10.5,
-        "longitude": -66.9166667,
-        "dns_name": "caracas"
-      }
-    ]
-  },
-  {
-    "id": 234,
-    "name": "Vietnam",
-    "code": "VN",
-    "cities": [
-      {
-        "id": 9270302,
-        "name": "Hanoi",
-        "latitude": 21.033333,
-        "longitude": 105.85,
-        "dns_name": "hanoi"
-      },
-      {
-        "id": 9271799,
-        "name": "Ho Chi Minh City",
-        "latitude": 10.75,
-        "longitude": 106.666667,
-        "dns_name": "ho-chi-minh-city"
-      }
-    ]
-  }
-]
+{
+  "id": 1,
+  "name": "Afghanistan",
+  "code": "AF",
+  "cities": [
+    {
+      "id": 98270,
+      "name": "Kabul",
+      "latitude": 34.516667,
+      "longitude": 69.183333,
+      "dns_name": "kabul"
+    }
+  ]
+}
+{
+  "id": 2,
+  "name": "Albania",
+  "code": "AL",
+  "cities": [
+    {
+      "id": 308615,
+      "name": "Tirana",
+      "latitude": 41.3275,
+      "longitude": 19.8188889,
+      "dns_name": "tirana"
+    }
+  ]
+}
+{
+  "id": 3,
+  "name": "Algeria",
+  "code": "DZ",
+  "cities": [
+    {
+      "id": 2438216,
+      "name": "Algiers",
+      "latitude": 36.7630556,
+      "longitude": 3.0505556,
+      "dns_name": "algiers"
+    }
+  ]
+}
+{
+  "id": 5,
+  "name": "Andorra",
+  "code": "AD",
+  "cities": [
+    {
+      "id": 20,
+      "name": "Andorra la Vella",
+      "latitude": 42.5,
+      "longitude": 1.5166667,
+      "dns_name": "andorra-la-vella"
+    }
+  ]
+}
+{
+  "id": 6,
+  "name": "Angola",
+  "code": "AO",
+  "cities": [
+    {
+      "id": 351407,
+      "name": "Luanda",
+      "latitude": -8.836804,
+      "longitude": 13.233174,
+      "dns_name": "luanda"
+    }
+  ]
+}
+{
+  "id": 10,
+  "name": "Argentina",
+  "code": "AR",
+  "cities": [
+    {
+      "id": 384866,
+      "name": "Buenos Aires",
+      "latitude": -34.5875,
+      "longitude": -58.6725,
+      "dns_name": "buenos-aires"
+    }
+  ]
+}
+{
+  "id": 11,
+  "name": "Armenia",
+  "code": "AM",
+  "cities": [
+    {
+      "id": 322385,
+      "name": "Yerevan",
+      "latitude": 40.1811111,
+      "longitude": 44.5136111,
+      "dns_name": "yerevan"
+    }
+  ]
+}
+{
+  "id": 13,
+  "name": "Australia",
+  "code": "AU",
+  "cities": [
+    {
+      "id": 452717,
+      "name": "Adelaide",
+      "latitude": -34.928661,
+      "longitude": 138.598633,
+      "dns_name": "adelaide"
+    },
+    {
+      "id": 456494,
+      "name": "Brisbane",
+      "latitude": -27.47101,
+      "longitude": 153.024292,
+      "dns_name": "brisbane"
+    },
+    {
+      "id": 470813,
+      "name": "Melbourne",
+      "latitude": -37.813938,
+      "longitude": 144.963425,
+      "dns_name": "melbourne"
+    },
+    {
+      "id": 475799,
+      "name": "Perth",
+      "latitude": -31.95224,
+      "longitude": 115.861397,
+      "dns_name": "perth"
+    },
+    {
+      "id": 479570,
+      "name": "Sydney",
+      "latitude": -33.861481,
+      "longitude": 151.205475,
+      "dns_name": "sydney"
+    }
+  ]
+}
+{
+  "id": 14,
+  "name": "Austria",
+  "code": "AT",
+  "cities": [
+    {
+      "id": 448799,
+      "name": "Vienna",
+      "latitude": 48.2,
+      "longitude": 16.366667,
+      "dns_name": "vienna"
+    }
+  ]
+}
+{
+  "id": 15,
+  "name": "Azerbaijan",
+  "code": "AZ",
+  "cities": [
+    {
+      "id": 490037,
+      "name": "Baku",
+      "latitude": 40.395278,
+      "longitude": 49.882222,
+      "dns_name": "baku"
+    }
+  ]
+}
+{
+  "id": 16,
+  "name": "Bahamas",
+  "code": "BS",
+  "cities": [
+    {
+      "id": 988382,
+      "name": "Nassau",
+      "latitude": 25.078056,
+      "longitude": -77.338611,
+      "dns_name": "nassau"
+    }
+  ]
+}
+{
+  "id": 17,
+  "name": "Bahrain",
+  "code": "BH",
+  "cities": [
+    {
+      "id": 789398,
+      "name": "Manama",
+      "latitude": 26.2361111,
+      "longitude": 50.5830556,
+      "dns_name": "manama"
+    }
+  ]
+}
+{
+  "id": 18,
+  "name": "Bangladesh",
+  "code": "BD",
+  "cities": [
+    {
+      "id": 594935,
+      "name": "Dhaka",
+      "latitude": 23.7230556,
+      "longitude": 90.4086111,
+      "dns_name": "dhaka"
+    }
+  ]
+}
+{
+  "id": 21,
+  "name": "Belgium",
+  "code": "BE",
+  "cities": [
+    {
+      "id": 654293,
+      "name": "Brussels",
+      "latitude": 50.833333,
+      "longitude": 4.333333,
+      "dns_name": "brussels"
+    }
+  ]
+}
+{
+  "id": 22,
+  "name": "Belize",
+  "code": "BZ",
+  "cities": [
+    {
+      "id": 1037459,
+      "name": "Belmopan",
+      "latitude": 17.25,
+      "longitude": -88.7666667,
+      "dns_name": "belmopan"
+    }
+  ]
+}
+{
+  "id": 24,
+  "name": "Bermuda",
+  "code": "BM",
+  "cities": [
+    {
+      "id": 809078,
+      "name": "Hamilton",
+      "latitude": 32.2941667,
+      "longitude": -64.7838889,
+      "dns_name": "hamilton"
+    }
+  ]
+}
+{
+  "id": 25,
+  "name": "Bhutan",
+  "code": "BT",
+  "cities": [
+    {
+      "id": 989699,
+      "name": "Thimphu",
+      "latitude": 27.472222,
+      "longitude": 89.636111,
+      "dns_name": "thimphu"
+    }
+  ]
+}
+{
+  "id": 26,
+  "name": "Bolivia",
+  "code": "BO",
+  "cities": [
+    {
+      "id": 838514,
+      "name": "La Paz",
+      "latitude": -16.5,
+      "longitude": -68.15,
+      "dns_name": "la-paz"
+    }
+  ]
+}
+{
+  "id": 27,
+  "name": "Bosnia and Herzegovina",
+  "code": "BA",
+  "cities": [
+    {
+      "id": 548462,
+      "name": "Novi Travnik",
+      "latitude": 44.1711111,
+      "longitude": 17.6575,
+      "dns_name": "novi-travnik"
+    }
+  ]
+}
+{
+  "id": 30,
+  "name": "Brazil",
+  "code": "BR",
+  "cities": [
+    {
+      "id": 890249,
+      "name": "Sao Paulo",
+      "latitude": -23.533333,
+      "longitude": -46.616667,
+      "dns_name": "sao-paulo"
+    }
+  ]
+}
+{
+  "id": 32,
+  "name": "Brunei Darussalam",
+  "code": "BN",
+  "cities": [
+    {
+      "id": 809132,
+      "name": "Bandar Seri Begawan",
+      "latitude": 4.8833333,
+      "longitude": 114.9333333,
+      "dns_name": "bandar-seri-begawan"
+    }
+  ]
+}
+{
+  "id": 33,
+  "name": "Bulgaria",
+  "code": "BG",
+  "cities": [
+    {
+      "id": 777368,
+      "name": "Sofia",
+      "latitude": 42.6833333,
+      "longitude": 23.3166667,
+      "dns_name": "sofia"
+    }
+  ]
+}
+{
+  "id": 36,
+  "name": "Cambodia",
+  "code": "KH",
+  "cities": [
+    {
+      "id": 4658987,
+      "name": "Phnom Penh",
+      "latitude": 11.55,
+      "longitude": 104.9166667,
+      "dns_name": "phnom-penh"
+    }
+  ]
+}
+{
+  "id": 38,
+  "name": "Canada",
+  "code": "CA",
+  "cities": [
+    {
+      "id": 1048463,
+      "name": "Montreal",
+      "latitude": 45.5,
+      "longitude": -73.583333,
+      "dns_name": "montreal"
+    },
+    {
+      "id": 1054250,
+      "name": "Toronto",
+      "latitude": 43.666667,
+      "longitude": -79.416667,
+      "dns_name": "toronto"
+    },
+    {
+      "id": 1054610,
+      "name": "Vancouver",
+      "latitude": 49.25,
+      "longitude": -123.133333,
+      "dns_name": "vancouver"
+    }
+  ]
+}
+{
+  "id": 40,
+  "name": "Cayman Islands",
+  "code": "KY",
+  "cities": [
+    {
+      "id": 4922303,
+      "name": "George Town",
+      "latitude": 19.3,
+      "longitude": -81.3833333,
+      "dns_name": "george-town"
+    }
+  ]
+}
+{
+  "id": 43,
+  "name": "Chile",
+  "code": "CL",
+  "cities": [
+    {
+      "id": 1227092,
+      "name": "Santiago",
+      "latitude": -33.45,
+      "longitude": -70.666667,
+      "dns_name": "santiago"
+    }
+  ]
+}
+{
+  "id": 47,
+  "name": "Colombia",
+  "code": "CO",
+  "cities": [
+    {
+      "id": 1980695,
+      "name": "Bogota",
+      "latitude": 4.649178,
+      "longitude": -74.062827,
+      "dns_name": "bogota"
+    }
+  ]
+}
+{
+  "id": 48,
+  "name": "Comoros",
+  "code": "KM",
+  "cities": [
+    {
+      "id": 4698371,
+      "name": "Moroni",
+      "latitude": -11.7041667,
+      "longitude": 43.2402778,
+      "dns_name": "moroni"
+    }
+  ]
+}
+{
+  "id": 52,
+  "name": "Costa Rica",
+  "code": "CR",
+  "cities": [
+    {
+      "id": 2062994,
+      "name": "San Jose",
+      "latitude": 9.893385,
+      "longitude": -84.105407,
+      "dns_name": "san-jose"
+    }
+  ]
+}
+{
+  "id": 54,
+  "name": "Croatia",
+  "code": "HR",
+  "cities": [
+    {
+      "id": 3308120,
+      "name": "Zagreb",
+      "latitude": 45.8,
+      "longitude": 16,
+      "dns_name": "zagreb"
+    }
+  ]
+}
+{
+  "id": 56,
+  "name": "Cyprus",
+  "code": "CY",
+  "cities": [
+    {
+      "id": 2099627,
+      "name": "Nicosia",
+      "latitude": 35.1666667,
+      "longitude": 33.3666667,
+      "dns_name": "nicosia"
+    }
+  ]
+}
+{
+  "id": 57,
+  "name": "Czech Republic",
+  "code": "CZ",
+  "cities": [
+    {
+      "id": 2144945,
+      "name": "Prague",
+      "latitude": 50.083333,
+      "longitude": 14.466667,
+      "dns_name": "prague"
+    }
+  ]
+}
+{
+  "id": 58,
+  "name": "Denmark",
+  "code": "DK",
+  "cities": [
+    {
+      "id": 2382515,
+      "name": "Copenhagen",
+      "latitude": 55.666667,
+      "longitude": 12.583333,
+      "dns_name": "copenhagen"
+    }
+  ]
+}
+{
+  "id": 61,
+  "name": "Dominican Republic",
+  "code": "DO",
+  "cities": [
+    {
+      "id": 2434841,
+      "name": "Santo Domingo",
+      "latitude": 18.4666667,
+      "longitude": -69.9,
+      "dns_name": "santo-domingo"
+    }
+  ]
+}
+{
+  "id": 63,
+  "name": "Ecuador",
+  "code": "EC",
+  "cities": [
+    {
+      "id": 2485688,
+      "name": "Quito",
+      "latitude": -0.2166667,
+      "longitude": -78.5,
+      "dns_name": "quito"
+    }
+  ]
+}
+{
+  "id": 64,
+  "name": "Egypt",
+  "code": "EG",
+  "cities": [
+    {
+      "id": 2528003,
+      "name": "Cairo",
+      "latitude": 30.05,
+      "longitude": 31.25,
+      "dns_name": "cairo"
+    }
+  ]
+}
+{
+  "id": 65,
+  "name": "El Salvador",
+  "code": "SV",
+  "cities": [
+    {
+      "id": 7990847,
+      "name": "San Salvador",
+      "latitude": 13.7086111,
+      "longitude": -89.2030556,
+      "dns_name": "san-salvador"
+    }
+  ]
+}
+{
+  "id": 68,
+  "name": "Estonia",
+  "code": "EE",
+  "cities": [
+    {
+      "id": 2514182,
+      "name": "Tallinn",
+      "latitude": 59.4338889,
+      "longitude": 24.7280556,
+      "dns_name": "tallinn"
+    }
+  ]
+}
+{
+  "id": 73,
+  "name": "Finland",
+  "code": "FI",
+  "cities": [
+    {
+      "id": 2704343,
+      "name": "Helsinki",
+      "latitude": 60.175556,
+      "longitude": 24.934167,
+      "dns_name": "helsinki"
+    }
+  ]
+}
+{
+  "id": 74,
+  "name": "France",
+  "code": "FR",
+  "cities": [
+    {
+      "id": 2867102,
+      "name": "Marseille",
+      "latitude": 43.285413,
+      "longitude": 5.37606,
+      "dns_name": "marseille"
+    },
+    {
+      "id": 2886284,
+      "name": "Paris",
+      "latitude": 48.866667,
+      "longitude": 2.333333,
+      "dns_name": "paris"
+    },
+    {
+      "id": 2929151,
+      "name": "Strasbourg",
+      "latitude": 48.600381,
+      "longitude": 7.787355,
+      "dns_name": "strasbourg"
+    }
+  ]
+}
+{
+  "id": 80,
+  "name": "Georgia",
+  "code": "GE",
+  "cities": [
+    {
+      "id": 3032063,
+      "name": "Tbilisi",
+      "latitude": 41.725,
+      "longitude": 44.7908333,
+      "dns_name": "tbilisi"
+    }
+  ]
+}
+{
+  "id": 81,
+  "name": "Germany",
+  "code": "DE",
+  "cities": [
+    {
+      "id": 2181458,
+      "name": "Berlin",
+      "latitude": 52.516667,
+      "longitude": 13.4,
+      "dns_name": "berlin"
+    },
+    {
+      "id": 2215709,
+      "name": "Frankfurt",
+      "latitude": 50.116667,
+      "longitude": 8.683333,
+      "dns_name": "frankfurt"
+    },
+    {
+      "id": 2234906,
+      "name": "Hamburg",
+      "latitude": 53.55,
+      "longitude": 10,
+      "dns_name": "hamburg"
+    }
+  ]
+}
+{
+  "id": 82,
+  "name": "Ghana",
+  "code": "GH",
+  "cities": [
+    {
+      "id": 3040355,
+      "name": "Accra",
+      "latitude": 5.55,
+      "longitude": -0.2166667,
+      "dns_name": "accra"
+    }
+  ]
+}
+{
+  "id": 84,
+  "name": "Greece",
+  "code": "GR",
+  "cities": [
+    {
+      "id": 3131903,
+      "name": "Athens",
+      "latitude": 37.9833333,
+      "longitude": 23.7333333,
+      "dns_name": "athens"
+    }
+  ]
+}
+{
+  "id": 85,
+  "name": "Greenland",
+  "code": "GL",
+  "cities": [
+    {
+      "id": 3085001,
+      "name": "Nuuk",
+      "latitude": 64.1833333,
+      "longitude": -51.75,
+      "dns_name": "nuuk"
+    }
+  ]
+}
+{
+  "id": 88,
+  "name": "Guam",
+  "code": "GU",
+  "cities": [
+    {
+      "id": 8808314,
+      "name": "Hagatna",
+      "latitude": 13.4741667,
+      "longitude": 144.7477778,
+      "dns_name": "hagatna"
+    }
+  ]
+}
+{
+  "id": 89,
+  "name": "Guatemala",
+  "code": "GT",
+  "cities": [
+    {
+      "id": 3202463,
+      "name": "Guatemala City",
+      "latitude": 14.621111,
+      "longitude": -90.526944,
+      "dns_name": "guatemala-city"
+    }
+  ]
+}
+{
+  "id": 96,
+  "name": "Honduras",
+  "code": "HN",
+  "cities": [
+    {
+      "id": 3270551,
+      "name": "Tegucigalpa",
+      "latitude": 14.1,
+      "longitude": -87.2166667,
+      "dns_name": "tegucigalpa"
+    }
+  ]
+}
+{
+  "id": 97,
+  "name": "Hong Kong",
+  "code": "HK",
+  "cities": [
+    {
+      "id": 3232931,
+      "name": "Hong Kong",
+      "latitude": 22.2833333,
+      "longitude": 114.15,
+      "dns_name": "hong-kong"
+    }
+  ]
+}
+{
+  "id": 98,
+  "name": "Hungary",
+  "code": "HU",
+  "cities": [
+    {
+      "id": 3348344,
+      "name": "Budapest",
+      "latitude": 47.5,
+      "longitude": 19.083333,
+      "dns_name": "budapest"
+    }
+  ]
+}
+{
+  "id": 99,
+  "name": "Iceland",
+  "code": "IS",
+  "cities": [
+    {
+      "id": 4509791,
+      "name": "Reykjavik",
+      "latitude": 64.15,
+      "longitude": -21.95,
+      "dns_name": "reykjavik"
+    }
+  ]
+}
+{
+  "id": 100,
+  "name": "India",
+  "code": "IN",
+  "cities": [
+    {
+      "id": 4041548,
+      "name": "Mumbai",
+      "latitude": 18.975,
+      "longitude": 72.825833,
+      "dns_name": "mumbai"
+    }
+  ]
+}
+{
+  "id": 101,
+  "name": "Indonesia",
+  "code": "ID",
+  "cities": [
+    {
+      "id": 3560288,
+      "name": "Jakarta",
+      "latitude": -6.174444,
+      "longitude": 106.829444,
+      "dns_name": "jakarta"
+    }
+  ]
+}
+{
+  "id": 103,
+  "name": "Iraq",
+  "code": "IQ",
+  "cities": [
+    {
+      "id": 4093955,
+      "name": "Baghdad",
+      "latitude": 33.3386111,
+      "longitude": 44.3938889,
+      "dns_name": "baghdad"
+    }
+  ]
+}
+{
+  "id": 104,
+  "name": "Ireland",
+  "code": "IE",
+  "cities": [
+    {
+      "id": 3939200,
+      "name": "Dublin",
+      "latitude": 53.3330556,
+      "longitude": -6.2488889,
+      "dns_name": "dublin"
+    }
+  ]
+}
+{
+  "id": 243,
+  "name": "Isle of Man",
+  "code": "IM",
+  "cities": [
+    {
+      "id": 3965405,
+      "name": "Douglas",
+      "latitude": 54.15,
+      "longitude": -4.483333,
+      "dns_name": "douglas"
+    }
+  ]
+}
+{
+  "id": 105,
+  "name": "Israel",
+  "code": "IL",
+  "cities": [
+    {
+      "id": 3964220,
+      "name": "Tel Aviv",
+      "latitude": 32.066667,
+      "longitude": 34.766667,
+      "dns_name": "tel-aviv"
+    }
+  ]
+}
+{
+  "id": 106,
+  "name": "Italy",
+  "code": "IT",
+  "cities": [
+    {
+      "id": 4542737,
+      "name": "Milan",
+      "latitude": 45.466667,
+      "longitude": 9.2,
+      "dns_name": "milan"
+    },
+    {
+      "id": 4548074,
+      "name": "Palermo",
+      "latitude": 38.116667,
+      "longitude": 13.366667,
+      "dns_name": "palermo"
+    },
+    {
+      "id": 4555808,
+      "name": "Rome",
+      "latitude": 41.8902,
+      "longitude": 12.4922,
+      "dns_name": "rome"
+    }
+  ]
+}
+{
+  "id": 107,
+  "name": "Jamaica",
+  "code": "JM",
+  "cities": [
+    {
+      "id": 4576328,
+      "name": "Kingston",
+      "latitude": 18,
+      "longitude": -76.8,
+      "dns_name": "kingston"
+    }
+  ]
+}
+{
+  "id": 108,
+  "name": "Japan",
+  "code": "JP",
+  "cities": [
+    {
+      "id": 4621847,
+      "name": "Osaka",
+      "latitude": 34.6937,
+      "longitude": 135.5023,
+      "dns_name": "osaka"
+    },
+    {
+      "id": 4633349,
+      "name": "Tokyo",
+      "latitude": 35.685,
+      "longitude": 139.751389,
+      "dns_name": "tokyo"
+    }
+  ]
+}
+{
+  "id": 244,
+  "name": "Jersey",
+  "code": "JE",
+  "cities": [
+    {
+      "id": 4572281,
+      "name": "Saint Helier",
+      "latitude": 49.183333,
+      "longitude": -2.1,
+      "dns_name": "saint-helier"
+    }
+  ]
+}
+{
+  "id": 109,
+  "name": "Jordan",
+  "code": "JO",
+  "cities": [
+    {
+      "id": 4581203,
+      "name": "Amman",
+      "latitude": 31.95,
+      "longitude": 35.933333,
+      "dns_name": "amman"
+    }
+  ]
+}
+{
+  "id": 110,
+  "name": "Kazakhstan",
+  "code": "KZ",
+  "cities": [
+    {
+      "id": 4925732,
+      "name": "Astana",
+      "latitude": 51.181111,
+      "longitude": 71.427778,
+      "dns_name": "astana"
+    }
+  ]
+}
+{
+  "id": 111,
+  "name": "Kenya",
+  "code": "KE",
+  "cities": [
+    {
+      "id": 4646603,
+      "name": "Nairobi",
+      "latitude": -1.2833333,
+      "longitude": 36.8166667,
+      "dns_name": "nairobi"
+    }
+  ]
+}
+{
+  "id": 116,
+  "name": "Kuwait",
+  "code": "KW",
+  "cities": [
+    {
+      "id": 9521894,
+      "name": "Kuwait City",
+      "latitude": 29.3759,
+      "longitude": 47.9774,
+      "dns_name": "kuwait-city"
+    }
+  ]
+}
+{
+  "id": 118,
+  "name": "Lao People's Democratic Republic",
+  "code": "LA",
+  "cities": [
+    {
+      "id": 5015876,
+      "name": "Vientiane",
+      "latitude": 17.966667,
+      "longitude": 102.6,
+      "dns_name": "vientiane"
+    }
+  ]
+}
+{
+  "id": 119,
+  "name": "Latvia",
+  "code": "LV",
+  "cities": [
+    {
+      "id": 5192828,
+      "name": "Riga",
+      "latitude": 56.95,
+      "longitude": 24.1,
+      "dns_name": "riga"
+    }
+  ]
+}
+{
+  "id": 120,
+  "name": "Lebanon",
+  "code": "LB",
+  "cities": [
+    {
+      "id": 5022080,
+      "name": "Beirut",
+      "latitude": 33.8719444,
+      "longitude": 35.5097222,
+      "dns_name": "beirut"
+    }
+  ]
+}
+{
+  "id": 123,
+  "name": "Libyan Arab Jamahiriya",
+  "code": "LY",
+  "cities": [
+    {
+      "id": 5206697,
+      "name": "Tripoli",
+      "latitude": 32.8925,
+      "longitude": 13.18,
+      "dns_name": "tripoli"
+    }
+  ]
+}
+{
+  "id": 124,
+  "name": "Liechtenstein",
+  "code": "LI",
+  "cities": [
+    {
+      "id": 5037212,
+      "name": "Vaduz",
+      "latitude": 47.1333333,
+      "longitude": 9.5166667,
+      "dns_name": "vaduz"
+    }
+  ]
+}
+{
+  "id": 125,
+  "name": "Lithuania",
+  "code": "LT",
+  "cities": [
+    {
+      "id": 5166932,
+      "name": "Vilnius",
+      "latitude": 54.6833333,
+      "longitude": 25.3166667,
+      "dns_name": "vilnius"
+    }
+  ]
+}
+{
+  "id": 126,
+  "name": "Luxembourg",
+  "code": "LU",
+  "cities": [
+    {
+      "id": 9521876,
+      "name": "Luxembourg",
+      "latitude": 49.6117,
+      "longitude": 6.13,
+      "dns_name": "luxembourg"
+    }
+  ]
+}
+{
+  "id": 131,
+  "name": "Malaysia",
+  "code": "MY",
+  "cities": [
+    {
+      "id": 5820143,
+      "name": "Kuala Lumpur",
+      "latitude": 3.166667,
+      "longitude": 101.7,
+      "dns_name": "kuala-lumpur"
+    }
+  ]
+}
+{
+  "id": 134,
+  "name": "Malta",
+  "code": "MT",
+  "cities": [
+    {
+      "id": 5554481,
+      "name": "Valletta",
+      "latitude": 35.899722,
+      "longitude": 14.514722,
+      "dns_name": "valletta"
+    }
+  ]
+}
+{
+  "id": 137,
+  "name": "Mauritania",
+  "code": "MR",
+  "cities": [
+    {
+      "id": 5551598,
+      "name": "Nouakchott",
+      "latitude": 18.0863889,
+      "longitude": -15.9752778,
+      "dns_name": "nouakchott"
+    }
+  ]
+}
+{
+  "id": 140,
+  "name": "Mexico",
+  "code": "MX",
+  "cities": [
+    {
+      "id": 5677037,
+      "name": "Mexico",
+      "latitude": 19.434167,
+      "longitude": -99.138611,
+      "dns_name": "mexico"
+    }
+  ]
+}
+{
+  "id": 142,
+  "name": "Moldova",
+  "code": "MD",
+  "cities": [
+    {
+      "id": 5295179,
+      "name": "Chisinau",
+      "latitude": 47.005556,
+      "longitude": 28.8575,
+      "dns_name": "chisinau"
+    }
+  ]
+}
+{
+  "id": 143,
+  "name": "Monaco",
+  "code": "MC",
+  "cities": [
+    {
+      "id": 5292332,
+      "name": "Monte Carlo",
+      "latitude": 43.739722,
+      "longitude": 7.427222,
+      "dns_name": "monte-carlo"
+    }
+  ]
+}
+{
+  "id": 144,
+  "name": "Mongolia",
+  "code": "MN",
+  "cities": [
+    {
+      "id": 5543669,
+      "name": "Ulaanbaatar",
+      "latitude": 47.9166667,
+      "longitude": 106.9166667,
+      "dns_name": "ulaanbaatar"
+    }
+  ]
+}
+{
+  "id": 146,
+  "name": "Montenegro",
+  "code": "ME",
+  "cities": [
+    {
+      "id": 5318561,
+      "name": "Podgorica",
+      "latitude": 42.441111,
+      "longitude": 19.263611,
+      "dns_name": "podgorica"
+    }
+  ]
+}
+{
+  "id": 147,
+  "name": "Morocco",
+  "code": "MA",
+  "cities": [
+    {
+      "id": 5271254,
+      "name": "Rabat",
+      "latitude": 34.013784,
+      "longitude": -6.844268,
+      "dns_name": "rabat"
+    }
+  ]
+}
+{
+  "id": 148,
+  "name": "Mozambique",
+  "code": "MZ",
+  "cities": [
+    {
+      "id": 5870336,
+      "name": "Maputo",
+      "latitude": -25.9652778,
+      "longitude": 32.5891667,
+      "dns_name": "maputo"
+    }
+  ]
+}
+{
+  "id": 149,
+  "name": "Myanmar",
+  "code": "MM",
+  "cities": [
+    {
+      "id": 9521893,
+      "name": "Naypyidaw",
+      "latitude": 19.7475,
+      "longitude": 96.115,
+      "dns_name": "naypyidaw"
+    }
+  ]
+}
+{
+  "id": 152,
+  "name": "Nepal",
+  "code": "NP",
+  "cities": [
+    {
+      "id": 6142175,
+      "name": "Kathmandu",
+      "latitude": 27.7166667,
+      "longitude": 85.3166667,
+      "dns_name": "kathmandu"
+    }
+  ]
+}
+{
+  "id": 153,
+  "name": "Netherlands",
+  "code": "NL",
+  "cities": [
+    {
+      "id": 6076868,
+      "name": "Amsterdam",
+      "latitude": 52.35,
+      "longitude": 4.916667,
+      "dns_name": "amsterdam"
+    }
+  ]
+}
+{
+  "id": 156,
+  "name": "New Zealand",
+  "code": "NZ",
+  "cities": [
+    {
+      "id": 6144239,
+      "name": "Auckland",
+      "latitude": -36.866667,
+      "longitude": 174.766667,
+      "dns_name": "auckland"
+    }
+  ]
+}
+{
+  "id": 159,
+  "name": "Nigeria",
+  "code": "NG",
+  "cities": [
+    {
+      "id": 6010328,
+      "name": "Lagos",
+      "latitude": 6.453056,
+      "longitude": 3.395833,
+      "dns_name": "lagos"
+    }
+  ]
+}
+{
+  "id": 128,
+  "name": "North Macedonia",
+  "code": "MK",
+  "cities": [
+    {
+      "id": 5386019,
+      "name": "Skopje",
+      "latitude": 42,
+      "longitude": 21.4333333,
+      "dns_name": "skopje"
+    }
+  ]
+}
+{
+  "id": 163,
+  "name": "Norway",
+  "code": "NO",
+  "cities": [
+    {
+      "id": 6127364,
+      "name": "Oslo",
+      "latitude": 59.916667,
+      "longitude": 10.75,
+      "dns_name": "oslo"
+    }
+  ]
+}
+{
+  "id": 165,
+  "name": "Pakistan",
+  "code": "PK",
+  "cities": [
+    {
+      "id": 6600485,
+      "name": "Karachi",
+      "latitude": 24.9056,
+      "longitude": 67.0822,
+      "dns_name": "karachi"
+    }
+  ]
+}
+{
+  "id": 168,
+  "name": "Panama",
+  "code": "PA",
+  "cities": [
+    {
+      "id": 6176273,
+      "name": "Panama City",
+      "latitude": 8.9666667,
+      "longitude": -79.5333333,
+      "dns_name": "panama-city"
+    }
+  ]
+}
+{
+  "id": 169,
+  "name": "Papua New Guinea",
+  "code": "PG",
+  "cities": [
+    {
+      "id": 6292406,
+      "name": "Port Moresby",
+      "latitude": -9.4647222,
+      "longitude": 147.1925,
+      "dns_name": "port-moresby"
+    }
+  ]
+}
+{
+  "id": 170,
+  "name": "Paraguay",
+  "code": "PY",
+  "cities": [
+    {
+      "id": 9521890,
+      "name": "Asuncion",
+      "latitude": -25.3,
+      "longitude": -57.633333,
+      "dns_name": "asuncion"
+    }
+  ]
+}
+{
+  "id": 171,
+  "name": "Peru",
+  "code": "PE",
+  "cities": [
+    {
+      "id": 6222584,
+      "name": "Lima",
+      "latitude": -12.05,
+      "longitude": -77.05,
+      "dns_name": "lima"
+    }
+  ]
+}
+{
+  "id": 172,
+  "name": "Philippines",
+  "code": "PH",
+  "cities": [
+    {
+      "id": 6391379,
+      "name": "Manila",
+      "latitude": 14.6042,
+      "longitude": 120.9822,
+      "dns_name": "manila"
+    }
+  ]
+}
+{
+  "id": 174,
+  "name": "Poland",
+  "code": "PL",
+  "cities": [
+    {
+      "id": 6863429,
+      "name": "Warsaw",
+      "latitude": 52.25,
+      "longitude": 21,
+      "dns_name": "warsaw"
+    }
+  ]
+}
+{
+  "id": 175,
+  "name": "Portugal",
+  "code": "PT",
+  "cities": [
+    {
+      "id": 6906665,
+      "name": "Lisbon",
+      "latitude": 38.716667,
+      "longitude": -9.133333,
+      "dns_name": "lisbon"
+    }
+  ]
+}
+{
+  "id": 176,
+  "name": "Puerto Rico",
+  "code": "PR",
+  "cities": [
+    {
+      "id": 9521884,
+      "name": "San Juan",
+      "latitude": 18.406389,
+      "longitude": -66.063889,
+      "dns_name": "san-juan"
+    }
+  ]
+}
+{
+  "id": 177,
+  "name": "Qatar",
+  "code": "QA",
+  "cities": [
+    {
+      "id": 6940529,
+      "name": "Doha",
+      "latitude": 25.286667,
+      "longitude": 51.533333,
+      "dns_name": "doha"
+    }
+  ]
+}
+{
+  "id": 179,
+  "name": "Romania",
+  "code": "RO",
+  "cities": [
+    {
+      "id": 6953096,
+      "name": "Bucharest",
+      "latitude": 44.433333,
+      "longitude": 26.1,
+      "dns_name": "bucharest"
+    }
+  ]
+}
+{
+  "id": 181,
+  "name": "Rwanda",
+  "code": "RW",
+  "cities": [
+    {
+      "id": 7723910,
+      "name": "Kigali",
+      "latitude": -1.9536111,
+      "longitude": 30.0605556,
+      "dns_name": "kigali"
+    }
+  ]
+}
+{
+  "id": 191,
+  "name": "Senegal",
+  "code": "SN",
+  "cities": [
+    {
+      "id": 7924958,
+      "name": "Dakar",
+      "latitude": 14.6708333,
+      "longitude": -17.4380556,
+      "dns_name": "dakar"
+    }
+  ]
+}
+{
+  "id": 192,
+  "name": "Serbia",
+  "code": "RS",
+  "cities": [
+    {
+      "id": 7030907,
+      "name": "Belgrade",
+      "latitude": 44.818611,
+      "longitude": 20.468056,
+      "dns_name": "belgrad"
+    }
+  ]
+}
+{
+  "id": 195,
+  "name": "Singapore",
+  "code": "SG",
+  "cities": [
+    {
+      "id": 7867982,
+      "name": "Singapore",
+      "latitude": 1.2930556,
+      "longitude": 103.8558333,
+      "dns_name": "singapore"
+    }
+  ]
+}
+{
+  "id": 196,
+  "name": "Slovakia",
+  "code": "SK",
+  "cities": [
+    {
+      "id": 7884305,
+      "name": "Bratislava",
+      "latitude": 48.15,
+      "longitude": 17.1166667,
+      "dns_name": "bratislava"
+    }
+  ]
+}
+{
+  "id": 197,
+  "name": "Slovenia",
+  "code": "SI",
+  "cities": [
+    {
+      "id": 7874306,
+      "name": "Ljubljana",
+      "latitude": 46.0552778,
+      "longitude": 14.5144444,
+      "dns_name": "ljubljana"
+    }
+  ]
+}
+{
+  "id": 199,
+  "name": "Somalia",
+  "code": "SO",
+  "cities": [
+    {
+      "id": 7971170,
+      "name": "Mogadishu",
+      "latitude": 2.0666667,
+      "longitude": 45.3666667,
+      "dns_name": "mogadishu"
+    }
+  ]
+}
+{
+  "id": 200,
+  "name": "South Africa",
+  "code": "ZA",
+  "cities": [
+    {
+      "id": 9383693,
+      "name": "Johannesburg",
+      "latitude": -26.205171,
+      "longitude": 28.049815,
+      "dns_name": "johannesburg"
+    }
+  ]
+}
+{
+  "id": 114,
+  "name": "South Korea",
+  "code": "KR",
+  "cities": [
+    {
+      "id": 4879586,
+      "name": "Seoul",
+      "latitude": 37.5985,
+      "longitude": 126.9783,
+      "dns_name": "seoul"
+    }
+  ]
+}
+{
+  "id": 202,
+  "name": "Spain",
+  "code": "ES",
+  "cities": [
+    {
+      "id": 2572757,
+      "name": "Barcelona",
+      "latitude": 41.398371,
+      "longitude": 2.1741,
+      "dns_name": "barcelona"
+    },
+    {
+      "id": 2619989,
+      "name": "Madrid",
+      "latitude": 40.408566,
+      "longitude": -3.69222,
+      "dns_name": "madrid"
+    }
+  ]
+}
+{
+  "id": 203,
+  "name": "Sri Lanka",
+  "code": "LK",
+  "cities": [
+    {
+      "id": 5043197,
+      "name": "Colombo",
+      "latitude": 6.9319444,
+      "longitude": 79.8477778,
+      "dns_name": "colombo"
+    }
+  ]
+}
+{
+  "id": 208,
+  "name": "Sweden",
+  "code": "SE",
+  "cities": [
+    {
+      "id": 7852919,
+      "name": "Stockholm",
+      "latitude": 59.333333,
+      "longitude": 18.05,
+      "dns_name": "stockholm"
+    }
+  ]
+}
+{
+  "id": 209,
+  "name": "Switzerland",
+  "code": "CH",
+  "cities": [
+    {
+      "id": 1171814,
+      "name": "Zurich",
+      "latitude": 47.366667,
+      "longitude": 8.55,
+      "dns_name": "zurich"
+    }
+  ]
+}
+{
+  "id": 211,
+  "name": "Taiwan",
+  "code": "TW",
+  "cities": [
+    {
+      "id": 8544365,
+      "name": "Taipei",
+      "latitude": 25.0391667,
+      "longitude": 121.525,
+      "dns_name": "taipei"
+    }
+  ]
+}
+{
+  "id": 214,
+  "name": "Thailand",
+  "code": "TH",
+  "cities": [
+    {
+      "id": 8121638,
+      "name": "Bangkok",
+      "latitude": 13.753979,
+      "longitude": 100.501444,
+      "dns_name": "bangkok"
+    }
+  ]
+}
+{
+  "id": 218,
+  "name": "Trinidad and Tobago",
+  "code": "TT",
+  "cities": [
+    {
+      "id": 9521887,
+      "name": "Port of Spain",
+      "latitude": 10.666667,
+      "longitude": -61.516667,
+      "dns_name": "port-of-spain"
+    }
+  ]
+}
+{
+  "id": 219,
+  "name": "Tunisia",
+  "code": "TN",
+  "cities": [
+    {
+      "id": 8295401,
+      "name": "Tunis",
+      "latitude": 36.806112,
+      "longitude": 10.171078,
+      "dns_name": "tunis"
+    }
+  ]
+}
+{
+  "id": 220,
+  "name": "Turkey",
+  "code": "TR",
+  "cities": [
+    {
+      "id": 8401790,
+      "name": "Istanbul",
+      "latitude": 41.018611,
+      "longitude": 28.964722,
+      "dns_name": "istanbul"
+    }
+  ]
+}
+{
+  "id": 225,
+  "name": "Ukraine",
+  "code": "UA",
+  "cities": [
+    {
+      "id": 8626766,
+      "name": "Kyiv",
+      "latitude": 50.433333,
+      "longitude": 30.516667,
+      "dns_name": "kyiv"
+    }
+  ]
+}
+{
+  "id": 226,
+  "name": "United Arab Emirates",
+  "code": "AE",
+  "cities": [
+    {
+      "id": 728,
+      "name": "Dubai",
+      "latitude": 25.258172,
+      "longitude": 55.304717,
+      "dns_name": "dubai"
+    }
+  ]
+}
+{
+  "id": 227,
+  "name": "United Kingdom",
+  "code": "GB",
+  "cities": [
+    {
+      "id": 2975852,
+      "name": "Edinburgh",
+      "latitude": 55.95,
+      "longitude": -3.2,
+      "dns_name": "edinburgh"
+    },
+    {
+      "id": 2978888,
+      "name": "Glasgow",
+      "latitude": 55.833333,
+      "longitude": -4.25,
+      "dns_name": "glasgow"
+    },
+    {
+      "id": 2989907,
+      "name": "London",
+      "latitude": 51.514125,
+      "longitude": -0.093689,
+      "dns_name": "london"
+    },
+    {
+      "id": 2991110,
+      "name": "Manchester",
+      "latitude": 53.5,
+      "longitude": -2.216667,
+      "dns_name": "manchester"
+    }
+  ]
+}
+{
+  "id": 228,
+  "name": "United States",
+  "code": "US",
+  "cities": [
+    {
+      "id": 9103211,
+      "name": "Ashburn",
+      "latitude": 39.0436111,
+      "longitude": -77.4877778,
+      "dns_name": "ashburn"
+    },
+    {
+      "id": 8792429,
+      "name": "Atlanta",
+      "latitude": 33.7488889,
+      "longitude": -84.3880556,
+      "dns_name": "atlanta"
+    },
+    {
+      "id": 8895305,
+      "name": "Boston",
+      "latitude": 42.3583333,
+      "longitude": -71.0602778,
+      "dns_name": "boston"
+    },
+    {
+      "id": 8963153,
+      "name": "Buffalo",
+      "latitude": 42.8863889,
+      "longitude": -78.8786111,
+      "dns_name": "buffalo"
+    },
+    {
+      "id": 8980922,
+      "name": "Charlotte",
+      "latitude": 35.2269444,
+      "longitude": -80.8433333,
+      "dns_name": "charlotte"
+    },
+    {
+      "id": 8815352,
+      "name": "Chicago",
+      "latitude": 41.85,
+      "longitude": -87.65,
+      "dns_name": "chicago"
+    },
+    {
+      "id": 9080300,
+      "name": "Dallas",
+      "latitude": 32.7833333,
+      "longitude": -96.8,
+      "dns_name": "dallas"
+    },
+    {
+      "id": 8770934,
+      "name": "Denver",
+      "latitude": 39.7391667,
+      "longitude": -104.9841667,
+      "dns_name": "denver"
+    },
+    {
+      "id": 9083687,
+      "name": "Houston",
+      "latitude": 29.7630556,
+      "longitude": -95.3630556,
+      "dns_name": "houston"
+    },
+    {
+      "id": 8930717,
+      "name": "Kansas City",
+      "latitude": 39.0997222,
+      "longitude": -94.5783333,
+      "dns_name": "kansas-city"
+    },
+    {
+      "id": 8761958,
+      "name": "Los Angeles",
+      "latitude": 34.0522222,
+      "longitude": -118.2427778,
+      "dns_name": "los-angeles"
+    },
+    {
+      "id": 9113744,
+      "name": "Manassas",
+      "latitude": 38.7508333,
+      "longitude": -77.4755556,
+      "dns_name": "manassas"
+    },
+    {
+      "id": 9086162,
+      "name": "McAllen",
+      "latitude": 26.2030556,
+      "longitude": -98.2297222,
+      "dns_name": "mcallen"
+    },
+    {
+      "id": 8787782,
+      "name": "Miami",
+      "latitude": 25.7738889,
+      "longitude": -80.1938889,
+      "dns_name": "miami"
+    },
+    {
+      "id": 9071273,
+      "name": "Nashville",
+      "latitude": 36.1658333,
+      "longitude": -86.7844444,
+      "dns_name": "nashville"
+    },
+    {
+      "id": 8971718,
+      "name": "New York",
+      "latitude": 40.7141667,
+      "longitude": -74.0063889,
+      "dns_name": "new-york"
+    },
+    {
+      "id": 8943887,
+      "name": "Omaha",
+      "latitude": 41.2586111,
+      "longitude": -95.9375,
+      "dns_name": "omaha"
+    },
+    {
+      "id": 8741960,
+      "name": "Phoenix",
+      "latitude": 33.4483333,
+      "longitude": -112.0733333,
+      "dns_name": "phoenix"
+    },
+    {
+      "id": 8934551,
+      "name": "Saint Louis",
+      "latitude": 38.6272222,
+      "longitude": -90.1977778,
+      "dns_name": "saint-louis"
+    },
+    {
+      "id": 9097865,
+      "name": "Salt Lake City",
+      "latitude": 40.7608333,
+      "longitude": -111.8902778,
+      "dns_name": "salt-lake-city"
+    },
+    {
+      "id": 8766359,
+      "name": "San Francisco",
+      "latitude": 37.7698135,
+      "longitude": -122.4660005,
+      "dns_name": "san-francisco"
+    },
+    {
+      "id": 9128402,
+      "name": "Seattle",
+      "latitude": 47.6063889,
+      "longitude": -122.3308333,
+      "dns_name": "seattle"
+    }
+  ]
+}
+{
+  "id": 230,
+  "name": "Uruguay",
+  "code": "UY",
+  "cities": [
+    {
+      "id": 9150812,
+      "name": "Montevideo",
+      "latitude": -34.8580556,
+      "longitude": -56.1708333,
+      "dns_name": "montevideo"
+    }
+  ]
+}
+{
+  "id": 231,
+  "name": "Uzbekistan",
+  "code": "UZ",
+  "cities": [
+    {
+      "id": 9166826,
+      "name": "Tashkent",
+      "latitude": 41.3166667,
+      "longitude": 69.25,
+      "dns_name": "tashkent"
+    }
+  ]
+}
+{
+  "id": 233,
+  "name": "Venezuela",
+  "code": "VE",
+  "cities": [
+    {
+      "id": 9176843,
+      "name": "Caracas",
+      "latitude": 10.5,
+      "longitude": -66.9166667,
+      "dns_name": "caracas"
+    }
+  ]
+}
+{
+  "id": 234,
+  "name": "Vietnam",
+  "code": "VN",
+  "cities": [
+    {
+      "id": 9270302,
+      "name": "Hanoi",
+      "latitude": 21.033333,
+      "longitude": 105.85,
+      "dns_name": "hanoi"
+    },
+    {
+      "id": 9271799,
+      "name": "Ho Chi Minh City",
+      "latitude": 10.75,
+      "longitude": 106.666667,
+      "dns_name": "ho-chi-minh-city"
+    }
+  ]
+}

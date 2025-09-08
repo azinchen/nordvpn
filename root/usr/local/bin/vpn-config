@@ -12,10 +12,6 @@ TECHNOLOGY="${TECHNOLOGY:-OpenVPN UDP}"
 GROUP="${GROUP:-}"
 RANDOM_TOP="${RANDOM_TOP:-0}"
 
-nvcountries=$(jq -c '.[]' < "/etc/nordvpn/countries.json")
-nvgroups=$(jq -c '.[]' < "/etc/nordvpn/groups.json")
-nvtechnologies=$(jq -c '.[]' < "/etc/nordvpn/technologies.json")
-
 numericregex="^[0-9]+$"
 specific_server_regex="^[a-zA-Z]{2}[0-9]+$"
 
@@ -64,11 +60,11 @@ getcountryid()
     input=$1
 
     if is_numeric "$input"; then
-        id=$(echo "$nvcountries" | jq -r --argjson ID "$input" 'select(.id == $ID) | .id')
+        id=$(jq -r --argjson ID "$input" 'select(.id == $ID) | .id' < "/etc/nordvpn/countries.json")
     else
-        id=$(echo "$nvcountries" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .id')
+        id=$(jq -r --arg NAME "$input" 'select(.name == $NAME) | .id' < "/etc/nordvpn/countries.json")
         if [ -z "$id" ]; then
-            id=$(echo "$nvcountries" | jq -r --arg CODE "$input" 'select(.code == $CODE) | .id')
+            id=$(jq -r --arg CODE "$input" 'select(.code == $CODE) | .id' < "/etc/nordvpn/countries.json")
         fi
     fi
 
@@ -86,11 +82,11 @@ getcountryname()
     input=$1
 
     if is_numeric "$input"; then
-        name=$(echo "$nvcountries" | jq -r --argjson ID "$input" 'select(.id == $ID) | .name')
+        name=$(jq -r --argjson ID "$input" 'select(.id == $ID) | .name' < "/etc/nordvpn/countries.json")
     else
-        name=$(echo "$nvcountries" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .name')
+        name=$(jq -r --arg NAME "$input" 'select(.name == $NAME) | .name' < "/etc/nordvpn/countries.json")
         if [ -z "$name" ]; then
-            name=$(echo "$nvcountries" | jq -r --arg CODE "$input" 'select(.code == $CODE) | .name')
+            name=$(jq -r --arg CODE "$input" 'select(.code == $CODE) | .name' < "/etc/nordvpn/countries.json")
         fi
     fi
 
@@ -108,11 +104,11 @@ getcityid()
     input=$1
 
     if is_numeric "$input"; then
-        id=$(echo "$nvcountries" | jq -r --argjson ID "$input" 'select(.cities[]? | .id == $ID) | .cities[] | select(.id == $ID) | .id' | head -n 1)
+        id=$(jq -r --argjson ID "$input" 'select(.cities[]? | .id == $ID) | .cities[] | select(.id == $ID) | .id' < "/etc/nordvpn/countries.json" | head -n 1)
     else
-        id=$(echo "$nvcountries" | jq -r --arg NAME "$input" 'select(.cities[]? | .name == $NAME) | .cities[] | select(.name == $NAME) | .id' | head -n 1)
+        id=$(jq -r --arg NAME "$input" 'select(.cities[]? | .name == $NAME) | .cities[] | select(.name == $NAME) | .id' < "/etc/nordvpn/countries.json" | head -n 1)
         if [ -z "$id" ]; then
-            id=$(echo "$nvcountries" | jq -r --arg DNS_NAME "$input" 'select(.cities[]? | .dns_name == $DNS_NAME) | .cities[] | select(.dns_name == $DNS_NAME) | .id' | head -n 1)
+            id=$(jq -r --arg DNS_NAME "$input" 'select(.cities[]? | .dns_name == $DNS_NAME) | .cities[] | select(.dns_name == $DNS_NAME) | .id' < "/etc/nordvpn/countries.json" | head -n 1)
         fi
     fi
 
@@ -130,11 +126,11 @@ getcityname()
     input=$1
 
     if is_numeric "$input"; then
-        name=$(echo "$nvcountries" | jq -r --argjson ID "$input" 'select(.cities[]? | .id == $ID) | .cities[] | select(.id == $ID) | .name' | head -n 1)
+        name=$(jq -r --argjson ID "$input" 'select(.cities[]? | .id == $ID) | .cities[] | select(.id == $ID) | .name' < "/etc/nordvpn/countries.json" | head -n 1)
     else
-        name=$(echo "$nvcountries" | jq -r --arg NAME "$input" 'select(.cities[]? | .name == $NAME) | .cities[] | select(.name == $NAME) | .name' | head -n 1)
+        name=$(jq -r --arg NAME "$input" 'select(.cities[]? | .name == $NAME) | .cities[] | select(.name == $NAME) | .name' < "/etc/nordvpn/countries.json" | head -n 1)
         if [ -z "$name" ]; then
-            name=$(echo "$nvcountries" | jq -r --arg DNS_NAME "$input" 'select(.cities[]? | .dns_name == $DNS_NAME) | .cities[] | select(.dns_name == $DNS_NAME) | .name' | head -n 1)
+            name=$(jq -r --arg DNS_NAME "$input" 'select(.cities[]? | .dns_name == $DNS_NAME) | .cities[] | select(.dns_name == $DNS_NAME) | .name' < "/etc/nordvpn/countries.json" | head -n 1)
         fi
     fi
 
@@ -158,7 +154,7 @@ getcitycoordinates()
     fi
 
     # Then get coordinates using the city ID
-    coords=$(echo "$nvcountries" | jq -r --argjson ID "$cityid" 'select(.cities[]? | .id == $ID) | .cities[] | select(.id == $ID) | "\(.latitude),\(.longitude)"' | head -n 1)
+    coords=$(jq -r --argjson ID "$cityid" 'select(.cities[]? | .id == $ID) | .cities[] | select(.id == $ID) | "\(.latitude),\(.longitude)"' < "/etc/nordvpn/countries.json" | head -n 1)
 
     printf '%s' "$coords"
 
@@ -179,11 +175,11 @@ getgroupid()
     fi
 
     if is_numeric "$input"; then
-        id=$(echo "$nvgroups" | jq -r --argjson ID "$input" 'select(.id == $ID) | .id')
+        id=$(jq -r --argjson ID "$input" 'select(.id == $ID) | .id' < "/etc/nordvpn/groups.json")
     else
-        id=$(echo "$nvgroups" | jq -r --arg TITLE "$input" 'select(.title == $TITLE) | .id')
+        id=$(jq -r --arg TITLE "$input" 'select(.title == $TITLE) | .id' < "/etc/nordvpn/groups.json")
         if [ -z "$id" ]; then
-            id=$(echo "$nvgroups" | jq -r --arg IDENTIFIER "$input" 'select(.identifier == $IDENTIFIER) | .id')
+            id=$(jq -r --arg IDENTIFIER "$input" 'select(.identifier == $IDENTIFIER) | .id' < "/etc/nordvpn/groups.json")
         fi
     fi
 
@@ -201,11 +197,11 @@ getgrouptitle()
     input=$1
 
     if is_numeric "$input"; then
-        title=$(echo "$nvgroups" | jq -r --argjson ID "$input" 'select(.id == $ID) | .title')
+        title=$(jq -r --argjson ID "$input" 'select(.id == $ID) | .title' < "/etc/nordvpn/groups.json")
     else
-        title=$(echo "$nvgroups" | jq -r --arg TITLE "$input" 'select(.title == $TITLE) | .title')
+        title=$(jq -r --arg TITLE "$input" 'select(.title == $TITLE) | .title' < "/etc/nordvpn/groups.json")
         if [ -z "$title" ]; then
-            title=$(echo "$nvgroups" | jq -r --arg IDENTIFIER "$input" 'select(.identifier == $IDENTIFIER) | .title')
+            title=$(jq -r --arg IDENTIFIER "$input" 'select(.identifier == $IDENTIFIER) | .title' < "/etc/nordvpn/groups.json")
         fi
     fi
 
@@ -228,11 +224,11 @@ gettechnologyid()
     fi
 
     if is_numeric "$input"; then
-        id=$(echo "$nvtechnologies" | jq -r --argjson ID "$input" 'select(.id == $ID) | .id')
+        id=$(jq -r --argjson ID "$input" 'select(.id == $ID) | .id' < "/etc/nordvpn/technologies.json")
     else
-        id=$(echo "$nvtechnologies" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .id')
+        id=$(jq -r --arg NAME "$input" 'select(.name == $NAME) | .id' < "/etc/nordvpn/technologies.json")
         if [ -z "$id" ]; then
-            id=$(echo "$nvtechnologies" | jq -r --arg IDENTIFIER "$input" 'select(.identifier == $IDENTIFIER) | .id')
+            id=$(jq -r --arg IDENTIFIER "$input" 'select(.identifier == $IDENTIFIER) | .id' < "/etc/nordvpn/technologies.json")
         fi
     fi
 
@@ -250,11 +246,11 @@ gettechnologyname()
     input=$1
 
     if is_numeric "$input"; then
-        name=$(echo "$nvtechnologies" | jq -r --argjson ID "$input" 'select(.id == $ID) | .name')
+        name=$(jq -r --argjson ID "$input" 'select(.id == $ID) | .name' < "/etc/nordvpn/technologies.json")
     else
-        name=$(echo "$nvtechnologies" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .name')
+        name=$(jq -r --arg NAME "$input" 'select(.name == $NAME) | .name' < "/etc/nordvpn/technologies.json")
         if [ -z "$name" ]; then
-            name=$(echo "$nvtechnologies" | jq -r --arg IDENTIFIER "$input" 'select(.identifier == $IDENTIFIER) | .name')
+            name=$(jq -r --arg IDENTIFIER "$input" 'select(.identifier == $IDENTIFIER) | .name' < "/etc/nordvpn/technologies.json")
         fi
     fi
 
@@ -271,10 +267,10 @@ getopenvpnprotocol()
 {
     input=$1
 
-    ident=$(echo "$nvtechnologies" | jq -r --arg NAME "$input" 'select(.name == $NAME) | .identifier')
+    ident=$(jq -r --arg NAME "$input" 'select(.name == $NAME) | .identifier' < "/etc/nordvpn/technologies.json")
     if [ -z "$ident" ]; then
         if is_numeric "$input"; then
-            ident=$(echo "$nvtechnologies" | jq -r --argjson ID "$input" 'select(.id == $ID) | .identifier')
+            ident=$(jq -r --argjson ID "$input" 'select(.id == $ID) | .identifier' < "/etc/nordvpn/technologies.json")
         fi
     fi
     if [ -z "$ident" ]; then
