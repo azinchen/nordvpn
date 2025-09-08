@@ -36,12 +36,12 @@ jobs:
         file: 
           - name: "CITIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
-            jq_filter: '.[] | . as $parent | .cities[] | [$parent.name, $parent.code, $parent.id, .name, .id] | "\(.[0]) | \(.[1]) | \(.[2]) | \(.[3]) | \(.[4])"'
-            header: "Country | Code | ID | City | ID"
+            jq_filter: '.[] | . as $parent | .cities[] | [$parent.name, $parent.code, $parent.id, $parent.serverCount, .name, .id, .serverCount] | "\(.[0]) | \(.[1]) | \(.[2]) | \(.[3]) | \(.[4]) | \(.[5]) | \(.[6])"'
+            header: "Country | Code | ID | Servers | City | ID | Servers"
           - name: "COUNTRIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
-            jq_filter: '.[] | [.name, .code, .id] | "\(.[0]) | \(.[1]) | \(.[2])"'
-            header: "Country | Code | ID"
+            jq_filter: '.[] | [.name, .code, .id, .serverCount] | "\(.[0]) | \(.[1]) | \(.[2]) | \(.[3])"'
+            header: "Country | Code | ID | Servers"
           - name: "TECHNOLOGIES"
             url: "https://api.nordvpn.com/v1/technologies"
             jq_filter: '.[] | [.name, .identifier, .id] | "\(.[0]) | \(.[1]) | \(.[2])"'
@@ -110,7 +110,7 @@ jobs:
           
           # Download and process countries.json with beautiful formatting
           curl -s "https://api.nordvpn.com/v1/servers/countries" \
-            | jq '.[] | del(.serverCount) | .cities = [.cities[]? | del(.serverCount, .hub_score)] | .' \
+            | jq '.[] | .cities = [.cities[]? | del(.hub_score)] | .' \
             > root/etc/nordvpn/countries.json
 
           UPDATE_DATE=$(date +%y%m%d)
@@ -133,7 +133,8 @@ jobs:
             ### Changes:
             - Updated countries data from NordVPN API
             - Beautifully formatted JSON with proper indentation
-            - Removed frequently changing serverCount and hub_score fields
+            - Included server count information for countries and cities
+            - Removed hub_score field (frequently changing metric)
             - Optimized for both readability and runtime performance
             
             ---
