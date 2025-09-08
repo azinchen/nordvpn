@@ -56,10 +56,78 @@ if [ -n "${docker6_network}" ]; then
     ip6tables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
 fi
 if [ -n "${docker_network}" ]; then
-    iptables -A OUTPUT -d api.nordvpn.com -j ACCEPT
+    iptables -A OUTPUT -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
 fi
 if [ -n "${docker6_network}" ]; then
-    ip6tables -A OUTPUT -d api.nordvpn.com -j ACCEPT 2> /dev/null
+    ip6tables -A OUTPUT -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT 2> /dev/null
+fi
+
+# Consolidated local network rules (from init-localnetwork)
+echo "[INIT-FIREWALL] Setting up local network rules..."
+if [ -n "${docker_network}" ]; then
+    iptables -A INPUT -s "${docker_network}" -j ACCEPT
+    iptables -A FORWARD -d "${docker_network}" -j ACCEPT
+    iptables -A FORWARD -s "${docker_network}" -j ACCEPT
+    iptables -A OUTPUT -d "${docker_network}" -j ACCEPT
+fi
+if [ -n "${docker6_network}" ]; then
+    ip6tables -A INPUT -s "${docker6_network}" -j ACCEPT 2>/dev/null
+    ip6tables -A FORWARD -d "${docker6_network}" -j ACCEPT 2>/dev/null
+    ip6tables -A FORWARD -s "${docker6_network}" -j ACCEPT 2>/dev/null
+    ip6tables -A OUTPUT -d "${docker6_network}" -j ACCEPT 2>/dev/null
+fi
+
+# Handle custom networks from NETWORK variable
+if [ -n "${docker_network}" ] && [ -n "${NETWORK:-}" ]; then
+    echo "[INIT-FIREWALL] Processing custom IPv4 networks from NETWORK variable: ${NETWORK}"
+    gw=$(ip route | awk '/default/ {print $3}')
+    echo "[INIT-FIREWALL] Using gateway: ${gw}"
+    # Convert semicolon/comma separated list to space separated
+    networks=$(echo "$NETWORK" | tr ';,' ' ')
+    for net in $networks; do
+        ip route | grep -q "$net" || ip route add to "$net" via "$gw" dev eth0
+        iptables -A INPUT -s "$net" -j ACCEPT
+        iptables -A FORWARD -d "$net" -j ACCEPT
+        iptables -A FORWARD -s "$net" -j ACCEPT
+        iptables -A OUTPUT -d "$net" -j ACCEPT
+    done
+    echo "[INIT-FIREWALL] Custom IPv4 networks configured"
+fi
+if [ -n "${docker6_network}" ] && [ -n "${NETWORK6:-}" ]; then
+    echo "[INIT-FIREWALL] Processing custom IPv6 networks from NETWORK6 variable: ${NETWORK6}"
+    gw6=$(ip -6 route | awk '/default/{print $3}')
+    echo "[INIT-FIREWALL] Using IPv6 gateway: ${gw6}"
+    # Convert semicolon/comma separated list to space separated
+    networks6=$(echo "$NETWORK6" | tr ';,' ' ')
+    for net6 in $networks6; do
+        ip -6 route | grep -q "$net6" || ip -6 route add to "$net6" via "$gw6" dev eth0
+        ip6tables -A INPUT -s "$net6" -j ACCEPT 2>/dev/null
+        ip6tables -A FORWARD -d "$net6" -j ACCEPT 2>/dev/null
+        ip6tables -A FORWARD -s "$net6" -j ACCEPT 2>/dev/null
+        ip6tables -A OUTPUT -d "$net6" -j ACCEPT 2>/dev/null
+    done
+    echo "[INIT-FIREWALL] Custom IPv6 networks configured"
+fi
+
+# Consolidated whitelist rules (from init-whitelistnetwork)
+echo "[INIT-FIREWALL] Setting up whitelist network rules..."
+if [ -n "${WHITELIST:-}" ]; then
+    echo "[INIT-FIREWALL] Processing whitelist domains: ${WHITELIST}"
+    # Convert semicolon/comma separated list to space separated
+    domains=$(echo "$WHITELIST" | tr ';,' ' ')
+    for domain in $domains; do
+        domain=$(echo "$domain" | sed 's/^.*:\/\///;s/\/.*$//')
+        echo "[INIT-FIREWALL] Adding whitelist rule for domain: ${domain}"
+        if [ -n "${docker_network}" ]; then
+            iptables -A OUTPUT -o eth0 -d $domain -j ACCEPT
+        fi
+        if [ -n "${docker6_network}" ]; then
+            ip6tables -A OUTPUT -o eth0 -d $domain -j ACCEPT 2>/dev/null
+        fi
+    done
+    echo "[INIT-FIREWALL] Whitelist domains configured"
+else
+    echo "[INIT-FIREWALL] No whitelist domains specified"
 fi
 
 echo "[INIT-FIREWALL] init-firewall script completed successfully"
