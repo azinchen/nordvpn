@@ -16,6 +16,7 @@ ip6tables -P FORWARD DROP 2>/dev/null
 
 docker_network="$(ip -o addr show dev eth0 | awk '$3 == "inet" {print $4}')"
 docker6_network="$(ip -o addr show dev eth0 | awk '$3 == "inet6" {print $4; exit}')"
+
 if [ -n "${docker_network}" ]; then
     iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
     iptables -A INPUT -i lo -j ACCEPT
@@ -42,25 +43,23 @@ if [ -n "${docker6_network}" ]; then
     ip6tables -t nat -A POSTROUTING -o tap+ -j MASQUERADE
     ip6tables -t nat -A POSTROUTING -o tun+ -j MASQUERADE
 fi
+
+# Allow DNS first (needed for hostname resolution)
 if [ -n "${docker_network}" ]; then
     iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
-    iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
-    iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
 fi
 if [ -n "${docker6_network}" ]; then
     ip6tables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
-    ip6tables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
-    ip6tables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
 fi
 
-# Allow access to NordVPN API - resolve hostname or skip if DNS not ready
+# Now resolve and allow access to NordVPN API
 if [ -n "${docker_network}" ]; then
-    if nordvpn_ips=$(nslookup api.nordvpn.com 2>/dev/null | awk '/^Address: / { print $2 }' | grep -v '#'); then
+    if nordvpn_ips=$(nslookup api.nordvpn.com 2>/dev/null | awk '/^Address: / { print $2 }' | grep -v '#' | grep -v ':'); then
         for ip in $nordvpn_ips; do
             iptables -A OUTPUT -d "$ip" -j ACCEPT 2>/dev/null || true
         done
     else
-        echo "[INIT-FIREWALL] Warning: Could not resolve api.nordvpn.com, allowing by hostname"
+        echo "[INIT-FIREWALL] Warning: Could not resolve api.nordvpn.com IPv4, allowing by hostname"
         iptables -A OUTPUT -d api.nordvpn.com -j ACCEPT 2>/dev/null || true
     fi
 fi
@@ -72,6 +71,16 @@ if [ -n "${docker6_network}" ]; then
     else
         ip6tables -A OUTPUT -d api.nordvpn.com -j ACCEPT 2>/dev/null || true
     fi
+fi
+
+# Allow VPN ports
+if [ -n "${docker_network}" ]; then
+    iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
+    iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
+fi
+if [ -n "${docker6_network}" ]; then
+    ip6tables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
+    ip6tables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
 fi
 
 echo "[INIT-FIREWALL] init-firewall script completed successfully"
