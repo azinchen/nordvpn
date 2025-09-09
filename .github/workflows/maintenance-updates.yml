@@ -36,8 +36,8 @@ jobs:
         file: 
           - name: "CITIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
-            jq_filter: '.[] | . as $parent | .cities[] | [$parent.name, $parent.code, $parent.id, $parent.serverCount, .name, .id, .serverCount] | "\(.[0]) | \(.[1]) | \(.[2]) | \(.[3]) | \(.[4]) | \(.[5]) | \(.[6])"'
-            header: "Country | Code | ID | Servers | City | ID | Servers"
+            jq_filter: '.[] | . as $parent | .cities[] | [$parent.name, $parent.code, $parent.id, $parent.serverCount, .name, .id, .serverCount] | "\(.[0]) | \(.[1]) | \(.[2]) | \(.[4]) | \(.[5]) | \(.[6])"'
+            header: "Country | Code | ID | City | ID | Servers"
           - name: "COUNTRIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
             jq_filter: '.[] | [.name, .code, .id, .serverCount] | "\(.[0]) | \(.[1]) | \(.[2]) | \(.[3])"'

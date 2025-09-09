@@ -1,196 +1,480 @@
 [![logo](https://github.com/azinchen/nordvpn/raw/master/NordVpn_logo.png)](https://www.nordvpn.com/)
 
-# NordVPN
+# NordVPN Docker Container
 
 [![Docker pulls][dockerhub-pulls]][dockerhub-link]
 [![Docker image size][dockerhub-size]][dockerhub-link]
-[![GitHub release date][github-releasedate]][github-link]
-[![GitHub build][github-build]][github-link]
+[![Docker stars][dockerhub-stars]][dockerhub-link]
+[![GitHub stars][github-stars]][github-link]
+[![GitHub forks][github-forks]][github-link]
+[![GitHub release][github-release]][github-releases]
+[![GitHub release date][github-releasedate]][github-releases]
+[![GitHub build][github-build]][github-actions]
 [![GitHub last commit][github-lastcommit]][github-link]
+[![License][license-badge]][license-link]
+[![OpenVPN][openvpn-badge]](https://openvpn.net/)
 
-This is an OpenVPN client docker container that uses recommended NordVPN server. It makes routing containers traffic through OpenVPN easy.
+OpenVPN client docker container that routes other containers' traffic through NordVPN servers automatically.
 
-## What is OpenVPN?
+## ✨ Key Features
 
-OpenVPN is an open-source software application that implements virtual private network (VPN) techniques for creating secure point-to-point or site-to-site connections in routed or bridged configurations and remote access facilities. It uses a custom security protocol that utilizes SSL/TLS for key exchange. It is capable of traversing network address translators (NATs) and firewalls.
+- **🚀 Easy Setup**: Route any container's traffic through VPN with `--net=container:vpn`
+- **🌍 Smart Server Selection**: Automatically selects optimal NordVPN servers by country, city, or group
+- **🔄 Auto-Reconnection**: Periodic server switching and connection health monitoring with cron
+- **⚖️ Load Balancing**: Intelligent sorting by server load when multiple locations specified
+- **🔒 Local Network Access**: Maintain access to local services while using VPN
+- **🛡️ Kill Switch**: All traffic is blocked when VPN is down, except DNS, local networks, and whitelisted domains
+- **🏗️ Multi-Architecture**: Supports different platforms including ARM, x86, and enterprise systems
 
-## How to use this image
+## Quick Start
 
-This container was designed to be started first to provide a connection to other containers (using `--net=container:vpn`, see below *Starting an NordVPN client instance*).
+### Basic Usage
 
-**NOTE**: More than the basic privileges are needed for NordVPN. With docker 1.2 or newer you can use the `--cap-add=NET_ADMIN` and `--device /dev/net/tun` options. Earlier versions, or with fig, and you'll have to run it in privileged mode.
-
-### Supported Architectures
-
-The image supports multiple architectures such as `amd64`, `x86`, `arm/v6`, `arm/v7` and `arm64`.
-
-### Starting an NordVPN instance
-
+**From Docker Hub:**
 ```bash
-docker run -ti --cap-add=NET_ADMIN --device /dev/net/tun --name vpn \
-           -e USER=user@email.com -e PASS=password \
-           -e RANDOM_TOP=n -e RECREATE_VPN_CRON=string \
-           -e COUNTRY=country1;country2 -e CITY=city1;city2 \
-           -e GROUP=group -e TECHNOLOGY=technology -d azinchen/nordvpn
+docker run -d --cap-add=NET_ADMIN --device /dev/net/tun --name vpn \
+           -e USER=service_username -e PASS=service_password \
+           azinchen/nordvpn
 ```
 
-Once it's up other containers can be started using it's network connection:
-
+**From GitHub Container Registry:**
 ```bash
-docker run -it --net=container:vpn -d some/docker-container
+docker run -d --cap-add=NET_ADMIN --device /dev/net/tun --name vpn \
+           -e USER=service_username -e PASS=service_password \
+           ghcr.io/azinchen/nordvpn
 ```
 
-### docker-compose
+Route other containers through VPN:
+```bash
+docker run --net=container:vpn -d your/application
+```
 
-```Dockerfile
-version: "3"
+### Requirements
+
+- Docker with `--cap-add=NET_ADMIN` and `--device /dev/net/tun` support
+- **NordVPN Service Credentials** (not regular account credentials)
+
+### Security Features
+
+**🛡️ Traffic Control & Kill Switch**
+- **Default-deny (egress):** All outbound traffic is blocked unless it goes through the VPN interface **or** matches the configured exceptions (`NETWORK` or `WHITELIST`)
+- **Bring-up:** Before the VPN tunnel is established, only **essential services** and the configured exceptions (`NETWORK`, `WHITELIST`) are allowed. Everything else is blocked
+- **Kill switch:** If the VPN drops, traffic remains blocked **except** for **essential services** and the configured exceptions (`NETWORK`, `WHITELIST`)
+- **Container routing:** Containers using `network_mode: "service:vpn"` share the VPN container’s network namespace and inherit these policies
+- **Inbound (local/LAN only):** No connections from the host or LAN reach the stack **unless you publish ports on the VPN container**. **Public inbound via NordVPN is not supported** (no port forwarding)
+
+**🔒 Network Access Control (Exceptions)**
+- **Local network access (always on):** Set `NETWORK=192.168.1.0/24` (comma-separated CIDRs supported) to allow access to those subnets **regardless of VPN status**
+- **Domain allowlist (always on):** Set `WHITELIST=example.com,foo.bar` to permit those domains to bypass the VPN **regardless of VPN status**
+- **Essential services (always allowed):**
+  - DNS lookups are **not blocked** (uses the image’s default resolvers)
+  - NordVPN API over HTTPS to select a VPN server based on settings before establishing the tunnel
+
+**⚖️ Rule Precedence**
+1. **Always-allowed:** Essential services → DNS + VPN control/API
+2. **Exceptions:** If destination matches `NETWORK` (CIDR) or `WHITELIST` (domain), allow (bypass/LAN), regardless of VPN state
+3. **VPN path:** If VPN is **up** and traffic is not an exception, allow only via VPN interface
+4. **Default-deny:** Otherwise, block
+
+**⚠️ Security Note**
+Because `NETWORK` and `WHITELIST` remain open when the VPN is down, this is **not a strict kill switch**. Limit exceptions to the minimum necessary and prefer CIDRs/domains you trust.
+
+### Container Registries
+
+The image is available from two registries:
+
+- **Docker Hub**: `azinchen/nordvpn` - Main distribution, publicly accessible
+- **GitHub Container Registry**: `ghcr.io/azinchen/nordvpn` - Alternative source, same image
+
+Both registries contain identical images. Use whichever is more convenient for your setup.
+
+### Getting Service Credentials
+
+For manual OpenVPN setup, you need special service credentials from your NordVPN account:
+
+1. Log into your [Nord Account Dashboard](https://my.nordaccount.com/)
+2. Click on **NordVPN**
+3. Under **Advanced Settings**, click **Set up NordVPN manually**
+4. Go to the **Service credentials** tab
+5. Copy the **Username** and **Password** shown there
+
+**Note**: These are different from your regular NordVPN login credentials and are specifically required for OpenVPN connections.
+
+## Docker Compose Examples
+
+### Simple VPN + Application Setup
+
+```yaml
+version: "3.8"
 services:
+  # VPN Container
   vpn:
-    image: azinchen/nordvpn:latest
+    image: azinchen/nordvpn:latest  # or ghcr.io/azinchen/nordvpn:latest
+    container_name: nordvpn
     cap_add:
-      - net_admin
+      - NET_ADMIN
     devices:
       - /dev/net/tun
     environment:
-      - USER=user@email.com
-      - PASS=password
-      - COUNTRY=Spain;Hong Kong;IE;131
-      - CITY=London;Paris
-      - GROUP=Standard VPN servers
+      - USER=service_username
+      - PASS=service_password
+      - COUNTRY=United States;CA;38
+      - CITY=New York;Los Angeles;Toronto
       - RANDOM_TOP=10
-      - RECREATE_VPN_CRON=5 */3 * * *
-      - NETWORK=192.168.1.0/24;192.168.2.0/24
-      - OPENVPN_OPTS=--mute-replay-warnings
+      - RECREATE_VPN_CRON=0 */6 * * *  # Reconnect every 6 hours
+      - NETWORK=192.168.1.0/24         # Your local network
     ports:
-      - 8080:80
+      - "8080:8080"  # Expose ports for services using VPN
+      - "3000:3000"  # Application web UI
     restart: unless-stopped
-  
-  web:
-    image: nginx
-    network_mode: service:vpn
+
+  # Application using VPN
+  webapp:
+    image: nginx:alpine
+    container_name: webapp
+    network_mode: "service:vpn"  # Route through VPN
+    depends_on:
+      - vpn
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+    restart: unless-stopped
+
+  # Another application using VPN
+  api-service:
+    image: node:alpine
+    container_name: api-service
+    network_mode: "service:vpn"  # Route through VPN
+    depends_on:
+      - vpn
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: ["npm", "start"]
+    restart: unless-stopped
 ```
 
-### Filter NordVPN servers
+### Advanced Setup with Local Access
 
-This container selects recommended servers. The list of recommended servers can be filtered by setting `COUNTRY`, `CITY`, `GROUP` and/or `TECHNOLOGY` environment variables.
+```yaml
+version: "3.8"
+services:
+  # VPN Container with health monitoring
+  vpn:
+    image: azinchen/nordvpn:latest  # or ghcr.io/azinchen/nordvpn:latest
+    container_name: nordvpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    environment:
+      - USER=service_username
+      - PASS=service_password
+      - COUNTRY=Netherlands;DE;209
+      - CITY=Amsterdam;Berlin;Frankfurt
+      - GROUP=Standard VPN servers
+      - RANDOM_TOP=5
+      - RECREATE_VPN_CRON=0 */4 * * *
+      - CHECK_CONNECTION_CRON=*/5 * * * *
+      - CHECK_CONNECTION_URL=https://1.1.1.1;https://8.8.8.8
+      - NETWORK=192.168.1.0/24;172.20.0.0/16
+      - OPENVPN_OPTS=--mute-replay-warnings --ping-exit 60
+    ports:
+      - "8080:8080"   # Web application
+      - "3000:3000"   # API service
+      - "9000:9000"   # Monitoring dashboard
+      - "6379:6379"   # Redis
+    restart: unless-stopped
+
+  # Web application using VPN
+  webapp:
+    image: nginx:alpine
+    container_name: webapp
+    network_mode: "service:vpn"
+    depends_on:
+      vpn:
+        condition: service_healthy
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./web:/usr/share/nginx/html:ro
+    restart: unless-stopped
+
+  api-service:
+    image: node:alpine
+    container_name: api-service
+    network_mode: "service:vpn"
+    depends_on:
+      - vpn
+      - webapp
+    working_dir: /app
+    volumes:
+      - ./api:/app
+    command: ["npm", "start"]
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    network_mode: "service:vpn"
+    depends_on:
+      - vpn
+    volumes:
+      - ./config/redis:/data
+    restart: unless-stopped
+
+  # Service that DOESN'T use VPN (runs on host network)
+  monitoring:
+    image: grafana/grafana:latest
+    container_name: monitoring
+    network_mode: host  # Direct host access for local monitoring
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./config/grafana:/var/lib/grafana
+    restart: unless-stopped
+```
+
+### Web Proxy Setup
+
+```yaml
+version: "3.8"
+services:
+  vpn:
+    image: azinchen/nordvpn:latest  # or ghcr.io/azinchen/nordvpn:latest
+    container_name: nordvpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    environment:
+      - USER=service_username
+      - PASS=service_password
+      - COUNTRY=CA;38
+      - CITY=Toronto;Montreal
+      - NETWORK=192.168.1.0/24
+    restart: unless-stopped
+
+  # Application behind VPN
+  app:
+    image: nginx:alpine
+    container_name: webapp
+    network_mode: "service:vpn"
+    depends_on:
+      - vpn
+    volumes:
+      - ./html:/usr/share/nginx/html
+    restart: unless-stopped
+
+  # Reverse proxy for local access
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - vpn
+    restart: unless-stopped
+```
+
+## Configuration Options
+
+### Server Selection
+
+Filter NordVPN servers using location and server criteria:
+
+```bash
+docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
+           -e USER=service_username -e PASS=service_password \
+           -e COUNTRY="United States;CA;153" \
+           -e CITY="New York;2619989;es1234" \
+           -e GROUP="Standard VPN servers" \
+           -e RANDOM_TOP=5 \
+           azinchen/nordvpn
+```
+
+**Location Specification Options:**
+- **Country**: Can be defined by name (`United States`), code (`US`), or ID (`228`)
+- **City**: Can be defined by name (`New York`) or ID (`8971718`)
+- **Specific Server**: Use server hostname (e.g., `es1234`, `uk2567`) in either COUNTRY or CITY - these servers get priority with load=0
 
 **Server Selection Behavior:**
-- When **multiple countries or cities** are specified, the container requests recommended servers for each location separately, then combines and sorts them by server load (lowest load first)
-- When **no location is specified** or **only one country/city** is set, the recommended server list is used as-is to preserve NordVPN's optimization
-- This sorting and selection are performed **before** the `RANDOM_TOP` feature is applied
-- This ensures optimal performance: single locations maintain NordVPN's recommended order, while multiple locations are sorted to prefer less loaded servers
+- **Specific servers**: Named servers (e.g., `es1234`) are placed at the top of the list with load=0 for highest priority
+- **Multiple locations**: Servers are combined from all specified locations and sorted by load (lowest first)
+- **Single location**: Maintains NordVPN's recommended server order for optimal performance  
+- **RANDOM_TOP**: Applies after location filtering and load sorting for variety
 
-### Reconnect by cron
+### Automatic Reconnection
 
-This container selects server and its config during startup and maintains connection until stop. Selected server might be changed using cron via `RECREATE_VPN_CRON` environment variable.
-
-```bash
-docker run -ti --cap-add=NET_ADMIN --device /dev/net/tun --name vpn \
-           -e RECREATE_VPN_CRON="5 */3 * * *" -e RANDOM_TOP=10
-           -e USER=user@email.com -e PASS=password -d azinchen/nordvpn
-```
-
-In this example the VPN connection will be reconnected in the 5th minute every 3 hours.
-
-### Reconnect
-
-By the fault the container will try to reconnect to the same server when disconnected, in order to reconnect to another recommended server automatically add env variable:
+#### Scheduled Reconnection
+Automatically switch to different servers on a schedule:
 
 ```bash
- - OPENVPN_OPTS=--pull-filter ignore "ping-restart" --ping-exit 180
+# Reconnect every 6 hours at minute 0
+-e RECREATE_VPN_CRON="0 */6 * * *"
+
+# Reconnect daily at 3 AM
+-e RECREATE_VPN_CRON="0 3 * * *"
+
+# Reconnect every 4 hours
+-e RECREATE_VPN_CRON="0 */4 * * *"
 ```
 
-### Check Internet connection by cron
-
-This container checks Internet connection via VPN by cron.
+#### Connection Failure Handling
+Handle disconnections by switching to a new server automatically:
 
 ```bash
-docker run -ti --cap-add=NET_ADMIN --device /dev/net/tun --name vpn \
-           -e CHECK_CONNECTION_CRON="*/5 * * * *" -e CHECK_CONNECTION_URL="https://www.google.com"
-           -e USER=user@email.com -e PASS=password -d azinchen/nordvpn
+# Force reconnect to different server on connection loss
+-e OPENVPN_OPTS="--pull-filter ignore ping-restart --ping-exit 180"
+
+# Alternative: More aggressive reconnection
+-e OPENVPN_OPTS="--ping 10 --ping-exit 60 --ping-restart 300"
 ```
 
-In this example the VPN connection will be checked every 5 minutes.
-
-### Local Network access to services connecting to the internet through the VPN
-
-The environment variable NETWORK must be your local network that you would connect to the server running the docker containers on. Running the following on your docker host should give you the correct network: `ip route | awk '!/ (docker0|br-)/ && /src/ {print $1}'`
+#### Connection Health Monitoring
+Monitor VPN connection and reconnect if internet is not accessible:
 
 ```bash
-docker run -ti --cap-add=NET_ADMIN --device /dev/net/tun --name vpn \
-           -p 8080:80 -e NETWORK=192.168.1.0/24 \ 
-           -e USER=user@email.com -e PASS=password -d azinchen/nordvpn
+# Check connection every 5 minutes
+-e CHECK_CONNECTION_CRON="*/5 * * * *"
+-e CHECK_CONNECTION_URL="https://1.1.1.1;https://8.8.8.8"
+-e CHECK_CONNECTION_ATTEMPTS=3
+-e CHECK_CONNECTION_ATTEMPT_INTERVAL=10
 ```
 
-Now just create the second container _without_ the `-p` parameter, only inlcude the `--net=container:vpn`, the port should be declare in the vpn container.
+### Local Network Access
+
+Enable access to local services while using VPN:
 
 ```bash
-docker run -ti --rm --net=container:vpn -d bubuntux/riot-web
+# Find your local network
+ip route | awk '!/ (docker0|br-)/ && /src/ {print $1}'
+
+# Configure container with local network access
+docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
+           -e NETWORK=192.168.1.0/24 \
+           -e USER=service_username -e PASS=service_password \
+           azinchen/nordvpn
 ```
 
-now the service provided by the second container would be available from the host machine (<http://localhost:8080>) or anywhere inside the local network (<http://192.168.1.xxx:8080>).
-
-### Local Network access to services connecting to the internet through the VPN using a Web proxy
-
+**Multiple Networks:**
 ```bash
-docker run -it --name web -p 80:80 -p 443:443 \
-           --link vpn:<service_name> -d dperson/nginx \
-           -w "http://<service_name>:<PORT>/<URI>;/<PATH>"
+-e NETWORK="192.168.1.0/24;172.20.0.0/16;10.0.0.0/8"
 ```
 
-Which will start a Nginx web server on local ports 80 and 443, and proxy any requests under `/<PATH>` to the to `http://<service_name>:<PORT>/<URI>`. To use a concrete example:
-
+**IPv6 Support:**
 ```bash
-docker run -it --name bit --net=container:vpn -d bubundut/nordvpn
-docker run -it --name web -p 80:80 -p 443:443 --link vpn:bit \
-           -d dperson/nginx -w "http://bit:9091/transmission;/transmission"
+-e NETWORK6="fe00:d34d:b33f::/64"
 ```
 
-For multiple services (non-existant 'foo' used as an example):
+## Docker Run Examples
 
+### Basic Example
 ```bash
-docker run -it --name bit --net=container:vpn -d dperson/transmission
-docker run -it --name foo --net=container:vpn -d dperson/foo
-docker run -it --name web -p 80:80 -p 443:443 --link vpn:bit \
-           --link vpn:foo -d dperson/nginx \
-           -w "http://bit:9091/transmission;/transmission" \
-           -w "http://foo:8000/foo;/foo"
+docker run -d --name vpn \
+           --cap-add=NET_ADMIN \
+           --device /dev/net/tun \
+           -e USER=service_username \
+           -e PASS=service_password \
+           azinchen/nordvpn
+
+# Run application through VPN
+docker run -d --name app --net=container:vpn nginx
 ```
 
-## Environment variables
+### Advanced Example with Port Mapping
+```bash
+docker run -d --name vpn \
+           --cap-add=NET_ADMIN \
+           --device /dev/net/tun \
+           -p 8080:8080 \
+           -p 9091:9091 \
+           -e USER=service_username \
+           -e PASS=service_password \
+           -e COUNTRY="Germany;NL;202" \
+           -e CITY="Amsterdam;6076868;uk2567" \
+           -e GROUP="Standard VPN servers" \
+           -e RANDOM_TOP=3 \
+           -e RECREATE_VPN_CRON="0 */6 * * *" \
+           -e NETWORK=192.168.1.0/24 \
+           azinchen/nordvpn
 
-Container images are configured using environment variables passed at runtime.
+# Applications using VPN (access via host ports)
+docker run -d --name webapp --net=container:vpn \
+           nginx:alpine
 
-* `COUNTRY`           - Use servers from countries in the list (IE Australia;New Zeland). Several countries can be selected using semicolon. Country can be defined by Country name, Code or ID [full list][nordvpn-countries].
-* `CITY`              - Use servers from cities in the list (IE London;Paris). Several cities can be selected using semicolon. City can be defined by City name, DNS name or ID [full list][nordvpn-cities].
-* `GROUP`             - Use servers from specific group. Only one group can be selected. Group can be defined by Name, Identifier or ID [full list][nordvpn-groups].
-* `TECHNOLOGY`        - User servers with specific technology supported. Only one technololgy can be selected. Technology can be defined by Name, Identifier or ID [full list][nordvpn-technologies]. NOTE: Only OpenVPN servers are supported by this container.
-* `RANDOM_TOP`        - Place n servers from filtered list in random order. Useful with `RECREATE_VPN_CRON`.
-* `RECREATE_VPN_CRON` - Set period of selecting new server in format for crontab file. Disabled by default.
-* `CHECK_CONNECTION_CRON` - Set period of checking Internet connection in format for crontab file. Disabled by default.
-* `CHECK_CONNECTION_URL` - Use list of URI for checking Internet connection.
-* `CHECK_CONNECTION_ATTEMPTS` - Set number of attemps of checking. Default value is 5.
-* `CHECK_CONNECTION_ATTEMPT_INTERVAL` - Set sleep timeouts between failed attepms. Default value is 10.
-* `USER`              - User for NordVPN account.
-* `PASS`              - Password for NordVPN account.
-* `WHITELIST`         - List of domains that are going to be accessible outside vpn.
-* `NETWORK`           - CIDR network (IE 192.168.1.0/24), add a route to allows replies once the VPN is up. Several networks can be added to route using semicolon.
-* `NETWORK6`          - CIDR IPv6 network (IE fe00:d34d:b33f::/64), add a route to allows replies once the VPN is up. Several networks can be added to route using semicolon.
-* `OPENVPN_OPTS`      - Used to pass extra parameters to openvpn [full list](https://openvpn.net/community-resources/reference-manual-for-openvpn-2-4/).
+docker run -d --name api-service --net=container:vpn \
+           -v ./app:/app -w /app \
+           node:alpine npm start
+```
+
+## Environment Variables
+
+| Variable | Description | Default | Example |
+|----------|-------------|---------|---------|
+| `USER` | **Required** - NordVPN service credentials username | - | `service_username` |
+| `PASS` | **Required** - NordVPN service credentials password | - | `service_password` |
+| `COUNTRY` | Filter by countries: name, code, ID, or specific server hostname ([list][nordvpn-countries]) | All countries | `United States;CA;228;es1234` |
+| `CITY` | Filter by cities: name, ID, or specific server hostname ([list][nordvpn-cities]) | All cities | `New York;8971718;uk2567` |
+| `GROUP` | Filter by server group ([list][nordvpn-groups]) | All groups | `P2P` or `Standard VPN servers` |
+| `TECHNOLOGY` | Filter by technology - OpenVPN only supported ([list][nordvpn-technologies]) | OpenVPN UDP | `openvpn_udp` |
+| `RANDOM_TOP` | Randomize top N servers from filtered list | Disabled | `10` |
+| `RECREATE_VPN_CRON` | Schedule for server switching (cron format) | Disabled | `0 */6 * * *` (every 6 hours) |
+| `CHECK_CONNECTION_CRON` | Schedule for connection monitoring | Disabled | `*/5 * * * *` (every 5 minutes) |
+| `CHECK_CONNECTION_URL` | URLs to test connectivity (semicolon separated) | None | `https://1.1.1.1;https://8.8.8.8` |
+| `CHECK_CONNECTION_ATTEMPTS` | Number of connection test attempts | `5` | `5` |
+| `CHECK_CONNECTION_ATTEMPT_INTERVAL` | Seconds between failed attempts | `10` | `10` |
+| `NETWORK` | Local networks for access (semicolon separated) | None | `192.168.1.0/24;172.20.0.0/16` |
+| `NETWORK6` | IPv6 networks for access (semicolon separated) | None | `fe00:d34d:b33f::/64` |
+| `WHITELIST` | Domains accessible outside VPN | None | `local.example.com` |
+| `OPENVPN_OPTS` | Additional OpenVPN parameters | None | `--mute-replay-warnings` |
+
+### Server Lists
+- **Countries**: [View available countries][nordvpn-countries]
+- **Cities**: [View available cities][nordvpn-cities]  
+- **Groups**: [View server groups][nordvpn-groups]
+- **Technologies**: [View technologies][nordvpn-technologies]
+
+## Supported Platforms
+
+This container supports multiple architectures and can run on various platforms:
+
+| Architecture | Platform | Notes |
+|--------------|----------|-------|
+| `linux/386` | 32-bit x86 | Legacy systems |
+| `linux/amd64` | 64-bit x86 | Most common desktop/server |
+| `linux/arm/v6` | ARM v6 | Older ARM devices |
+| `linux/arm/v7` | ARM v7 | Raspberry Pi 2/3, many ARM SBCs |
+| `linux/arm64` | 64-bit ARM | Raspberry Pi 4, Apple M1, modern ARM |
+| `linux/ppc64le` | PowerPC 64-bit LE | IBM Power Systems |
+| `linux/riscv64` | 64-bit RISC-V | Emerging RISC-V hardware |
+| `linux/s390x` | IBM System z | Enterprise mainframes |
+
+Docker will automatically pull the correct architecture for your system.
 
 ## Issues
 
 If you have any problems with or questions about this image, please contact me through a [GitHub issue][github-issues] or [email][email-link].
 
-[dockerhub-badge]: https://img.shields.io/docker/pulls/azinchen/nordvpn?style=flat-square
-[dockerhub-link]: https://hub.docker.com/repository/docker/azinchen/nordvpn
-[dockerhub-pulls]: https://img.shields.io/docker/pulls/azinchen/nordvpn
-[dockerhub-size]: https://img.shields.io/docker/image-size/azinchen/nordvpn/latest
-[github-lastcommit]: https://img.shields.io/github/last-commit/azinchen/nordvpn
+[dockerhub-link]: https://hub.docker.com/r/azinchen/nordvpn
+[dockerhub-pulls]: https://img.shields.io/docker/pulls/azinchen/nordvpn?style=flat-square&logo=docker&logoColor=white
+[dockerhub-size]: https://img.shields.io/docker/image-size/azinchen/nordvpn/latest?style=flat-square&logo=docker&logoColor=white
+[dockerhub-stars]: https://img.shields.io/docker/stars/azinchen/nordvpn?style=flat-square&logo=docker&logoColor=white
 [github-link]: https://github.com/azinchen/nordvpn
 [github-issues]: https://github.com/azinchen/nordvpn/issues
-[github-build]: https://img.shields.io/github/actions/workflow/status/azinchen/nordvpn/deploy.yml?branch=master
-[github-releasedate]: https://img.shields.io/github/release-date/azinchen/nordvpn
+[github-releases]: https://github.com/azinchen/nordvpn/releases
+[github-actions]: https://github.com/azinchen/nordvpn/actions
+[github-stars]: https://img.shields.io/github/stars/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
+[github-forks]: https://img.shields.io/github/forks/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
+[github-release]: https://img.shields.io/github/v/release/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
+[github-releasedate]: https://img.shields.io/github/release-date/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
+[github-build]: https://img.shields.io/github/actions/workflow/status/azinchen/nordvpn/ci-build-deploy.yml?branch=master&style=flat-square&logo=github&logoColor=white&label=build
+[github-lastcommit]: https://img.shields.io/github/last-commit/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
+[license-badge]: https://img.shields.io/github/license/azinchen/nordvpn?style=flat-square&logo=opensourceinitiative&logoColor=white
+[license-link]: https://github.com/azinchen/nordvpn/blob/master/LICENSE
+[multiarch-badge]: https://img.shields.io/badge/multi--arch-linux%2F386%20%7C%20linux%2Famd64%20%7C%20linux%2Farm%2Fv6%20%7C%20linux%2Farm%2Fv7%20%7C%20linux%2Farm64%20%7C%20linux%2Fppc64le%20%7C%20linux%2Friscv64%20%7C%20linux%2Fs390x-blue?style=flat-square&logo=docker&logoColor=white
+[openvpn-badge]: https://img.shields.io/badge/OpenVPN-supported-green?style=flat-square&logo=openvpn&logoColor=white
 [nordvpn-cities]: https://github.com/azinchen/nordvpn/blob/master/CITIES.md
 [nordvpn-countries]: https://github.com/azinchen/nordvpn/blob/master/COUNTRIES.md
 [nordvpn-groups]: https://github.com/azinchen/nordvpn/blob/master/GROUPS.md
