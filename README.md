@@ -453,6 +453,44 @@ This container supports multiple architectures and can run on various platforms:
 
 Docker will automatically pull the correct architecture for your system.
 
+## Updating the VPN container & dependent services
+
+When the `vpn` container is restarted—whether due to an image update or a manual restart—every container that uses `network_mode: "service:vpn"` must also be restarted. These containers share the VPN container’s network namespace; if they keep running while `vpn` is recreated, they remain attached to a stale namespace and can lose outbound connectivity until they are restarted.
+
+### With Docker Compose
+
+Use the same service names as in your compose file (examples below use `webapp`, `api-service`, and `redis`). The key is to recreate `vpn` first and then force-recreate all services that have `network_mode: "service:vpn"`:
+
+```bash
+# Pull and recreate the VPN container
+docker compose pull vpn
+docker compose up -d --no-deps --force-recreate vpn
+
+# Then force-recreate all services that use vpn's network namespace
+docker compose up -d --force-recreate webapp api-service redis
+```
+
+Tip (optional): capture this in a Makefile target so it's easy to run consistently.
+
+### With plain Docker (no Compose)
+
+Recreate `vpn` with the same flags you originally used, then restart the dependent containers:
+
+```bash
+docker pull azinchen/nordvpn:latest   # or ghcr.io/azinchen/nordvpn:latest
+docker stop vpn && docker rm vpn
+# Re-run your "vpn" container with the same args as before...
+# Then restart each dependent container:
+docker restart webapp api-service redis
+```
+
+### Safer automated updates for Compose stacks
+
+For safer, repeatable updates of Compose-defined stacks, consider using
+[azinchen/update-docker-containers](https://github.com/azinchen/update-docker-containers).
+It can pull images and recreate services predictably; when updating `vpn`, ensure that all
+services using `network_mode: "service:vpn"` are force-recreated immediately afterward.
+
 ## Issues
 
 If you have any problems with or questions about this image, please contact me through a [GitHub issue][github-issues] or [email][email-link].
