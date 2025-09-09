@@ -57,9 +57,9 @@ India | IN | 100 | 27
 Indonesia | ID | 101 | 10
 Iraq | IQ | 103 | 2
 Ireland | IE | 104 | 70
-Isle of Man | IM | 243 | 3
+Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
-Italy | IT | 106 | 193
+Italy | IT | 106 | 190
 Jamaica | JM | 107 | 2
 Japan | JP | 108 | 257
 Jersey | JE | 244 | 4
@@ -105,7 +105,7 @@ Romania | RO | 179 | 25
 Rwanda | RW | 181 | 2
 Senegal | SN | 191 | 2
 Serbia | RS | 192 | 15
-Singapore | SG | 195 | 82
+Singapore | SG | 195 | 81
 Slovakia | SK | 196 | 15
 Slovenia | SI | 197 | 6
 Somalia | SO | 199 | 2
@@ -123,7 +123,7 @@ Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
 United Kingdom | GB | 227 | 1091
-United States | US | 228 | 2845
+United States | US | 228 | 2844
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
