@@ -359,10 +359,10 @@ if [ -n "$COUNTRY" ]; then
                 # Build curl parameters
                 curl_params="--data-urlencode filters[country_id]=$countryid"
                 if [ -n "$tech_filter" ]; then
-                    curl_params="$curl_params --data-urlencode filters[servers_technologies][id]=$tech_id"
+                    curl_params="$curl_params $tech_filter"
                 fi
                 if [ -n "$group_filter" ]; then
-                    curl_params="$curl_params --data-urlencode filters[servers_groups][id]=$group_id"
+                    curl_params="$curl_params $group_filter"
                 fi
                 
                 # Execute curl with built parameters
@@ -400,10 +400,10 @@ if [ -n "$CITY" ]; then
                 # Build curl parameters
                 curl_params="--data-urlencode coordinates[latitude]=$latitude --data-urlencode coordinates[longitude]=$longitude"
                 if [ -n "$tech_filter" ]; then
-                    curl_params="$curl_params --data-urlencode filters[servers_technologies][id]=$tech_id"
+                    curl_params="$curl_params $tech_filter"
                 fi
                 if [ -n "$group_filter" ]; then
-                    curl_params="$curl_params --data-urlencode filters[servers_groups][id]=$group_id"
+                    curl_params="$curl_params $group_filter"
                 fi
                 
                 # Execute curl with built parameters
@@ -436,10 +436,10 @@ if [ "$poollength" -eq 0 ]; then
     # Build curl parameters for fallback
     curl_params=""
     if [ -n "$tech_filter" ]; then
-        curl_params="--data-urlencode filters[servers_technologies][id]=$tech_id"
+        curl_params="$tech_filter"
     fi
     if [ -n "$group_filter" ]; then
-        curl_params="$curl_params --data-urlencode filters[servers_groups][id]=$group_id"
+        curl_params="$curl_params $group_filter"
     fi
     
     servers=$(eval "curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
