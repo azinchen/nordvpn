@@ -1,0 +1,25 @@
+services:
+  vpn:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nordvpn:local-test
+    restart: unless-stopped
+    cap_add:
+      - net_admin
+    environment:
+      - COUNTRY=Canada
+      - CITY=Madrid;Barcelona
+      - GROUP=P2P
+      - TECHNOLOGY=OpenVPN UDP
+#      - RANDOM_TOP=10
+#      - RECREATE_VPN_CRON=5 */3 * * *
+      - NETWORK=192.168.0.0/16
+      - USER=eHZZxszqzxz14tw71dW6yHSx
+      - PASS=g7KF5wBW6vdqWpi6a7t8k2xS
+      - OPENVPN_OPTS=--mute-replay-warnings
+    devices:
+      - /dev/net/tun
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
