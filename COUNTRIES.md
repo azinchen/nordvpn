@@ -3,7 +3,7 @@
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 24
+Albania | AL | 2 | 23
 Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 4
 Angola | AO | 6 | 2
@@ -59,7 +59,7 @@ Iraq | IQ | 103 | 2
 Ireland | IE | 104 | 70
 Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
-Italy | IT | 106 | 190
+Italy | IT | 106 | 193
 Jamaica | JM | 107 | 2
 Japan | JP | 108 | 257
 Jersey | JE | 244 | 4
