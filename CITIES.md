@@ -67,11 +67,11 @@ India | IN | 100 | 27 | Mumbai | 4041548 | 27
 Indonesia | ID | 101 | 10 | Jakarta | 3560288 | 10
 Iraq | IQ | 103 | 2 | Baghdad | 4093955 | 2
 Ireland | IE | 104 | 70 | Dublin | 3939200 | 70
-Isle of Man | IM | 243 | 3 | Douglas | 3965405 | 3
+Isle of Man | IM | 243 | 4 | Douglas | 3965405 | 4
 Israel | IL | 105 | 20 | Tel Aviv | 3964220 | 20
-Italy | IT | 106 | 193 | Milan | 4542737 | 137
-Italy | IT | 106 | 193 | Palermo | 4548074 | 12
-Italy | IT | 106 | 193 | Rome | 4555808 | 44
+Italy | IT | 106 | 190 | Milan | 4542737 | 134
+Italy | IT | 106 | 190 | Palermo | 4548074 | 12
+Italy | IT | 106 | 190 | Rome | 4555808 | 44
 Jamaica | JM | 107 | 2 | Kingston | 4576328 | 2
 Japan | JP | 108 | 257 | Osaka | 4621847 | 36
 Japan | JP | 108 | 257 | Tokyo | 4633349 | 221
@@ -118,7 +118,7 @@ Romania | RO | 179 | 25 | Bucharest | 6953096 | 25
 Rwanda | RW | 181 | 2 | Kigali | 7723910 | 2
 Senegal | SN | 191 | 2 | Dakar | 7924958 | 2
 Serbia | RS | 192 | 15 | Belgrade | 7030907 | 15
-Singapore | SG | 195 | 82 | Singapore | 7867982 | 82
+Singapore | SG | 195 | 81 | Singapore | 7867982 | 81
 Slovakia | SK | 196 | 15 | Bratislava | 7884305 | 15
 Slovenia | SI | 197 | 6 | Ljubljana | 7874306 | 6
 Somalia | SO | 199 | 2 | Mogadishu | 7971170 | 2
@@ -140,28 +140,28 @@ United Kingdom | GB | 227 | 1091 | Edinburgh | 2975852 | 40
 United Kingdom | GB | 227 | 1091 | Glasgow | 2978888 | 48
 United Kingdom | GB | 227 | 1091 | London | 2989907 | 868
 United Kingdom | GB | 227 | 1091 | Manchester | 2991110 | 135
-United States | US | 228 | 2845 | Ashburn | 9103211 | 20
-United States | US | 228 | 2845 | Atlanta | 8792429 | 189
-United States | US | 228 | 2845 | Boston | 8895305 | 70
-United States | US | 228 | 2845 | Buffalo | 8963153 | 115
-United States | US | 228 | 2845 | Charlotte | 8980922 | 38
-United States | US | 228 | 2845 | Chicago | 8815352 | 289
-United States | US | 228 | 2845 | Dallas | 9080300 | 243
-United States | US | 228 | 2845 | Denver | 8770934 | 119
-United States | US | 228 | 2845 | Houston | 9083687 | 30
-United States | US | 228 | 2845 | Kansas City | 8930717 | 35
-United States | US | 228 | 2845 | Los Angeles | 8761958 | 297
-United States | US | 228 | 2845 | Manassas | 9113744 | 94
-United States | US | 228 | 2845 | McAllen | 9086162 | 20
-United States | US | 228 | 2845 | Miami | 8787782 | 202
-United States | US | 228 | 2845 | Nashville | 9071273 | 40
-United States | US | 228 | 2845 | New York | 8971718 | 586
-United States | US | 228 | 2845 | Omaha | 8943887 | 40
-United States | US | 228 | 2845 | Phoenix | 8741960 | 52
-United States | US | 228 | 2845 | Saint Louis | 8934551 | 36
-United States | US | 228 | 2845 | Salt Lake City | 9097865 | 29
-United States | US | 228 | 2845 | San Francisco | 8766359 | 113
-United States | US | 228 | 2845 | Seattle | 9128402 | 188
+United States | US | 228 | 2844 | Ashburn | 9103211 | 20
+United States | US | 228 | 2844 | Atlanta | 8792429 | 189
+United States | US | 228 | 2844 | Boston | 8895305 | 70
+United States | US | 228 | 2844 | Buffalo | 8963153 | 114
+United States | US | 228 | 2844 | Charlotte | 8980922 | 38
+United States | US | 228 | 2844 | Chicago | 8815352 | 289
+United States | US | 228 | 2844 | Dallas | 9080300 | 243
+United States | US | 228 | 2844 | Denver | 8770934 | 119
+United States | US | 228 | 2844 | Houston | 9083687 | 30
+United States | US | 228 | 2844 | Kansas City | 8930717 | 35
+United States | US | 228 | 2844 | Los Angeles | 8761958 | 297
+United States | US | 228 | 2844 | Manassas | 9113744 | 94
+United States | US | 228 | 2844 | McAllen | 9086162 | 20
+United States | US | 228 | 2844 | Miami | 8787782 | 202
+United States | US | 228 | 2844 | Nashville | 9071273 | 40
+United States | US | 228 | 2844 | New York | 8971718 | 586
+United States | US | 228 | 2844 | Omaha | 8943887 | 40
+United States | US | 228 | 2844 | Phoenix | 8741960 | 52
+United States | US | 228 | 2844 | Saint Louis | 8934551 | 36
+United States | US | 228 | 2844 | Salt Lake City | 9097865 | 29
+United States | US | 228 | 2844 | San Francisco | 8766359 | 113
+United States | US | 228 | 2844 | Seattle | 9128402 | 188
 Uruguay | UY | 230 | 2 | Montevideo | 9150812 | 2
 Uzbekistan | UZ | 231 | 2 | Tashkent | 9166826 | 2
 Venezuela | VE | 233 | 2 | Caracas | 9176843 | 2
