@@ -26,6 +26,40 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🛡️ Kill Switch**: All traffic is blocked when VPN is down, except DNS, local networks, and whitelisted domains
 - **🏗️ Multi-Architecture**: Supports different platforms including ARM, x86, and enterprise systems
 
+<!-- TOC -->
+## Table of contents
+
+- [✨ Key Features](#key-features)
+- [Quick Start](#quick-start)
+  - [Basic Usage](#basic-usage)
+  - [Requirements](#requirements)
+  - [Security Features](#security-features)
+  - [Container Registries](#container-registries)
+  - [Getting Service Credentials](#getting-service-credentials)
+- [Configuration Options](#configuration-options)
+  - [Server Selection](#server-selection)
+  - [Automatic Reconnection](#automatic-reconnection)
+    - [Scheduled Reconnection](#scheduled-reconnection)
+    - [Connection Failure Handling](#connection-failure-handling)
+    - [Connection Health Monitoring](#connection-health-monitoring)
+  - [Local Network Access](#local-network-access)
+- [Docker Compose Examples](#docker-compose-examples)
+  - [Simple VPN + Application Setup](#simple-vpn-application-setup)
+  - [Advanced Setup with Local Access](#advanced-setup-with-local-access)
+  - [Web Proxy Setup](#web-proxy-setup)
+- [Docker Run Examples](#docker-run-examples)
+  - [Basic Example](#basic-example)
+  - [Advanced Example with Port Mapping](#advanced-example-with-port-mapping)
+- [Environment Variables](#environment-variables)
+  - [Server Lists](#server-lists)
+- [Supported Platforms](#supported-platforms)
+- [Updating the VPN container & dependent services](#updating-the-vpn-container-dependent-services)
+  - [With Docker Compose](#with-docker-compose)
+  - [With plain Docker (no Compose)](#with-plain-docker-no-compose)
+  - [Safer automated updates for Compose stacks](#safer-automated-updates-for-compose-stacks)
+- [Issues](#issues)
+<!-- /TOC -->
+
 ## Quick Start
 
 ### Basic Usage
@@ -99,6 +133,96 @@ For manual OpenVPN setup, you need special service credentials from your NordVPN
 5. Copy the **Username** and **Password** shown there
 
 **Note**: These are different from your regular NordVPN login credentials and are specifically required for OpenVPN connections.
+
+## Configuration Options
+
+### Server Selection
+
+Filter NordVPN servers using location and server criteria:
+
+```bash
+docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
+           -e USER=service_username -e PASS=service_password \
+           -e COUNTRY="United States;CA;153" \
+           -e CITY="New York;2619989;es1234" \
+           -e GROUP="Standard VPN servers" \
+           -e RANDOM_TOP=5 \
+           azinchen/nordvpn
+```
+
+**Location Specification Options:**
+- **Country**: Can be defined by name (`United States`), code (`US`), or ID (`228`)
+- **City**: Can be defined by name (`New York`) or ID (`8971718`)
+- **Specific Server**: Use server hostname (e.g., `es1234`, `uk2567`) in either COUNTRY or CITY - these servers get priority with load=0
+
+**Server Selection Behavior:**
+- **Specific servers**: Named servers (e.g., `es1234`) are placed at the top of the list with load=0 for highest priority
+- **Multiple locations**: Servers are combined from all specified locations and sorted by load (lowest first)
+- **Single location**: Maintains NordVPN's recommended server order for optimal performance  
+- **RANDOM_TOP**: Applies after location filtering and load sorting for variety
+
+### Automatic Reconnection
+
+#### Scheduled Reconnection
+Automatically switch to different servers on a schedule:
+
+```bash
+# Reconnect every 6 hours at minute 0
+-e RECREATE_VPN_CRON="0 */6 * * *"
+
+# Reconnect daily at 3 AM
+-e RECREATE_VPN_CRON="0 3 * * *"
+
+# Reconnect every 4 hours
+-e RECREATE_VPN_CRON="0 */4 * * *"
+```
+
+#### Connection Failure Handling
+Handle disconnections by switching to a new server automatically:
+
+```bash
+# Force reconnect to different server on connection loss
+-e OPENVPN_OPTS="--pull-filter ignore ping-restart --ping-exit 180"
+
+# Alternative: More aggressive reconnection
+-e OPENVPN_OPTS="--ping 10 --ping-exit 60 --ping-restart 300"
+```
+
+#### Connection Health Monitoring
+Monitor VPN connection and reconnect if internet is not accessible:
+
+```bash
+# Check connection every 5 minutes
+-e CHECK_CONNECTION_CRON="*/5 * * * *"
+-e CHECK_CONNECTION_URL="https://1.1.1.1;https://8.8.8.8"
+-e CHECK_CONNECTION_ATTEMPTS=3
+-e CHECK_CONNECTION_ATTEMPT_INTERVAL=10
+```
+
+### Local Network Access
+
+Enable access to local services while using VPN:
+
+```bash
+# Find your local network
+ip route | awk '!/ (docker0|br-)/ && /src/ {print $1}'
+
+# Configure container with local network access
+docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
+           -e NETWORK=192.168.1.0/24 \
+           -e USER=service_username -e PASS=service_password \
+           azinchen/nordvpn
+```
+
+**Multiple Networks:**
+```bash
+-e NETWORK="192.168.1.0/24;172.20.0.0/16;10.0.0.0/8"
+```
+
+**IPv6 Support:**
+```bash
+-e NETWORK6="fe00:d34d:b33f::/64"
+```
 
 ## Docker Compose Examples
 
@@ -276,96 +400,6 @@ services:
     depends_on:
       - vpn
     restart: unless-stopped
-```
-
-## Configuration Options
-
-### Server Selection
-
-Filter NordVPN servers using location and server criteria:
-
-```bash
-docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
-           -e USER=service_username -e PASS=service_password \
-           -e COUNTRY="United States;CA;153" \
-           -e CITY="New York;2619989;es1234" \
-           -e GROUP="Standard VPN servers" \
-           -e RANDOM_TOP=5 \
-           azinchen/nordvpn
-```
-
-**Location Specification Options:**
-- **Country**: Can be defined by name (`United States`), code (`US`), or ID (`228`)
-- **City**: Can be defined by name (`New York`) or ID (`8971718`)
-- **Specific Server**: Use server hostname (e.g., `es1234`, `uk2567`) in either COUNTRY or CITY - these servers get priority with load=0
-
-**Server Selection Behavior:**
-- **Specific servers**: Named servers (e.g., `es1234`) are placed at the top of the list with load=0 for highest priority
-- **Multiple locations**: Servers are combined from all specified locations and sorted by load (lowest first)
-- **Single location**: Maintains NordVPN's recommended server order for optimal performance  
-- **RANDOM_TOP**: Applies after location filtering and load sorting for variety
-
-### Automatic Reconnection
-
-#### Scheduled Reconnection
-Automatically switch to different servers on a schedule:
-
-```bash
-# Reconnect every 6 hours at minute 0
--e RECREATE_VPN_CRON="0 */6 * * *"
-
-# Reconnect daily at 3 AM
--e RECREATE_VPN_CRON="0 3 * * *"
-
-# Reconnect every 4 hours
--e RECREATE_VPN_CRON="0 */4 * * *"
-```
-
-#### Connection Failure Handling
-Handle disconnections by switching to a new server automatically:
-
-```bash
-# Force reconnect to different server on connection loss
--e OPENVPN_OPTS="--pull-filter ignore ping-restart --ping-exit 180"
-
-# Alternative: More aggressive reconnection
--e OPENVPN_OPTS="--ping 10 --ping-exit 60 --ping-restart 300"
-```
-
-#### Connection Health Monitoring
-Monitor VPN connection and reconnect if internet is not accessible:
-
-```bash
-# Check connection every 5 minutes
--e CHECK_CONNECTION_CRON="*/5 * * * *"
--e CHECK_CONNECTION_URL="https://1.1.1.1;https://8.8.8.8"
--e CHECK_CONNECTION_ATTEMPTS=3
--e CHECK_CONNECTION_ATTEMPT_INTERVAL=10
-```
-
-### Local Network Access
-
-Enable access to local services while using VPN:
-
-```bash
-# Find your local network
-ip route | awk '!/ (docker0|br-)/ && /src/ {print $1}'
-
-# Configure container with local network access
-docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
-           -e NETWORK=192.168.1.0/24 \
-           -e USER=service_username -e PASS=service_password \
-           azinchen/nordvpn
-```
-
-**Multiple Networks:**
-```bash
--e NETWORK="192.168.1.0/24;172.20.0.0/16;10.0.0.0/8"
-```
-
-**IPv6 Support:**
-```bash
--e NETWORK6="fe00:d34d:b33f::/64"
 ```
 
 ## Docker Run Examples
