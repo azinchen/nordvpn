@@ -3,13 +3,13 @@
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 23
+Albania | AL | 2 | 7
 Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 4
 Angola | AO | 6 | 2
 Argentina | AR | 10 | 19
 Armenia | AM | 11 | 2
-Australia | AU | 13 | 265
+Australia | AU | 13 | 266
 Austria | AT | 14 | 69
 Azerbaijan | AZ | 15 | 2
 Bahamas | BS | 16 | 5
@@ -123,7 +123,7 @@ Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
 United Kingdom | GB | 227 | 1091
-United States | US | 228 | 2844
+United States | US | 228 | 2833
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
