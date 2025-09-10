@@ -3,14 +3,14 @@
 Country | Code | ID | City | ID | Servers
 --------|------|----|------|----|--------
 Afghanistan | AF | 1 | Kabul | 98270 | 2
-Albania | AL | 2 | Tirana | 308615 | 23
+Albania | AL | 2 | Tirana | 308615 | 7
 Algeria | DZ | 3 | Algiers | 2438216 | 4
 Andorra | AD | 5 | Andorra la Vella | 20 | 4
 Angola | AO | 6 | Luanda | 351407 | 2
 Argentina | AR | 10 | Buenos Aires | 384866 | 19
 Armenia | AM | 11 | Yerevan | 322385 | 2
 Australia | AU | 13 | Adelaide | 452717 | 18
-Australia | AU | 13 | Brisbane | 456494 | 45
+Australia | AU | 13 | Brisbane | 456494 | 46
 Australia | AU | 13 | Melbourne | 470813 | 56
 Australia | AU | 13 | Perth | 475799 | 34
 Australia | AU | 13 | Sydney | 479570 | 112
@@ -146,12 +146,12 @@ United States | US | 228 | Boston | 8895305 | 70
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
 United States | US | 228 | Chicago | 8815352 | 289
-United States | US | 228 | Dallas | 9080300 | 243
+United States | US | 228 | Dallas | 9080300 | 242
 United States | US | 228 | Denver | 8770934 | 119
 United States | US | 228 | Houston | 9083687 | 30
 United States | US | 228 | Kansas City | 8930717 | 35
 United States | US | 228 | Los Angeles | 8761958 | 297
-United States | US | 228 | Manassas | 9113744 | 94
+United States | US | 228 | Manassas | 9113744 | 84
 United States | US | 228 | McAllen | 9086162 | 20
 United States | US | 228 | Miami | 8787782 | 202
 United States | US | 228 | Nashville | 9071273 | 40
