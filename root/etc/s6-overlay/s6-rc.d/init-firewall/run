@@ -6,7 +6,7 @@ set -eu
 echo "[INIT-FIREWALL] Starting init-firewall script..."
 echo "[INIT-FIREWALL] Setting up firewall - everything has to go through the VPN"
 
-# Note: Basic DROP policies and rule flushing now handled by early-firewall script
+# Note: Basic DROP policies and rule flushing now handled by entrypoint script
 
 docker_network="$(ip -o addr show dev eth0 | awk '$3 == "inet" {print $4}')"
 docker6_network="$(ip -o addr show dev eth0 | awk '$3 == "inet6" {print $4; exit}')"
@@ -22,6 +22,8 @@ if [ -n "${docker_network}" ]; then
     iptables -A OUTPUT -o tun+ -j ACCEPT
     iptables -t nat -A POSTROUTING -o tap+ -j MASQUERADE
     iptables -t nat -A POSTROUTING -o tun+ -j MASQUERADE
+    iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
+    iptables -A OUTPUT -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
 fi
 if [ -n "${docker6_network}" ]; then
     ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
@@ -36,21 +38,7 @@ if [ -n "${docker6_network}" ]; then
     ip6tables -A OUTPUT -o tun+ -j ACCEPT
     ip6tables -t nat -A POSTROUTING -o tap+ -j MASQUERADE
     ip6tables -t nat -A POSTROUTING -o tun+ -j MASQUERADE
-fi
-if [ -n "${docker_network}" ]; then
-    iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
-    iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
-    iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
-fi
-if [ -n "${docker6_network}" ]; then
     ip6tables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
-    ip6tables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
-    ip6tables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
-fi
-if [ -n "${docker_network}" ]; then
-    iptables -A OUTPUT -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
-fi
-if [ -n "${docker6_network}" ]; then
     ip6tables -A OUTPUT -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT 2> /dev/null
 fi
 
@@ -75,8 +63,8 @@ if [ -n "${docker_network}" ] && [ -n "${NETWORK:-}" ]; then
     gw=$(ip route | awk '/default/ {print $3}')
     echo "[INIT-FIREWALL] Using gateway: ${gw}"
     # Convert semicolon/comma separated list to space separated
-    networks=$(echo "$NETWORK" | tr ';,' ' ')
-    for net in $networks; do
+    IFS=';'
+    for net in $NETWORK; do
         ip route | grep -q "$net" || ip route add to "$net" via "$gw" dev eth0
         iptables -A INPUT -s "$net" -j ACCEPT
         iptables -A FORWARD -d "$net" -j ACCEPT
@@ -90,8 +78,8 @@ if [ -n "${docker6_network}" ] && [ -n "${NETWORK6:-}" ]; then
     gw6=$(ip -6 route | awk '/default/{print $3}')
     echo "[INIT-FIREWALL] Using IPv6 gateway: ${gw6}"
     # Convert semicolon/comma separated list to space separated
-    networks6=$(echo "$NETWORK6" | tr ';,' ' ')
-    for net6 in $networks6; do
+    IFS=';'
+    for net6 in $NETWORK6; do
         ip -6 route | grep -q "$net6" || ip -6 route add to "$net6" via "$gw6" dev eth0
         ip6tables -A INPUT -s "$net6" -j ACCEPT 2>/dev/null
         ip6tables -A FORWARD -d "$net6" -j ACCEPT 2>/dev/null
@@ -106,8 +94,8 @@ echo "[INIT-FIREWALL] Setting up whitelist network rules..."
 if [ -n "${WHITELIST:-}" ]; then
     echo "[INIT-FIREWALL] Processing whitelist domains: ${WHITELIST}"
     # Convert semicolon/comma separated list to space separated
-    domains=$(echo "$WHITELIST" | tr ';,' ' ')
-    for domain in $domains; do
+    IFS=';'
+    for domain in $WHITELIST; do
         domain=$(echo "$domain" | sed 's/^.*:\/\///;s/\/.*$//')
         echo "[INIT-FIREWALL] Adding whitelist rule for domain: ${domain}"
         if [ -n "${docker_network}" ]; then

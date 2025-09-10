@@ -17,8 +17,8 @@ httpreq()
 counter=1
 while [ $counter -le "$CHECK_CONNECTION_ATTEMPTS" ]; do
     # Convert semicolon separated list to space separated
-    urls=$(echo "$CHECK_CONNECTION_URL" | tr ';,' ' ')
-    for url in $urls; do
+    IFS=';'
+    for url in $CHECK_CONNECTION_URL; do
         if httpreq "$url"; then
             echo "[VPN-HEALTHCHECK] Connection via VPN is up"
             exit 0

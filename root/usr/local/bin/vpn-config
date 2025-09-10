@@ -325,7 +325,7 @@ else
 fi
 
 group_filter=""
-if [ -n "$GROUP" ] && [ "$GROUP" != "" ]; then
+if [ -n "$GROUP" ]; then
     group_id=$(getgroupid "$GROUP")
     if [ -z "$group_id" ]; then
         echo "[VPN-CONFIG] Warning: Could not find group \"$GROUP\""
@@ -333,7 +333,7 @@ if [ -n "$GROUP" ] && [ "$GROUP" != "" ]; then
         group_filter="--data-urlencode filters[servers_groups][id]=$group_id"
     fi
 else
-    echo "[VPN-CONFIG] No group filter specified (GROUP='${GROUP:-}')"
+    echo "[VPN-CONFIG] No group filter specified"
 fi
 
 test_response=$(curl -sG --connect-timeout 5 --max-time 10 "https://api.nordvpn.com/v1/servers/recommendations" --data-urlencode "limit=1" 2>/dev/null || echo "")
@@ -345,9 +345,9 @@ locations_count=0
 
 # Process COUNTRY if set
 if [ -n "$COUNTRY" ]; then
-    # Convert semicolon/comma separated list to space separated  
-    countries=$(echo "$COUNTRY" | tr ';,' ' ')
-    for value in $countries; do
+    # Convert semicolon/comma separated list to space separated
+    IFS=';'
+    for value in $COUNTRY; do
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))
         fi
@@ -383,9 +383,9 @@ fi
 
 # Process CITY if set
 if [ -n "$CITY" ]; then
-    # Convert semicolon/comma separated list to space separated  
-    cities=$(echo "$CITY" | tr ';,' ' ')
-    for value in $cities; do
+    # Convert semicolon/comma separated list to space separated
+    IFS=';'
+    for value in $CITY; do
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))
         fi

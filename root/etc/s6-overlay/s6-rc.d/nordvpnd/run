@@ -5,7 +5,65 @@ set -eu
 
 echo "[SERVICE-NORDVPND] Starting nordvpnd service..."
 
+OPENVPN_OPTS="${OPENVPN_OPTS:-}"
+
 authfile="/tmp/auth"
 ovpnfile="/tmp/nordvpn.ovpn"
 
-exec sg nordvpn -c "openvpn --config $ovpnfile --auth-user-pass $authfile --auth-nocache ${OPENVPN_OPTS}"
+# Optional: restrict allow rule to your pre-VPN uplink iface
+wan_if="${WAN_IFACE:-eth0}"
+# Set USE_EGRESS_IFACE=0 if you don't want to use "-o $wan_if"
+use_o="${USE_EGRESS_IFACE:-1}"
+
+# --- Parse the .ovpn (single remote) ---
+r_line=$(awk '/^[[:space:]]*remote[ \t]+/ {print; exit}' "$ovpnfile")
+[ -n "$r_line" ] || { echo "[ERROR] No 'remote' line in $ovpnfile"; exit 1; }
+
+r_ip=$(echo "$r_line"   | awk '{print $2}')
+r_port=$(echo "$r_line" | awk '{print $3}')
+r_proto=$(echo "$r_line"| awk '{print $4}')
+
+# Defaults from file or sane fallbacks
+[ -n "${r_port:-}" ]  || r_port=$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "$ovpnfile" || true)
+[ -n "${r_port:-}" ]  || r_port=1194
+if [ -z "${r_proto:-}" ]; then
+    r_proto=$(awk '/^[[:space:]]*proto[ \t]+/ {print $2; exit}' "$ovpnfile" || true)
+fi
+case "${r_proto:-}" in
+    tcp* ) r_proto=tcp ;;
+    udp* | "" ) r_proto=udp ;;
+esac
+
+# Decide family/tool based on the remote being v4 or v6
+case "$r_ip" in
+    *:*) tool=ip6tables ;;
+    *)   tool=iptables ;;
+esac
+
+# Build the exact rule (insert at top so it beats any catch-all DROPs)
+rule="OUTPUT -p $r_proto -d $r_ip --dport $r_port -j ACCEPT"
+[ "$use_o" = "1" ] && rule="OUTPUT -o $wan_if -p $r_proto -d $r_ip --dport $r_port -j ACCEPT"
+
+add_rule() { $tool -C $rule 2>/dev/null || $tool -I $rule; }
+del_rule() { $tool -D $rule 2>/dev/null || true; }
+
+echo "[SERVICE-NORDVPND] Allowing $r_proto to $r_ip:$r_port (iface=${use_o:+$wan_if})..."
+add_rule
+
+cleanup() {
+    echo "[SERVICE-NORDVPND] Cleaning VPN pinhole..."
+    del_rule
+}
+
+# Ensure cleanup on normal exit and signals; also forward signals to OpenVPN
+trap 'kill -TERM "$ovpn_pid" 2>/dev/null || true' TERM
+trap 'kill -INT  "$ovpn_pid" 2>/dev/null || true' INT
+trap cleanup EXIT
+
+# --- Run OpenVPN (no exec so traps fire) ---
+sg nordvpn -c "openvpn --config $ovpnfile --auth-user-pass $authfile --auth-nocache ${OPENVPN_OPTS:-}" &
+ovpn_pid=$!
+wait "$ovpn_pid"
+rc=$?
+
+exit "$rc"

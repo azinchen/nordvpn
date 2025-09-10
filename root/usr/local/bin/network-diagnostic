@@ -1,0 +1,360 @@
+#!/bin/sh
+# vpn-diag: POSIX sh network diagnostics for an OpenVPN-connected system (Docker-friendly)
+# Usage: vpn-diag [--basic|-b] | [--full|-f] | [--help|-h]
+# Default mode is --full.
+
+set -u  # be strict about undefined vars
+
+MODE="full"
+
+print_usage() {
+  cat <<'EOF'
+Usage: vpn-diag [options]
+
+Options:
+  -b, --basic   Print only: "Public IP address X.X.X.X, location City CC"
+  -f, --full    Full diagnostics (default)
+  -h, --help    Show this help
+EOF
+}
+
+# ---- Parse CLI --------------------------------------------------------------
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -b|--basic) MODE="basic" ;;
+    -f|--full)  MODE="full"  ;;
+    -h|--help)  print_usage; exit 0 ;;
+    *) echo "Unknown option: $1" >&2; print_usage; exit 2 ;;
+  esac
+  shift
+done
+
+# ---- Tool discovery ---------------------------------------------------------
+CURL_BIN="$(command -v curl 2>/dev/null || printf '')"
+JQ_BIN="$(command -v jq 2>/dev/null || printf '')"
+DIG_BIN="$(command -v dig 2>/dev/null || printf '')"
+RESOLVECTL_BIN="$(command -v resolvectl 2>/dev/null || printf '')"
+NFT_BIN="$(command -v nft 2>/dev/null || printf '')"
+IPT_BIN="$(command -v iptables 2>/dev/null || printf '')"
+IP6T_BIN="$(command -v ip6tables 2>/dev/null || printf '')"
+TR_BIN="$(command -v traceroute 2>/dev/null || printf '')"
+[ -n "$TR_BIN" ] || TR_BIN="$(command -v tracepath 2>/dev/null || printf '')"
+
+# ---- Public IP helpers (prefer ipinfo.io) ----------------------------------
+fetch_public_info() {
+  IP=""; CITY=""; CC=""
+  if [ -n "$CURL_BIN" ]; then
+    RESP="$($CURL_BIN -s --max-time 4 https://ipinfo.io/json 2>/dev/null || printf '')"
+    if [ -n "$RESP" ]; then
+      if [ -n "$JQ_BIN" ]; then
+        IP="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.ip // empty' 2>/dev/null || printf '')"
+        CITY="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.city // empty' 2>/dev/null || printf '')"
+        CC="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.country // empty' 2>/dev/null || printf '')"
+      else
+        IP="$(printf "%s" "$RESP" | sed -n 's/.*"ip"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+        CITY="$(printf "%s" "$RESP" | sed -n 's/.*"city"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+        CC="$(printf "%s" "$RESP" | sed -n 's/.*"country"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+      fi
+    fi
+    if [ -z "$IP" ]; then
+      IP="$($CURL_BIN -s --max-time 4 https://ifconfig.co 2>/dev/null || printf '')"
+      CITY="$($CURL_BIN -s --max-time 4 https://ifconfig.co/city 2>/dev/null || printf '')"
+      CC="$($CURL_BIN -s --max-time 4 https://ifconfig.co/country-iso 2>/dev/null || printf '')"
+    fi
+  fi
+}
+
+print_basic() {
+  fetch_public_info
+  if [ -n "$IP" ]; then
+    echo "Public IP address $IP, location ${CITY:-Unknown} ${CC:-??}"
+    exit 0
+  else
+    echo "Public IP address Unknown, location Unknown ??"
+    exit 1
+  fi
+}
+
+# If basic mode requested, do that and exit early.
+if [ "$MODE" = "basic" ]; then
+  print_basic
+fi
+
+# ---- Helpers: DNS nameserver geolocation & RTT ------------------------------
+is_private_ip() {
+  case "$1" in
+    10.*|192.168.*|172.1[6-9].*|172.2[0-9].*|172.3[0-1].*) return 0 ;;
+    fd*|FD*|fc*|FC*|fe80*|FE80*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+ns_geo_line() {
+  IPQ="$1"
+  if is_private_ip "$IPQ"; then
+    echo "$IPQ : (private/local resolver)"
+    return
+  fi
+  if [ -z "$CURL_BIN" ]; then
+    echo "$IPQ : (curl not available)"
+    return
+  fi
+
+  CITY=""; CC=""; ORG=""
+  RESP="$($CURL_BIN -s --max-time 4 "https://ipinfo.io/$IPQ/json" 2>/dev/null || printf '')"
+  if [ -n "$RESP" ]; then
+    if [ -n "$JQ_BIN" ]; then
+      CITY="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.city // empty' 2>/dev/null || printf '')"
+      CC="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.country // empty' 2>/dev/null || printf '')"
+      ORG="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.org // empty' 2>/dev/null || printf '')"
+    else
+      CITY="$(printf "%s" "$RESP" | sed -n 's/.*"city"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+      CC="$(printf "%s" "$RESP" | sed -n 's/.*"country"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+      ORG="$(printf "%s" "$RESP" | sed -n 's/.*"org"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+    fi
+  fi
+  if [ -z "$CITY$CC$ORG" ]; then
+    RESP="$($CURL_BIN -s --max-time 4 "https://ipapi.co/$IPQ/json/" 2>/dev/null || printf '')"
+    if [ -n "$RESP" ]; then
+      if [ -n "$JQ_BIN" ]; then
+        CITY="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.city // empty' 2>/dev/null || printf '')"
+        CC="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.country // empty' 2>/dev/null || printf '')"
+        [ -n "$CC" ] || CC="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.country_code // empty' 2>/dev/null || printf '')"
+        ORG="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.org // empty' 2>/dev/null || printf '')"
+      else
+        CITY="$(printf "%s" "$RESP" | sed -n 's/.*"city"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+        CC="$(printf "%s" "$RESP" | sed -n 's/.*"country_code"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+        [ -n "$CC" ] || CC="$(printf "%s" "$RESP" | sed -n 's/.*"country"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+        ORG="$(printf "%s" "$RESP" | sed -n 's/.*"org"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+      fi
+    fi
+  fi
+  [ -n "$CITY" ] || CITY="Unknown"
+  [ -n "$CC" ] || CC="??"
+  if [ -n "$ORG" ]; then
+    echo "$IPQ : $CITY $CC — $ORG"
+  else
+    echo "$IPQ : $CITY $CC"
+  fi
+}
+
+ns_rtt() {
+  NS="$1"
+  POUT="$(ping -w 2 -c 2 "$NS" 2>/dev/null | awk -F'[/ ]' '/^rtt|^round-trip/{print $(NF-2)" ms"}')"
+  [ -n "$POUT" ] && echo "  (avg RTT: $POUT)"
+}
+
+print_dns_geo() {
+  echo "### DNS servers geolocation"
+  NS_LIST="$(awk '/^nameserver/ {print $2}' /etc/resolv.conf 2>/dev/null | sed 's/%.*//' | sort -u)"
+  if [ -z "$NS_LIST" ] && [ -n "$RESOLVECTL_BIN" ]; then
+    NS_LIST="$($RESOLVECTL_BIN dns 2>/dev/null | tr ' ' '\n' | sed 's/%.*//' | \
+      grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$|^[0-9a-fA-F:]+$' | sort -u)"
+  fi
+  if [ -z "$NS_LIST" ]; then
+    echo "(no nameservers found)"
+    echo
+    return
+  fi
+  for NS in $NS_LIST; do
+    ns_geo_line "$NS"
+    ns_rtt "$NS"
+  done
+  echo
+}
+
+# ---- Full diagnostics (default) --------------------------------------------
+PUBLIC_TEST_IPv4="1.1.1.1"
+PUBLIC_TEST_IPv6="2606:4700:4700::1111"
+
+COMMON_NAME="${common_name:-unknown}"
+DEV_IF="${dev:-tun0}"
+DEV_TYPE="${dev_type:-?}"
+IFCONF_LOCAL="${ifconfig_local:-?}"
+IFCONF_REMOTE="${ifconfig_remote:-?}"
+ROUTE_VPN_GW="${route_vpn_gateway:-?}"
+TRUSTED_IP="${trusted_ip:-?}"
+TRUSTED_PORT="${trusted_port:-?}"
+PROTO="${proto_1:-${proto:-?}}"
+LPORT="${local_port_1:-${local_port:-?}}"
+
+echo "================================================================"
+echo "OpenVPN DIAG (full)   : $(date -Is 2>/dev/null || date)"
+echo "Device                : $DEV_IF (type=$DEV_TYPE)"
+echo "Common Name           : $COMMON_NAME"
+echo "Ifconfig Local        : $IFCONF_LOCAL"
+echo "Ifconfig Remote       : $IFCONF_REMOTE"
+echo "Route VPN Gateway     : $ROUTE_VPN_GW"
+echo "Trusted Peer          : $TRUSTED_IP:$TRUSTED_PORT"
+echo "Proto/Local Port      : $PROTO/$LPORT"
+echo
+
+echo "### ip addr show $DEV_IF"
+ip addr show "$DEV_IF" 2>/dev/null || true
+echo
+
+echo "### ip link (up)"
+ip -brief link show up 2>/dev/null || true
+echo
+
+echo "### ip route (main)"
+ip route show 2>/dev/null || true
+echo
+
+echo "### ip rule"
+ip rule show 2>/dev/null || true
+echo
+
+# Default route / split-default detection
+DEF_DEV="$(ip route show default 2>/dev/null | awk '/default/{for(i=1;i<=NF;i++) if($i=="dev"){print $(i+1); exit}}')"
+DEV0="$(ip route show '0.0.0.0/1' 2>/dev/null | awk '{for(i=1;i<=NF;i++) if($i=="dev"){print $(i+1); exit}}')"
+DEV128="$(ip route show '128.0.0.0/1' 2>/dev/null | awk '{for(i=1;i<=NF;i++) if($i=="dev"){print $(i+1); exit}}')"
+
+if [ -n "$DEV0" ] && [ -n "$DEV128" ] && [ "$DEV0" = "$DEV_IF" ] && [ "$DEV128" = "$DEV_IF" ]; then
+  echo "Default route dev     : (split default) $DEV_IF (0.0.0.0/1 + 128.0.0.0/1)"
+  echo "[ok] Full-tunnel via split default detected"
+else
+  [ -n "${DEF_DEV:-}" ] || DEF_DEV="<none>"
+  echo "Default route dev     : $DEF_DEV"
+  if [ "$DEF_DEV" = "$DEV_IF" ]; then
+    echo "[ok] Default route is via $DEV_IF"
+  else
+    echo "[warn] Default route is NOT via $DEV_IF"
+  fi
+fi
+echo
+
+echo "### ip route get $PUBLIC_TEST_IPv4"
+ip route get "$PUBLIC_TEST_IPv4" 2>/dev/null || true
+echo
+
+echo "### ip -6 route get $PUBLIC_TEST_IPv6"
+ip -6 route get "$PUBLIC_TEST_IPv6" 2>/dev/null || echo "[info] no IPv6 route"
+echo
+
+# Netfilter snapshot
+echo "### nftables / iptables rules"
+if [ -n "$NFT_BIN" ]; then
+  "$NFT_BIN" list ruleset 2>/dev/null || echo "[info] nft present, empty ruleset or no perms"
+else
+  echo "[info] nft not present"
+fi
+
+if [ -n "$IPT_BIN" ]; then
+  echo
+  echo "### iptables -S (filter)"
+  "$IPT_BIN" -S 2>/dev/null || true
+
+  echo
+  echo "### iptables -t nat -S (IPv4 NAT)"
+  "$IPT_BIN" -t nat -S 2>/dev/null || echo "(no IPv4 NAT rules or table unavailable)"
+
+  # Optional counters view (comment out if too verbose)
+  # echo
+  # echo "### iptables -t nat -L -n -v (counters)"
+  # "$IPT_BIN" -t nat -L -n -v 2>/dev/null || true
+fi
+
+if [ -n "$IP6T_BIN" ]; then
+  echo
+  echo "### ip6tables -S (filter)"
+  "$IP6T_BIN" -S 2>/dev/null || true
+
+  echo
+  echo "### ip6tables -t nat -S (IPv6 NAT)"
+  "$IP6T_BIN" -t nat -S 2>/dev/null || echo "(no IPv6 NAT rules or table unavailable)"
+fi
+echo
+
+# Public IP & rough geo (JSON from same provider as summary)
+echo "### Public IP / Geo (best-effort)"
+if [ -n "$CURL_BIN" ]; then
+  RESP="$($CURL_BIN -s --max-time 4 https://ipinfo.io/json 2>/dev/null || printf '')"
+  if [ -z "$RESP" ]; then
+    RESP="$($CURL_BIN -s --max-time 4 https://ifconfig.co/json 2>/dev/null || printf '')"
+  fi
+  if [ -n "$RESP" ]; then
+    if [ -n "$JQ_BIN" ]; then
+      echo "$RESP" | "$JQ_BIN" . 2>/dev/null || echo "$RESP"
+    else
+      echo "$RESP"
+    fi
+  else
+    echo "[warn] could not fetch public info"
+  fi
+else
+  echo "[warn] curl not available"
+fi
+echo
+
+# DNS configuration & identity probe
+echo "### DNS configuration"
+if [ -n "$RESOLVECTL_BIN" ]; then
+  "$RESOLVECTL_BIN" status "$DEV_IF" 2>/dev/null || "$RESOLVECTL_BIN" status 2>/dev/null || true
+else
+  cat /etc/resolv.conf 2>/dev/null || true
+fi
+echo
+
+print_dns_geo
+
+# Resolver identity (with fallbacks)
+if [ -n "$DIG_BIN" ]; then
+  NS_ACTIVE="$(awk '/^nameserver/ {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
+  if [ -n "$NS_ACTIVE" ]; then
+    echo "### resolver identity via $NS_ACTIVE"
+    OUT="$("$DIG_BIN" +timeout=3 +short TXT whoami.cloudflare @"$NS_ACTIVE" 2>/dev/null | sed -n '1p')"
+    if [ -z "$OUT" ]; then
+      OUT="$("$DIG_BIN" +timeout=3 +short CHAOS TXT id.server @"$NS_ACTIVE" 2>/dev/null | sed -n '1p')"
+    fi
+    if [ -z "$OUT" ]; then
+      OUT="$("$DIG_BIN" +timeout=3 +short CHAOS TXT hostname.bind @"$NS_ACTIVE" 2>/dev/null | sed -n '1p')"
+    fi
+    if [ -n "$OUT" ]; then
+      echo "$OUT"
+    else
+      echo "(no identity TXT available from resolver)"
+    fi
+    echo
+  fi
+fi
+
+# Connectivity probes
+echo "### Ping checks"
+ping -w 3 -c 3 "$PUBLIC_TEST_IPv4" 2>&1 || echo "[warn] ping to $PUBLIC_TEST_IPv4 failed"
+if command -v ping6 >/dev/null 2>&1; then
+  ping6 -w 3 -c 3 "$PUBLIC_TEST_IPv6" 2>&1 || echo "[info] ping6 to $PUBLIC_TEST_IPv6 failed"
+fi
+echo
+
+if [ -n "$TR_BIN" ]; then
+  echo "### Short trace to $PUBLIC_TEST_IPv4 (first hop should be VPN)"
+  BN="$(basename "$TR_BIN" 2>/dev/null)"
+  case "$BN" in
+    tracepath) "$TR_BIN" -n -m 4 "$PUBLIC_TEST_IPv4" 2>&1 || true ;;
+    *)         "$TR_BIN" -n -m 4 -w 2 "$PUBLIC_TEST_IPv4" 2>&1 || true ;;
+  esac
+  echo
+fi
+
+# Quick verdicts
+echo "### Quick verdicts"
+ROUTE_DEV="$(ip route get "$PUBLIC_TEST_IPv4" 2>/dev/null | awk '{for(i=1;i<=NF;i++) if($i=="dev"){print $(i+1); exit}}')"
+if [ -n "$ROUTE_DEV" ] && [ "$ROUTE_DEV" = "$DEV_IF" ]; then
+  echo "[ok] Route to $PUBLIC_TEST_IPv4 goes via $DEV_IF"
+else
+  echo "[warn] Route to $PUBLIC_TEST_IPv4 uses ${ROUTE_DEV:-<none>} (expected $DEV_IF)"
+fi
+
+fetch_public_info
+if [ -n "${IP:-}" ]; then
+  echo "Public IPv4 seen     : $IP"
+  [ -n "$CITY" ] || CITY="Unknown"
+  [ -n "$CC" ] || CC="??"
+  echo "Location             : $CITY $CC"
+fi
+
+echo "Done."
+echo "================================================================"
+echo
+exit 0

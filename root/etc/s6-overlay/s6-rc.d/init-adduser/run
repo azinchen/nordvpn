@@ -8,8 +8,15 @@ echo "[INIT-ADDUSER] Starting init-adduser script..."
 PUID=${PUID:-912}
 PGID=${PGID:-912}
 
-groupmod --non-unique --gid "$PGID" nordvpn
-usermod --non-unique --uid "$PUID" nordvpn
+if [ "$(id -g nordvpn)" -ne "$PGID" ]; then
+    echo "[INIT-ADDUSER] Updating nordvpn group ID from $(id -g nordvpn) to $PGID"
+    groupmod --non-unique --gid "$PGID" nordvpn
+fi
+
+if [ "$(id -u nordvpn)" -ne "$PUID" ]; then
+    echo "[INIT-ADDUSER] Updating nordvpn user ID from $(id -u nordvpn) to $PUID"
+    usermod --non-unique --uid "$PUID" nordvpn
+fi
 
 echo "[INIT-ADDUSER] init-adduser script completed successfully"
 exit 0
