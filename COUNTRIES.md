@@ -3,7 +3,7 @@
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 7
+Albania | AL | 2 | 19
 Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 4
 Angola | AO | 6 | 2
@@ -23,7 +23,7 @@ Bolivia | BO | 26 | 2
 Bosnia and Herzegovina | BA | 27 | 5
 Brazil | BR | 30 | 38
 Brunei Darussalam | BN | 32 | 2
-Bulgaria | BG | 33 | 24
+Bulgaria | BG | 33 | 23
 Cambodia | KH | 36 | 2
 Canada | CA | 38 | 436
 Cayman Islands | KY | 40 | 2
@@ -32,7 +32,6 @@ Colombia | CO | 47 | 10
 Comoros | KM | 48 | 2
 Costa Rica | CR | 52 | 6
 Croatia | HR | 54 | 16
-Cyprus | CY | 56 | 13
 Czech Republic | CZ | 57 | 56
 Denmark | DK | 58 | 72
 Dominican Republic | DO | 61 | 2
