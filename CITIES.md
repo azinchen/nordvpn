@@ -3,7 +3,7 @@
 Country | Code | ID | City | ID | Servers
 --------|------|----|------|----|--------
 Afghanistan | AF | 1 | Kabul | 98270 | 2
-Albania | AL | 2 | Tirana | 308615 | 7
+Albania | AL | 2 | Tirana | 308615 | 19
 Algeria | DZ | 3 | Algiers | 2438216 | 4
 Andorra | AD | 5 | Andorra la Vella | 20 | 4
 Angola | AO | 6 | Luanda | 351407 | 2
@@ -27,7 +27,7 @@ Bolivia | BO | 26 | La Paz | 838514 | 2
 Bosnia and Herzegovina | BA | 27 | Novi Travnik | 548462 | 5
 Brazil | BR | 30 | Sao Paulo | 890249 | 38
 Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | 2
-Bulgaria | BG | 33 | Sofia | 777368 | 24
+Bulgaria | BG | 33 | Sofia | 777368 | 23
 Cambodia | KH | 36 | Phnom Penh | 4658987 | 2
 Canada | CA | 38 | Montreal | 1048463 | 142
 Canada | CA | 38 | Toronto | 1054250 | 203
@@ -38,7 +38,6 @@ Colombia | CO | 47 | Bogota | 1980695 | 10
 Comoros | KM | 48 | Moroni | 4698371 | 2
 Costa Rica | CR | 52 | San Jose | 2062994 | 6
 Croatia | HR | 54 | Zagreb | 3308120 | 16
-Cyprus | CY | 56 | Nicosia | 2099627 | 13
 Czech Republic | CZ | 57 | Prague | 2144945 | 56
 Denmark | DK | 58 | Copenhagen | 2382515 | 72
 Dominican Republic | DO | 61 | Santo Domingo | 2434841 | 2
