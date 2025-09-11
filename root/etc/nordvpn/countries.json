@@ -461,20 +461,6 @@
   ]
 }
 {
-  "id": 56,
-  "name": "Cyprus",
-  "code": "CY",
-  "cities": [
-    {
-      "id": 2099627,
-      "name": "Nicosia",
-      "latitude": 35.1666667,
-      "longitude": 33.3666667,
-      "dns_name": "nicosia"
-    }
-  ]
-}
-{
   "id": 57,
   "name": "Czech Republic",
   "code": "CZ",
