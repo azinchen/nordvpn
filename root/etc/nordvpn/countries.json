@@ -461,6 +461,20 @@
   ]
 }
 {
+  "id": 56,
+  "name": "Cyprus",
+  "code": "CY",
+  "cities": [
+    {
+      "id": 2099627,
+      "name": "Nicosia",
+      "latitude": 35.1666667,
+      "longitude": 33.3666667,
+      "dns_name": "nicosia"
+    }
+  ]
+}
+{
   "id": 57,
   "name": "Czech Republic",
   "code": "CZ",
@@ -1094,20 +1108,6 @@
       "latitude": 3.166667,
       "longitude": 101.7,
       "dns_name": "kuala-lumpur"
-    }
-  ]
-}
-{
-  "id": 134,
-  "name": "Malta",
-  "code": "MT",
-  "cities": [
-    {
-      "id": 5554481,
-      "name": "Valletta",
-      "latitude": 35.899722,
-      "longitude": 14.514722,
-      "dns_name": "valletta"
     }
   ]
 }
