@@ -3,7 +3,7 @@
 Country | Code | ID | City | ID | Servers
 --------|------|----|------|----|--------
 Afghanistan | AF | 1 | Kabul | 98270 | 2
-Albania | AL | 2 | Tirana | 308615 | 19
+Albania | AL | 2 | Tirana | 308615 | 15
 Algeria | DZ | 3 | Algiers | 2438216 | 4
 Andorra | AD | 5 | Andorra la Vella | 20 | 4
 Angola | AO | 6 | Luanda | 351407 | 2
@@ -27,17 +27,18 @@ Bolivia | BO | 26 | La Paz | 838514 | 2
 Bosnia and Herzegovina | BA | 27 | Novi Travnik | 548462 | 5
 Brazil | BR | 30 | Sao Paulo | 890249 | 38
 Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | 2
-Bulgaria | BG | 33 | Sofia | 777368 | 23
+Bulgaria | BG | 33 | Sofia | 777368 | 25
 Cambodia | KH | 36 | Phnom Penh | 4658987 | 2
 Canada | CA | 38 | Montreal | 1048463 | 142
 Canada | CA | 38 | Toronto | 1054250 | 203
-Canada | CA | 38 | Vancouver | 1054610 | 91
+Canada | CA | 38 | Vancouver | 1054610 | 93
 Cayman Islands | KY | 40 | George Town | 4922303 | 2
 Chile | CL | 43 | Santiago | 1227092 | 7
 Colombia | CO | 47 | Bogota | 1980695 | 10
 Comoros | KM | 48 | Moroni | 4698371 | 2
 Costa Rica | CR | 52 | San Jose | 2062994 | 6
 Croatia | HR | 54 | Zagreb | 3308120 | 16
+Cyprus | CY | 56 | Nicosia | 2099627 | 13
 Czech Republic | CZ | 57 | Prague | 2144945 | 56
 Denmark | DK | 58 | Copenhagen | 2382515 | 72
 Dominican Republic | DO | 61 | Santo Domingo | 2434841 | 2
@@ -68,7 +69,7 @@ Iraq | IQ | 103 | Baghdad | 4093955 | 2
 Ireland | IE | 104 | Dublin | 3939200 | 70
 Isle of Man | IM | 243 | Douglas | 3965405 | 4
 Israel | IL | 105 | Tel Aviv | 3964220 | 20
-Italy | IT | 106 | Milan | 4542737 | 137
+Italy | IT | 106 | Milan | 4542737 | 136
 Italy | IT | 106 | Palermo | 4548074 | 12
 Italy | IT | 106 | Rome | 4555808 | 44
 Jamaica | JM | 107 | Kingston | 4576328 | 2
@@ -87,11 +88,10 @@ Liechtenstein | LI | 124 | Vaduz | 5037212 | 2
 Lithuania | LT | 125 | Vilnius | 5166932 | 12
 Luxembourg | LU | 126 | Luxembourg | 9521876 | 12
 Malaysia | MY | 131 | Kuala Lumpur | 5820143 | 10
-Malta | MT | 134 | Valletta | 5554481 | 2
 Mauritania | MR | 137 | Nouakchott | 5551598 | 2
 Mexico | MX | 140 | Mexico | 5677037 | 60
 Moldova | MD | 142 | Chisinau | 5295179 | 3
-Monaco | MC | 143 | Monte Carlo | 5292332 | 4
+Monaco | MC | 143 | Monte Carlo | 5292332 | 2
 Mongolia | MN | 144 | Ulaanbaatar | 5543669 | 2
 Montenegro | ME | 146 | Podgorica | 5318561 | 2
 Morocco | MA | 147 | Rabat | 5271254 | 4
@@ -137,15 +137,15 @@ Ukraine | UA | 225 | Kyiv | 8626766 | 14
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
 United Kingdom | GB | 227 | Edinburgh | 2975852 | 40
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
-United Kingdom | GB | 227 | London | 2989907 | 868
-United Kingdom | GB | 227 | Manchester | 2991110 | 135
+United Kingdom | GB | 227 | London | 2989907 | 867
+United Kingdom | GB | 227 | Manchester | 2991110 | 157
 United States | US | 228 | Ashburn | 9103211 | 20
 United States | US | 228 | Atlanta | 8792429 | 189
 United States | US | 228 | Boston | 8895305 | 70
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
 United States | US | 228 | Chicago | 8815352 | 289
-United States | US | 228 | Dallas | 9080300 | 242
+United States | US | 228 | Dallas | 9080300 | 247
 United States | US | 228 | Denver | 8770934 | 119
 United States | US | 228 | Houston | 9083687 | 30
 United States | US | 228 | Kansas City | 8930717 | 35
@@ -154,7 +154,7 @@ United States | US | 228 | Manassas | 9113744 | 84
 United States | US | 228 | McAllen | 9086162 | 20
 United States | US | 228 | Miami | 8787782 | 202
 United States | US | 228 | Nashville | 9071273 | 40
-United States | US | 228 | New York | 8971718 | 586
+United States | US | 228 | New York | 8971718 | 585
 United States | US | 228 | Omaha | 8943887 | 40
 United States | US | 228 | Phoenix | 8741960 | 52
 United States | US | 228 | Saint Louis | 8934551 | 36
