@@ -6,108 +6,67 @@ set -eu
 echo "[INIT-FIREWALL] Starting init-firewall script..."
 echo "[INIT-FIREWALL] Setting up firewall - everything has to go through the VPN"
 
-# Note: Basic DROP policies and rule flushing now handled by entrypoint script
+# -------- Backend chooser (nft -> legacy fallback) --------
+pick_iptables_backend() {
+    IPT="iptables"
 
-docker_network="$(ip -o addr show dev eth0 | awk '$3 == "inet" {print $4}')"
-docker6_network="$(ip -o addr show dev eth0 | awk '$3 == "inet6" {print $4; exit}')"
-
-if [ -n "${docker_network}" ]; then
-    iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-    iptables -A INPUT -i lo -j ACCEPT
-    iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-    iptables -A FORWARD -i lo -j ACCEPT
-    iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-    iptables -A OUTPUT -o lo -j ACCEPT
-    iptables -A OUTPUT -o tap+ -j ACCEPT
-    iptables -A OUTPUT -o tun+ -j ACCEPT
-    iptables -t nat -A POSTROUTING -o tap+ -j MASQUERADE
-    iptables -t nat -A POSTROUTING -o tun+ -j MASQUERADE
-    iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
-    iptables -A OUTPUT -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
-fi
-if [ -n "${docker6_network}" ]; then
-    ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-    ip6tables -A INPUT -p icmp -j ACCEPT
-    ip6tables -A INPUT -i lo -j ACCEPT
-    ip6tables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-    ip6tables -A FORWARD -p icmp -j ACCEPT
-    ip6tables -A FORWARD -i lo -j ACCEPT
-    ip6tables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-    ip6tables -A OUTPUT -o lo -j ACCEPT
-    ip6tables -A OUTPUT -o tap+ -j ACCEPT
-    ip6tables -A OUTPUT -o tun+ -j ACCEPT
-    ip6tables -t nat -A POSTROUTING -o tap+ -j MASQUERADE
-    ip6tables -t nat -A POSTROUTING -o tun+ -j MASQUERADE
-    ip6tables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
-    ip6tables -A OUTPUT -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT 2> /dev/null
-fi
-
-# Consolidated local network rules (from init-localnetwork)
-echo "[INIT-FIREWALL] Setting up local network rules..."
-if [ -n "${docker_network}" ]; then
-    iptables -A INPUT -s "${docker_network}" -j ACCEPT
-    iptables -A FORWARD -d "${docker_network}" -j ACCEPT
-    iptables -A FORWARD -s "${docker_network}" -j ACCEPT
-    iptables -A OUTPUT -d "${docker_network}" -j ACCEPT
-fi
-if [ -n "${docker6_network}" ]; then
-    ip6tables -A INPUT -s "${docker6_network}" -j ACCEPT 2>/dev/null
-    ip6tables -A FORWARD -d "${docker6_network}" -j ACCEPT 2>/dev/null
-    ip6tables -A FORWARD -s "${docker6_network}" -j ACCEPT 2>/dev/null
-    ip6tables -A OUTPUT -d "${docker6_network}" -j ACCEPT 2>/dev/null
-fi
-
-# Handle custom networks from NETWORK variable
-if [ -n "${docker_network}" ] && [ -n "${NETWORK:-}" ]; then
-    echo "[INIT-FIREWALL] Processing custom IPv4 networks from NETWORK variable: ${NETWORK}"
-    gw=$(ip route | awk '/default/ {print $3}')
-    echo "[INIT-FIREWALL] Using gateway: ${gw}"
-    # Convert semicolon/comma separated list to space separated
-    IFS=';'
-    for net in $NETWORK; do
-        ip route | grep -q "$net" || ip route add to "$net" via "$gw" dev eth0
-        iptables -A INPUT -s "$net" -j ACCEPT
-        iptables -A FORWARD -d "$net" -j ACCEPT
-        iptables -A FORWARD -s "$net" -j ACCEPT
-        iptables -A OUTPUT -d "$net" -j ACCEPT
-    done
-    echo "[INIT-FIREWALL] Custom IPv4 networks configured"
-fi
-if [ -n "${docker6_network}" ] && [ -n "${NETWORK6:-}" ]; then
-    echo "[INIT-FIREWALL] Processing custom IPv6 networks from NETWORK6 variable: ${NETWORK6}"
-    gw6=$(ip -6 route | awk '/default/{print $3}')
-    echo "[INIT-FIREWALL] Using IPv6 gateway: ${gw6}"
-    # Convert semicolon/comma separated list to space separated
-    IFS=';'
-    for net6 in $NETWORK6; do
-        ip -6 route | grep -q "$net6" || ip -6 route add to "$net6" via "$gw6" dev eth0
-        ip6tables -A INPUT -s "$net6" -j ACCEPT 2>/dev/null
-        ip6tables -A FORWARD -d "$net6" -j ACCEPT 2>/dev/null
-        ip6tables -A FORWARD -s "$net6" -j ACCEPT 2>/dev/null
-        ip6tables -A OUTPUT -d "$net6" -j ACCEPT 2>/dev/null
-    done
-    echo "[INIT-FIREWALL] Custom IPv6 networks configured"
-fi
-
-# Consolidated whitelist rules (from init-whitelistnetwork)
-echo "[INIT-FIREWALL] Setting up whitelist network rules..."
-if [ -n "${WHITELIST:-}" ]; then
-    echo "[INIT-FIREWALL] Processing whitelist domains: ${WHITELIST}"
-    # Convert semicolon/comma separated list to space separated
-    IFS=';'
-    for domain in $WHITELIST; do
-        domain=$(echo "$domain" | sed 's/^.*:\/\///;s/\/.*$//')
-        echo "[INIT-FIREWALL] Adding whitelist rule for domain: ${domain}"
-        if [ -n "${docker_network}" ]; then
-            iptables -A OUTPUT -o eth0 -d $domain -j ACCEPT
+    if $IPT -V 2>&1 | grep -qi "(nf_tables)"; then
+        if ! $IPT -S >/dev/null 2>&1; then
+            command -v iptables-legacy >/dev/null 2>&1 && IPT="iptables-legacy"
         fi
-        if [ -n "${docker6_network}" ]; then
-            ip6tables -A OUTPUT -o eth0 -d $domain -j ACCEPT 2>/dev/null
-        fi
-    done
-    echo "[INIT-FIREWALL] Whitelist domains configured"
+    elif $IPT -V 2>&1 | grep -qi "(legacy)"; then
+        command -v iptables-legacy >/dev/null 2>&1 && IPT="iptables-legacy"
+    fi
+}
+
+pick_iptables_backend
+
+add4() { if ! $IPT "$@" 2>/dev/null; then echo "[INIT-FIREWALL] (IPv4) skipped: $*"; fi; }
+
+# BusyBox-friendly helpers
+docker_network="$(ip addr show dev eth0 2>/dev/null | awk '/inet / {print $2; exit}')"
+gw="$(ip route 2>/dev/null | awk '/default/ {print $3; exit}')"
+
+# ===================== IPv4 =====================
+if [ -n "${docker_network}" ]; then
+    echo "[INIT-FIREWALL] IPv4 rules..."
+
+    # Stateful fast-path (skip gracefully if conntrack match absent)
+    add4 -A INPUT  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+    add4 -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+    # Allow outbound to VPN interfaces + NAT
+    add4 -A OUTPUT -o tun+ -j ACCEPT
+    add4 -t nat -A POSTROUTING -o tun+ -j MASQUERADE
+
+    # NordVPN API bootstrap (TCP/443) by resolved IPs
+    if [ -n "${NORDVPNAPI_IP:-}" ]; then
+        echo "[INIT-FIREWALL] Processing NordVPN API IPv4 addresses from NORDVPNAPI_IP variable: ${NORDVPNAPI_IP}"
+        oldIFS="$IFS"; IFS=',;'
+        for ip in $NORDVPNAPI_IP; do
+            [ -z "$ip" ] && continue
+            add4 -A OUTPUT -d "$ip" -p tcp --dport 443 -j ACCEPT
+        done
+        IFS="$oldIFS"
+    fi
+
+    # NETWORK rules (CIDRs). If present, restrict inbound to these nets; do NOT add the broad eth0 accept.
+    if [ -n "${NETWORK:-}" ]; then
+        echo "[INIT-FIREWALL] Processing custom IPv4 networks from NETWORK variable: ${NETWORK}"
+        oldIFS="$IFS"; IFS=',;'
+        for net in $NETWORK; do
+            [ -z "$net" ] && continue
+            # Best-effort route add (if not already present)
+            if [ -n "${gw:-}" ]; then
+                ip route 2>/dev/null | grep -q " ${net} " || ip route add "$net" via "$gw" dev eth0 2>/dev/null || true
+            fi
+            # Allow inbound from this network only
+            add4 -A INPUT -i eth0 -s "$net" -j ACCEPT
+        done
+        IFS="$oldIFS"
+    fi
 else
-    echo "[INIT-FIREWALL] No whitelist domains specified"
+    echo "[INIT-FIREWALL] No IPv4 on eth0; skipping v4 rules."
 fi
 
 echo "[INIT-FIREWALL] init-firewall script completed successfully"

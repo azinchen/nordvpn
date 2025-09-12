@@ -308,6 +308,26 @@ handle_specific_server()
     printf '%s' "$constructed_json"
 }
 
+nord_api_curl()
+{
+    _path="$1"
+    shift 2>/dev/null || true
+
+    OLDIFS="$IFS"; IFS=';'; _rc=1
+    for _ip in $NORDVPNAPI_IP; do
+        [ -n "$_ip" ] || continue
+        case "$_ip" in *:*) _lit="[$_ip]" ;; *) _lit="$_ip" ;; esac
+
+        curl -sG --connect-timeout 10 --max-time 30 \
+             --resolve "api.nordvpn.com:443:${_lit}" \
+             "https://api.nordvpn.com/${_path}" "$@"
+        _rc=$?
+        [ $_rc -eq 0 ] && IFS="$OLDIFS" && return 0
+    done
+    IFS="$OLDIFS"
+    return $_rc
+}
+
 servers=""
 locations_count=0
 
@@ -336,7 +356,7 @@ else
     echo "[VPN-CONFIG] No group filter specified"
 fi
 
-test_response=$(curl -sG --connect-timeout 5 --max-time 10 "https://api.nordvpn.com/v1/servers/recommendations" --data-urlencode "limit=1" 2>/dev/null || echo "")
+test_response=$(nord_api_curl "v1/servers/recommendations" --data-urlencode "limit=1" 2>/dev/null || echo "")
 if [ -z "$test_response" ]; then
     echo "[VPN-CONFIG] WARNING: API connectivity test failed - no response from NordVPN API"
 fi
@@ -366,7 +386,7 @@ if [ -n "$COUNTRY" ]; then
                 fi
                 
                 # Execute curl with built parameters
-                serversincountry=$(eval "curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
+                serversincountry=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincountry" ]; then
                     echo "[VPN-CONFIG] Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
                     echo "$serversincountry" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"' | head -n 20
@@ -407,7 +427,7 @@ if [ -n "$CITY" ]; then
                 fi
                 
                 # Execute curl with built parameters
-                serversincity=$(eval "curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
+                serversincity=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincity" ]; then
                     echo "[VPN-CONFIG] Request servers in \"$(getcityname "$value")\", $(echo "$serversincity" | jq -s 'length') servers received"
                     echo "$serversincity" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"' | head -n 20
@@ -442,7 +462,7 @@ if [ "$poollength" -eq 0 ]; then
         curl_params="$curl_params $group_filter"
     fi
     
-    servers=$(eval "curl -sG --connect-timeout 10 --max-time 30 \"https://api.nordvpn.com/v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
+    servers=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
     
     if [ -n "$servers" ]; then
         echo "[VPN-CONFIG] Default recommended servers: $(echo "$servers" | jq -s 'length') servers received"
@@ -512,6 +532,5 @@ else
     exit 1
 fi
 
-echo "[VPN-CONFIG] VPN configuration file created successfully at $ovpnfile"
 echo "[VPN-CONFIG] vpn-config script completed successfully"
 exit 0
