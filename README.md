@@ -91,27 +91,26 @@ docker run --net=container:vpn -d your/application
 ### Security Features
 
 **🛡️ Traffic Control & Kill Switch**
-- **Default-deny (egress):** All outbound traffic is blocked unless it goes through the VPN interface **or** matches the configured exceptions (`NETWORK` or `WHITELIST`)
-- **Bring-up:** Before the VPN tunnel is established, only **essential services** and the configured exceptions (`NETWORK`, `WHITELIST`) are allowed. Everything else is blocked
-- **Kill switch:** If the VPN drops, traffic remains blocked **except** for **essential services** and the configured exceptions (`NETWORK`, `WHITELIST`)
+- **Default-deny (egress):** All outbound traffic is blocked unless it goes through the VPN interface **or** matches the configured exceptions (`NETWORK`)
+- **Bring-up:** Before the VPN tunnel is established, only **essential services** and the configured exceptions (`NETWORK`) are allowed. Everything else is blocked
+- **Kill switch:** If the VPN drops, traffic remains blocked **except** for **essential services** and the configured exceptions (`NETWORK`)
 - **Container routing:** Containers using `network_mode: "service:vpn"` share the VPN container’s network namespace and inherit these policies
 - **Inbound (local/LAN only):** No connections from the host or LAN reach the stack **unless you publish ports on the VPN container**. **Public inbound via NordVPN is not supported** (no port forwarding)
 
 **🔒 Network Access Control (Exceptions)**
 - **Local network access (always on):** Set `NETWORK=192.168.1.0/24` (comma-separated CIDRs supported) to allow access to those subnets **regardless of VPN status**
-- **Domain allowlist (always on):** Set `WHITELIST=example.com,foo.bar` to permit those domains to bypass the VPN **regardless of VPN status**
 - **Essential services (always allowed):**
   - DNS lookups are **not blocked** (uses the image’s default resolvers)
   - NordVPN API over HTTPS to select a VPN server based on settings before establishing the tunnel
 
 **⚖️ Rule Precedence**
 1. **Always-allowed:** Essential services → DNS + VPN control/API
-2. **Exceptions:** If destination matches `NETWORK` (CIDR) or `WHITELIST` (domain), allow (bypass/LAN), regardless of VPN state
+2. **Exceptions:** If destination matches `NETWORK` (CIDR), allow (bypass/LAN), regardless of VPN state
 3. **VPN path:** If VPN is **up** and traffic is not an exception, allow only via VPN interface
 4. **Default-deny:** Otherwise, block
 
 **⚠️ Security Note**
-Because `NETWORK` and `WHITELIST` remain open when the VPN is down, this is **not a strict kill switch**. Limit exceptions to the minimum necessary and prefer CIDRs/domains you trust.
+Because `NETWORK` remains open when the VPN is down, this is **not a strict kill switch**. Limit exceptions to the minimum necessary and prefer CIDRs/domains you trust.
 
 ### Container Registries
 
@@ -461,7 +460,6 @@ docker run -d --name api-service --net=container:vpn \
 | `CHECK_CONNECTION_ATTEMPT_INTERVAL` | Seconds between failed attempts | `10` | `10` |
 | `NETWORK` | Local networks for access (semicolon separated) | None | `192.168.1.0/24;172.20.0.0/16` |
 | `NETWORK6` | IPv6 networks for access (semicolon separated) | None | `fe00:d34d:b33f::/64` |
-| `WHITELIST` | Domains accessible outside VPN | None | `local.example.com` |
 | `OPENVPN_OPTS` | Additional OpenVPN parameters | None | `--mute-replay-warnings` |
 
 ### Server Lists

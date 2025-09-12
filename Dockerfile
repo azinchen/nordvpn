@@ -48,6 +48,7 @@ FROM alpine:3.22.1
 LABEL maintainer="Alexander Zinchenko <alexander@zinchenko.com>"
 
 ENV TECHNOLOGY=openvpn_udp \
+    NORDVPNAPI_IP=104.19.159.190;104.16.208.203 \
     RANDOM_TOP=0 \
     CHECK_CONNECTION_ATTEMPTS=5 \
     CHECK_CONNECTION_ATTEMPT_INTERVAL=10 \
@@ -58,11 +59,12 @@ RUN echo "**** install security fix packages ****" && \
     apk --no-cache --no-progress add \
         curl=8.14.1-r1 \
         iptables=1.8.11-r1 \
+        iptables-legacy=1.8.11-r1 \
         jq=1.8.0-r0 \
         shadow=4.17.3-r0 \
         shadow-login=4.17.3-r0 \
         openvpn=2.6.14-r0 \
-        bind-tools=9.20.12-r0 \
+        bind-tools=9.20.13-r0 \
         && \
     echo "**** create process user ****" && \
     addgroup --system --gid 912 nordvpn && \

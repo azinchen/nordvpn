@@ -1,30 +1,72 @@
 #!/bin/sh
-# Container entrypoint with immediate security setup
-# This ensures no traffic can leak before VPN is established
+# shellcheck shell=sh
 
-set -e
+set -eu
 
 echo "[ENTRYPOINT] Applying immediate security rules..."
 
-# Set all policies to DROP - this is the most critical security step
-iptables -P OUTPUT DROP 2>/dev/null || true
-iptables -P INPUT DROP 2>/dev/null || true  
-iptables -P FORWARD DROP 2>/dev/null || true
-ip6tables -P OUTPUT DROP 2>/dev/null || true
-ip6tables -P INPUT DROP 2>/dev/null || true
-ip6tables -P FORWARD DROP 2>/dev/null || true
+# -------- Backend chooser (nft -> legacy fallback) --------
+pick_iptables_backend() {
+    _IPT="iptables"; _IP6T="ip6tables"
+    if $_IPT -V 2>&1 | grep -qi "(nf_tables)"; then
+        if ! $_IPT -S >/dev/null 2>&1; then
+            command -v iptables-legacy >/dev/null 2>&1 && _IPT="iptables-legacy"
+        fi
+    elif $_IPT -V 2>&1 | grep -qi "(legacy)"; then
+        command -v iptables-legacy >/dev/null 2>&1 && _IPT="iptables-legacy"
+    fi
 
-# Flush existing rules to start clean
-iptables -F 2>/dev/null || true
-iptables -X 2>/dev/null || true
-ip6tables -F 2>/dev/null || true
-ip6tables -X 2>/dev/null || true
+    if $_IP6T -V 2>&1 | grep -qi "(nf_tables)"; then
+        if ! $_IP6T -S >/dev/null 2>&1; then
+            command -v ip6tables-legacy >/dev/null 2>&1 && _IP6T="ip6tables-legacy"
+        fi
+    elif $_IP6T -V 2>&1 | grep -qi "(legacy)"; then
+        command -v ip6tables-legacy >/dev/null 2>&1 && _IP6T="ip6tables-legacy"
+    fi
 
-# Allow loopback (essential for system operation)
-iptables -A INPUT -i lo -j ACCEPT 2>/dev/null || true
-iptables -A OUTPUT -o lo -j ACCEPT 2>/dev/null || true
+    # Avoid mixing stacks: if we picked legacy and nft binaries exist, flush nft chains (best effort)
+    if [ "$_IPT" = "iptables-legacy" ] && command -v iptables-nft >/dev/null 2>&1; then
+        iptables-nft -F 2>/dev/null || true; iptables-nft -t nat -F 2>/dev/null || true; iptables-nft -X 2>/dev/null || true
+    fi
+
+    if [ "$_IP6T" = "ip6tables-legacy" ] && command -v ip6tables-nft >/dev/null 2>&1; then
+        ip6tables-nft -F 2>/dev/null || true; ip6tables-nft -t nat -F 2>/dev/null || true; ip6tables-nft -X 2>/dev/null || true
+    fi
+
+    IPT="$_IPT"; IP6T="$_IP6T"
+}
+
+pick_iptables_backend
+
+run4() { if ! $IPT "$@" 2>/dev/null; then echo "[ENTRYPOINT] (IPv4) skipped: $*"; fi; }
+run6() { if ! $IP6T "$@" 2>/dev/null; then echo "[ENTRYPOINT] (IPv6) skipped: $*"; fi; }
+
+# Default DROP policies (container namespace only)
+run4 -P OUTPUT DROP
+run4 -P INPUT DROP
+run4 -P FORWARD DROP
+run6 -P OUTPUT DROP
+run6 -P INPUT DROP
+run6 -P FORWARD DROP
+
+# Flush any preexisting rules (filter + nat, best effort)
+run4 -F; run4 -X; run4 -t nat -F; run4 -t nat -X
+run6 -F; run6 -X; run6 -t nat -F; run6 -t nat -X
+
+# Allow loopback (critical for local apps)
+run4 -A INPUT -i lo -j ACCEPT
+run4 -A OUTPUT -o lo -j ACCEPT
+run6 -A INPUT -i lo -j ACCEPT
+run6 -A OUTPUT -o lo -j ACCEPT
+
+# Ensure /dev/net/tun exists (best effort), useful for VPN containers
+if [ ! -c /dev/net/tun ]; then
+    mkdir -p /dev/net || true
+    mknod /dev/net/tun c 10 200 2>/dev/null || true
+    chmod 600 /dev/net/tun 2>/dev/null || true
+fi
 
 echo "[ENTRYPOINT] Critical security rules applied - all traffic blocked by default"
+echo "[ENTRYPOINT] Execing /init $*"
 
-# Execute the original entrypoint
 exec /init "$@"
