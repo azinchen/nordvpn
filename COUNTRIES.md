@@ -3,7 +3,7 @@
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 19
+Albania | AL | 2 | 15
 Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 4
 Angola | AO | 6 | 2
@@ -23,15 +23,16 @@ Bolivia | BO | 26 | 2
 Bosnia and Herzegovina | BA | 27 | 5
 Brazil | BR | 30 | 38
 Brunei Darussalam | BN | 32 | 2
-Bulgaria | BG | 33 | 23
+Bulgaria | BG | 33 | 25
 Cambodia | KH | 36 | 2
-Canada | CA | 38 | 436
+Canada | CA | 38 | 438
 Cayman Islands | KY | 40 | 2
 Chile | CL | 43 | 7
 Colombia | CO | 47 | 10
 Comoros | KM | 48 | 2
 Costa Rica | CR | 52 | 6
 Croatia | HR | 54 | 16
+Cyprus | CY | 56 | 13
 Czech Republic | CZ | 57 | 56
 Denmark | DK | 58 | 72
 Dominican Republic | DO | 61 | 2
@@ -58,7 +59,7 @@ Iraq | IQ | 103 | 2
 Ireland | IE | 104 | 70
 Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
-Italy | IT | 106 | 193
+Italy | IT | 106 | 192
 Jamaica | JM | 107 | 2
 Japan | JP | 108 | 257
 Jersey | JE | 244 | 4
@@ -74,11 +75,10 @@ Liechtenstein | LI | 124 | 2
 Lithuania | LT | 125 | 12
 Luxembourg | LU | 126 | 12
 Malaysia | MY | 131 | 10
-Malta | MT | 134 | 2
 Mauritania | MR | 137 | 2
 Mexico | MX | 140 | 60
 Moldova | MD | 142 | 3
-Monaco | MC | 143 | 4
+Monaco | MC | 143 | 2
 Mongolia | MN | 144 | 2
 Montenegro | ME | 146 | 2
 Morocco | MA | 147 | 4
@@ -121,8 +121,8 @@ Tunisia | TN | 219 | 2
 Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
-United Kingdom | GB | 227 | 1091
-United States | US | 228 | 2833
+United Kingdom | GB | 227 | 1112
+United States | US | 228 | 2837
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
