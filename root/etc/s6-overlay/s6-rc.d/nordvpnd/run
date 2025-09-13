@@ -11,7 +11,8 @@ ovpnfile="/tmp/nordvpn.ovpn"
 OPENVPN_OPTS="${OPENVPN_OPTS:-}"
 
 # -------- pick iptables backend (v4/v6) --------
-pick_xt() {
+pick_xt()
+{
     IPT="iptables"; IP6T="ip6tables"
     if $IPT -V 2>&1 | grep -qi "(nf_tables)"; then
         if ! $IPT -S >/dev/null 2>&1; then
@@ -31,7 +32,8 @@ pick_xt() {
 pick_xt
 
 # -------- helpers --------
-ensure_tun() {
+ensure_tun()
+{
     if [ ! -c /dev/net/tun ]; then
         echo "[SERVICE-NORDVPND] /dev/net/tun missing; creating (best effort)"
         mkdir -p /dev/net || true
@@ -40,7 +42,8 @@ ensure_tun() {
     fi
 }
 
-normalize_proto() {
+normalize_proto()
+{
     # Map OpenVPN tokens to "udp" or "tcp" (family handled by IP literal)
     case "$(echo "$1" | tr 'A-Z' 'a-z')" in
         tcp|tcp-client|tcp-server|tcp6|tcp6-client|tcp6-server) echo "tcp" ;;

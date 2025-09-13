@@ -31,7 +31,8 @@ echo "$packages"
 echo
 
 # --- 3. Function to Precisely Extract Version from HTML using AWK ---
-extract_new_version() {
+extract_new_version()
+{
     local url="$1"
     local html
     html=$(curl -s "$url")

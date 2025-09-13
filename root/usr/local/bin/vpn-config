@@ -313,13 +313,12 @@ nord_api_curl()
     _path="$1"
     shift 2>/dev/null || true
 
-    OLDIFS="$IFS"; IFS=';'; _rc=1
+    OLDIFS="$IFS"; IFS=',;'; _rc=1
     for _ip in $NORDVPNAPI_IP; do
         [ -n "$_ip" ] || continue
-        case "$_ip" in *:*) _lit="[$_ip]" ;; *) _lit="$_ip" ;; esac
 
         curl -sG --connect-timeout 10 --max-time 30 \
-             --resolve "api.nordvpn.com:443:${_lit}" \
+             --resolve "api.nordvpn.com:443:${_ip}" \
              "https://api.nordvpn.com/${_path}" "$@"
         _rc=$?
         [ $_rc -eq 0 ] && IFS="$OLDIFS" && return 0
@@ -366,7 +365,7 @@ locations_count=0
 # Process COUNTRY if set
 if [ -n "$COUNTRY" ]; then
     # Convert semicolon/comma separated list to space separated
-    IFS=';'
+    IFS=',;'
     for value in $COUNTRY; do
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))
@@ -389,7 +388,7 @@ if [ -n "$COUNTRY" ]; then
                 serversincountry=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincountry" ]; then
                     echo "[VPN-CONFIG] Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
-                    echo "$serversincountry" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"' | head -n 20
+                    echo "$serversincountry" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
                     servers="$servers""$serversincountry"
                 else
                     echo "[VPN-CONFIG] Warning: No servers returned for country \"$value\""
@@ -404,7 +403,7 @@ fi
 # Process CITY if set
 if [ -n "$CITY" ]; then
     # Convert semicolon/comma separated list to space separated
-    IFS=';'
+    IFS=',;'
     for value in $CITY; do
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))
@@ -430,7 +429,7 @@ if [ -n "$CITY" ]; then
                 serversincity=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincity" ]; then
                     echo "[VPN-CONFIG] Request servers in \"$(getcityname "$value")\", $(echo "$serversincity" | jq -s 'length') servers received"
-                    echo "$serversincity" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"' | head -n 20
+                    echo "$serversincity" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
                     servers="$servers""$serversincity"
                 else
                     echo "[VPN-CONFIG] Warning: No servers returned for city \"$value\""
@@ -466,7 +465,7 @@ if [ "$poollength" -eq 0 ]; then
     
     if [ -n "$servers" ]; then
         echo "[VPN-CONFIG] Default recommended servers: $(echo "$servers" | jq -s 'length') servers received"
-        echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"' | head -n 20
+        echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
         poollength=$(echo "$servers" | jq -s 'unique | length')
     else
         echo "[VPN-CONFIG] ERROR: Failed to get fallback servers"
@@ -495,7 +494,7 @@ fi
 echo "[VPN-CONFIG] $poollength recommended servers in pool"
 if [ "$poollength" -ne 0 ]; then
     echo "[VPN-CONFIG] --- Top 20 servers in filtered pool ---"
-    echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"' | head -n 20
+    echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
     echo "[VPN-CONFIG] ---------------------------------------"
 fi
 
