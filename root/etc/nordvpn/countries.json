@@ -1112,6 +1112,20 @@
   ]
 }
 {
+  "id": 134,
+  "name": "Malta",
+  "code": "MT",
+  "cities": [
+    {
+      "id": 5554481,
+      "name": "Valletta",
+      "latitude": 35.899722,
+      "longitude": 14.514722,
+      "dns_name": "valletta"
+    }
+  ]
+}
+{
   "id": 137,
   "name": "Mauritania",
   "code": "MR",
