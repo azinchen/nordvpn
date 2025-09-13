@@ -6,7 +6,8 @@ set -eu
 echo "[ENTRYPOINT] Applying immediate security rules..."
 
 # -------- Backend chooser (nft -> legacy fallback) --------
-pick_iptables_backend() {
+pick_iptables_backend()
+{
     _IPT="iptables"; _IP6T="ip6tables"
     if $_IPT -V 2>&1 | grep -qi "(nf_tables)"; then
         if ! $_IPT -S >/dev/null 2>&1; then
