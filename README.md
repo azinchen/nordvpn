@@ -25,7 +25,7 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🔒 Local/LAN Access (explicit)**: Allow specific LAN or inter‑container CIDRs with `NETWORK=...`
 - **🛡️ Strict(er) Kill Switch**: All non-exempt traffic is blocked when VPN is down; only `NETWORK` CIDRs you define remain reachable; **HTTPS requests to the IPs in `NORDVPNAPI_IP` are allowed for NordVPN API bootstrap.**
 - **🧱 iptables compatibility**: Automatically falls back to **iptables‑legacy** on older or nft‑broken hosts
-- **📵 IPv6 Disabled**: IPv6 traffic is disabled; NordVPN lacks IPv6 support
+- **📵 IPv6**: Image is **IPv4-only** - it doesn’t program `ip6tables` or change sysctls. Disable IPv6 at the Docker daemon/network or pass run-time sysctls (e.g., `--sysctl net.ipv6.conf.all.disable_ipv6=1`) to prevent IPv6 leaks
 - **📌 Pinned NordVPN API IPs**: Bootstrap uses `NORDVPNAPI_IP` to reach `api.nordvpn.com` **without DNS**
 
 ---
@@ -39,9 +39,11 @@ OpenVPN client docker container that routes other containers' traffic through No
   - [Requirements](#requirements)
   - [Security Features](#security-features)
   - [Container Registries](#container-registries)
+  - [Firewall backends (nft vs legacy)](#firewall-backends-nft-vs-legacy)
   - [Getting Service Credentials](#getting-service-credentials)
 - [Configuration Options](#configuration-options)
   - [Server Selection](#server-selection)
+  - [IPv6 behavior (read this!)](#ipv6-behavior-read-this)
   - [Automatic Reconnection](#automatic-reconnection)
     - [Scheduled Reconnection](#scheduled-reconnection)
     - [Connection Failure Handling](#connection-failure-handling)
@@ -123,6 +125,30 @@ The image is available from two registries:
 
 Both registries contain identical images. Use whichever is more convenient for your setup.
 
+### Firewall backends (nft vs legacy)
+
+This image ships **both** `iptables` (nft-backed) and `iptables-legacy` (xtables).
+At runtime, the entrypoint selects a working backend:
+
+- **New kernels (≥ 4.18)** → prefer **nft** (`iptables`) if it can change policy; otherwise fall back to legacy.
+- **Old kernels (< 4.18, e.g., 4.4)** → prefer **legacy** (`iptables-legacy`); fall back to nft only if legacy is unavailable.
+
+The selection is verified by attempting to toggle a chain policy (DROP ↔ ACCEPT) on `OUTPUT`. If that fails for a backend, it is not used. If legacy is selected and nft tables already contain rules in this network namespace, the entrypoint flushes nft tables **once** to avoid mixed stacks.
+
+You’ll see logs like:
+
+```
+[ENTRYPOINT] Kernel: 6.8.0-xx
+[ENTRYPOINT] Using IPv4 backend: iptables
+```
+
+or on older systems:
+
+```
+[ENTRYPOINT] Kernel: 4.4.0-xxx
+[ENTRYPOINT] Using IPv4 backend: iptables-legacy
+```
+
 ### Getting Service Credentials
 
 1. Log into your [Nord Account Dashboard](https://my.nordaccount.com/)
@@ -159,6 +185,54 @@ docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
 - **Multiple locations**: Combined and sorted by load (lowest first)
 - **Single location**: Keeps NordVPN’s recommended order
 - **RANDOM_TOP**: Applies after filtering and sorting
+
+### IPv6 behavior (read this!)
+
+This image is **IPv4-only**. It does **not** program `ip6tables` and it does **not** change IPv6 sysctls from inside the container (many environments mount `/proc/sys` read-only, so in-container `sysctl` fails).
+
+If your Docker runtime assigns IPv6 addresses and you want to avoid IPv6 leaks, choose **one** of the following:
+
+#### Option A — Disable IPv6 for the Docker daemon/network (recommended)
+- Daemon-wide: set `"ipv6": false` in Docker’s `daemon.json` and restart Docker.
+- Per-network: create the network with `--ipv6=false`.
+
+#### Option B — Disable IPv6 per container via runtime sysctls
+Pass sysctls at **run** time (works even when `/proc/sys` is read-only inside the container):
+
+```bash
+docker run -d --cap-add=NET_ADMIN --device /dev/net/tun --name vpn \
+           --sysctl net.ipv6.conf.all.disable_ipv6=1 \
+           --sysctl net.ipv6.conf.default.disable_ipv6=1 \
+           --sysctl net.ipv6.conf.eth0.disable_ipv6=1 \
+           azinchen/nordvpn
+```
+
+**docker-compose:**
+
+```yaml
+services:
+  vpn:
+    image: azinchen/nordvpn
+    sysctls:
+      net.ipv6.conf.all.disable_ipv6: "1"
+      net.ipv6.conf.default.disable_ipv6: "1"
+      net.ipv6.conf.eth0.disable_ipv6: "1"
+```
+
+#### Option C — Disable IPv6 on the host
+Use host sysctls or OS network settings to turn off IPv6 globally.
+
+#### How to verify IPv6 is truly off
+
+Inside the container:
+
+```bash
+cat /proc/net/if_inet6            # no output means no IPv6 addresses
+ip -6 addr show dev eth0          # should show "Device not found" or no inet6 lines
+ip6tables -S 2>/dev/null || true  # may be empty/unavailable
+```
+
+> Note: Because this image does **not** touch `ip6tables`, if your environment leaves IPv6 **enabled**, IPv6 traffic may bypass the IPv4 firewall. Use one of the options above to disable IPv6 at runtime.
 
 ### Automatic Reconnection
 

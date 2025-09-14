@@ -19,30 +19,6 @@ Options:
 EOF
 }
 
-# -------- Backend chooser (nft -> legacy fallback) --------
-pick_iptables_backend()
-{
-    IPT="iptables"; IP6T="ip6tables"
-
-    if $IPT -V 2>&1 | grep -qi "(nf_tables)"; then
-        if ! $IPT -S >/dev/null 2>&1; then
-            command -v iptables-legacy >/dev/null 2>&1 && IPT="iptables-legacy"
-        fi
-    elif $IPT -V 2>&1 | grep -qi "(legacy)"; then
-        command -v iptables-legacy >/dev/null 2>&1 && IPT="iptables-legacy"
-    fi
-
-    if $IP6T -V 2>&1 | grep -qi "(nf_tables)"; then
-        if ! $IP6T -S >/dev/null 2>&1; then
-            command -v ip6tables-legacy >/dev/null 2>&1 && IP6T="ip6tables-legacy"
-        fi
-    elif $IP6T -V 2>&1 | grep -qi "(legacy)"; then
-        command -v ip6tables-legacy >/dev/null 2>&1 && IP6T="ip6tables-legacy"
-    fi
-}
-
-pick_iptables_backend
-
 # ---- Parse CLI --------------------------------------------------------------
 while [ "$#" -gt 0 ]; do
     case "$1" in
@@ -53,6 +29,9 @@ while [ "$#" -gt 0 ]; do
     esac
     shift
 done
+
+# Reuse backend selected by entrypoint
+[ -r /run/xt/backend.env ] && . /run/xt/backend.env
 
 # ---- Tool discovery ---------------------------------------------------------
 CURL_BIN="$(command -v curl 2>/dev/null || printf '')"

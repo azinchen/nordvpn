@@ -6,21 +6,8 @@ set -eu
 echo "[INIT-FIREWALL] Starting init-firewall script..."
 echo "[INIT-FIREWALL] Setting up firewall - everything has to go through the VPN"
 
-# -------- Backend chooser (nft -> legacy fallback) --------
-pick_iptables_backend()
-{
-    IPT="iptables"
-
-    if $IPT -V 2>&1 | grep -qi "(nf_tables)"; then
-        if ! $IPT -S >/dev/null 2>&1; then
-            command -v iptables-legacy >/dev/null 2>&1 && IPT="iptables-legacy"
-        fi
-    elif $IPT -V 2>&1 | grep -qi "(legacy)"; then
-        command -v iptables-legacy >/dev/null 2>&1 && IPT="iptables-legacy"
-    fi
-}
-
-pick_iptables_backend
+# Reuse backend selected by entrypoint
+[ -r /run/xt/backend.env ] && . /run/xt/backend.env
 
 add4() { if ! $IPT "$@" 2>/dev/null; then echo "[INIT-FIREWALL] (IPv4) skipped: $*"; fi; }
 
