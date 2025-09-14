@@ -5,7 +5,7 @@ set -eu
 
 echo "[INIT-CREATEAUTH] Starting init-createauth script..."
 
-authfile="/tmp/auth"
+authfile="/run/xt/auth"
 
 echo "$USER" > "$authfile"
 echo "$PASS" >> "$authfile"

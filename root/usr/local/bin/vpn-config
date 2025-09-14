@@ -16,7 +16,7 @@ numericregex="^[0-9]+$"
 specific_server_regex="^[a-zA-Z]{2}[0-9]+$"
 
 ovpntemplatefile="/etc/nordvpn/template.ovpn"
-ovpnfile="/tmp/nordvpn.ovpn"
+ovpnfile="/run/xt/nordvpn.ovpn"
 
 # Helper functions for pattern matching (sh-compatible)
 is_numeric()
