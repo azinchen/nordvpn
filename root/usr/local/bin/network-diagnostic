@@ -265,7 +265,7 @@ if [ -n "$IPT_BIN" ]; then
     # "$IPT_BIN" -t nat -L -n -v 2>/dev/null || true
 fi
 
-if [ -n "$IP6T_BIN" ]; then
+if [ -n "${IP6T}" ]; then
     echo
     echo "### ip6tables -S (filter)"
     "$IP6T_BIN" -S 2>/dev/null || true

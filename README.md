@@ -25,7 +25,7 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🔒 Local/LAN Access (explicit)**: Allow specific LAN or inter‑container CIDRs with `NETWORK=...`
 - **🛡️ Strict(er) Kill Switch**: All non-exempt traffic is blocked when VPN is down; only `NETWORK` CIDRs you define remain reachable; **HTTPS requests to the IPs in `NORDVPNAPI_IP` are allowed for NordVPN API bootstrap.**
 - **🧱 iptables compatibility**: Automatically falls back to **iptables‑legacy** on older or nft‑broken hosts
-- **📵 IPv6**: IPv6 firewall is applied — built-in chains default to **DROP**
+- **📵 IPv6**: IPv6 firewall is applied — built-in chains default to **DROP** if IPv6 is enabled
 - **📌 Pinned NordVPN API IPs**: Bootstrap uses `NORDVPNAPI_IP` to reach `api.nordvpn.com` **without DNS**
 
 ---
@@ -43,7 +43,7 @@ OpenVPN client docker container that routes other containers' traffic through No
   - [Getting Service Credentials](#getting-service-credentials)
 - [Configuration Options](#configuration-options)
   - [Server Selection](#server-selection)
-  - [IPv6 behavior (read this!)](#ipv6-behavior-read-this)
+  - [IPv6 behavior](#ipv6-behavior-read-this)
   - [Automatic Reconnection](#automatic-reconnection)
     - [Scheduled Reconnection](#scheduled-reconnection)
     - [Connection Failure Handling](#connection-failure-handling)
@@ -186,9 +186,9 @@ docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
 - **Single location**: Keeps NordVPN’s recommended order
 - **RANDOM_TOP**: Applies after filtering and sorting
 
-### IPv6 behavior (read this!)
+### IPv6 behavior
 
-This image **applies an IPv6 firewall** (when `ip6tables` is available): `INPUT`/`FORWARD`/`OUTPUT` default to `DROP`. It does **not** change IPv6 sysctls from inside the container (many environments mount `/proc/sys` read-only).
+This image **applies an IPv6 firewall** (when `ip6tables` is available and IPv6 is enabled): `INPUT`/`FORWARD`/`OUTPUT` default to `DROP`. It does **not** change IPv6 sysctls from inside the container (many environments mount `/proc/sys` read-only).
 
 If your Docker runtime assigns IPv6 addresses and you want to avoid IPv6 leaks, choose **one** of the following:
 
