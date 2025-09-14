@@ -3,7 +3,7 @@
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 15
+Albania | AL | 2 | 23
 Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 4
 Angola | AO | 6 | 2
@@ -39,7 +39,7 @@ Dominican Republic | DO | 61 | 2
 Ecuador | EC | 63 | 2
 Egypt | EG | 64 | 2
 El Salvador | SV | 65 | 2
-Estonia | EE | 68 | 10
+Estonia | EE | 68 | 8
 Finland | FI | 73 | 21
 France | FR | 74 | 369
 Georgia | GE | 80 | 10
@@ -59,7 +59,7 @@ Iraq | IQ | 103 | 2
 Ireland | IE | 104 | 70
 Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
-Italy | IT | 106 | 192
+Italy | IT | 106 | 193
 Jamaica | JM | 107 | 2
 Japan | JP | 108 | 257
 Jersey | JE | 244 | 4
@@ -75,10 +75,11 @@ Liechtenstein | LI | 124 | 2
 Lithuania | LT | 125 | 12
 Luxembourg | LU | 126 | 12
 Malaysia | MY | 131 | 10
+Malta | MT | 134 | 2
 Mauritania | MR | 137 | 2
 Mexico | MX | 140 | 60
 Moldova | MD | 142 | 3
-Monaco | MC | 143 | 2
+Monaco | MC | 143 | 4
 Mongolia | MN | 144 | 2
 Montenegro | ME | 146 | 2
 Morocco | MA | 147 | 4
@@ -121,8 +122,8 @@ Tunisia | TN | 219 | 2
 Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
-United Kingdom | GB | 227 | 1112
-United States | US | 228 | 2837
+United Kingdom | GB | 227 | 1114
+United States | US | 228 | 2849
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
