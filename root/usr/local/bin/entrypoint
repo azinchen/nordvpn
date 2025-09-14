@@ -97,6 +97,10 @@ pick_ipv6_backend()
         [ -n "$IP6T" ] || { command -v ip6tables >/dev/null 2>&1 && try_policy ip6tables && IP6T="ip6tables"; } || true
     fi
 
+    # Last-resort: if a binary exists at all, use it (even if probe failed)
+    [ -n "$IP6T" ] || { command -v ip6tables-legacy >/dev/null 2>&1 && IP6T="ip6tables-legacy"; } || true
+    [ -n "$IP6T" ] || { command -v ip6tables >/dev/null 2>&1 && IP6T="ip6tables"; } || true
+
     if [ -n "$IP6T" ]; then
         echo "[ENTRYPOINT] Using IPv6 backend: ${IP6T}"
     else
@@ -145,8 +149,6 @@ run6 -t nat    -F; run6 -t nat    -X
 # Allow loopback (critical for local apps)
 run4 -A INPUT  -i lo -j ACCEPT
 run4 -A OUTPUT -o lo -j ACCEPT
-run6 -A INPUT  -i lo -j ACCEPT
-run6 -A OUTPUT -o lo -j ACCEPT
 
 echo "[ENTRYPOINT] Critical security rules applied - all traffic blocked by default (IPv4/IPv6 where available)"
 

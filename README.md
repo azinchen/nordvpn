@@ -25,7 +25,7 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🔒 Local/LAN Access (explicit)**: Allow specific LAN or inter‑container CIDRs with `NETWORK=...`
 - **🛡️ Strict(er) Kill Switch**: All non-exempt traffic is blocked when VPN is down; only `NETWORK` CIDRs you define remain reachable; **HTTPS requests to the IPs in `NORDVPNAPI_IP` are allowed for NordVPN API bootstrap.**
 - **🧱 iptables compatibility**: Automatically falls back to **iptables‑legacy** on older or nft‑broken hosts
-- **📵 IPv6**: Image is **IPv4-only** - it doesn’t program `ip6tables` or change sysctls. Disable IPv6 at the Docker daemon/network or pass run-time sysctls (e.g., `--sysctl net.ipv6.conf.all.disable_ipv6=1`) to prevent IPv6 leaks
+- **📵 IPv6**: IPv6 firewall is applied — built-in chains default to **DROP**
 - **📌 Pinned NordVPN API IPs**: Bootstrap uses `NORDVPNAPI_IP` to reach `api.nordvpn.com` **without DNS**
 
 ---
@@ -92,7 +92,7 @@ docker run --net=container:vpn -d your/application
 
 - Docker with `--cap-add=NET_ADMIN` and `--device /dev/net/tun`
 - **NordVPN Service Credentials** (not regular account credentials)
-- The image includes both nftables and **iptables‑legacy** and auto‑selects the working backend at runtime - no manual config needed.
+- The image includes both nftables and **iptables‑legacy** and auto‑selects the working backend at runtime — no manual config needed.
 
 ### Security Features
 
@@ -120,8 +120,8 @@ Because `NETWORK` remains open when the VPN is down, this is **not a strict kill
 
 The image is available from two registries:
 
-- **Docker Hub**: `azinchen/nordvpn` - Main distribution, publicly accessible
-- **GitHub Container Registry**: `ghcr.io/azinchen/nordvpn` - Alternative source, same image
+- **Docker Hub**: `azinchen/nordvpn` — Main distribution, publicly accessible
+- **GitHub Container Registry**: `ghcr.io/azinchen/nordvpn` — Alternative source, same image
 
 Both registries contain identical images. Use whichever is more convenient for your setup.
 
@@ -178,7 +178,7 @@ docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
 **Location Specification Options:**
 - **Country**: name (`United States`), code (`US`), or ID (`228`)
 - **City**: name (`New York`) or ID (`8971718`)
-- **Specific Server**: Use hostname (e.g., `es1234`, `uk2567`) in either COUNTRY or CITY - these get priority with load=0
+- **Specific Server**: Use hostname (e.g., `es1234`, `uk2567`) in either COUNTRY or CITY — these get priority with load=0
 
 **Server Selection Behavior:**
 - **Specific servers**: Named servers are placed at the top of the list with load=0
@@ -188,7 +188,7 @@ docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
 
 ### IPv6 behavior (read this!)
 
-This image is **IPv4-only**. It does **not** program `ip6tables` and it does **not** change IPv6 sysctls from inside the container (many environments mount `/proc/sys` read-only, so in-container `sysctl` fails).
+This image **applies an IPv6 firewall** (when `ip6tables` is available): `INPUT`/`FORWARD`/`OUTPUT` default to `DROP`. It does **not** change IPv6 sysctls from inside the container (many environments mount `/proc/sys` read-only).
 
 If your Docker runtime assigns IPv6 addresses and you want to avoid IPv6 leaks, choose **one** of the following:
 
@@ -505,12 +505,12 @@ docker run -d --name api-service --net=container:vpn \
 
 | Variable | Description | Default | Example |
 |----------|-------------|---------|---------|
-| `USER` | **Required** - NordVPN service credentials username | - | `service_username` |
-| `PASS` | **Required** - NordVPN service credentials password | - | `service_password` |
+| `USER` | **Required** — NordVPN service credentials username | - | `service_username` |
+| `PASS` | **Required** — NordVPN service credentials password | - | `service_password` |
 | `COUNTRY` | Filter by countries: names, codes, IDs, or specific server hostnames ([list][nordvpn-countries]) (semicolon separated) | All countries | `United States;CA;228;es1234` |
 | `CITY` | Filter by cities: names, IDs, or specific server hostnames ([list][nordvpn-cities]) (semicolon separated) | All cities | `New York;8971718;uk2567` |
 | `GROUP` | Filter by server group ([list][nordvpn-groups]) | Not defined | `Standard VPN servers` |
-| `TECHNOLOGY` | Filter by technology - OpenVPN only supported ([list][nordvpn-technologies]) | OpenVPN UDP | `openvpn_udp` |
+| `TECHNOLOGY` | Filter by technology — OpenVPN only supported ([list][nordvpn-technologies]) | OpenVPN UDP | `openvpn_udp` |
 | `RANDOM_TOP` | Randomize top N servers from filtered list | Disabled | `10` |
 | `RECREATE_VPN_CRON` | Schedule for server switching (cron format) | Disabled | `0 */6 * * *` (every 6 hours) |
 | `CHECK_CONNECTION_CRON` | Schedule for connection monitoring | Disabled | `*/5 * * * *` (every 5 minutes) |
@@ -540,7 +540,7 @@ Docker will automatically pull the correct architecture.
 
 ## Updating the VPN container & dependent services
 
-When the `vpn` container is restarted - whether due to an image update or a manual restart - every container that uses `network_mode: "service:vpn"` must also be restarted so they reattach to the recreated network namespace.
+When the `vpn` container is restarted — whether due to an image update or a manual restart — every container that uses `network_mode: "service:vpn"` must also be restarted so they reattach to the recreated network namespace.
 
 ### With Docker Compose
 ```bash
