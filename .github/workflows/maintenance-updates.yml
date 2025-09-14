@@ -319,7 +319,7 @@ jobs:
           echo "Fetching countries data from NordVPN API..."
 
           IPS=$(dig +short A api.nordvpn.com | tr '\n' ';' | sed 's/;$//')
-          sed -i "s/^\(\s*\)NORDVPNAPI_IP=.*/\1NORDVPNAPI_IP=${IPS}/" Dockerfile
+          sed -i "s/^\(\s*\)NORDVPNAPI_IP=.*/\1NORDVPNAPI_IP=${IPS} \\\/" Dockerfile
 
           UPDATE_DATE=$(date +%y%m%d)
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
