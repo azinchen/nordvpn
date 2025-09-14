@@ -74,7 +74,7 @@ jobs:
       - name: Create Pull Request for ${{ matrix.file.name }}.md
         uses: peter-evans/create-pull-request@v7.0.8
         with:
-          branch: bot/update-${{ matrix.file.name }}-${{ env.update_date }}
+          branch: bot/update-${{ matrix.file.name }}-md
           commit-message: "docs: update ${{ matrix.file.name }}.md (${{ env.update_date }})"
           delete-branch: true
           title: "📄 Update ${{ matrix.file.name }}.md - ${{ env.update_date }}"
@@ -119,7 +119,7 @@ jobs:
       - name: Create Pull Request for countries.json
         uses: peter-evans/create-pull-request@v7.0.8
         with:
-          branch: bot/update-countries-json-${{ env.update_date }}
+          branch: bot/update-countries-json
           commit-message: "config: update countries.json (${{ env.update_date }})"
           delete-branch: true
           title: "🌍 Update countries.json - ${{ env.update_date }}"
@@ -168,7 +168,7 @@ jobs:
       - name: Create Pull Request for groups.json
         uses: peter-evans/create-pull-request@v7.0.8
         with:
-          branch: bot/update-groups-json-${{ env.update_date }}
+          branch: bot/update-groups-json
           commit-message: "config: update groups.json (${{ env.update_date }})"
           delete-branch: true
           title: "🏷️ Update groups.json - ${{ env.update_date }}"
@@ -216,7 +216,7 @@ jobs:
       - name: Create Pull Request for technologies.json
         uses: peter-evans/create-pull-request@v7.0.8
         with:
-          branch: bot/update-technologies-json-${{ env.update_date }}
+          branch: bot/update-technologies-json
           commit-message: "config: update technologies.json (${{ env.update_date }})"
           delete-branch: true
           title: "🔧 Update technologies.json - ${{ env.update_date }}"
@@ -280,7 +280,7 @@ jobs:
       - name: Create Pull Request for template.ovpn
         uses: peter-evans/create-pull-request@v7.0.8
         with:
-          branch: bot/update-openvpn-template-${{ env.update_date }}
+          branch: bot/update-openvpn-template
           commit-message: "config: update OpenVPN template (${{ env.update_date }})"
           delete-branch: true
           title: "📝 Update OpenVPN template - ${{ env.update_date }}"
@@ -325,7 +325,7 @@ jobs:
         if: steps.update-apk.outputs.has_updates == 'true'
         uses: peter-evans/create-pull-request@v7.0.8
         with:
-          branch: bot/update-apk-packages-${{ env.update_date }}
+          branch: bot/update-apk-packages
           commit-message: "deps: update ${{ steps.update-apk.outputs.updated_count }} APK package(s) (${{ env.update_date }})"
           delete-branch: true
           title: "📦 Update APK packages - ${{ env.update_date }}"
@@ -378,7 +378,7 @@ jobs:
       - name: Create Pull Request for ${{ matrix.repository }}
         uses: peter-evans/create-pull-request@v7.0.8
         with:
-          branch: ${{ env.branch_name }}
+          branch: bot/${{ env.branch_name }}
           commit-message: "deps: bump ${{ env.repo_name }} to v${{ env.package_version }}"
           delete-branch: true
           title: "📋 Bump ${{ env.repo_name }} to v${{ env.package_version }}"

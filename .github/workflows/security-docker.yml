@@ -14,14 +14,6 @@ on:
         required: false
         default: 'latest'
         type: string
-      registry:
-        description: 'Registry to scan (dockerhub or ghcr)'
-        required: false
-        default: 'dockerhub'
-        type: choice
-        options:
-          - dockerhub
-          - ghcr
   workflow_call:  # Allow this workflow to be called by other workflows
     inputs:
       image_tag:
@@ -51,40 +43,21 @@ jobs:
           IMAGE_TAG="${{ inputs.image_tag || 'latest' }}"
           
           # Determine which registry to scan based on trigger and inputs
+          REGISTRY="ghcr"
+          IMAGE_REF="ghcr.io/${{ github.repository }}:${IMAGE_TAG}"
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            # Cron job: Always scan latest production image on Docker Hub
-            REGISTRY="dockerhub"
+            # Cron job: Always scan latest production image on 
             IMAGE_TAG="latest"
-            echo "🕒 Scheduled scan: Checking latest production image on Docker Hub"
+            echo "🕒 Scheduled scan: Checking latest production image on GHCR"
           elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            # Manual trigger: Use user-specified registry or default to Docker Hub
-            REGISTRY="${{ inputs.registry || 'dockerhub' }}"
+            # Manual trigger: Use user-specified registry or default to GHCR
             echo "🚀 Manual scan: Checking $REGISTRY registry"
           elif [[ "${{ github.event_name }}" == "workflow_call" ]]; then
             # Called from CI: Determine registry based on build type
-            if [[ "${{ inputs.is_production_build }}" == "true" ]]; then
-              REGISTRY="dockerhub"
-              echo "🏭 Production build scan: Checking Docker Hub"
-            else
-              REGISTRY="ghcr"
-              echo "🔧 Development build scan: Checking GHCR"
-            fi
+            echo "🔧 Build scan: Checking GHCR"
           else
             # Fallback: For development branches, use GHCR; for production, use Docker Hub
-            if [[ "${{ inputs.is_production_build }}" == "true" ]]; then
-              REGISTRY="dockerhub"
-              echo "⚠️  Fallback to Docker Hub for production build"
-            else
-              REGISTRY="ghcr"
-              echo "⚠️  Fallback to GHCR for development build"
-            fi
-          fi
-          
-          # Set the full image reference
-          if [[ "$REGISTRY" == "dockerhub" ]]; then
-            IMAGE_REF="${{ github.repository }}:${IMAGE_TAG}"
-          else
-            IMAGE_REF="ghcr.io/${{ github.repository }}:${IMAGE_TAG}"
+            echo "⚠️  Fallback to GHCR for development build"
           fi
           
           echo "registry=${REGISTRY}" >> $GITHUB_OUTPUT
@@ -99,7 +72,6 @@ jobs:
           echo "  Production Build: ${{ inputs.is_production_build }}"
 
       - name: Login to GitHub Container Registry
-        if: ${{ steps.config.outputs.registry == 'ghcr' }}
         uses: docker/login-action@v3.5.0
         with:
           registry: ghcr.io
