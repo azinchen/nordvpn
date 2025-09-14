@@ -111,7 +111,7 @@ pick_ipv6_backend()
 verify_ipv6_backend()
 {
     # If we picked something for v6, make sure v6 tables actually exist.
-    if [ -n "${IP6T:-}" ]; then
+    if [ -n "$IP6T" ]; then
         if ! ${IP6T} -t filter -S >/dev/null 2>&1; then
             echo "[ENTRYPOINT] IPv6 tables unavailable in this namespace; skipping IPv6 rules"
             IP6T=""
@@ -129,20 +129,20 @@ flush_nft_if_dirty_v6
 
 # After picking backends
 export IPT
-[ -n "${IP6T:-}" ] && export IP6T || true
+export IP6T
 
 # Publish for other scripts
 mkdir -p /run/xt
 {
     printf 'IPT=%s\n' "$IPT"
-    printf 'IP6T=%s\n' "${IP6T:-}"
+    printf 'IP6T=%s\n' "$IP6T"
 } > /run/xt/backend.env
 chmod 0644 /run/xt/backend.env
 
 run4() { if ! ${IPT} "$@" 2>/dev/null; then echo "[ENTRYPOINT] (IPv4) skipped: $*"; fi; }
 run6()
 {
-    if [ -n "${IP6T}" ]; then
+    if [ -n "$IP6T" ]; then
         if ! ${IP6T} "$@" 2>/dev/null; then
             echo "[ENTRYPOINT] (IPv6) skipped: $*"
         fi

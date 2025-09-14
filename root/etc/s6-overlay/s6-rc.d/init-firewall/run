@@ -16,7 +16,7 @@ docker_network="$(ip addr show dev eth0 2>/dev/null | awk '/inet / {print $2; ex
 gw="$(ip route 2>/dev/null | awk '/default/ {print $3; exit}')"
 
 # ===================== IPv4 =====================
-if [ -n "${docker_network}" ]; then
+if [ -n "$docker_network" ]; then
     echo "[INIT-FIREWALL] IPv4 rules..."
 
     # Stateful fast-path (skip gracefully if conntrack match absent)
@@ -28,7 +28,7 @@ if [ -n "${docker_network}" ]; then
     add4 -t nat -A POSTROUTING -o tun+ -j MASQUERADE
 
     # NordVPN API bootstrap (TCP/443) by resolved IPs
-    if [ -n "${NORDVPNAPI_IP:-}" ]; then
+    if [ -n "$NORDVPNAPI_IP" ]; then
         echo "[INIT-FIREWALL] Processing NordVPN API IPv4 addresses from NORDVPNAPI_IP variable: ${NORDVPNAPI_IP}"
         oldIFS="$IFS"; IFS=',;'
         for ip in $NORDVPNAPI_IP; do
@@ -45,7 +45,7 @@ if [ -n "${docker_network}" ]; then
         for net in $NETWORK; do
             [ -z "$net" ] && continue
             # Best-effort route add (if not already present)
-            if [ -n "${gw:-}" ]; then
+            if [ -n "$gw" ]; then
                 ip route 2>/dev/null | grep -q " ${net} " || ip route add "$net" via "$gw" dev eth0 2>/dev/null || true
             fi
             # Allow inbound from this network only
