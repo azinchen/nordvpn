@@ -52,12 +52,7 @@ r_proto="$(normalize_proto "$r_proto_raw")"
 
 # Clean up any bracketed IPv6 (just in case)
 r_ip="$(echo "$r_ip_raw" | sed 's,^\[,,' | sed 's,\]$,,' )"
-
-# Decide v4 vs v6 by the literal IP
-case "$r_ip" in
-    *:*) TOOL="$IP6T" ;;  # IPv6
-    *)   TOOL="$IPT"  ;;  # IPv4
-esac
+TOOL="$IPT"
 
 # -------- add a single temporary pinhole on eth0 --------
 PIN_SPEC="OUTPUT -o eth0 -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"

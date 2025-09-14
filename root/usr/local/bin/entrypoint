@@ -31,14 +31,27 @@ try_policy()
 }
 
 flush_nft_if_dirty_v4()
-{
-    # If we selected legacy and nft tables actually have rules, flush them (best effort)
+
+    # Flush nftables v4 only if we selected legacy for v4 AND nft tables actually carry rules
     if [ "${IPT}" = "iptables-legacy" ] && command -v iptables-nft >/dev/null 2>&1; then
         if iptables-nft -S 2>/dev/null | grep -q '^-A ' || iptables-nft -t nat -S 2>/dev/null | grep -q '^-A '; then
             iptables-nft -F 2>/dev/null || true
             iptables-nft -t nat -F 2>/dev/null || true
             iptables-nft -X 2>/dev/null || true
             echo "[ENTRYPOINT] Flushed nft v4 tables to avoid mixed stacks"
+        fi
+    fi
+}
+
+flush_nft_if_dirty_v6()
+{
+    # Flush nftables v6 only if we selected legacy for v6 AND nft v6 tables actually carry rules
+    if [ -n "${IP6T:-}" ] && [ "${IP6T}" = "ip6tables-legacy" ] && command -v ip6tables-nft >/dev/null 2>&1; then
+        if ip6tables-nft -S 2>/dev/null | grep -q '^-A ' || ip6tables-nft -t nat -S 2>/dev/null | grep -q '^-A '; then
+            ip6tables-nft -F 2>/dev/null || true
+            ip6tables-nft -t nat -F 2>/dev/null || true
+            ip6tables-nft -X 2>/dev/null || true
+            echo "[ENTRYPOINT] Flushed nft v6 tables to avoid mixed stacks"
         fi
     fi
 }
@@ -64,39 +77,77 @@ pick_ipv4_backend()
 
     echo "[ENTRYPOINT] Kernel: $(uname -r)"
     echo "[ENTRYPOINT] Using IPv4 backend: ${IPT}"
-    flush_nft_if_dirty_v4
+}
+
+# ---- IPv6 backend picker: prefer nft on ≥4.18; else legacy -----------------
+
+pick_ipv6_backend()
+{
+    IP6T=""
+    if kernel_ge_4_18; then
+        if command -v ip6tables >/dev/null 2>&1 && ip6tables -V 2>&1 | grep -qi "(nf_tables)"; then
+            try_policy ip6tables && IP6T="ip6tables"
+        fi
+        [ -n "$IP6T" ] || { command -v ip6tables-legacy >/dev/null 2>&1 && try_policy ip6tables-legacy && IP6T="ip6tables-legacy"; } || true
+        [ -n "$IP6T" ] || { command -v ip6tables >/dev/null 2>&1 && try_policy ip6tables && IP6T="ip6tables"; } || true
+    else
+        if command -v ip6tables-legacy >/dev/null 2>&1; then
+            try_policy ip6tables-legacy && IP6T="ip6tables-legacy"
+        fi
+        [ -n "$IP6T" ] || { command -v ip6tables >/dev/null 2>&1 && try_policy ip6tables && IP6T="ip6tables"; } || true
+    fi
+
+    if [ -n "$IP6T" ]; then
+        echo "[ENTRYPOINT] Using IPv6 backend: ${IP6T}"
+    else
+        echo "[ENTRYPOINT] IPv6 backend unavailable (disabled or not installed)"
+    fi
 }
 
 pick_ipv4_backend
+pick_ipv6_backend
 
-# After picking IPT
+# If we chose legacy for a family, clear any existing nft rules for that family to avoid mixed stacks
+flush_nft_if_dirty_v4
+flush_nft_if_dirty_v6
+
+# After picking backends
 export IPT
+[ -n "${IP6T:-}" ] && export IP6T || true
 
 # Publish for other scripts
 mkdir -p /run/xt
 {
     printf 'IPT=%s\n' "$IPT"
+    printf 'IP6T=%s\n' "${IP6T:-}"
 } > /run/xt/backend.env
-
 chmod 0644 /run/xt/backend.env
 
 run4() { if ! ${IPT} "$@" 2>/dev/null; then echo "[ENTRYPOINT] (IPv4) skipped: $*"; fi; }
+run6() { if [ -n "${IP6T:-}" ]; then if ! ${IP6T} "$@" 2>/dev/null; then echo "[ENTRYPOINT] (IPv6) skipped: $*"; fi; fi; }
 
-# ---- secure defaults (IPv4 only) -------------------------------------------
+# ---- secure defaults (v4 + v6 if available) --------------------------------
 
 # Default DROP policies (set ASAP)
 run4 -t filter -P OUTPUT DROP
 run4 -t filter -P INPUT  DROP
 run4 -t filter -P FORWARD DROP
+run6 -t filter -P OUTPUT DROP
+run6 -t filter -P INPUT  DROP
+run6 -t filter -P FORWARD DROP
 
 # Flush existing rules (filter + nat), best effort
 run4 -t filter -F; run4 -t filter -X
 run4 -t nat    -F; run4 -t nat    -X
+run6 -t filter -F; run6 -t filter -X
+run6 -t nat    -F; run6 -t nat    -X
 
 # Allow loopback (critical for local apps)
 run4 -A INPUT  -i lo -j ACCEPT
 run4 -A OUTPUT -o lo -j ACCEPT
+run6 -A INPUT  -i lo -j ACCEPT
+run6 -A OUTPUT -o lo -j ACCEPT
 
-echo "[ENTRYPOINT] Critical security rules applied - all traffic blocked by default (IPv4-only)"
+echo "[ENTRYPOINT] Critical security rules applied - all traffic blocked by default (IPv4/IPv6 where available)"
 
 exec /init "$@"
