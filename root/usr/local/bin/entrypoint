@@ -31,7 +31,7 @@ try_policy()
 }
 
 flush_nft_if_dirty_v4()
-
+{
     # Flush nftables v4 only if we selected legacy for v4 AND nft tables actually carry rules
     if [ "${IPT}" = "iptables-legacy" ] && command -v iptables-nft >/dev/null 2>&1; then
         if iptables-nft -S 2>/dev/null | grep -q '^-A ' || iptables-nft -t nat -S 2>/dev/null | grep -q '^-A '; then
