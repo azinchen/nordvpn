@@ -8,33 +8,32 @@ echo "[ENTRYPOINT] Applying immediate security rules..."
 # -------- Backend chooser (nft -> legacy fallback) --------
 pick_iptables_backend()
 {
-    _IPT="iptables"; _IP6T="ip6tables"
-    if $_IPT -V 2>&1 | grep -qi "(nf_tables)"; then
-        if ! $_IPT -S >/dev/null 2>&1; then
-            command -v iptables-legacy >/dev/null 2>&1 && _IPT="iptables-legacy"
+    IPT="iptables"; IP6T="ip6tables"
+
+    if $IPT -V 2>&1 | grep -qi "(nf_tables)"; then
+        if ! $IPT -S >/dev/null 2>&1; then
+            command -v iptables-legacy >/dev/null 2>&1 && IPT="iptables-legacy"
         fi
-    elif $_IPT -V 2>&1 | grep -qi "(legacy)"; then
-        command -v iptables-legacy >/dev/null 2>&1 && _IPT="iptables-legacy"
+    elif $IPT -V 2>&1 | grep -qi "(legacy)"; then
+        command -v iptables-legacy >/dev/null 2>&1 && IPT="iptables-legacy"
     fi
 
-    if $_IP6T -V 2>&1 | grep -qi "(nf_tables)"; then
-        if ! $_IP6T -S >/dev/null 2>&1; then
-            command -v ip6tables-legacy >/dev/null 2>&1 && _IP6T="ip6tables-legacy"
+    if $IP6T -V 2>&1 | grep -qi "(nf_tables)"; then
+        if ! $IP6T -S >/dev/null 2>&1; then
+            command -v ip6tables-legacy >/dev/null 2>&1 && IP6T="ip6tables-legacy"
         fi
-    elif $_IP6T -V 2>&1 | grep -qi "(legacy)"; then
-        command -v ip6tables-legacy >/dev/null 2>&1 && _IP6T="ip6tables-legacy"
+    elif $IP6T -V 2>&1 | grep -qi "(legacy)"; then
+        command -v ip6tables-legacy >/dev/null 2>&1 && IP6T="ip6tables-legacy"
     fi
 
     # Avoid mixing stacks: if we picked legacy and nft binaries exist, flush nft chains (best effort)
-    if [ "$_IPT" = "iptables-legacy" ] && command -v iptables-nft >/dev/null 2>&1; then
+    if [ "$IPT" = "iptables-legacy" ] && command -v iptables-nft >/dev/null 2>&1; then
         iptables-nft -F 2>/dev/null || true; iptables-nft -t nat -F 2>/dev/null || true; iptables-nft -X 2>/dev/null || true
     fi
 
-    if [ "$_IP6T" = "ip6tables-legacy" ] && command -v ip6tables-nft >/dev/null 2>&1; then
+    if [ "$IP6T" = "ip6tables-legacy" ] && command -v ip6tables-nft >/dev/null 2>&1; then
         ip6tables-nft -F 2>/dev/null || true; ip6tables-nft -t nat -F 2>/dev/null || true; ip6tables-nft -X 2>/dev/null || true
     fi
-
-    IPT="$_IPT"; IP6T="$_IP6T"
 }
 
 pick_iptables_backend

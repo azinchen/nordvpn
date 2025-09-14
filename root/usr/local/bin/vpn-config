@@ -365,7 +365,7 @@ locations_count=0
 # Process COUNTRY if set
 if [ -n "$COUNTRY" ]; then
     # Convert semicolon/comma separated list to space separated
-    IFS=',;'
+    OLDIFS="$IFS"; IFS=',;'; _rc=1
     for value in $COUNTRY; do
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))
@@ -398,12 +398,13 @@ if [ -n "$COUNTRY" ]; then
             fi
         fi
     done
+    IFS="$oldIFS"
 fi
 
 # Process CITY if set
 if [ -n "$CITY" ]; then
     # Convert semicolon/comma separated list to space separated
-    IFS=',;'
+    oldIFS="$IFS"; IFS=',;'
     for value in $CITY; do
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))
@@ -439,6 +440,7 @@ if [ -n "$CITY" ]; then
             fi
         fi
     done
+    IFS="$oldIFS"
 fi
 
 poollength=0
@@ -494,7 +496,7 @@ fi
 echo "[VPN-CONFIG] $poollength recommended servers in pool"
 if [ "$poollength" -ne 0 ]; then
     echo "[VPN-CONFIG] --- Top 20 servers in filtered pool ---"
-    echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
+    echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"' | head -n 20
     echo "[VPN-CONFIG] ---------------------------------------"
 fi
 
