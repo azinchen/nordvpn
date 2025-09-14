@@ -503,23 +503,23 @@ docker run -d --name api-service --net=container:vpn \
 
 ## Environment Variables
 
-| Variable | Description | Default | Example |
-|----------|-------------|---------|---------|
-| `USER` | **Required** — NordVPN service credentials username | - | `service_username` |
-| `PASS` | **Required** — NordVPN service credentials password | - | `service_password` |
-| `COUNTRY` | Filter by countries: names, codes, IDs, or specific server hostnames ([list][nordvpn-countries]) (semicolon separated) | All countries | `United States;CA;228;es1234` |
-| `CITY` | Filter by cities: names, IDs, or specific server hostnames ([list][nordvpn-cities]) (semicolon separated) | All cities | `New York;8971718;uk2567` |
-| `GROUP` | Filter by server group ([list][nordvpn-groups]) | Not defined | `Standard VPN servers` |
-| `TECHNOLOGY` | Filter by technology — OpenVPN only supported ([list][nordvpn-technologies]) | OpenVPN UDP | `openvpn_udp` |
-| `RANDOM_TOP` | Randomize top N servers from filtered list | Disabled | `10` |
-| `RECREATE_VPN_CRON` | Schedule for server switching (cron format) | Disabled | `0 */6 * * *` (every 6 hours) |
-| `CHECK_CONNECTION_CRON` | Schedule for connection monitoring | Disabled | `*/5 * * * *` (every 5 minutes) |
-| `CHECK_CONNECTION_URL` | URLs to test connectivity (semicolon separated) | None | `https://1.1.1.1;https://8.8.8.8` |
-| `CHECK_CONNECTION_ATTEMPTS` | Number of connection test attempts | `5` | `5` |
-| `CHECK_CONNECTION_ATTEMPT_INTERVAL` | Seconds between failed attempts | `10` | `10` |
-| `NETWORK` | Local/LAN or inter‑container networks to allow (semicolon separated) | None | `10.0.0.0/8;172.16.0.0/12;192.168.0.0/16` |
-| `NORDVPNAPI_IP` | IPv4 list of `api.nordvpn.com` addresses (semicolon separated) used during **pre‑VPN bootstrap** to avoid DNS (HTTPS only) | `104.19.159.190;104.16.208.203` | `104.19.159.190;104.16.208.203` |
-| `OPENVPN_OPTS` | Additional OpenVPN parameters | None | `--mute-replay-warnings` |
+| Variable | Details |
+|---|---|
+| **USER** | **Required** — NordVPN service credentials username. <br> **Default:** — <br> **Example:** `service_username` |
+| **PASS** | **Required** — NordVPN service credentials password. <br> **Default:** — <br> **Example:** `service_password` |
+| **COUNTRY** | Filter by countries: names, codes, IDs, or specific server hostnames ([list][nordvpn-countries]). Use semicolons to separate multiple values. <br> **Default:** All countries <br> **Example:** `United States;CA;228;es1234` |
+| **CITY** | Filter by cities: names, IDs, or specific server hostnames ([list][nordvpn-cities]). Use semicolons to separate multiple values. <br> **Default:** All cities <br> **Example:** `New York;8971718;uk2567` |
+| **GROUP** | Filter by server group ([list][nordvpn-groups]). <br> **Default:** Not defined <br> **Example:** `Standard VPN servers` |
+| **TECHNOLOGY** | Filter by technology — OpenVPN only supported ([list][nordvpn-technologies]). <br> **Default:** OpenVPN UDP <br> **Example:** `openvpn_udp` |
+| **RANDOM_TOP** | Randomize top **N** servers from the filtered list. <br> **Default:** Disabled <br> **Example:** `10` |
+| **RECREATE<wbr>_VPN<wbr>_CRON** | Schedule for server switching (cron format). <br> **Default:** Disabled <br> **Example:** `0 */6 * * *` *(every 6 hours)* |
+| **CHECK<wbr>_CONNECTION<wbr>_CRON** | Schedule for connection monitoring (cron format). <br> **Default:** Disabled <br> **Example:** `*/5 * * * *` *(every 5 minutes)* |
+| **CHECK<wbr>_CONNECTION<wbr>_URL** | URLs to test connectivity; semicolon‑separated. <br> **Default:** None <br> **Example:** `https://1.1.1.1;https://8.8.8.8` |
+| **CHECK<wbr>_CONNECTION<wbr>_ATTEMPTS** | Number of connection test attempts. <br> **Default:** `5` <br> **Example:** `5` |
+| **CHECK<wbr>_CONNECTION<wbr>_ATTEMPT<wbr>_INTERVAL** | Seconds between failed attempts. <br> **Default:** `10` <br> **Example:** `10` |
+| **NETWORK** | Local/LAN or inter‑container networks to allow; semicolon‑separated CIDRs. <br> **Default:** None <br> **Example:** `10.0.0.0/8;172.16.0.0/12;192.168.0.0/16` |
+| **NORDVPNAPI<wbr>_IP** | IPv4 list of `api.nordvpn.com` addresses (semicolon‑separated) used during **pre‑VPN bootstrap** to avoid DNS (HTTPS only). <br> **Default:** `104.19.159.190;104.16.208.203` <br> **Example:** `104.19.159.190;104.16.208.203` |
+| **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters. <br> **Default:** None <br> **Example:** `--mute-replay-warnings` |
 
 ## Supported Platforms
 

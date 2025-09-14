@@ -313,7 +313,7 @@ nord_api_curl()
     _path="$1"
     shift 2>/dev/null || true
 
-    OLDIFS="$IFS"; IFS=',;'; _rc=1
+    oldIFS="$IFS"; IFS=',;'; _rc=1
     for _ip in $NORDVPNAPI_IP; do
         [ -n "$_ip" ] || continue
 
@@ -321,9 +321,9 @@ nord_api_curl()
              --resolve "api.nordvpn.com:443:${_ip}" \
              "https://api.nordvpn.com/${_path}" "$@"
         _rc=$?
-        [ $_rc -eq 0 ] && IFS="$OLDIFS" && return 0
+        [ $_rc -eq 0 ] && IFS="$oldIFS" && return 0
     done
-    IFS="$OLDIFS"
+    IFS="$oldIFS"
     return $_rc
 }
 
@@ -365,7 +365,7 @@ locations_count=0
 # Process COUNTRY if set
 if [ -n "$COUNTRY" ]; then
     # Convert semicolon/comma separated list to space separated
-    OLDIFS="$IFS"; IFS=',;'; _rc=1
+    oldIFS="$IFS"; IFS=',;'; _rc=1
     for value in $COUNTRY; do
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))

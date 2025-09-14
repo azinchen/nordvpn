@@ -52,20 +52,19 @@ r_proto="$(normalize_proto "$r_proto_raw")"
 
 # Clean up any bracketed IPv6 (just in case)
 r_ip="$(echo "$r_ip_raw" | sed 's,^\[,,' | sed 's,\]$,,' )"
-TOOL="$IPT"
 
 # -------- add a single temporary pinhole on eth0 --------
 PIN_SPEC="OUTPUT -o eth0 -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"
-if ! $TOOL -C $PIN_SPEC 2>/dev/null; then
-    $TOOL -I $PIN_SPEC
-    echo "[SERVICE-NORDVPND] pinhole added: $TOOL -I $PIN_SPEC"
+if ! $IPT -C $PIN_SPEC 2>/dev/null; then
+    $IPT -I $PIN_SPEC
+    echo "[SERVICE-NORDVPND] pinhole added: $IPT -I $PIN_SPEC"
 else
     echo "[SERVICE-NORDVPND] pinhole already present"
 fi
 
 cleanup() {
     echo "[SERVICE-NORDVPND] Cleaning VPN pinhole..."
-    $TOOL -D $PIN_SPEC 2>/dev/null || true
+    $IPT -D $PIN_SPEC 2>/dev/null || true
 }
 
 # -------- run OpenVPN --------
