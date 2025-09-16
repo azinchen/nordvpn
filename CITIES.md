@@ -3,14 +3,14 @@
 Country | Code | ID | City | ID | Servers
 --------|------|----|------|----|--------
 Afghanistan | AF | 1 | Kabul | 98270 | 2
-Albania | AL | 2 | Tirana | 308615 | 23
+Albania | AL | 2 | Tirana | 308615 | 24
 Algeria | DZ | 3 | Algiers | 2438216 | 4
 Andorra | AD | 5 | Andorra la Vella | 20 | 4
 Angola | AO | 6 | Luanda | 351407 | 2
 Argentina | AR | 10 | Buenos Aires | 384866 | 19
 Armenia | AM | 11 | Yerevan | 322385 | 2
 Australia | AU | 13 | Adelaide | 452717 | 18
-Australia | AU | 13 | Brisbane | 456494 | 46
+Australia | AU | 13 | Brisbane | 456494 | 45
 Australia | AU | 13 | Melbourne | 470813 | 56
 Australia | AU | 13 | Perth | 475799 | 34
 Australia | AU | 13 | Sydney | 479570 | 112
@@ -45,7 +45,7 @@ Dominican Republic | DO | 61 | Santo Domingo | 2434841 | 2
 Ecuador | EC | 63 | Quito | 2485688 | 2
 Egypt | EG | 64 | Cairo | 2528003 | 2
 El Salvador | SV | 65 | San Salvador | 7990847 | 2
-Estonia | EE | 68 | Tallinn | 2514182 | 8
+Estonia | EE | 68 | Tallinn | 2514182 | 10
 Finland | FI | 73 | Helsinki | 2704343 | 21
 France | FR | 74 | Marseille | 2867102 | 109
 France | FR | 74 | Paris | 2886284 | 236
@@ -103,7 +103,7 @@ Netherlands | NL | 153 | Amsterdam | 6076868 | 251
 New Zealand | NZ | 156 | Auckland | 6144239 | 39
 Nigeria | NG | 159 | Lagos | 6010328 | 4
 North Macedonia | MK | 128 | Skopje | 5386019 | 2
-Norway | NO | 163 | Oslo | 6127364 | 87
+Norway | NO | 163 | Oslo | 6127364 | 86
 Pakistan | PK | 165 | Karachi | 6600485 | 2
 Panama | PA | 168 | Panama City | 6176273 | 3
 Papua New Guinea | PG | 169 | Port Moresby | 6292406 | 2
@@ -140,18 +140,18 @@ United Kingdom | GB | 227 | Edinburgh | 2975852 | 40
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
 United Kingdom | GB | 227 | London | 2989907 | 867
 United Kingdom | GB | 227 | Manchester | 2991110 | 159
-United States | US | 228 | Ashburn | 9103211 | 33
-United States | US | 228 | Atlanta | 8792429 | 189
+United States | US | 228 | Ashburn | 9103211 | 48
+United States | US | 228 | Atlanta | 8792429 | 191
 United States | US | 228 | Boston | 8895305 | 70
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
 United States | US | 228 | Chicago | 8815352 | 289
-United States | US | 228 | Dallas | 9080300 | 248
+United States | US | 228 | Dallas | 9080300 | 245
 United States | US | 228 | Denver | 8770934 | 119
 United States | US | 228 | Houston | 9083687 | 30
 United States | US | 228 | Kansas City | 8930717 | 35
 United States | US | 228 | Los Angeles | 8761958 | 297
-United States | US | 228 | Manassas | 9113744 | 81
+United States | US | 228 | Manassas | 9113744 | 66
 United States | US | 228 | McAllen | 9086162 | 20
 United States | US | 228 | Miami | 8787782 | 202
 United States | US | 228 | Nashville | 9071273 | 40
