@@ -3,13 +3,13 @@
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 23
+Albania | AL | 2 | 24
 Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 4
 Angola | AO | 6 | 2
 Argentina | AR | 10 | 19
 Armenia | AM | 11 | 2
-Australia | AU | 13 | 266
+Australia | AU | 13 | 265
 Austria | AT | 14 | 69
 Azerbaijan | AZ | 15 | 2
 Bahamas | BS | 16 | 5
@@ -39,7 +39,7 @@ Dominican Republic | DO | 61 | 2
 Ecuador | EC | 63 | 2
 Egypt | EG | 64 | 2
 El Salvador | SV | 65 | 2
-Estonia | EE | 68 | 8
+Estonia | EE | 68 | 10
 Finland | FI | 73 | 21
 France | FR | 74 | 369
 Georgia | GE | 80 | 10
@@ -90,7 +90,7 @@ Netherlands | NL | 153 | 251
 New Zealand | NZ | 156 | 39
 Nigeria | NG | 159 | 4
 North Macedonia | MK | 128 | 2
-Norway | NO | 163 | 87
+Norway | NO | 163 | 86
 Pakistan | PK | 165 | 2
 Panama | PA | 168 | 3
 Papua New Guinea | PG | 169 | 2
@@ -123,7 +123,7 @@ Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
 United Kingdom | GB | 227 | 1114
-United States | US | 228 | 2849
+United States | US | 228 | 2848
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
