@@ -8,8 +8,6 @@ echo "[INIT-FIREWALL] Setting up firewall - everything has to go through the VPN
 
 . /usr/local/bin/backend-functions
 
-add4() { if ! $IPT "$@" 2>/dev/null; then echo "[INIT-FIREWALL] (IPv4) skipped: $*"; fi; }
-
 # BusyBox-friendly helpers
 docker_network="$(ip addr show dev eth0 2>/dev/null | awk '/inet / {print $2; exit}')"
 gw="$(ip route 2>/dev/null | awk '/default/ {print $3; exit}')"
@@ -19,12 +17,17 @@ if [ -n "$docker_network" ]; then
     echo "[INIT-FIREWALL] IPv4 rules..."
 
     # Stateful fast-path (skip gracefully if conntrack match absent)
-    add4 -A INPUT  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-    add4 -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+    run4 -A INPUT  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+    run4 -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
     # Allow outbound to VPN interfaces + NAT
-    add4 -A OUTPUT -o tun+ -j ACCEPT
-    add4 -t nat -A POSTROUTING -o tun+ -j MASQUERADE
+    run4 -A OUTPUT -o tun+ -j ACCEPT
+    run4 -t nat -A POSTROUTING -o tun+ -j MASQUERADE
+
+    # Create named chain for VPN Server rules
+    run4 -N VPN-SERVER
+    run4 -A OUTPUT -p udp --dport 1194 -j VPN-SERVER
+    run4 -A OUTPUT -p tcp --dport 443 -j VPN-SERVER
 
     # NordVPN API bootstrap (TCP/443) by resolved IPs
     if [ -n "$NORDVPNAPI_IP" ]; then
@@ -32,7 +35,7 @@ if [ -n "$docker_network" ]; then
         oldIFS="$IFS"; IFS=',;'
         for ip in $NORDVPNAPI_IP; do
             [ -z "$ip" ] && continue
-            add4 -A OUTPUT -d "$ip" -p tcp --dport 443 -j ACCEPT
+            run4 -A OUTPUT -d "$ip" -p tcp --dport 443 -j ACCEPT
         done
         IFS="$oldIFS"
     fi
@@ -48,7 +51,7 @@ if [ -n "$docker_network" ]; then
                 ip route 2>/dev/null | grep -q " ${net} " || ip route add "$net" via "$gw" dev eth0 2>/dev/null || true
             fi
             # Allow inbound from this network only
-            add4 -A INPUT -i eth0 -s "$net" -j ACCEPT
+            run4 -A INPUT -i eth0 -s "$net" -j ACCEPT
         done
         IFS="$oldIFS"
     fi

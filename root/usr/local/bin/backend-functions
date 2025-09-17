@@ -6,14 +6,14 @@
 
 run4() {
     if ! ${IPT} "$@" 2>/dev/null; then
-        echo "[ENTRYPOINT] (IPv4) skipped: $*"
+        echo "(IPv4) skipped: $*"
     fi
 }
 
 run6() {
     if [ -n "$IP6T" ]; then
         if ! ${IP6T} "$@" 2>/dev/null; then
-            echo "[ENTRYPOINT] (IPv6) skipped: $*"
+            echo "(IPv6) skipped: $*"
         fi
     fi
 }

@@ -53,17 +53,16 @@ r_proto="$(normalize_proto "$r_proto_raw")"
 r_ip="$(echo "$r_ip_raw" | sed 's,^\[,,' | sed 's,\]$,,' )"
 
 # -------- add a single temporary pinhole on eth0 --------
-PIN_SPEC="OUTPUT -o eth0 -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"
-if ! $IPT -C $PIN_SPEC 2>/dev/null; then
-    $IPT -I $PIN_SPEC
-    echo "[SERVICE-NORDVPND] pinhole added: $IPT -I $PIN_SPEC"
-else
-    echo "[SERVICE-NORDVPND] pinhole already present"
+
+run4 -F VPN-SERVER
+PIN_SPEC="-A VPN-SERVER -o eth0 -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"
+if run4 $PIN_SPEC 2>/dev/null; then
+    echo "[SERVICE-NORDVPND] pinhole added: $IPT $PIN_SPEC"
 fi
 
 cleanup() {
     echo "[SERVICE-NORDVPND] Cleaning VPN pinhole..."
-    $IPT -D $PIN_SPEC 2>/dev/null || true
+    run4 -F VPN-SERVER
 }
 
 # -------- run OpenVPN --------
