@@ -33,7 +33,7 @@ try_policy()
 flush_nft_if_dirty_v4()
 {
     # Flush nftables v4 only if we selected legacy for v4 AND nft tables actually carry rules
-    if [ "${IPT}" = "iptables-legacy" ] && command -v iptables-nft >/dev/null 2>&1; then
+    if [ "${_IPT}" = "iptables-legacy" ] && command -v iptables-nft >/dev/null 2>&1; then
         if iptables-nft -S 2>/dev/null | grep -q '^-A ' || iptables-nft -t nat -S 2>/dev/null | grep -q '^-A '; then
             iptables-nft -F 2>/dev/null || true
             iptables-nft -t nat -F 2>/dev/null || true
@@ -46,7 +46,7 @@ flush_nft_if_dirty_v4()
 flush_nft_if_dirty_v6()
 {
     # Flush nftables v6 only if we selected legacy for v6 AND nft v6 tables actually carry rules
-    if [ -n "${IP6T:-}" ] && [ "${IP6T}" = "ip6tables-legacy" ] && command -v ip6tables-nft >/dev/null 2>&1; then
+    if [ -n "${_IP6T:-}" ] && [ "${_IP6T}" = "ip6tables-legacy" ] && command -v ip6tables-nft >/dev/null 2>&1; then
         if ip6tables-nft -S 2>/dev/null | grep -q '^-A ' || ip6tables-nft -t nat -S 2>/dev/null | grep -q '^-A '; then
             ip6tables-nft -F 2>/dev/null || true
             ip6tables-nft -t nat -F 2>/dev/null || true
@@ -60,49 +60,49 @@ flush_nft_if_dirty_v6()
 
 pick_ipv4_backend()
 {
-    IPT=""
+    _IPT=""
     if kernel_ge_4_18; then
         if command -v iptables >/dev/null 2>&1 && iptables -V 2>&1 | grep -qi "(nf_tables)"; then
-            try_policy iptables && IPT="iptables"
+            try_policy iptables && _IPT="iptables"
         fi
-        [ -n "$IPT" ] || { command -v iptables-legacy >/dev/null 2>&1 && try_policy iptables-legacy && IPT="iptables-legacy"; }
-        [ -n "$IPT" ] || { command -v iptables >/dev/null 2>&1 && try_policy iptables && IPT="iptables"; }
+        [ -n "$_IPT" ] || { command -v iptables-legacy >/dev/null 2>&1 && try_policy iptables-legacy && _IPT="iptables-legacy"; }
+        [ -n "$_IPT" ] || { command -v iptables >/dev/null 2>&1 && try_policy iptables && _IPT="iptables"; }
     else
         if command -v iptables-legacy >/dev/null 2>&1; then
-            try_policy iptables-legacy && IPT="iptables-legacy"
+            try_policy iptables-legacy && _IPT="iptables-legacy"
         fi
-        [ -n "$IPT" ] || { command -v iptables >/dev/null 2>&1 && try_policy iptables && IPT="iptables"; }
+        [ -n "$_IPT" ] || { command -v iptables >/dev/null 2>&1 && try_policy iptables && _IPT="iptables"; }
     fi
-    [ -n "$IPT" ] || { echo "[ENTRYPOINT] ERROR: no working iptables (IPv4) found"; exit 1; }
+    [ -n "$_IPT" ] || { echo "[ENTRYPOINT] ERROR: no working iptables (IPv4) found"; exit 1; }
 
     echo "[ENTRYPOINT] Kernel: $(uname -r)"
-    echo "[ENTRYPOINT] Using IPv4 backend: ${IPT}"
+    echo "[ENTRYPOINT] Using IPv4 backend: ${_IPT}"
 }
 
 # ---- IPv6 backend picker: prefer nft on ≥4.18; else legacy -----------------
 
 pick_ipv6_backend()
 {
-    IP6T=""
+    _IP6T=""
     if kernel_ge_4_18; then
         if command -v ip6tables >/dev/null 2>&1 && ip6tables -V 2>&1 | grep -qi "(nf_tables)"; then
-            try_policy ip6tables && IP6T="ip6tables"
+            try_policy ip6tables && _IP6T="ip6tables"
         fi
-        [ -n "$IP6T" ] || { command -v ip6tables-legacy >/dev/null 2>&1 && try_policy ip6tables-legacy && IP6T="ip6tables-legacy"; } || true
-        [ -n "$IP6T" ] || { command -v ip6tables >/dev/null 2>&1 && try_policy ip6tables && IP6T="ip6tables"; } || true
+        [ -n "$_IP6T" ] || { command -v ip6tables-legacy >/dev/null 2>&1 && try_policy ip6tables-legacy && _IP6T="ip6tables-legacy"; } || true
+        [ -n "$_IP6T" ] || { command -v ip6tables >/dev/null 2>&1 && try_policy ip6tables && _IP6T="ip6tables"; } || true
     else
         if command -v ip6tables-legacy >/dev/null 2>&1; then
-            try_policy ip6tables-legacy && IP6T="ip6tables-legacy"
+            try_policy ip6tables-legacy && _IP6T="ip6tables-legacy"
         fi
-        [ -n "$IP6T" ] || { command -v ip6tables >/dev/null 2>&1 && try_policy ip6tables && IP6T="ip6tables"; } || true
+        [ -n "$_IP6T" ] || { command -v ip6tables >/dev/null 2>&1 && try_policy ip6tables && _IP6T="ip6tables"; } || true
     fi
 
     # Last-resort: if a binary exists at all, use it (even if probe failed)
-    [ -n "$IP6T" ] || { command -v ip6tables-legacy >/dev/null 2>&1 && IP6T="ip6tables-legacy"; } || true
-    [ -n "$IP6T" ] || { command -v ip6tables >/dev/null 2>&1 && IP6T="ip6tables"; } || true
+    [ -n "$_IP6T" ] || { command -v ip6tables-legacy >/dev/null 2>&1 && _IP6T="ip6tables-legacy"; } || true
+    [ -n "$_IP6T" ] || { command -v ip6tables >/dev/null 2>&1 && _IP6T="ip6tables"; } || true
 
-    if [ -n "$IP6T" ]; then
-        echo "[ENTRYPOINT] Using IPv6 backend: ${IP6T}"
+    if [ -n "$_IP6T" ]; then
+        echo "[ENTRYPOINT] Using IPv6 backend: ${_IP6T}"
     else
         echo "[ENTRYPOINT] IPv6 backend unavailable (disabled or not installed)"
     fi
@@ -111,10 +111,10 @@ pick_ipv6_backend()
 verify_ipv6_backend()
 {
     # If we picked something for v6, make sure v6 tables actually exist.
-    if [ -n "$IP6T" ]; then
-        if ! ${IP6T} -t filter -S >/dev/null 2>&1; then
+    if [ -n "$_IP6T" ]; then
+        if ! ${_IP6T} -t filter -S >/dev/null 2>&1; then
             echo "[ENTRYPOINT] IPv6 tables unavailable in this namespace; skipping IPv6 rules"
-            IP6T=""
+            _IP6T=""
         fi
     fi
 }
@@ -127,27 +127,15 @@ verify_ipv6_backend
 flush_nft_if_dirty_v4
 flush_nft_if_dirty_v6
 
-# After picking backends
-export IPT
-export IP6T
-
 # Publish for other scripts
 mkdir -p /run/xt
 {
-    printf 'IPT=%s\n' "$IPT"
-    printf 'IP6T=%s\n' "$IP6T"
+    printf 'IPT=%s\n' "$_IPT"
+    printf 'IP6T=%s\n' "$_IP6T"
 } > /run/xt/backend.env
 chmod 0644 /run/xt/backend.env
 
-run4() { if ! ${IPT} "$@" 2>/dev/null; then echo "[ENTRYPOINT] (IPv4) skipped: $*"; fi; }
-run6()
-{
-    if [ -n "$IP6T" ]; then
-        if ! ${IP6T} "$@" 2>/dev/null; then
-            echo "[ENTRYPOINT] (IPv6) skipped: $*"
-        fi
-    fi
-}
+. /usr/local/bin/backend_functions
 
 # ---- secure defaults (v4 + v6 if available) --------------------------------
 

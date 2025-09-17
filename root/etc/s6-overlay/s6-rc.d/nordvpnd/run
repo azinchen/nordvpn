@@ -10,8 +10,7 @@ authfile="/run/xt/auth"
 ovpnfile="/run/xt/nordvpn.ovpn"
 OPENVPN_OPTS="${OPENVPN_OPTS:-}"
 
-# Reuse backend selected by entrypoint
-[ -r /run/xt/backend.env ] && . /run/xt/backend.env
+. /usr/local/bin/backend_functions
 
 # -------- helpers --------
 ensure_tun()

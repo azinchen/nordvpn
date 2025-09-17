@@ -1,0 +1,19 @@
+#!/bin/sh
+# shellcheck shell=sh
+
+# Reuse backend selected by entrypoint
+[ -r /run/xt/backend.env ] && . /run/xt/backend.env
+
+run4() {
+    if ! ${IPT} "$@" 2>/dev/null; then
+        echo "[ENTRYPOINT] (IPv4) skipped: $*"
+    fi
+}
+
+run6() {
+    if [ -n "$IP6T" ]; then
+        if ! ${IP6T} "$@" 2>/dev/null; then
+            echo "[ENTRYPOINT] (IPv6) skipped: $*"
+        fi
+    fi
+}

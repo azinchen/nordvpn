@@ -6,8 +6,7 @@ set -eu
 echo "[INIT-FIREWALL] Starting init-firewall script..."
 echo "[INIT-FIREWALL] Setting up firewall - everything has to go through the VPN"
 
-# Reuse backend selected by entrypoint
-[ -r /run/xt/backend.env ] && . /run/xt/backend.env
+. /usr/local/bin/backend_functions
 
 add4() { if ! $IPT "$@" 2>/dev/null; then echo "[INIT-FIREWALL] (IPv4) skipped: $*"; fi; }
 

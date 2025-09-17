@@ -30,17 +30,10 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
-# Reuse backend selected by entrypoint
-[ -r /run/xt/backend.env ] && . /run/xt/backend.env
+. /usr/local/bin/backend_functions
 
 # ---- Tool discovery ---------------------------------------------------------
-CURL_BIN="$(command -v curl 2>/dev/null || printf '')"
-JQ_BIN="$(command -v jq 2>/dev/null || printf '')"
-DIG_BIN="$(command -v dig 2>/dev/null || printf '')"
-RESOLVECTL_BIN="$(command -v resolvectl 2>/dev/null || printf '')"
 NFT_BIN="$(command -v nft 2>/dev/null || printf '')"
-IPT_BIN="$(command -v $IPT 2>/dev/null || printf '')"
-IP6T_BIN="$(command -v $IP6T 2>/dev/null || printf '')"
 TR_BIN="$(command -v traceroute 2>/dev/null || printf '')"
 [ -n "$TR_BIN" ] || TR_BIN="$(command -v tracepath 2>/dev/null || printf '')"
 
@@ -48,24 +41,16 @@ TR_BIN="$(command -v traceroute 2>/dev/null || printf '')"
 fetch_public_info()
 {
     IP=""; CITY=""; CC=""
-    if [ -n "$CURL_BIN" ]; then
-        RESP="$($CURL_BIN -s --max-time 4 https://ipinfo.io/json 2>/dev/null || printf '')"
-        if [ -n "$RESP" ]; then
-            if [ -n "$JQ_BIN" ]; then
-                IP="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.ip // empty' 2>/dev/null || printf '')"
-                CITY="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.city // empty' 2>/dev/null || printf '')"
-                CC="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.country // empty' 2>/dev/null || printf '')"
-            else
-                IP="$(printf "%s" "$RESP" | sed -n 's/.*"ip"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
-                CITY="$(printf "%s" "$RESP" | sed -n 's/.*"city"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
-                CC="$(printf "%s" "$RESP" | sed -n 's/.*"country"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
-            fi
-        fi
-        if [ -z "$IP" ]; then
-            IP="$($CURL_BIN -s --max-time 4 https://ifconfig.co 2>/dev/null || printf '')"
-            CITY="$($CURL_BIN -s --max-time 4 https://ifconfig.co/city 2>/dev/null || printf '')"
-            CC="$($CURL_BIN -s --max-time 4 https://ifconfig.co/country-iso 2>/dev/null || printf '')"
-        fi
+    RESP="$(curl -s --max-time 4 https://ipinfo.io/json 2>/dev/null || printf '')"
+    if [ -n "$RESP" ]; then
+        IP="$(printf "%s" "$RESP" | jq -r '.ip // empty' 2>/dev/null || printf '')"
+        CITY="$(printf "%s" "$RESP" | jq -r '.city // empty' 2>/dev/null || printf '')"
+        CC="$(printf "%s" "$RESP" | jq -r '.country // empty' 2>/dev/null || printf '')"
+    fi
+    if [ -z "$IP" ]; then
+        IP="$(curl -s --max-time 4 https://ifconfig.co 2>/dev/null || printf '')"
+        CITY="$(curl -s --max-time 4 https://ifconfig.co/city 2>/dev/null || printf '')"
+        CC="$(curl -s --max-time 4 https://ifconfig.co/country-iso 2>/dev/null || printf '')"
     fi
 }
 
@@ -103,38 +88,21 @@ ns_geo_line()
         echo "$IPQ : (private/local resolver)"
         return
     fi
-    if [ -z "$CURL_BIN" ]; then
-        echo "$IPQ : (curl not available)"
-        return
-    fi
 
     CITY=""; CC=""; ORG=""
-    RESP="$($CURL_BIN -s --max-time 4 "https://ipinfo.io/$IPQ/json" 2>/dev/null || printf '')"
+    RESP="$(curl -s --max-time 4 "https://ipinfo.io/$IPQ/json" 2>/dev/null || printf '')"
     if [ -n "$RESP" ]; then
-        if [ -n "$JQ_BIN" ]; then
-            CITY="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.city // empty' 2>/dev/null || printf '')"
-            CC="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.country // empty' 2>/dev/null || printf '')"
-            ORG="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.org // empty' 2>/dev/null || printf '')"
-        else
-            CITY="$(printf "%s" "$RESP" | sed -n 's/.*"city"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
-            CC="$(printf "%s" "$RESP" | sed -n 's/.*"country"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
-            ORG="$(printf "%s" "$RESP" | sed -n 's/.*"org"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
-        fi
+        CITY="$(printf "%s" "$RESP" | jq -r '.city // empty' 2>/dev/null || printf '')"
+        CC="$(printf "%s" "$RESP" | jq -r '.country // empty' 2>/dev/null || printf '')"
+        ORG="$(printf "%s" "$RESP" | jq -r '.org // empty' 2>/dev/null || printf '')"
     fi
     if [ -z "$CITY$CC$ORG" ]; then
-        RESP="$($CURL_BIN -s --max-time 4 "https://ipapi.co/$IPQ/json/" 2>/dev/null || printf '')"
+        RESP="$(curl -s --max-time 4 "https://ipapi.co/$IPQ/json/" 2>/dev/null || printf '')"
         if [ -n "$RESP" ]; then
-            if [ -n "$JQ_BIN" ]; then
-                CITY="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.city // empty' 2>/dev/null || printf '')"
-                CC="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.country // empty' 2>/dev/null || printf '')"
-                [ -n "$CC" ] || CC="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.country_code // empty' 2>/dev/null || printf '')"
-                ORG="$(printf "%s" "$RESP" | "$JQ_BIN" -r '.org // empty' 2>/dev/null || printf '')"
-            else
-                CITY="$(printf "%s" "$RESP" | sed -n 's/.*"city"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
-                CC="$(printf "%s" "$RESP" | sed -n 's/.*"country_code"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
-                [ -n "$CC" ] || CC="$(printf "%s" "$RESP" | sed -n 's/.*"country"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
-                ORG="$(printf "%s" "$RESP" | sed -n 's/.*"org"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
-            fi
+                CITY="$(printf "%s" "$RESP" | jq -r '.city // empty' 2>/dev/null || printf '')"
+                CC="$(printf "%s" "$RESP" | jq -r '.country // empty' 2>/dev/null || printf '')"
+                [ -n "$CC" ] || CC="$(printf "%s" "$RESP" | jq -r '.country_code // empty' 2>/dev/null || printf '')"
+                ORG="$(printf "%s" "$RESP" | jq -r '.org // empty' 2>/dev/null || printf '')"
         fi
     fi
     [ -n "$CITY" ] || CITY="Unknown"
@@ -157,8 +125,8 @@ print_dns_geo()
 {
     echo "### DNS servers geolocation"
     NS_LIST="$(awk '/^nameserver/ {print $2}' /etc/resolv.conf 2>/dev/null | sed 's/%.*//' | sort -u)"
-    if [ -z "$NS_LIST" ] && [ -n "$RESOLVECTL_BIN" ]; then
-        NS_LIST="$($RESOLVECTL_BIN dns 2>/dev/null | tr ' ' '\n' | sed 's/%.*//' | \
+    if [ -z "$NS_LIST" ]; then
+        NS_LIST="$(resolvectl dns 2>/dev/null | tr ' ' '\n' | sed 's/%.*//' | \
             grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$|^[0-9a-fA-F:]+$' | sort -u)"
     fi
     if [ -z "$NS_LIST" ]; then
@@ -250,83 +218,67 @@ else
     echo "[info] nft not present"
 fi
 
-if [ -n "$IPT_BIN" ]; then
-    echo
-    echo "### iptables -S (filter)"
-    "$IPT_BIN" -S 2>/dev/null || true
+echo
+echo "### iptables -S (filter)"
+run4 -S 2>/dev/null || true
 
-    echo
-    echo "### iptables -t nat -S (IPv4 NAT)"
-    "$IPT_BIN" -t nat -S 2>/dev/null || echo "(no IPv4 NAT rules or table unavailable)"
+echo
+echo "### iptables -t nat -S (IPv4 NAT)"
+run4 -t nat -S 2>/dev/null || echo "(no IPv4 NAT rules or table unavailable)"
 
-    # Optional counters view (comment out if too verbose)
-    # echo
-    # echo "### iptables -t nat -L -n -v (counters)"
-    # "$IPT_BIN" -t nat -L -n -v 2>/dev/null || true
-fi
+# Optional counters view (comment out if too verbose)
+# echo
+# echo "### iptables -t nat -L -n -v (counters)"
+# "$IPT" -t nat -L -n -v 2>/dev/null || true
 
 if [ -n "${IP6T}" ]; then
     echo
     echo "### ip6tables -S (filter)"
-    "$IP6T_BIN" -S 2>/dev/null || true
+    run6 -S 2>/dev/null || true
 
     echo
     echo "### ip6tables -t nat -S (IPv6 NAT)"
-    "$IP6T_BIN" -t nat -S 2>/dev/null || echo "(no IPv6 NAT rules or table unavailable)"
+    run6 -t nat -S 2>/dev/null || echo "(no IPv6 NAT rules or table unavailable)"
 fi
 echo
 
 # Public IP & rough geo (JSON from same provider as summary)
 echo "### Public IP / Geo (best-effort)"
-if [ -n "$CURL_BIN" ]; then
-    RESP="$($CURL_BIN -s --max-time 4 https://ipinfo.io/json 2>/dev/null || printf '')"
-    if [ -z "$RESP" ]; then
-        RESP="$($CURL_BIN -s --max-time 4 https://ifconfig.co/json 2>/dev/null || printf '')"
-    fi
-    if [ -n "$RESP" ]; then
-        if [ -n "$JQ_BIN" ]; then
-            echo "$RESP" | "$JQ_BIN" . 2>/dev/null || echo "$RESP"
-        else
-            echo "$RESP"
-        fi
-    else
-        echo "[warn] could not fetch public info"
-    fi
+RESP="$(curl -s --max-time 4 https://ipinfo.io/json 2>/dev/null || printf '')"
+if [ -z "$RESP" ]; then
+    RESP="$(curl -s --max-time 4 https://ifconfig.co/json 2>/dev/null || printf '')"
+fi
+if [ -n "$RESP" ]; then
+    echo "$RESP" | jq . 2>/dev/null || echo "$RESP"
 else
-    echo "[warn] curl not available"
+    echo "[warn] could not fetch public info"
 fi
 echo
 
 # DNS configuration & identity probe
 echo "### DNS configuration"
-if [ -n "$RESOLVECTL_BIN" ]; then
-    "$RESOLVECTL_BIN" status "$DEV_IF" 2>/dev/null || "$RESOLVECTL_BIN" status 2>/dev/null || true
-else
-    cat /etc/resolv.conf 2>/dev/null || true
-fi
+resolvectl status "$DEV_IF" 2>/dev/null || resolvectl status 2>/dev/null || true
 echo
 
 print_dns_geo
 
 # Resolver identity (with fallbacks)
-if [ -n "$DIG_BIN" ]; then
-    NS_ACTIVE="$(awk '/^nameserver/ {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
-    if [ -n "$NS_ACTIVE" ]; then
-        echo "### resolver identity via $NS_ACTIVE"
-        OUT="$("$DIG_BIN" +timeout=3 +short TXT whoami.cloudflare @"$NS_ACTIVE" 2>/dev/null | sed -n '1p')"
-        if [ -z "$OUT" ]; then
-            OUT="$("$DIG_BIN" +timeout=3 +short CHAOS TXT id.server @"$NS_ACTIVE" 2>/dev/null | sed -n '1p')"
-        fi
-        if [ -z "$OUT" ]; then
-            OUT="$("$DIG_BIN" +timeout=3 +short CHAOS TXT hostname.bind @"$NS_ACTIVE" 2>/dev/null | sed -n '1p')"
-        fi
-        if [ -n "$OUT" ]; then
-            echo "$OUT"
-        else
-            echo "(no identity TXT available from resolver)"
-        fi
-        echo
+NS_ACTIVE="$(awk '/^nameserver/ {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
+if [ -n "$NS_ACTIVE" ]; then
+    echo "### resolver identity via $NS_ACTIVE"
+    OUT="$(dig +timeout=3 +short TXT whoami.cloudflare @"$NS_ACTIVE" 2>/dev/null | sed -n '1p')"
+    if [ -z "$OUT" ]; then
+        OUT="$(dig +timeout=3 +short CHAOS TXT id.server @"$NS_ACTIVE" 2>/dev/null | sed -n '1p')"
     fi
+    if [ -z "$OUT" ]; then
+        OUT="$(dig +timeout=3 +short CHAOS TXT hostname.bind @"$NS_ACTIVE" 2>/dev/null | sed -n '1p')"
+    fi
+    if [ -n "$OUT" ]; then
+        echo "$OUT"
+    else
+        echo "(no identity TXT available from resolver)"
+    fi
+    echo
 fi
 
 # Connectivity probes
