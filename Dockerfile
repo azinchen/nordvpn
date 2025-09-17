@@ -48,7 +48,7 @@ FROM alpine:3.22.1
 LABEL maintainer="Alexander Zinchenko <alexander@zinchenko.com>"
 
 ENV TECHNOLOGY=openvpn_udp \
-    NORDVPNAPI_IP=104.19.159.190;104.16.208.203 \
+    NORDVPNAPI_IP=104.16.208.203;104.19.159.190 \
     RANDOM_TOP=0 \
     CHECK_CONNECTION_ATTEMPTS=5 \
     CHECK_CONNECTION_ATTEMPT_INTERVAL=10 \
