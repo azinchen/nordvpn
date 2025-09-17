@@ -47,11 +47,16 @@ FROM alpine:3.22.1
 
 LABEL maintainer="Alexander Zinchenko <alexander@zinchenko.com>"
 
+ARG IMAGE_VERSION=dev
+ARG BUILD_DATE=N/A
+
 ENV TECHNOLOGY=openvpn_udp \
     NORDVPNAPI_IP=104.16.208.203;104.19.159.190 \
     RANDOM_TOP=0 \
     CHECK_CONNECTION_ATTEMPTS=5 \
     CHECK_CONNECTION_ATTEMPT_INTERVAL=10 \
+    IMAGE_VERSION=${IMAGE_VERSION} \
+    BUILD_DATE=${BUILD_DATE} \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=120000
 
 RUN echo "**** install security fix packages ****" && \

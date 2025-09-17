@@ -3,6 +3,18 @@
 
 set -eu
 
+# Display project information
+echo "=================================================================================="
+echo "🚀 NordVPN Docker Container"
+echo "=================================================================================="
+echo "📋 Description: Docker container for NordVPN with OpenVPN and advanced networking"
+echo "👤 Author: Alexander Zinchenko <alexander@zinchenko.com>"
+echo "🔗 Repository: https://github.com/azinchen/nordvpn"
+echo "📚 Documentation: https://github.com/azinchen/nordvpn#readme"
+echo "🏷️ Image Version: ${IMAGE_VERSION:-unknown}"
+echo "📅 Build Date: ${BUILD_DATE:-unknown}"
+echo "=================================================================================="
+
 echo "[ENTRYPOINT] Applying immediate security rules..."
 
 # ---- helpers ---------------------------------------------------------------
@@ -135,7 +147,7 @@ mkdir -p /run/xt
 } > /run/xt/backend.env
 chmod 0644 /run/xt/backend.env
 
-. /usr/local/bin/backend_functions
+. /usr/local/bin/backend-functions
 
 # ---- secure defaults (v4 + v6 if available) --------------------------------
 

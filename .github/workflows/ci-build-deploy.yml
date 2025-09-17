@@ -81,6 +81,7 @@ jobs:
           echo "is_tag=${IS_TAG}" >> $GITHUB_OUTPUT
           echo "platforms=${PLATFORMS}" >> $GITHUB_OUTPUT
           echo "push_to_prod=${PUSH_TO_PROD}" >> $GITHUB_OUTPUT
+          echo "build_date=$(date -u +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
 
           echo "Action branch=${GITHUB_REF_NAME} tag=${IS_TAG} ref=${GITHUB_REF} image_tag=${IMAGE_TAG} platforms=${PLATFORMS}"
 
@@ -117,6 +118,9 @@ jobs:
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            IMAGE_VERSION=${{ steps.git.outputs.image_tag }}
+            BUILD_DATE=${{ steps.git.outputs.build_date }}
           tags: |
             ghcr.io/${{ github.repository }}:${{ steps.git.outputs.image_tag }}
 
@@ -128,6 +132,9 @@ jobs:
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            IMAGE_VERSION=${{ steps.git.outputs.image_tag }}
+            BUILD_DATE=${{ steps.git.outputs.build_date }}
           tags: |
             ${{ github.repository }}:${{ steps.git.outputs.image_tag }}
             ghcr.io/${{ github.repository }}:${{ steps.git.outputs.image_tag }}

@@ -30,7 +30,7 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
-. /usr/local/bin/backend_functions
+. /usr/local/bin/backend-functions
 
 # ---- Tool discovery ---------------------------------------------------------
 NFT_BIN="$(command -v nft 2>/dev/null || printf '')"
@@ -284,9 +284,7 @@ fi
 # Connectivity probes
 echo "### Ping checks"
 ping -w 3 -c 3 "$PUBLIC_TEST_IPv4" 2>&1 || echo "[warn] ping to $PUBLIC_TEST_IPv4 failed"
-if command -v ping6 >/dev/null 2>&1; then
-    ping6 -w 3 -c 3 "$PUBLIC_TEST_IPv6" 2>&1 || echo "[info] ping6 to $PUBLIC_TEST_IPv6 failed"
-fi
+ping6 -w 3 -c 3 "$PUBLIC_TEST_IPv6" 2>&1 || echo "[info] ping6 to $PUBLIC_TEST_IPv6 failed"
 echo
 
 if [ -n "$TR_BIN" ]; then

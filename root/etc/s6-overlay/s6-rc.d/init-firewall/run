@@ -6,7 +6,7 @@ set -eu
 echo "[INIT-FIREWALL] Starting init-firewall script..."
 echo "[INIT-FIREWALL] Setting up firewall - everything has to go through the VPN"
 
-. /usr/local/bin/backend_functions
+. /usr/local/bin/backend-functions
 
 add4() { if ! $IPT "$@" 2>/dev/null; then echo "[INIT-FIREWALL] (IPv4) skipped: $*"; fi; }
 

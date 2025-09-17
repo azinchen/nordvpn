@@ -10,7 +10,7 @@ authfile="/run/xt/auth"
 ovpnfile="/run/xt/nordvpn.ovpn"
 OPENVPN_OPTS="${OPENVPN_OPTS:-}"
 
-. /usr/local/bin/backend_functions
+. /usr/local/bin/backend-functions
 
 # -------- helpers --------
 ensure_tun()
