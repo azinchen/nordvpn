@@ -1,0 +1,14 @@
+#!/command/with-contenv sh
+# shellcheck shell=sh
+
+set -eu
+
+echo "[SERVICE-NORDVPND] Stopping nordvpnd service..."
+
+. /usr/local/bin/backend-functions
+
+echo "[SERVICE-NORDVPND] Cleaning VPN pinhole..."
+run4 -F VPN-SERVER
+
+echo "[SERVICE-NORDVPND] nordvpnd service stopped successfully"
+exit 0

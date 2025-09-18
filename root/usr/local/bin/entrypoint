@@ -5,7 +5,7 @@ set -eu
 
 # Display project information
 echo "=================================================================================="
-echo "🚀 NordVPN Docker Container"
+echo "🚀 NordVPN OpenVPN Docker Container"
 echo "=================================================================================="
 echo "📋 Description: Docker container for NordVPN with OpenVPN and advanced networking"
 echo "👤 Author: Alexander Zinchenko <alexander@zinchenko.com>"

@@ -13,16 +13,6 @@ OPENVPN_OPTS="${OPENVPN_OPTS:-}"
 . /usr/local/bin/backend-functions
 
 # -------- helpers --------
-ensure_tun()
-{
-    if [ ! -c /dev/net/tun ]; then
-        echo "[SERVICE-NORDVPND] /dev/net/tun missing; creating (best effort)"
-        mkdir -p /dev/net || true
-        mknod /dev/net/tun c 10 200 2>/dev/null || true
-        chmod 600 /dev/net/tun 2>/dev/null || true
-    fi
-}
-
 normalize_proto()
 {
     # Map OpenVPN tokens to "udp" or "tcp" (family handled by IP literal)
@@ -54,27 +44,13 @@ r_ip="$(echo "$r_ip_raw" | sed 's,^\[,,' | sed 's,\]$,,' )"
 
 # -------- add a single temporary pinhole on eth0 --------
 
-run4 -F VPN-SERVER
 PIN_SPEC="-A VPN-SERVER -o eth0 -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"
 if run4 $PIN_SPEC 2>/dev/null; then
     echo "[SERVICE-NORDVPND] pinhole added: $IPT $PIN_SPEC"
 fi
 
-cleanup() {
-    echo "[SERVICE-NORDVPND] Cleaning VPN pinhole..."
-    run4 -F VPN-SERVER
-}
-
-# -------- run OpenVPN --------
-ensure_tun
-trap 'kill -TERM "$ovpn_pid" 2>/dev/null || true' TERM
-trap 'kill -INT  "$ovpn_pid" 2>/dev/null || true' INT
-trap cleanup EXIT
 
 echo "[SERVICE-NORDVPND] launching OpenVPN..."
-sg nordvpn -c "openvpn --config \"$ovpnfile\" --auth-user-pass \"$authfile\" --auth-nocache ${OPENVPN_OPTS:-}" &
-ovpn_pid=$!
-wait "$ovpn_pid"
-rc=$?
+sg nordvpn -c "openvpn --config \"$ovpnfile\" --auth-user-pass \"$authfile\" --auth-nocache ${OPENVPN_OPTS:-}"
 
-exit "$rc"
+exit 0
