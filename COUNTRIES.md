@@ -5,7 +5,7 @@ Country | Code | ID | Servers
 Afghanistan | AF | 1 | 2
 Albania | AL | 2 | 24
 Algeria | DZ | 3 | 4
-Andorra | AD | 5 | 4
+Andorra | AD | 5 | 6
 Angola | AO | 6 | 2
 Argentina | AR | 10 | 19
 Armenia | AM | 11 | 2
@@ -59,9 +59,9 @@ Iraq | IQ | 103 | 2
 Ireland | IE | 104 | 70
 Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
-Italy | IT | 106 | 192
+Italy | IT | 106 | 193
 Jamaica | JM | 107 | 2
-Japan | JP | 108 | 257
+Japan | JP | 108 | 256
 Jersey | JE | 244 | 4
 Jordan | JO | 109 | 2
 Kazakhstan | KZ | 110 | 2
@@ -86,7 +86,7 @@ Morocco | MA | 147 | 4
 Mozambique | MZ | 148 | 2
 Myanmar | MM | 149 | 2
 Nepal | NP | 152 | 2
-Netherlands | NL | 153 | 251
+Netherlands | NL | 153 | 249
 New Zealand | NZ | 156 | 39
 Nigeria | NG | 159 | 4
 North Macedonia | MK | 128 | 2
@@ -98,7 +98,7 @@ Paraguay | PY | 170 | 2
 Peru | PE | 171 | 2
 Philippines | PH | 172 | 6
 Poland | PL | 174 | 101
-Portugal | PT | 175 | 54
+Portugal | PT | 175 | 52
 Puerto Rico | PR | 176 | 2
 Qatar | QA | 177 | 2
 Romania | RO | 179 | 25
@@ -111,7 +111,7 @@ Slovenia | SI | 197 | 6
 Somalia | SO | 199 | 2
 South Africa | ZA | 200 | 25
 South Korea | KR | 114 | 44
-Spain | ES | 202 | 108
+Spain | ES | 202 | 109
 Sri Lanka | LK | 203 | 2
 Sweden | SE | 208 | 179
 Switzerland | CH | 209 | 145
@@ -122,7 +122,7 @@ Tunisia | TN | 219 | 2
 Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
-United Kingdom | GB | 227 | 1114
+United Kingdom | GB | 227 | 1113
 United States | US | 228 | 2850
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
