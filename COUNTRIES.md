@@ -9,7 +9,7 @@ Andorra | AD | 5 | 6
 Angola | AO | 6 | 2
 Argentina | AR | 10 | 19
 Armenia | AM | 11 | 2
-Australia | AU | 13 | 266
+Australia | AU | 13 | 268
 Austria | AT | 14 | 69
 Azerbaijan | AZ | 15 | 2
 Bahamas | BS | 16 | 5
@@ -41,7 +41,7 @@ Egypt | EG | 64 | 2
 El Salvador | SV | 65 | 2
 Estonia | EE | 68 | 10
 Finland | FI | 73 | 21
-France | FR | 74 | 369
+France | FR | 74 | 367
 Georgia | GE | 80 | 10
 Germany | DE | 81 | 439
 Ghana | GH | 82 | 2
@@ -61,7 +61,7 @@ Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
 Italy | IT | 106 | 193
 Jamaica | JM | 107 | 2
-Japan | JP | 108 | 256
+Japan | JP | 108 | 257
 Jersey | JE | 244 | 4
 Jordan | JO | 109 | 2
 Kazakhstan | KZ | 110 | 2
@@ -105,7 +105,7 @@ Romania | RO | 179 | 25
 Rwanda | RW | 181 | 2
 Senegal | SN | 191 | 2
 Serbia | RS | 192 | 15
-Singapore | SG | 195 | 81
+Singapore | SG | 195 | 82
 Slovakia | SK | 196 | 15
 Slovenia | SI | 197 | 6
 Somalia | SO | 199 | 2
@@ -122,8 +122,8 @@ Tunisia | TN | 219 | 2
 Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
-United Kingdom | GB | 227 | 1113
-United States | US | 228 | 2850
+United Kingdom | GB | 227 | 1117
+United States | US | 228 | 2876
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
