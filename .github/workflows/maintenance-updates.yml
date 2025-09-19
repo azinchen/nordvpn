@@ -60,19 +60,41 @@ jobs:
         id: update-file
         shell: bash
         run: |
-          {
-            echo "# List of ${{ matrix.file.name }} with NordVPN servers"
-            echo ""
-            echo "${{ matrix.file.header }}"
-            echo "$(echo "${{ matrix.file.header }}" | sed 's/[^|]/-/g')"
-            curl -s "${{ matrix.file.url }}" | jq -r '${{ matrix.file.jq_filter }}'
-          } > ${{ matrix.file.name }}.md
-
+          # Generate new content without timestamp
+          NEW_CONTENT="# List of ${{ matrix.file.name }} with NordVPN servers
+          
+          ${{ matrix.file.header }}
+          $(echo "${{ matrix.file.header }}" | sed 's/[^|]/-/g')
+          $(curl -s "${{ matrix.file.url }}" | jq -r '${{ matrix.file.jq_filter }}')"
+          
+          # Check if file exists and extract existing content without timestamp
+          if [ -f "${{ matrix.file.name }}.md" ]; then
+            LAST_LINE=$(tail -1 "${{ matrix.file.name }}.md")
+            if [[ $LAST_LINE == "Last updated:"* ]]; then
+              EXISTING_CONTENT=$(head -n -2 "${{ matrix.file.name }}.md")
+            else
+              EXISTING_CONTENT=$(cat "${{ matrix.file.name }}.md")
+            fi
+          else
+            EXISTING_CONTENT=""
+          fi
+          
+          # Compare
+          if [ "$NEW_CONTENT" != "$EXISTING_CONTENT" ]; then
+            echo "$NEW_CONTENT" > "${{ matrix.file.name }}.md"
+            echo "---" >> "${{ matrix.file.name }}.md"
+            echo "Last updated: $(date +%Y-%m-%d)" >> "${{ matrix.file.name }}.md"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+          
           DATE=$(date +%y%m%d)
           echo "update_date=${DATE}" >> $GITHUB_ENV
           echo "file_name=${{ matrix.file.name }}" >> $GITHUB_ENV
 
       - name: Create Pull Request for ${{ matrix.file.name }}.md
+        if: steps.update-file.outputs.has_changes == 'true'
         uses: peter-evans/create-pull-request@v7.0.8
         with:
           branch: bot/update-${{ matrix.file.name }}-md
