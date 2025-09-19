@@ -11,7 +11,7 @@ Argentina | AR | 10 | Buenos Aires | 384866 | 19
 Armenia | AM | 11 | Yerevan | 322385 | 2
 Australia | AU | 13 | Adelaide | 452717 | 18
 Australia | AU | 13 | Brisbane | 456494 | 46
-Australia | AU | 13 | Melbourne | 470813 | 56
+Australia | AU | 13 | Melbourne | 470813 | 58
 Australia | AU | 13 | Perth | 475799 | 34
 Australia | AU | 13 | Sydney | 479570 | 112
 Austria | AT | 14 | Vienna | 448799 | 69
@@ -48,7 +48,7 @@ El Salvador | SV | 65 | San Salvador | 7990847 | 2
 Estonia | EE | 68 | Tallinn | 2514182 | 10
 Finland | FI | 73 | Helsinki | 2704343 | 21
 France | FR | 74 | Marseille | 2867102 | 109
-France | FR | 74 | Paris | 2886284 | 236
+France | FR | 74 | Paris | 2886284 | 234
 France | FR | 74 | Strasbourg | 2929151 | 24
 Georgia | GE | 80 | Tbilisi | 3032063 | 10
 Germany | DE | 81 | Berlin | 2181458 | 79
@@ -73,7 +73,7 @@ Italy | IT | 106 | Milan | 4542737 | 137
 Italy | IT | 106 | Palermo | 4548074 | 12
 Italy | IT | 106 | Rome | 4555808 | 44
 Jamaica | JM | 107 | Kingston | 4576328 | 2
-Japan | JP | 108 | Osaka | 4621847 | 35
+Japan | JP | 108 | Osaka | 4621847 | 36
 Japan | JP | 108 | Tokyo | 4633349 | 221
 Jersey | JE | 244 | Saint Helier | 4572281 | 4
 Jordan | JO | 109 | Amman | 4581203 | 2
@@ -118,7 +118,7 @@ Romania | RO | 179 | Bucharest | 6953096 | 25
 Rwanda | RW | 181 | Kigali | 7723910 | 2
 Senegal | SN | 191 | Dakar | 7924958 | 2
 Serbia | RS | 192 | Belgrade | 7030907 | 15
-Singapore | SG | 195 | Singapore | 7867982 | 81
+Singapore | SG | 195 | Singapore | 7867982 | 82
 Slovakia | SK | 196 | Bratislava | 7884305 | 15
 Slovenia | SI | 197 | Ljubljana | 7874306 | 6
 Somalia | SO | 199 | Mogadishu | 7971170 | 2
@@ -138,22 +138,22 @@ Ukraine | UA | 225 | Kyiv | 8626766 | 14
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
 United Kingdom | GB | 227 | Edinburgh | 2975852 | 40
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
-United Kingdom | GB | 227 | London | 2989907 | 866
+United Kingdom | GB | 227 | London | 2989907 | 870
 United Kingdom | GB | 227 | Manchester | 2991110 | 159
 United States | US | 228 | Ashburn | 9103211 | 63
 United States | US | 228 | Atlanta | 8792429 | 191
 United States | US | 228 | Boston | 8895305 | 70
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
-United States | US | 228 | Chicago | 8815352 | 289
+United States | US | 228 | Chicago | 8815352 | 314
 United States | US | 228 | Dallas | 9080300 | 247
 United States | US | 228 | Denver | 8770934 | 119
-United States | US | 228 | Houston | 9083687 | 30
+United States | US | 228 | Houston | 9083687 | 32
 United States | US | 228 | Kansas City | 8930717 | 35
 United States | US | 228 | Los Angeles | 8761958 | 297
 United States | US | 228 | Manassas | 9113744 | 51
 United States | US | 228 | McAllen | 9086162 | 20
-United States | US | 228 | Miami | 8787782 | 202
+United States | US | 228 | Miami | 8787782 | 201
 United States | US | 228 | Nashville | 9071273 | 40
 United States | US | 228 | New York | 8971718 | 586
 United States | US | 228 | Omaha | 8943887 | 40
