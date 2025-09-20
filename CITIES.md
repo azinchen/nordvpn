@@ -47,12 +47,12 @@ Egypt | EG | 64 | Cairo | 2528003 | 2
 El Salvador | SV | 65 | San Salvador | 7990847 | 2
 Estonia | EE | 68 | Tallinn | 2514182 | 10
 Finland | FI | 73 | Helsinki | 2704343 | 21
-France | FR | 74 | Marseille | 2867102 | 109
-France | FR | 74 | Paris | 2886284 | 234
+France | FR | 74 | Marseille | 2867102 | 108
+France | FR | 74 | Paris | 2886284 | 235
 France | FR | 74 | Strasbourg | 2929151 | 24
 Georgia | GE | 80 | Tbilisi | 3032063 | 10
 Germany | DE | 81 | Berlin | 2181458 | 79
-Germany | DE | 81 | Frankfurt | 2215709 | 310
+Germany | DE | 81 | Frankfurt | 2215709 | 309
 Germany | DE | 81 | Hamburg | 2234906 | 50
 Ghana | GH | 82 | Accra | 3040355 | 2
 Greece | GR | 84 | Athens | 3131903 | 21
@@ -60,7 +60,7 @@ Greenland | GL | 85 | Nuuk | 3085001 | 2
 Guam | GU | 88 | Hagatna | 8808314 | 2
 Guatemala | GT | 89 | Guatemala City | 3202463 | 2
 Honduras | HN | 96 | Tegucigalpa | 3270551 | 2
-Hong Kong | HK | 97 | Hong Kong | 3232931 | 73
+Hong Kong | HK | 97 | Hong Kong | 3232931 | 72
 Hungary | HU | 98 | Budapest | 3348344 | 26
 Iceland | IS | 99 | Reykjavik | 4509791 | 10
 India | IN | 100 | Mumbai | 4041548 | 27
@@ -111,7 +111,7 @@ Paraguay | PY | 170 | Asuncion | 9521890 | 2
 Peru | PE | 171 | Lima | 6222584 | 2
 Philippines | PH | 172 | Manila | 6391379 | 6
 Poland | PL | 174 | Warsaw | 6863429 | 101
-Portugal | PT | 175 | Lisbon | 6906665 | 52
+Portugal | PT | 175 | Lisbon | 6906665 | 51
 Puerto Rico | PR | 176 | San Juan | 9521884 | 2
 Qatar | QA | 177 | Doha | 6940529 | 2
 Romania | RO | 179 | Bucharest | 6953096 | 25
@@ -134,7 +134,7 @@ Thailand | TH | 214 | Bangkok | 8121638 | 12
 Trinidad and Tobago | TT | 218 | Port of Spain | 9521887 | 2
 Tunisia | TN | 219 | Tunis | 8295401 | 2
 Turkey | TR | 220 | Istanbul | 8401790 | 19
-Ukraine | UA | 225 | Kyiv | 8626766 | 14
+Ukraine | UA | 225 | Kyiv | 8626766 | 13
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
 United Kingdom | GB | 227 | Edinburgh | 2975852 | 40
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
@@ -145,15 +145,15 @@ United States | US | 228 | Atlanta | 8792429 | 191
 United States | US | 228 | Boston | 8895305 | 70
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
-United States | US | 228 | Chicago | 8815352 | 314
+United States | US | 228 | Chicago | 8815352 | 315
 United States | US | 228 | Dallas | 9080300 | 247
 United States | US | 228 | Denver | 8770934 | 119
 United States | US | 228 | Houston | 9083687 | 32
 United States | US | 228 | Kansas City | 8930717 | 35
-United States | US | 228 | Los Angeles | 8761958 | 297
+United States | US | 228 | Los Angeles | 8761958 | 291
 United States | US | 228 | Manassas | 9113744 | 51
 United States | US | 228 | McAllen | 9086162 | 20
-United States | US | 228 | Miami | 8787782 | 201
+United States | US | 228 | Miami | 8787782 | 202
 United States | US | 228 | Nashville | 9071273 | 40
 United States | US | 228 | New York | 8971718 | 586
 United States | US | 228 | Omaha | 8943887 | 40
@@ -167,3 +167,5 @@ Uzbekistan | UZ | 231 | Tashkent | 9166826 | 2
 Venezuela | VE | 233 | Caracas | 9176843 | 2
 Vietnam | VN | 234 | Hanoi | 9270302 | 2
 Vietnam | VN | 234 | Ho Chi Minh City | 9271799 | 4
+---
+Last updated: 2025-09-20
