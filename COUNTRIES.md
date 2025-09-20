@@ -43,14 +43,14 @@ Estonia | EE | 68 | 10
 Finland | FI | 73 | 21
 France | FR | 74 | 367
 Georgia | GE | 80 | 10
-Germany | DE | 81 | 439
+Germany | DE | 81 | 438
 Ghana | GH | 82 | 2
 Greece | GR | 84 | 21
 Greenland | GL | 85 | 2
 Guam | GU | 88 | 2
 Guatemala | GT | 89 | 2
 Honduras | HN | 96 | 2
-Hong Kong | HK | 97 | 73
+Hong Kong | HK | 97 | 72
 Hungary | HU | 98 | 26
 Iceland | IS | 99 | 10
 India | IN | 100 | 27
@@ -98,7 +98,7 @@ Paraguay | PY | 170 | 2
 Peru | PE | 171 | 2
 Philippines | PH | 172 | 6
 Poland | PL | 174 | 101
-Portugal | PT | 175 | 52
+Portugal | PT | 175 | 51
 Puerto Rico | PR | 176 | 2
 Qatar | QA | 177 | 2
 Romania | RO | 179 | 25
@@ -120,11 +120,13 @@ Thailand | TH | 214 | 12
 Trinidad and Tobago | TT | 218 | 2
 Tunisia | TN | 219 | 2
 Turkey | TR | 220 | 19
-Ukraine | UA | 225 | 14
+Ukraine | UA | 225 | 13
 United Arab Emirates | AE | 226 | 17
 United Kingdom | GB | 227 | 1117
-United States | US | 228 | 2876
+United States | US | 228 | 2872
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
 Vietnam | VN | 234 | 6
+---
+Last updated: 2025-09-20
