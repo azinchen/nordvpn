@@ -26,6 +26,11 @@ on:
           - nordvpn-api-ips
           - packages
           - apk
+      force_update:
+        description: 'Force update MD files even if content unchanged'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   update-readme-files:
@@ -79,8 +84,8 @@ jobs:
             EXISTING_CONTENT=""
           fi
           
-          # Compare
-          if [ "$NEW_CONTENT" != "$EXISTING_CONTENT" ]; then
+          # Check force update or compare
+          if [ "${{ github.event.inputs.force_update }}" == "true" ] || [ "$NEW_CONTENT" != "$EXISTING_CONTENT" ]; then
             echo "$NEW_CONTENT" > "${{ matrix.file.name }}.md"
             echo "---" >> "${{ matrix.file.name }}.md"
             echo "Last updated: $(date +%Y-%m-%d)" >> "${{ matrix.file.name }}.md"
