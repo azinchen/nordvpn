@@ -52,6 +52,6 @@ if run4 $PIN_SPEC 2>/dev/null; then
 fi
 
 echo "[SERVICE-NORDVPND] launching OpenVPN..."
-sg nordvpn -c "openvpn --config \"$ovpnfile\" --auth-user-pass \"$authfile\" --auth-nocache ${OPENVPN_OPTS:-}"
+sg nordvpn -c "openvpn --config \"$ovpnfile\" --auth-user-pass \"$authfile\" --auth-nocache --management 127.0.0.1 7505 $OPENVPN_OPTS"
 
 exit 0

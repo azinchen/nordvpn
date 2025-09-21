@@ -58,6 +58,7 @@ ENV TECHNOLOGY=openvpn_udp \
     CHECK_CONNECTION_ATTEMPT_INTERVAL=10 \
     IMAGE_VERSION=${IMAGE_VERSION} \
     BUILD_DATE=${BUILD_DATE} \
+    PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=120000
 
 RUN echo "**** install security fix packages ****" && \

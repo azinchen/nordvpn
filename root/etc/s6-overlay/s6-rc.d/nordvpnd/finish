@@ -10,5 +10,9 @@ echo "[SERVICE-NORDVPND] Stopping nordvpnd service..."
 echo "[SERVICE-NORDVPND] Cleaning VPN pinhole..."
 run4 -F VPN-SERVER
 
+echo "[SERVICE-NORDVPND] Disconnecting OpenVPN cleanly..."
+echo "signal SIGTERM" | nc 127.0.0.1 7505
+sleep 5
+
 echo "[SERVICE-NORDVPND] nordvpnd service stopped successfully"
 exit 0
