@@ -41,9 +41,9 @@ Egypt | EG | 64 | 2
 El Salvador | SV | 65 | 2
 Estonia | EE | 68 | 10
 Finland | FI | 73 | 21
-France | FR | 74 | 367
+France | FR | 74 | 364
 Georgia | GE | 80 | 10
-Germany | DE | 81 | 438
+Germany | DE | 81 | 435
 Ghana | GH | 82 | 2
 Greece | GR | 84 | 21
 Greenland | GL | 85 | 2
@@ -129,4 +129,4 @@ Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
 Vietnam | VN | 234 | 6
 ---
-Last updated: 2025-09-20
+Last updated: 2025-09-21
