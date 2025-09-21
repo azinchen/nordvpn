@@ -518,7 +518,7 @@ docker run -d --name api-service --net=container:vpn \
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPTS** | Number of connection test attempts. <br> **Default:** `5` <br> **Example:** `5` |
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPT<wbr>_INTERVAL** | Seconds between failed attempts. <br> **Default:** `10` <br> **Example:** `10` |
 | **NETWORK** | Local/LAN or inter‑container networks to allow; semicolon‑separated CIDRs. <br> **Default:** None <br> **Example:** `10.0.0.0/8;172.16.0.0/12;192.168.0.0/16` |
-| **NORDVPNAPI<wbr>_IP** | IPv4 list of `api.nordvpn.com` addresses (semicolon‑separated) used during **pre‑VPN bootstrap** to avoid DNS (HTTPS only). <br> **Default:** `104.19.159.190;104.16.208.203` <br> **Example:** `104.19.159.190;104.16.208.203` |
+| **NORDVPNAPI<wbr>_IP** | IPv4 list of `api.nordvpn.com` addresses (semicolon‑separated) used during **pre‑VPN bootstrap** to avoid DNS (HTTPS only). <br> **Default:** `104.16.208.203;104.19.159.190` <br> **Example:** `104.19.159.190;104.16.208.203` |
 | **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters. <br> **Default:** None <br> **Example:** `--mute-replay-warnings` |
 
 ## Supported Platforms

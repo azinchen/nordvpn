@@ -23,6 +23,8 @@ normalize_proto()
     esac
 }
 
+vpn-config
+
 # -------- parse the single 'remote' line --------
 [ -s "$ovpnfile" ] || { echo "[ERROR] OVPN file not found: $ovpnfile" >&2; exit 1; }
 

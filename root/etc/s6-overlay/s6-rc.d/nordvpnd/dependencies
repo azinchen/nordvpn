@@ -1,2 +1,3 @@
 init-adduser
-init-createvpnconfig
+init-createauth
+init-firewall

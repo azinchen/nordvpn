@@ -512,8 +512,6 @@ protocol=$(getopenvpnprotocol "$TECHNOLOGY")
 # Extract location information
 country_name=$(echo "$servers" | jq -r '.locations[0].country.name' | head -n 1)
 city_name=$(echo "$servers" | jq -r '.locations[0].country.city.name' | head -n 1)
-echo "[VPN-CONFIG] Server location: $country_name, $city_name"
-
 echo "[VPN-CONFIG] Select server \"$name\" hostname=\"$hostname\" ip=\"$serverip\" protocol=\"$protocol\" location=\"$country_name, $city_name\""
 
 cp "$ovpntemplatefile" "$ovpnfile"
