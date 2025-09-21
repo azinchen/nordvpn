@@ -48,11 +48,11 @@ El Salvador | SV | 65 | San Salvador | 7990847 | 2
 Estonia | EE | 68 | Tallinn | 2514182 | 10
 Finland | FI | 73 | Helsinki | 2704343 | 21
 France | FR | 74 | Marseille | 2867102 | 108
-France | FR | 74 | Paris | 2886284 | 235
+France | FR | 74 | Paris | 2886284 | 232
 France | FR | 74 | Strasbourg | 2929151 | 24
 Georgia | GE | 80 | Tbilisi | 3032063 | 10
-Germany | DE | 81 | Berlin | 2181458 | 79
-Germany | DE | 81 | Frankfurt | 2215709 | 309
+Germany | DE | 81 | Berlin | 2181458 | 78
+Germany | DE | 81 | Frankfurt | 2215709 | 307
 Germany | DE | 81 | Hamburg | 2234906 | 50
 Ghana | GH | 82 | Accra | 3040355 | 2
 Greece | GR | 84 | Athens | 3131903 | 21
@@ -168,4 +168,4 @@ Venezuela | VE | 233 | Caracas | 9176843 | 2
 Vietnam | VN | 234 | Hanoi | 9270302 | 2
 Vietnam | VN | 234 | Ho Chi Minh City | 9271799 | 4
 ---
-Last updated: 2025-09-20
+Last updated: 2025-09-21
