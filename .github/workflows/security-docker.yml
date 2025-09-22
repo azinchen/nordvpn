@@ -97,7 +97,7 @@ jobs:
       - name: Run Grype security scan
         id: grype-scan
         continue-on-error: true
-        uses: anchore/scan-action@v6.5.1
+        uses: anchore/scan-action@v7.0.0
         with:
           image: "${{ steps.config.outputs.image_ref }}"
           fail-build: false
