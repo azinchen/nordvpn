@@ -40,10 +40,10 @@ Ecuador | EC | 63 | 2
 Egypt | EG | 64 | 2
 El Salvador | SV | 65 | 2
 Estonia | EE | 68 | 10
-Finland | FI | 73 | 21
-France | FR | 74 | 364
+Finland | FI | 73 | 19
+France | FR | 74 | 358
 Georgia | GE | 80 | 10
-Germany | DE | 81 | 435
+Germany | DE | 81 | 426
 Ghana | GH | 82 | 2
 Greece | GR | 84 | 21
 Greenland | GL | 85 | 2
@@ -59,7 +59,7 @@ Iraq | IQ | 103 | 2
 Ireland | IE | 104 | 70
 Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
-Italy | IT | 106 | 193
+Italy | IT | 106 | 192
 Jamaica | JM | 107 | 2
 Japan | JP | 108 | 257
 Jersey | JE | 244 | 4
@@ -129,4 +129,4 @@ Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
 Vietnam | VN | 234 | 6
 ---
-Last updated: 2025-09-21
+Last updated: 2025-09-22
