@@ -46,13 +46,13 @@ Ecuador | EC | 63 | Quito | 2485688 | 2
 Egypt | EG | 64 | Cairo | 2528003 | 2
 El Salvador | SV | 65 | San Salvador | 7990847 | 2
 Estonia | EE | 68 | Tallinn | 2514182 | 10
-Finland | FI | 73 | Helsinki | 2704343 | 21
+Finland | FI | 73 | Helsinki | 2704343 | 19
 France | FR | 74 | Marseille | 2867102 | 108
-France | FR | 74 | Paris | 2886284 | 232
+France | FR | 74 | Paris | 2886284 | 226
 France | FR | 74 | Strasbourg | 2929151 | 24
 Georgia | GE | 80 | Tbilisi | 3032063 | 10
 Germany | DE | 81 | Berlin | 2181458 | 78
-Germany | DE | 81 | Frankfurt | 2215709 | 307
+Germany | DE | 81 | Frankfurt | 2215709 | 298
 Germany | DE | 81 | Hamburg | 2234906 | 50
 Ghana | GH | 82 | Accra | 3040355 | 2
 Greece | GR | 84 | Athens | 3131903 | 21
@@ -69,7 +69,7 @@ Iraq | IQ | 103 | Baghdad | 4093955 | 2
 Ireland | IE | 104 | Dublin | 3939200 | 70
 Isle of Man | IM | 243 | Douglas | 3965405 | 4
 Israel | IL | 105 | Tel Aviv | 3964220 | 20
-Italy | IT | 106 | Milan | 4542737 | 137
+Italy | IT | 106 | Milan | 4542737 | 136
 Italy | IT | 106 | Palermo | 4548074 | 12
 Italy | IT | 106 | Rome | 4555808 | 44
 Jamaica | JM | 107 | Kingston | 4576328 | 2
@@ -168,4 +168,4 @@ Venezuela | VE | 233 | Caracas | 9176843 | 2
 Vietnam | VN | 234 | Hanoi | 9270302 | 2
 Vietnam | VN | 234 | Ho Chi Minh City | 9271799 | 4
 ---
-Last updated: 2025-09-21
+Last updated: 2025-09-22
