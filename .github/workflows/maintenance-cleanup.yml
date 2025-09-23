@@ -24,7 +24,7 @@ on:
       protect_latest_per:
         description: 'Protection level for latest tags'
         required: false
-        default: 'patch'
+        default: 'minor'
         type: choice
         options:
           - none
@@ -78,7 +78,7 @@ jobs:
           DRY_RUN="false"
           MAX_RELEASE_DAYS="365"  # Keep release tags for 1 year
           MAX_DEV_DAYS="90"       # Keep dev tags for 3 months
-          PROTECT_LATEST_PER="patch"  # Default protection level
+          PROTECT_LATEST_PER="minor"  # Default protection level
           
           # Override with manual inputs if workflow_dispatch
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
