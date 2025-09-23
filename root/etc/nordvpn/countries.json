@@ -573,6 +573,20 @@
   ]
 }
 {
+  "id": 69,
+  "name": "Ethiopia",
+  "code": "ET",
+  "cities": [
+    {
+      "id": 2660744,
+      "name": "Addis Ababa",
+      "latitude": 9.024325,
+      "longitude": 38.749226,
+      "dns_name": "addis-ababa"
+    }
+  ]
+}
+{
   "id": 73,
   "name": "Finland",
   "code": "FI",
