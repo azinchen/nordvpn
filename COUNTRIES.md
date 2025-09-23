@@ -25,7 +25,7 @@ Brazil | BR | 30 | 38
 Brunei Darussalam | BN | 32 | 2
 Bulgaria | BG | 33 | 25
 Cambodia | KH | 36 | 2
-Canada | CA | 38 | 438
+Canada | CA | 38 | 437
 Cayman Islands | KY | 40 | 2
 Chile | CL | 43 | 7
 Colombia | CO | 47 | 10
@@ -40,10 +40,11 @@ Ecuador | EC | 63 | 2
 Egypt | EG | 64 | 2
 El Salvador | SV | 65 | 2
 Estonia | EE | 68 | 10
-Finland | FI | 73 | 19
-France | FR | 74 | 358
+Ethiopia | ET | 69 | 2
+Finland | FI | 73 | 21
+France | FR | 74 | 367
 Georgia | GE | 80 | 10
-Germany | DE | 81 | 426
+Germany | DE | 81 | 439
 Ghana | GH | 82 | 2
 Greece | GR | 84 | 21
 Greenland | GL | 85 | 2
@@ -59,7 +60,7 @@ Iraq | IQ | 103 | 2
 Ireland | IE | 104 | 70
 Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
-Italy | IT | 106 | 192
+Italy | IT | 106 | 193
 Jamaica | JM | 107 | 2
 Japan | JP | 108 | 257
 Jersey | JE | 244 | 4
@@ -77,7 +78,7 @@ Luxembourg | LU | 126 | 12
 Malaysia | MY | 131 | 10
 Malta | MT | 134 | 2
 Mauritania | MR | 137 | 2
-Mexico | MX | 140 | 60
+Mexico | MX | 140 | 59
 Moldova | MD | 142 | 3
 Monaco | MC | 143 | 4
 Mongolia | MN | 144 | 2
@@ -113,20 +114,20 @@ South Africa | ZA | 200 | 25
 South Korea | KR | 114 | 44
 Spain | ES | 202 | 109
 Sri Lanka | LK | 203 | 2
-Sweden | SE | 208 | 179
+Sweden | SE | 208 | 166
 Switzerland | CH | 209 | 145
 Taiwan | TW | 211 | 30
 Thailand | TH | 214 | 12
 Trinidad and Tobago | TT | 218 | 2
 Tunisia | TN | 219 | 2
 Turkey | TR | 220 | 19
-Ukraine | UA | 225 | 13
+Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
 United Kingdom | GB | 227 | 1117
-United States | US | 228 | 2872
+United States | US | 228 | 2867
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
 Vietnam | VN | 234 | 6
 ---
-Last updated: 2025-09-22
+Last updated: 2025-09-23
