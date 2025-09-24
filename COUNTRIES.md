@@ -3,13 +3,13 @@
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 24
+Albania | AL | 2 | 23
 Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 6
 Angola | AO | 6 | 2
 Argentina | AR | 10 | 19
 Armenia | AM | 11 | 2
-Australia | AU | 13 | 268
+Australia | AU | 13 | 263
 Austria | AT | 14 | 69
 Azerbaijan | AZ | 15 | 2
 Bahamas | BS | 16 | 5
@@ -25,7 +25,7 @@ Brazil | BR | 30 | 38
 Brunei Darussalam | BN | 32 | 2
 Bulgaria | BG | 33 | 25
 Cambodia | KH | 36 | 2
-Canada | CA | 38 | 437
+Canada | CA | 38 | 436
 Cayman Islands | KY | 40 | 2
 Chile | CL | 43 | 7
 Colombia | CO | 47 | 10
@@ -44,7 +44,7 @@ Ethiopia | ET | 69 | 2
 Finland | FI | 73 | 21
 France | FR | 74 | 367
 Georgia | GE | 80 | 10
-Germany | DE | 81 | 439
+Germany | DE | 81 | 437
 Ghana | GH | 82 | 2
 Greece | GR | 84 | 21
 Greenland | GL | 85 | 2
@@ -78,7 +78,7 @@ Luxembourg | LU | 126 | 12
 Malaysia | MY | 131 | 10
 Malta | MT | 134 | 2
 Mauritania | MR | 137 | 2
-Mexico | MX | 140 | 59
+Mexico | MX | 140 | 57
 Moldova | MD | 142 | 3
 Monaco | MC | 143 | 4
 Mongolia | MN | 144 | 2
@@ -87,7 +87,7 @@ Morocco | MA | 147 | 4
 Mozambique | MZ | 148 | 2
 Myanmar | MM | 149 | 2
 Nepal | NP | 152 | 2
-Netherlands | NL | 153 | 249
+Netherlands | NL | 153 | 261
 New Zealand | NZ | 156 | 39
 Nigeria | NG | 159 | 4
 North Macedonia | MK | 128 | 2
@@ -114,8 +114,8 @@ South Africa | ZA | 200 | 25
 South Korea | KR | 114 | 44
 Spain | ES | 202 | 109
 Sri Lanka | LK | 203 | 2
-Sweden | SE | 208 | 166
-Switzerland | CH | 209 | 145
+Sweden | SE | 208 | 179
+Switzerland | CH | 209 | 147
 Taiwan | TW | 211 | 30
 Thailand | TH | 214 | 12
 Trinidad and Tobago | TT | 218 | 2
@@ -124,10 +124,10 @@ Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
 United Kingdom | GB | 227 | 1117
-United States | US | 228 | 2867
+United States | US | 228 | 2856
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
 Vietnam | VN | 234 | 6
 ---
-Last updated: 2025-09-23
+Last updated: 2025-09-24
