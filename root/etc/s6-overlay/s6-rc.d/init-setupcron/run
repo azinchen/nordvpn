@@ -5,6 +5,43 @@ set -eu
 
 echo "[INIT-SETUPCRON] Starting init-setupcron script..."
 
+# Validate cron-related environment variables
+if [ -n "${RECREATE_VPN_CRON:-}" ]; then
+    echo "[INIT-SETUPCRON] RECREATE_VPN_CRON is set to: $RECREATE_VPN_CRON"
+else
+    echo "[INIT-SETUPCRON] RECREATE_VPN_CRON is not set"
+fi
+
+if [ -n "${CHECK_CONNECTION_CRON:-}" ]; then
+    echo "[INIT-SETUPCRON] CHECK_CONNECTION_CRON is set to: $CHECK_CONNECTION_CRON"
+    
+    # Validate CHECK_CONNECTION_* variables that are used by vpn-healthcheck
+    CHECK_CONNECTION_ATTEMPTS="${CHECK_CONNECTION_ATTEMPTS:-3}"
+    CHECK_CONNECTION_URL="${CHECK_CONNECTION_URL:-https://www.google.com}"
+    CHECK_CONNECTION_ATTEMPT_INTERVAL="${CHECK_CONNECTION_ATTEMPT_INTERVAL:-5}"
+    
+    if [ -z "$CHECK_CONNECTION_ATTEMPTS" ] || [ "$CHECK_CONNECTION_ATTEMPTS" -le 0 ]; then
+        echo "[INIT-SETUPCRON] ERROR: CHECK_CONNECTION_ATTEMPTS must be a positive integer, got: '$CHECK_CONNECTION_ATTEMPTS'"
+        exit 1
+    fi
+    
+    if [ -z "$CHECK_CONNECTION_URL" ]; then
+        echo "[INIT-SETUPCRON] ERROR: CHECK_CONNECTION_URL must be set"
+        exit 1
+    fi
+    
+    if [ -z "$CHECK_CONNECTION_ATTEMPT_INTERVAL" ] || [ "$CHECK_CONNECTION_ATTEMPT_INTERVAL" -le 0 ]; then
+        echo "[INIT-SETUPCRON] ERROR: CHECK_CONNECTION_ATTEMPT_INTERVAL must be a positive integer, got: '$CHECK_CONNECTION_ATTEMPT_INTERVAL'"
+        exit 1
+    fi
+    
+    echo "[INIT-SETUPCRON] CHECK_CONNECTION_ATTEMPTS: $CHECK_CONNECTION_ATTEMPTS"
+    echo "[INIT-SETUPCRON] CHECK_CONNECTION_URL: $CHECK_CONNECTION_URL"
+    echo "[INIT-SETUPCRON] CHECK_CONNECTION_ATTEMPT_INTERVAL: $CHECK_CONNECTION_ATTEMPT_INTERVAL"
+else
+    echo "[INIT-SETUPCRON] CHECK_CONNECTION_CRON is not set - vpn-healthcheck validation skipped"
+fi
+
 cron_dir="/var/spool/cron/crontabs"
 cron_file="$cron_dir/root"
 
