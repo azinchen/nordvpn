@@ -81,6 +81,105 @@ is_private_ip()
     esac
 }
 
+# Query OpenVPN management interface for connection details
+get_openvpn_status()
+{
+    # Try to connect to OpenVPN management interface
+    if command -v nc >/dev/null 2>&1; then
+        # Use netcat to query management interface
+        MGMT_RESP="$(printf "status\nquit\n" | nc -w 2 127.0.0.1 7505 2>/dev/null || printf '')"
+    elif command -v telnet >/dev/null 2>&1 && command -v timeout >/dev/null 2>&1; then
+        # Fallback to telnet with timeout
+        MGMT_RESP="$(printf "status\nquit\n" | timeout 2 telnet 127.0.0.1 7505 2>/dev/null | sed -n '/^END/,/^END/p' || printf '')"
+    else
+        MGMT_RESP=""
+    fi
+    
+    # Parse the response for connection details
+    if [ -n "$MGMT_RESP" ]; then
+        # For client connections, try to extract from different lines
+        # Look for remote server info in the status output
+        COMMON_NAME="$(printf "%s" "$MGMT_RESP" | grep -o 'TCP connection established with \[AF_INET\][0-9.]*:[0-9]*' | sed 's/.*\[\([^]]*\)\].*/\1/' | cut -d: -f1 || printf '')"
+        
+        # Extract remote IP from status (TCP or UDP)
+        TCP_LINE="$(printf "%s" "$MGMT_RESP" | grep 'TCP connection established' | head -1 || printf '')"
+        UDP_LINE="$(printf "%s" "$MGMT_RESP" | grep 'UDPv4 link remote' | head -1 || printf '')"
+        
+        if [ -n "$TCP_LINE" ]; then
+            TRUSTED_IP="$(printf "%s" "$TCP_LINE" | sed 's/.*\[AF_INET\]\([0-9.]*\):.*/\1/' || printf '')"
+        elif [ -n "$UDP_LINE" ]; then
+            TRUSTED_IP="$(printf "%s" "$UDP_LINE" | sed 's/.*\[AF_INET\]\([0-9.]*\):.*/\1/' || printf '')"
+        fi
+        
+        # Try to get port from management interface state
+        STATE_RESP="$(printf "state\nquit\n" | nc -w 2 127.0.0.1 7505 2>/dev/null || printf '')"
+        if [ -n "$STATE_RESP" ]; then
+            # Parse state line: >STATE:timestamp,connected,remote_ip,remote_port,local_ip,local_port
+            STATE_LINE="$(printf "%s" "$STATE_RESP" | grep '^>STATE:' | head -1 || printf '')"
+            if [ -n "$STATE_LINE" ]; then
+                STATE_IP="$(printf "%s" "$STATE_LINE" | cut -d, -f3 || printf '')"
+                STATE_PORT="$(printf "%s" "$STATE_LINE" | cut -d, -f4 || printf '')"
+                [ -n "$STATE_IP" ] && [ "$STATE_IP" != "0.0.0.0" ] && TRUSTED_IP="$STATE_IP"
+                [ -n "$STATE_PORT" ] && [ "$STATE_PORT" != "0" ] && TRUSTED_PORT="$STATE_PORT"
+            fi
+        fi
+    fi
+    
+    # Fallback: try to get from config file if management interface didn't work
+    if [ -z "$COMMON_NAME" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+        # Extract from verify-x509-name line first (preferred)
+        COMMON_NAME="$(awk '/^[[:space:]]*verify-x509-name/ {for(i=1;i<=NF;i++) if($i ~ /CN=/) {sub(/CN=/,"",$i); print $i; exit}}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
+        if [ -z "$COMMON_NAME" ]; then
+            # Fallback to remote hostname/IP
+            REMOTE_VAL="$(awk '/^[[:space:]]*remote[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
+            # If it's an IP address, try to construct hostname
+            if printf "%s" "$REMOTE_VAL" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' >/dev/null 2>&1; then
+                # It's an IP, we can't easily get hostname, so leave empty for now
+                COMMON_NAME=""
+            else
+                COMMON_NAME="$REMOTE_VAL"
+            fi
+        fi
+    fi
+    if [ -z "$TRUSTED_IP" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+        TRUSTED_IP="$(awk '/^[[:space:]]*remote[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
+        TRUSTED_PORT="$(awk '/^[[:space:]]*remote[ \t]+/ {print $3; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
+        [ -z "$TRUSTED_PORT" ] && TRUSTED_PORT="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
+    fi
+}
+
+# Get OpenVPN interface details from system
+get_interface_details()
+{
+    # Get device type (tun/tap)
+    DEV_TYPE="$(ip link show "$DEV_IF" 2>/dev/null | awk -F: '/^[0-9]+:.*tun[0-9]*:/ {print "tun"} /^[0-9]+:.*tap[0-9]*:/ {print "tap"}' || printf '?')"
+    
+    # Get local IP from interface
+    IFCONF_LOCAL="$(ip addr show "$DEV_IF" 2>/dev/null | awk '/inet / {split($2,a,"/"); print a[1]; exit}' || printf '?')"
+    
+    # For OpenVPN tun interface, remote IP is typically local_ip + 1 or from peer address
+    if [ "$IFCONF_LOCAL" != "?" ]; then
+        # Calculate remote IP (usually .1 for local, .2 for remote in /30 subnet)
+        # Split IP address using POSIX-compatible method
+        a="$(printf "%s" "$IFCONF_LOCAL" | cut -d. -f1)"
+        b="$(printf "%s" "$IFCONF_LOCAL" | cut -d. -f2)"
+        c="$(printf "%s" "$IFCONF_LOCAL" | cut -d. -f3)"
+        d="$(printf "%s" "$IFCONF_LOCAL" | cut -d. -f4)"
+        if [ "$d" = "1" ]; then
+            IFCONF_REMOTE="$a.$b.$c.2"
+        elif [ "$d" = "2" ]; then
+            IFCONF_REMOTE="$a.$b.$c.1"
+        else
+            IFCONF_REMOTE="?"
+        fi
+    else
+        IFCONF_REMOTE="?"
+    fi
+    
+    # Get VPN gateway from routes (usually the remote IP)
+    ROUTE_VPN_GW="$IFCONF_REMOTE"
+}
+
 ns_geo_line()
 {
     IPQ="$1"
@@ -145,16 +244,52 @@ print_dns_geo()
 PUBLIC_TEST_IPv4="1.1.1.1"
 PUBLIC_TEST_IPv6="2606:4700:4700::1111"
 
-COMMON_NAME="${common_name:-unknown}"
-DEV_IF="${dev:-tun0}"
-DEV_TYPE="${dev_type:-?}"
-IFCONF_LOCAL="${ifconfig_local:-?}"
-IFCONF_REMOTE="${ifconfig_remote:-?}"
-ROUTE_VPN_GW="${route_vpn_gateway:-?}"
-TRUSTED_IP="${trusted_ip:-?}"
-TRUSTED_PORT="${trusted_port:-?}"
-PROTO="${proto_1:-${proto:-?}}"
-LPORT="${local_port_1:-${local_port:-?}}"
+# Initialize variables with defaults
+COMMON_NAME=""
+DEV_IF="tun0"
+DEV_TYPE="?"
+IFCONF_LOCAL="?"
+IFCONF_REMOTE="?"
+ROUTE_VPN_GW="?"
+TRUSTED_IP=""
+TRUSTED_PORT=""
+PROTO="?"
+LPORT="?"
+
+# Try to get OpenVPN status from management interface
+get_openvpn_status
+
+# Get interface details from system
+get_interface_details
+
+# Try to get protocol and port from OpenVPN config or process
+if [ -f "/run/xt/nordvpn.ovpn" ]; then
+    # Try to extract from config file
+    PROTO="$(awk '/^[[:space:]]*proto[ \t]+/ {print tolower($2); exit}' "/run/xt/nordvpn.ovpn" || printf '?')"
+    LPORT="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" || printf '?')"
+    if [ -z "$LPORT" ] || [ "$LPORT" = "?" ]; then
+        # Try from remote line
+        LPORT="$(awk '/^[[:space:]]*remote[ \t]+/ {print $3; exit}' "/run/xt/nordvpn.ovpn" | grep '^[0-9]*$' || printf '?')"
+    fi
+elif command -v pgrep >/dev/null 2>&1 && command -v ps >/dev/null 2>&1; then
+    OVPN_PID="$(pgrep -f openvpn || printf '')"
+    if [ -n "$OVPN_PID" ]; then
+        # Try to extract from process command line
+        OVPN_CMD="$(ps -p "$OVPN_PID" -o args= 2>/dev/null || printf '')"
+        PROTO="$(printf "%s" "$OVPN_CMD" | grep -o '\-\-proto [a-zA-Z0-9]*' | awk '{print $2}' | tr 'A-Z' 'a-z' || printf '?')"
+        LPORT="$(printf "%s" "$OVPN_CMD" | grep -o '\-\-lport [0-9]*\|\-\-port [0-9]*' | awk '{print $2}' | tail -1 || printf '?')"
+        [ -z "$LPORT" ] && LPORT="$(printf "%s" "$OVPN_CMD" | grep -o '\-\-remote [0-9.]* [0-9]*' | awk '{print $3}' || printf '?')"
+    fi
+fi
+
+# Format trusted peer display
+if [ -n "$TRUSTED_IP" ] && [ -n "$TRUSTED_PORT" ]; then
+    TRUSTED_PEER="$TRUSTED_IP:$TRUSTED_PORT"
+elif [ -n "$TRUSTED_IP" ]; then
+    TRUSTED_PEER="$TRUSTED_IP:?"
+else
+    TRUSTED_PEER="?:?"
+fi
 
 echo "================================================================"
 echo "OpenVPN DIAG (full)   : $(date -Is 2>/dev/null || date)"
@@ -163,7 +298,7 @@ echo "Common Name           : $COMMON_NAME"
 echo "Ifconfig Local        : $IFCONF_LOCAL"
 echo "Ifconfig Remote       : $IFCONF_REMOTE"
 echo "Route VPN Gateway     : $ROUTE_VPN_GW"
-echo "Trusted Peer          : $TRUSTED_IP:$TRUSTED_PORT"
+echo "Trusted Peer          : $TRUSTED_PEER"
 echo "Proto/Local Port      : $PROTO/$LPORT"
 echo
 
