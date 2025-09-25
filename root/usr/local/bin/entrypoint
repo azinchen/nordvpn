@@ -152,18 +152,18 @@ chmod 0644 /run/xt/backend.env
 # ---- secure defaults (v4 + v6 if available) --------------------------------
 
 # Default DROP policies (set ASAP)
-run4 -t filter -P OUTPUT DROP
-run4 -t filter -P INPUT  DROP
-run4 -t filter -P FORWARD DROP
-run6 -t filter -P OUTPUT DROP
-run6 -t filter -P INPUT  DROP
-run6 -t filter -P FORWARD DROP
+run4_critical -t filter -P OUTPUT DROP
+run4_critical -t filter -P INPUT  DROP
+run4_critical -t filter -P FORWARD DROP
+run6_critical -t filter -P OUTPUT DROP
+run6_critical -t filter -P INPUT  DROP
+run6_critical -t filter -P FORWARD DROP
 
 # Flush existing rules (filter + nat), best effort
-run4 -t filter -F; run4 -t filter -X
-run4 -t nat    -F; run4 -t nat    -X
-run6 -t filter -F; run6 -t filter -X
-run6 -t nat    -F; run6 -t nat    -X
+run4_critical -t filter -F; run4_critical -t filter -X
+run4_critical -t nat    -F; run4_critical -t nat    -X
+run6_critical -t filter -F; run6_critical -t filter -X
+run6_critical -t nat    -F; run6_critical -t nat    -X
 
 # Allow loopback (critical for local apps)
 run4 -A INPUT  -i lo -j ACCEPT

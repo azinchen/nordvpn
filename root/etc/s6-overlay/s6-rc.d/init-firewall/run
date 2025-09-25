@@ -17,12 +17,12 @@ if [ -n "$docker_network" ]; then
     echo "[INIT-FIREWALL] IPv4 rules..."
 
     # Stateful fast-path (skip gracefully if conntrack match absent)
-    run4 -A INPUT  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-    run4 -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+    run4_critical -A INPUT  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+    run4_critical -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
     # Allow outbound to VPN interfaces + NAT
-    run4 -A OUTPUT -o tun+ -j ACCEPT
-    run4 -t nat -A POSTROUTING -o tun+ -j MASQUERADE
+    run4_critical -A OUTPUT -o tun+ -j ACCEPT
+    run4_critical -t nat -A POSTROUTING -o tun+ -j MASQUERADE
 
     # Create named chain for VPN Server rules
     run4 -N VPN-SERVER

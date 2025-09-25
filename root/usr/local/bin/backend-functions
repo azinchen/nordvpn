@@ -10,10 +10,26 @@ run4() {
     fi
 }
 
+run4_critical() {
+    if ! ${IPT} "$@" 2>/dev/null; then
+        echo "(IPv4) CRITICAL ERROR: Failed to execute: $* - sleeping infinite"
+        sleep infinity
+    fi
+}
+
 run6() {
     if [ -n "$IP6T" ]; then
         if ! ${IP6T} "$@" 2>/dev/null; then
             echo "(IPv6) skipped: $*"
+        fi
+    fi
+}
+
+run6_critical() {
+    if [ -n "$IP6T" ]; then
+        if ! ${IP6T} "$@" 2>/dev/null; then
+            echo "(IPv6) CRITICAL ERROR: Failed to execute: $* - sleeping infinite"
+            sleep infinity
         fi
     fi
 }

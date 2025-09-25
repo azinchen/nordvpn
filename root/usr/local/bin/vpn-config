@@ -470,8 +470,8 @@ if [ "$poollength" -eq 0 ]; then
         echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
         poollength=$(echo "$servers" | jq -s 'unique | length')
     else
-        echo "[VPN-CONFIG] ERROR: Failed to get fallback servers"
-        exit 1
+        echo "[VPN-CONFIG] CRITICAL ERROR: Failed to get fallback servers - sleeping infinite"
+        sleep infinity
     fi
 fi
 
@@ -501,7 +501,8 @@ if [ "$poollength" -ne 0 ]; then
 fi
 
 if [ "$poollength" -eq 0 ]; then
-    echo "[VPN-CONFIG] ERROR: list of selected servers is empty"
+    echo "[VPN-CONFIG] CRITICAL ERROR: list of selected servers is empty - sleeping infinite"
+    sleep infinity
 fi
 
 serverip=$(echo "$servers" | jq -r '.station' | head -n 1)
@@ -527,8 +528,14 @@ if [ "$protocol" = "udp" ]; then
 elif [ "$protocol" = "tcp" ]; then
     sed -i "s/__PORT__/443/g" "$ovpnfile"
 else
-    echo "[VPN-CONFIG] ERROR: TECHNOLOGY environment variable contains wrong parameter \"$TECHNOLOGY\""
-    exit 1
+    echo "[VPN-CONFIG] CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$TECHNOLOGY\" - sleeping infinite"
+    sleep infinity
+fi
+
+# Verify the config file was created successfully
+if [ ! -s "$ovpnfile" ]; then
+    echo "[VPN-CONFIG] CRITICAL ERROR: VPN config file was not created successfully - sleeping infinite"
+    sleep infinity
 fi
 
 echo "[VPN-CONFIG] vpn-config script completed successfully"

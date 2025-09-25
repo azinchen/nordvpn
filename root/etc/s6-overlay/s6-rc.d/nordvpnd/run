@@ -27,10 +27,10 @@ normalize_proto()
 vpn-config
 
 # -------- parse the single 'remote' line --------
-[ -s "$ovpnfile" ] || { echo "[ERROR] OVPN file not found: $ovpnfile" >&2; exit 1; }
+[ -s "$ovpnfile" ] || { echo "[SERVICE-NORDVPND] CRITICAL ERROR: OVPN file not found: $ovpnfile - sleeping infinite" >&2; sleep infinity; }
 
 r_line="$(awk '/^[[:space:]]*remote[ \t]+/ {print; exit}' "$ovpnfile")"
-[ -n "$r_line" ] || { echo "[ERROR] No 'remote' line in $ovpnfile" >&2; exit 1; }
+[ -n "$r_line" ] || { echo "[SERVICE-NORDVPND] CRITICAL ERROR: No 'remote' line in $ovpnfile - sleeping infinite" >&2; sleep infinity; }
 
 # Fields: remote <ip> [port] [proto]
 r_ip_raw="$(echo "$r_line" | awk '{print $2}')"
