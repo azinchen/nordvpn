@@ -5,6 +5,27 @@ set -eu
 
 echo "[VPN-HEALTHCHECK] Starting VPN healthcheck script..."
 
+# Set default values for environment variables
+CHECK_CONNECTION_ATTEMPTS="${CHECK_CONNECTION_ATTEMPTS:-3}"
+CHECK_CONNECTION_URL="${CHECK_CONNECTION_URL:-https://www.google.com}"
+CHECK_CONNECTION_ATTEMPT_INTERVAL="${CHECK_CONNECTION_ATTEMPT_INTERVAL:-5}"
+
+# Validate required variables
+if [ -z "$CHECK_CONNECTION_ATTEMPTS" ] || [ "$CHECK_CONNECTION_ATTEMPTS" -le 0 ]; then
+    echo "[VPN-HEALTHCHECK] ERROR: CHECK_CONNECTION_ATTEMPTS must be a positive integer"
+    exit 1
+fi
+
+if [ -z "$CHECK_CONNECTION_URL" ]; then
+    echo "[VPN-HEALTHCHECK] ERROR: CHECK_CONNECTION_URL must be set"
+    exit 1
+fi
+
+if [ -z "$CHECK_CONNECTION_ATTEMPT_INTERVAL" ] || [ "$CHECK_CONNECTION_ATTEMPT_INTERVAL" -le 0 ]; then
+    echo "[VPN-HEALTHCHECK] ERROR: CHECK_CONNECTION_ATTEMPT_INTERVAL must be a positive integer"
+    exit 1
+fi
+
 httpreq()
 {
     case "$(curl -s --max-time 2 -I "$1" | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
