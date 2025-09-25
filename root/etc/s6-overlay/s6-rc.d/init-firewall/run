@@ -52,6 +52,8 @@ if [ -n "$docker_network" ]; then
             fi
             # Allow inbound from this network only
             run4 -A INPUT -i eth0 -s "$net" -j ACCEPT
+            # Allow outbound to this network only
+            run4 -A OUTPUT -o eth0 -d "$net" -j ACCEPT
         done
         IFS="$oldIFS"
     fi

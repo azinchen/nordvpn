@@ -104,7 +104,7 @@ docker run --net=container:vpn -d your/application
 - **Inbound (local/LAN only):** No connections from the host or LAN reach the stack **unless you publish ports on the VPN container**. **Public inbound via NordVPN is not supported** (no port forwarding).
 
 **🔒 Network Access Control (Exceptions)**
-- **Local/LAN access (explicit):** Set `NETWORK=192.168.1.0/24` (semicolon‑separated CIDRs supported) to allow access to those subnets **regardless of VPN status**.
+- **Local/LAN access (bidirectional, explicit):** Set `NETWORK=192.168.1.0/24` (semicolon‑separated CIDRs supported) to allow access to those subnets **regardless of VPN status**.
 - **No domain names allowed:** Use IPs in `NETWORK` for any non‑VPN access you require.
 
 **⚖️ Rule Precedence**
@@ -268,7 +268,7 @@ ip6tables -S 2>/dev/null || true  # may be empty/unavailable
 
 ### Local Network Access
 
-Allow access to local services or inter‑container networks **explicitly**:
+Allow local services or inter‑container networks **explicitly**:
 
 ```bash
 # Find your local network
@@ -520,6 +520,7 @@ docker run -d --name api-service --net=container:vpn \
 | **NETWORK** | Local/LAN or inter‑container networks to allow; semicolon‑separated CIDRs. <br> **Default:** None <br> **Example:** `10.0.0.0/8;172.16.0.0/12;192.168.0.0/16` |
 | **NORDVPNAPI<wbr>_IP** | IPv4 list of `api.nordvpn.com` addresses (semicolon‑separated) used during **pre‑VPN bootstrap** to avoid DNS (HTTPS only). <br> **Default:** `104.16.208.203;104.19.159.190` <br> **Example:** `104.19.159.190;104.16.208.203` |
 | **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters. <br> **Default:** None <br> **Example:** `--mute-replay-warnings` |
+| **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable automatic network diagnostics on VPN connection and reconnection. <br> **Default:** `false` <br> **Example:** `true` |
 
 ## Supported Platforms
 
