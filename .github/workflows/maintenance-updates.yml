@@ -74,9 +74,9 @@ jobs:
           
           # Check if file exists and extract existing content without timestamp
           if [ -f "${{ matrix.file.name }}.md" ]; then
-            LAST_LINE=$(tail -1 "${{ matrix.file.name }}.md")
-            if [[ $LAST_LINE == "Last updated:"* ]]; then
-              EXISTING_CONTENT=$(head -n -2 "${{ matrix.file.name }}.md")
+            FIRST_LINE=$(head -1 "${{ matrix.file.name }}.md")
+            if [[ $FIRST_LINE == "Last updated:"* ]]; then
+              EXISTING_CONTENT=$(tail -n +3 "${{ matrix.file.name }}.md")
             else
               EXISTING_CONTENT=$(cat "${{ matrix.file.name }}.md")
             fi
@@ -86,9 +86,9 @@ jobs:
           
           # Check force update or compare
           if [ "${{ github.event.inputs.force_update }}" == "true" ] || [ "$NEW_CONTENT" != "$EXISTING_CONTENT" ]; then
-            echo "$NEW_CONTENT" > "${{ matrix.file.name }}.md"
+            echo "Last updated: $(date +%Y-%m-%d)" > "${{ matrix.file.name }}.md"
             echo "---" >> "${{ matrix.file.name }}.md"
-            echo "Last updated: $(date +%Y-%m-%d)" >> "${{ matrix.file.name }}.md"
+            echo "$NEW_CONTENT" >> "${{ matrix.file.name }}.md"
             echo "has_changes=true" >> $GITHUB_OUTPUT
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
