@@ -1,3 +1,5 @@
+Last updated: 2025-09-26
+---
 # List of GROUPS with NordVPN servers
 
 Group | Identifier | ID
@@ -21,5 +23,3 @@ Grafana | grafana | 239
 Kapacitor | kapacitor | 242
 Socks5 Proxy | legacy_socks5_proxy | 245
 FastNetMon | fastnetmon | 248
----
-Last updated: 2025-09-20
