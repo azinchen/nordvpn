@@ -1,9 +1,11 @@
+Last updated: 2025-09-26
+---
 # List of COUNTRIES with NordVPN servers
 
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 20
+Albania | AL | 2 | 19
 Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 6
 Angola | AO | 6 | 2
@@ -21,7 +23,7 @@ Bermuda | BM | 24 | 3
 Bhutan | BT | 25 | 2
 Bolivia | BO | 26 | 2
 Bosnia and Herzegovina | BA | 27 | 5
-Brazil | BR | 30 | 37
+Brazil | BR | 30 | 38
 Brunei Darussalam | BN | 32 | 2
 Bulgaria | BG | 33 | 25
 Cambodia | KH | 36 | 2
@@ -107,14 +109,14 @@ Rwanda | RW | 181 | 2
 Senegal | SN | 191 | 2
 Serbia | RS | 192 | 15
 Singapore | SG | 195 | 82
-Slovakia | SK | 196 | 14
+Slovakia | SK | 196 | 15
 Slovenia | SI | 197 | 6
 Somalia | SO | 199 | 2
 South Africa | ZA | 200 | 25
 South Korea | KR | 114 | 44
 Spain | ES | 202 | 109
 Sri Lanka | LK | 203 | 2
-Sweden | SE | 208 | 177
+Sweden | SE | 208 | 179
 Switzerland | CH | 209 | 147
 Taiwan | TW | 211 | 29
 Thailand | TH | 214 | 12
@@ -129,5 +131,3 @@ Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
 Vietnam | VN | 234 | 6
----
-Last updated: 2025-09-26
