@@ -1,6 +1,6 @@
 #!/bin/sh
-# vpn-diag: POSIX sh network diagnostics for an OpenVPN-connected system (Docker-friendly)
-# Usage: vpn-diag [--basic|-b] | [--full|-f] | [--help|-h]
+# network-diagnostic: POSIX sh network diagnostics for an OpenVPN-connected system (Docker-friendly)
+# Usage: network-diagnostic [--basic|-b] | [--full|-f] | [--help|-h]
 # Default mode is --full.
 
 set -u  # be strict about undefined vars
@@ -10,7 +10,7 @@ MODE="full"
 print_usage()
 {
     cat <<'EOF'
-Usage: vpn-diag [options]
+Usage: network-diagnostic [options]
 
 Options:
     -b, --basic   Print only: "Public IP address X.X.X.X, location City CC"
