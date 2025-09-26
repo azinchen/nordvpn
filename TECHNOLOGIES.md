@@ -1,3 +1,5 @@
+Last updated: 2025-09-26
+---
 # List of TECHNOLOGIES with NordVPN servers
 
 Technology | Identifier | ID
@@ -25,5 +27,3 @@ OpenVPN TCP Dedicated | openvpn_dedicated_tcp | 45
 Skylark | skylark | 48
 Mesh Relay | mesh_relay | 50
 NordWhisper | nordwhisper | 51
----
-Last updated: 2025-09-20
