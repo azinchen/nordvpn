@@ -1,9 +1,11 @@
+Last updated: 2025-09-26
+---
 # List of CITIES with NordVPN servers
 
 Country | Code | ID | City | ID | Servers
 --------|------|----|------|----|--------
 Afghanistan | AF | 1 | Kabul | 98270 | 2
-Albania | AL | 2 | Tirana | 308615 | 20
+Albania | AL | 2 | Tirana | 308615 | 19
 Algeria | DZ | 3 | Algiers | 2438216 | 4
 Andorra | AD | 5 | Andorra la Vella | 20 | 6
 Angola | AO | 6 | Luanda | 351407 | 2
@@ -25,7 +27,7 @@ Bermuda | BM | 24 | Hamilton | 809078 | 3
 Bhutan | BT | 25 | Thimphu | 989699 | 2
 Bolivia | BO | 26 | La Paz | 838514 | 2
 Bosnia and Herzegovina | BA | 27 | Novi Travnik | 548462 | 5
-Brazil | BR | 30 | Sao Paulo | 890249 | 37
+Brazil | BR | 30 | Sao Paulo | 890249 | 38
 Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | 2
 Bulgaria | BG | 33 | Sofia | 777368 | 25
 Cambodia | KH | 36 | Phnom Penh | 4658987 | 2
@@ -120,7 +122,7 @@ Rwanda | RW | 181 | Kigali | 7723910 | 2
 Senegal | SN | 191 | Dakar | 7924958 | 2
 Serbia | RS | 192 | Belgrade | 7030907 | 15
 Singapore | SG | 195 | Singapore | 7867982 | 82
-Slovakia | SK | 196 | Bratislava | 7884305 | 14
+Slovakia | SK | 196 | Bratislava | 7884305 | 15
 Slovenia | SI | 197 | Ljubljana | 7874306 | 6
 Somalia | SO | 199 | Mogadishu | 7971170 | 2
 South Africa | ZA | 200 | Johannesburg | 9383693 | 25
@@ -128,7 +130,7 @@ South Korea | KR | 114 | Seoul | 4879586 | 44
 Spain | ES | 202 | Barcelona | 2572757 | 32
 Spain | ES | 202 | Madrid | 2619989 | 77
 Sri Lanka | LK | 203 | Colombo | 5043197 | 2
-Sweden | SE | 208 | Stockholm | 7852919 | 177
+Sweden | SE | 208 | Stockholm | 7852919 | 179
 Switzerland | CH | 209 | Zurich | 1171814 | 147
 Taiwan | TW | 211 | Taipei | 8544365 | 29
 Thailand | TH | 214 | Bangkok | 8121638 | 12
@@ -167,5 +169,3 @@ Uzbekistan | UZ | 231 | Tashkent | 9166826 | 2
 Venezuela | VE | 233 | Caracas | 9176843 | 2
 Vietnam | VN | 234 | Hanoi | 9270302 | 2
 Vietnam | VN | 234 | Ho Chi Minh City | 9271799 | 4
----
-Last updated: 2025-09-26
