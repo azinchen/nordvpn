@@ -1,21 +1,21 @@
-Last updated: 2025-09-26
+Last updated: 2025-09-27
 ---
 # List of CITIES with NordVPN servers
 
 Country | Code | ID | City | ID | Servers
 --------|------|----|------|----|--------
 Afghanistan | AF | 1 | Kabul | 98270 | 2
-Albania | AL | 2 | Tirana | 308615 | 19
+Albania | AL | 2 | Tirana | 308615 | 21
 Algeria | DZ | 3 | Algiers | 2438216 | 4
 Andorra | AD | 5 | Andorra la Vella | 20 | 6
 Angola | AO | 6 | Luanda | 351407 | 2
 Argentina | AR | 10 | Buenos Aires | 384866 | 19
 Armenia | AM | 11 | Yerevan | 322385 | 2
 Australia | AU | 13 | Adelaide | 452717 | 18
-Australia | AU | 13 | Brisbane | 456494 | 46
+Australia | AU | 13 | Brisbane | 456494 | 45
 Australia | AU | 13 | Melbourne | 470813 | 58
-Australia | AU | 13 | Perth | 475799 | 32
-Australia | AU | 13 | Sydney | 479570 | 111
+Australia | AU | 13 | Perth | 475799 | 34
+Australia | AU | 13 | Sydney | 479570 | 100
 Austria | AT | 14 | Vienna | 448799 | 69
 Azerbaijan | AZ | 15 | Baku | 490037 | 2
 Bahamas | BS | 16 | Nassau | 988382 | 5
@@ -132,7 +132,7 @@ Spain | ES | 202 | Madrid | 2619989 | 77
 Sri Lanka | LK | 203 | Colombo | 5043197 | 2
 Sweden | SE | 208 | Stockholm | 7852919 | 179
 Switzerland | CH | 209 | Zurich | 1171814 | 147
-Taiwan | TW | 211 | Taipei | 8544365 | 29
+Taiwan | TW | 211 | Taipei | 8544365 | 30
 Thailand | TH | 214 | Bangkok | 8121638 | 12
 Trinidad and Tobago | TT | 218 | Port of Spain | 9521887 | 2
 Tunisia | TN | 219 | Tunis | 8295401 | 2
@@ -141,7 +141,7 @@ Ukraine | UA | 225 | Kyiv | 8626766 | 14
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
 United Kingdom | GB | 227 | Edinburgh | 2975852 | 40
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
-United Kingdom | GB | 227 | London | 2989907 | 870
+United Kingdom | GB | 227 | London | 2989907 | 871
 United Kingdom | GB | 227 | Manchester | 2991110 | 159
 United States | US | 228 | Ashburn | 9103211 | 94
 United States | US | 228 | Atlanta | 8792429 | 191
