@@ -43,7 +43,7 @@ OpenVPN client docker container that routes other containers' traffic through No
   - [Getting Service Credentials](#getting-service-credentials)
 - [Configuration Options](#configuration-options)
   - [Server Selection](#server-selection)
-  - [IPv6 behavior](#ipv6-behavior-read-this)
+  - [IPv6 behavior](#ipv6-behavior)
   - [Automatic Reconnection](#automatic-reconnection)
     - [Scheduled Reconnection](#scheduled-reconnection)
     - [Connection Failure Handling](#connection-failure-handling)
