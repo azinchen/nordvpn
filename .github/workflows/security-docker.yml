@@ -31,6 +31,7 @@ jobs:
   docker-security-scan:
     name: 🔍 Docker Image Security Scan
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
