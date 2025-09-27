@@ -28,8 +28,7 @@ run6() {
 run6_critical() {
     if [ -n "$IP6T" ]; then
         if ! ${IP6T} "$@" 2>/dev/null; then
-            echo "(IPv6) CRITICAL ERROR: Failed to execute: $* - sleeping infinite"
-            sleep infinity
+            echo "(IPv6) CRITICAL ERROR: Failed to execute: $*"
         fi
     fi
 }

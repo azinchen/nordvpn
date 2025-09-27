@@ -122,9 +122,9 @@ pick_ipv6_backend()
 
 verify_ipv6_backend()
 {
-    # If we picked something for v6, make sure v6 tables actually exist.
+    # If we picked something for v6, make sure v6 tables actually exist and nat table is usable.
     if [ -n "$_IP6T" ]; then
-        if ! ${_IP6T} -t filter -S >/dev/null 2>&1; then
+        if ! ${_IP6T} -t filter -S >/dev/null 2>&1 || ! ${_IP6T} -t nat -F >/dev/null 2>&1; then
             echo "[ENTRYPOINT] IPv6 tables unavailable in this namespace; skipping IPv6 rules"
             _IP6T=""
         fi
