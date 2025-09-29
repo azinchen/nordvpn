@@ -1,4 +1,4 @@
-Last updated: 2025-09-28
+Last updated: 2025-09-29
 ---
 # List of CITIES with NordVPN servers
 
@@ -9,10 +9,10 @@ Albania | AL | 2 | Tirana | 308615 | 21
 Algeria | DZ | 3 | Algiers | 2438216 | 4
 Andorra | AD | 5 | Andorra la Vella | 20 | 6
 Angola | AO | 6 | Luanda | 351407 | 2
-Argentina | AR | 10 | Buenos Aires | 384866 | 19
+Argentina | AR | 10 | Buenos Aires | 384866 | 18
 Armenia | AM | 11 | Yerevan | 322385 | 2
 Australia | AU | 13 | Adelaide | 452717 | 18
-Australia | AU | 13 | Brisbane | 456494 | 45
+Australia | AU | 13 | Brisbane | 456494 | 44
 Australia | AU | 13 | Melbourne | 470813 | 58
 Australia | AU | 13 | Perth | 475799 | 34
 Australia | AU | 13 | Sydney | 479570 | 100
@@ -98,7 +98,7 @@ Moldova | MD | 142 | Chisinau | 5295179 | 3
 Monaco | MC | 143 | Monte Carlo | 5292332 | 4
 Mongolia | MN | 144 | Ulaanbaatar | 5543669 | 2
 Montenegro | ME | 146 | Podgorica | 5318561 | 2
-Morocco | MA | 147 | Rabat | 5271254 | 3
+Morocco | MA | 147 | Rabat | 5271254 | 4
 Mozambique | MZ | 148 | Maputo | 5870336 | 2
 Myanmar | MM | 149 | Naypyidaw | 9521893 | 2
 Nepal | NP | 152 | Kathmandu | 6142175 | 2
@@ -130,7 +130,7 @@ South Korea | KR | 114 | Seoul | 4879586 | 44
 Spain | ES | 202 | Barcelona | 2572757 | 32
 Spain | ES | 202 | Madrid | 2619989 | 77
 Sri Lanka | LK | 203 | Colombo | 5043197 | 2
-Sweden | SE | 208 | Stockholm | 7852919 | 179
+Sweden | SE | 208 | Stockholm | 7852919 | 178
 Switzerland | CH | 209 | Zurich | 1171814 | 147
 Taiwan | TW | 211 | Taipei | 8544365 | 30
 Thailand | TH | 214 | Bangkok | 8121638 | 12
