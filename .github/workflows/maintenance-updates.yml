@@ -385,13 +385,34 @@ jobs:
         id: update-apk
         run: |
           chmod +x ./scripts/update-apk-versions.sh
-          ./scripts/update-apk-versions.sh Dockerfile
-
+          OUTPUT=$(./scripts/update-apk-versions.sh Dockerfile 2>&1)
+          echo "$OUTPUT"
+          
           UPDATE_DATE=$(date +%y%m%d)
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_OUTPUT
+          
+          # Parse the output to extract summary information
+          TOTAL_PACKAGES=$(echo "$OUTPUT" | grep "Total packages checked:" | sed 's/.*: //' | tr -d '\n')
+          UPDATED_COUNT=$(echo "$OUTPUT" | grep "Packages updated:" | sed 's/.*: //' | tr -d '\n')
+          
+          # Extract updated packages list
+          PACKAGES_UPDATED=$(echo "$OUTPUT" | sed -n '/Updated packages:/,/^$/p' | tail -n +2 | sed '/^$/d' | sed 's/^/- /')
+          if [ -z "$PACKAGES_UPDATED" ]; then
+            PACKAGES_UPDATED="No packages needed updates"
+          fi
+          
+          echo "total_packages=$TOTAL_PACKAGES" >> $GITHUB_OUTPUT
+          echo "updated_count=$UPDATED_COUNT" >> $GITHUB_OUTPUT
+          echo "packages_updated<<EOF" >> $GITHUB_OUTPUT
+          echo "$PACKAGES_UPDATED" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
+          HAS_UPDATES=$([ "$UPDATED_COUNT" -gt 0 ] && echo "true" || echo "false")
+          echo "has_updates=$HAS_UPDATES" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request for APK updates
+        if: steps.update-apk.outputs.has_updates == 'true'
         uses: peter-evans/create-pull-request@v7.0.8
         with:
           branch: bot/update-apk-packages
