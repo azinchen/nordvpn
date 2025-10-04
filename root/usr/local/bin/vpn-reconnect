@@ -5,9 +5,9 @@ set -eu
 
 echo "[VPN-RECONNECT] Starting VPN reconnection script..."
 
-s6-rc stop nordvpnd
+s6-rc stop svc-nordvpn
 sleep 2
-s6-rc start nordvpnd
+s6-rc start svc-nordvpn
 
 echo "[VPN-RECONNECT] VPN reconnection completed successfully"
 exit 0
