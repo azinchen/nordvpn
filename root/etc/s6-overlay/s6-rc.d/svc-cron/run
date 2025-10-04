@@ -3,6 +3,6 @@
 
 set -eu
 
-echo "[SERVICE-CROND] Starting crond service..."
+echo "[SERVICE-CRON] Starting cron service..."
 
 exec crond -f
