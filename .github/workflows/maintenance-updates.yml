@@ -392,7 +392,6 @@ jobs:
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request for APK updates
-        if: steps.update-apk.outputs.has_updates == 'true'
         uses: peter-evans/create-pull-request@v7.0.8
         with:
           branch: bot/update-apk-packages
