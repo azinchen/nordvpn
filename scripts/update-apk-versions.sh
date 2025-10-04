@@ -100,9 +100,12 @@ update_package_with_tracking() {
 }
 
 # --- 6. Loop Over All Packages and Update ---
-echo "$packages" | while IFS= read -r package; do
+IFS='
+'
+for package in $packages; do
     update_package_with_tracking "$package"
 done
+unset IFS
 
 # --- 7. Output summary ---
 echo "=== UPDATE SUMMARY ==="
