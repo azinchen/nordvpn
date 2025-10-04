@@ -64,7 +64,7 @@ ENV TECHNOLOGY=openvpn_udp \
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
-        curl=8.14.1-r1 \
+        curl=8.14.1-r2 \
         iptables=1.8.11-r1 \
         iptables-legacy=1.8.11-r1 \
         jq=1.8.0-r0 \
