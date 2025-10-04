@@ -1,17 +1,17 @@
-Last updated: 2025-09-29
+Last updated: 2025-10-04
 ---
 # List of COUNTRIES with NordVPN servers
 
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 21
+Albania | AL | 2 | 16
 Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 6
 Angola | AO | 6 | 2
-Argentina | AR | 10 | 18
+Argentina | AR | 10 | 19
 Armenia | AM | 11 | 2
-Australia | AU | 13 | 254
+Australia | AU | 13 | 267
 Austria | AT | 14 | 69
 Azerbaijan | AZ | 15 | 2
 Bahamas | BS | 16 | 5
@@ -22,12 +22,12 @@ Belize | BZ | 22 | 2
 Bermuda | BM | 24 | 3
 Bhutan | BT | 25 | 2
 Bolivia | BO | 26 | 2
-Bosnia and Herzegovina | BA | 27 | 5
+Bosnia and Herzegovina | BA | 27 | 4
 Brazil | BR | 30 | 38
 Brunei Darussalam | BN | 32 | 2
 Bulgaria | BG | 33 | 25
 Cambodia | KH | 36 | 2
-Canada | CA | 38 | 437
+Canada | CA | 38 | 438
 Cayman Islands | KY | 40 | 2
 Chile | CL | 43 | 7
 Colombia | CO | 47 | 10
@@ -43,7 +43,7 @@ Egypt | EG | 64 | 2
 El Salvador | SV | 65 | 2
 Estonia | EE | 68 | 10
 Ethiopia | ET | 69 | 2
-Finland | FI | 73 | 21
+Finland | FI | 73 | 20
 France | FR | 74 | 369
 Georgia | GE | 80 | 10
 Germany | DE | 81 | 439
@@ -53,7 +53,7 @@ Greenland | GL | 85 | 2
 Guam | GU | 88 | 2
 Guatemala | GT | 89 | 2
 Honduras | HN | 96 | 2
-Hong Kong | HK | 97 | 71
+Hong Kong | HK | 97 | 73
 Hungary | HU | 98 | 26
 Iceland | IS | 99 | 10
 India | IN | 100 | 27
@@ -62,7 +62,7 @@ Iraq | IQ | 103 | 2
 Ireland | IE | 104 | 90
 Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
-Italy | IT | 106 | 193
+Italy | IT | 106 | 194
 Jamaica | JM | 107 | 2
 Japan | JP | 108 | 259
 Jersey | JE | 244 | 4
@@ -89,7 +89,7 @@ Morocco | MA | 147 | 4
 Mozambique | MZ | 148 | 2
 Myanmar | MM | 149 | 2
 Nepal | NP | 152 | 2
-Netherlands | NL | 153 | 264
+Netherlands | NL | 153 | 266
 New Zealand | NZ | 156 | 39
 Nigeria | NG | 159 | 4
 North Macedonia | MK | 128 | 2
@@ -101,7 +101,7 @@ Paraguay | PY | 170 | 2
 Peru | PE | 171 | 2
 Philippines | PH | 172 | 6
 Poland | PL | 174 | 101
-Portugal | PT | 175 | 54
+Portugal | PT | 175 | 52
 Puerto Rico | PR | 176 | 2
 Qatar | QA | 177 | 2
 Romania | RO | 179 | 25
@@ -114,9 +114,9 @@ Slovenia | SI | 197 | 6
 Somalia | SO | 199 | 2
 South Africa | ZA | 200 | 25
 South Korea | KR | 114 | 44
-Spain | ES | 202 | 109
+Spain | ES | 202 | 110
 Sri Lanka | LK | 203 | 2
-Sweden | SE | 208 | 178
+Sweden | SE | 208 | 179
 Switzerland | CH | 209 | 147
 Taiwan | TW | 211 | 30
 Thailand | TH | 214 | 12
@@ -126,7 +126,7 @@ Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
 United Kingdom | GB | 227 | 1118
-United States | US | 228 | 2852
+United States | US | 228 | 2889
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
