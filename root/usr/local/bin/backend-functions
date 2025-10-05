@@ -25,6 +25,7 @@ network="${NETWORK:-}"
 # Common file paths
 ovpntemplatefile="/etc/nordvpn/template.ovpn"
 ovpnfile="/run/xt/nordvpn.ovpn"
+authfile="/run/xt/auth"
 
 run4() {
     if ! ${IPT} "$@" 2>/dev/null; then

@@ -5,9 +5,6 @@ set -eu
 
 echo "[SERVICE-NORDVPN] Starting nordvpn service..."
 
-# Paths (same as your original)
-authfile="/run/xt/auth"
-
 . /usr/local/bin/backend-functions
 
 # -------- helpers --------

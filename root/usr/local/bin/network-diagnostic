@@ -84,19 +84,18 @@ is_private_ip()
 # Query OpenVPN management interface for connection details
 get_openvpn_status()
 {
-    # Try to connect to OpenVPN management interface
+    MGMT_SOURCE=""
+    # Try to connect to OpenVPN management interface via TCP
     if command -v nc >/dev/null 2>&1; then
-        # Use netcat to query management interface
-        MGMT_RESP="$(printf "status\nquit\n" | nc -w 2 127.0.0.1 7505 2>/dev/null || printf '')"
-    elif command -v telnet >/dev/null 2>&1 && command -v timeout >/dev/null 2>&1; then
-        # Fallback to telnet with timeout
-        MGMT_RESP="$(printf "status\nquit\n" | timeout 2 telnet 127.0.0.1 7505 2>/dev/null | sed -n '/^END/,/^END/p' || printf '')"
+        # Use netcat with delays to allow management interface to process commands
+        MGMT_RESP="$({ sleep 0.2; printf "status\n"; sleep 1; printf "quit\n"; } | nc 127.0.0.1 7505 2>/dev/null || printf '')"
     else
         MGMT_RESP=""
     fi
     
     # Parse the response for connection details
     if [ -n "$MGMT_RESP" ]; then
+        MGMT_SOURCE="management interface"
         # For client connections, try to extract from different lines
         # Look for remote server info in the status output
         COMMON_NAME="$(printf "%s" "$MGMT_RESP" | grep -o 'TCP connection established with \[AF_INET\][0-9.]*:[0-9]*' | sed 's/.*\[\([^]]*\)\].*/\1/' | cut -d: -f1 || printf '')"
@@ -111,22 +110,46 @@ get_openvpn_status()
             TRUSTED_IP="$(printf "%s" "$UDP_LINE" | sed 's/.*\[AF_INET\]\([0-9.]*\):.*/\1/' || printf '')"
         fi
         
-        # Try to get port from management interface state
-        STATE_RESP="$(printf "state\nquit\n" | nc -w 2 127.0.0.1 7505 2>/dev/null || printf '')"
+        # Try to get port and uptime from management interface state
+        STATE_RESP="$({ sleep 0.2; printf "state\n"; sleep 1; printf "quit\n"; } | nc 127.0.0.1 7505 2>/dev/null || printf '')"
         if [ -n "$STATE_RESP" ]; then
-            # Parse state line: >STATE:timestamp,connected,remote_ip,remote_port,local_ip,local_port
-            STATE_LINE="$(printf "%s" "$STATE_RESP" | grep '^>STATE:' | head -1 || printf '')"
+            # Parse state line format: timestamp,CONNECTED,SUCCESS,local_ip,remote_ip,remote_port
+            STATE_LINE="$(printf "%s" "$STATE_RESP" | grep -E '^[0-9]+,CONNECTED' | head -1 || printf '')"
             if [ -n "$STATE_LINE" ]; then
-                STATE_IP="$(printf "%s" "$STATE_LINE" | cut -d, -f3 || printf '')"
-                STATE_PORT="$(printf "%s" "$STATE_LINE" | cut -d, -f4 || printf '')"
+                # Extract connection timestamp (seconds since epoch)
+                CONN_TIMESTAMP="$(printf "%s" "$STATE_LINE" | cut -d, -f1 || printf '')"
+                STATE_IP="$(printf "%s" "$STATE_LINE" | cut -d, -f5 || printf '')"
+                STATE_PORT="$(printf "%s" "$STATE_LINE" | cut -d, -f6 || printf '')"
                 [ -n "$STATE_IP" ] && [ "$STATE_IP" != "0.0.0.0" ] && TRUSTED_IP="$STATE_IP"
                 [ -n "$STATE_PORT" ] && [ "$STATE_PORT" != "0" ] && TRUSTED_PORT="$STATE_PORT"
+                
+                # Calculate uptime if we have the timestamp
+                if [ -n "$CONN_TIMESTAMP" ] && [ "$CONN_TIMESTAMP" -gt 0 ]; then
+                    NOW="$(date +%s 2>/dev/null || printf '')"
+                    if [ -n "$NOW" ]; then
+                        UPTIME_SECONDS=$((NOW - CONN_TIMESTAMP))
+                        # Format uptime as HH:MM:SS or DDd HH:MM:SS
+                        if [ "$UPTIME_SECONDS" -ge 86400 ]; then
+                            DAYS=$((UPTIME_SECONDS / 86400))
+                            HOURS=$(((UPTIME_SECONDS % 86400) / 3600))
+                            MINS=$(((UPTIME_SECONDS % 3600) / 60))
+                            SECS=$((UPTIME_SECONDS % 60))
+                            CONNECTION_UPTIME="$(printf "%dd %02d:%02d:%02d" "$DAYS" "$HOURS" "$MINS" "$SECS")"
+                        else
+                            HOURS=$((UPTIME_SECONDS / 3600))
+                            MINS=$(((UPTIME_SECONDS % 3600) / 60))
+                            SECS=$((UPTIME_SECONDS % 60))
+                            CONNECTION_UPTIME="$(printf "%02d:%02d:%02d" "$HOURS" "$MINS" "$SECS")"
+                        fi
+                    fi
+                fi
             fi
         fi
     fi
     
     # Fallback: try to get from config file if management interface didn't work
     if [ -z "$COMMON_NAME" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+        [ -z "$MGMT_SOURCE" ] && MGMT_SOURCE="config file"
         # Extract from verify-x509-name line first (preferred)
         COMMON_NAME="$(awk '/^[[:space:]]*verify-x509-name/ {for(i=1;i<=NF;i++) if($i ~ /CN=/) {sub(/CN=/,"",$i); print $i; exit}}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
         if [ -z "$COMMON_NAME" ]; then
@@ -142,10 +165,60 @@ get_openvpn_status()
         fi
     fi
     if [ -z "$TRUSTED_IP" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+        [ -z "$MGMT_SOURCE" ] && MGMT_SOURCE="config file"
         TRUSTED_IP="$(awk '/^[[:space:]]*remote[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
         TRUSTED_PORT="$(awk '/^[[:space:]]*remote[ \t]+/ {print $3; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
         [ -z "$TRUSTED_PORT" ] && TRUSTED_PORT="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
     fi
+    
+    # Export for use in output
+    export MGMT_SOURCE
+    export CONNECTION_UPTIME
+}
+
+# Detect iptables backend (nft_tables or legacy)
+get_iptables_backend()
+{
+    IPTABLES_BACKEND="unknown"
+    IPTABLES_VERSION=""
+    IPTABLES_COMMAND="unknown"
+    
+    # Get the selected iptables binary from backend.env (set by entrypoint)
+    if [ -n "${IPT:-}" ]; then
+        IPTABLES_COMMAND="$IPT"
+        # Get version information
+        IPTABLES_VERSION="$(${IPT} --version 2>/dev/null || printf '')"
+        
+        # Detect backend from version string
+        if printf "%s" "$IPTABLES_VERSION" | grep -q "nf_tables"; then
+            IPTABLES_BACKEND="nf_tables"
+        elif printf "%s" "$IPTABLES_VERSION" | grep -q "legacy"; then
+            IPTABLES_BACKEND="legacy"
+        else
+            # Try to detect by checking for nft command or the binary name
+            if printf "%s" "$IPT" | grep -q "legacy"; then
+                IPTABLES_BACKEND="legacy"
+            elif command -v nft >/dev/null 2>&1; then
+                IPTABLES_BACKEND="nf_tables (detected via nft)"
+            else
+                # Assume legacy if we can't determine
+                IPTABLES_BACKEND="legacy (assumed)"
+            fi
+        fi
+    elif command -v iptables >/dev/null 2>&1; then
+        # Fallback if IPT not set
+        IPTABLES_COMMAND="iptables"
+        IPTABLES_VERSION="$(iptables --version 2>/dev/null || printf '')"
+        if printf "%s" "$IPTABLES_VERSION" | grep -q "nf_tables"; then
+            IPTABLES_BACKEND="nf_tables"
+        elif printf "%s" "$IPTABLES_VERSION" | grep -q "legacy"; then
+            IPTABLES_BACKEND="legacy"
+        fi
+    fi
+    
+    export IPTABLES_BACKEND
+    export IPTABLES_VERSION
+    export IPTABLES_COMMAND
 }
 
 # Get OpenVPN interface details from system
@@ -255,12 +328,19 @@ TRUSTED_IP=""
 TRUSTED_PORT=""
 PROTO="?"
 LPORT="?"
+CONNECTION_UPTIME=""
+IPTABLES_BACKEND=""
+IPTABLES_VERSION=""
+IPTABLES_COMMAND=""
 
 # Try to get OpenVPN status from management interface
 get_openvpn_status
 
 # Get interface details from system
 get_interface_details
+
+# Detect iptables backend
+get_iptables_backend
 
 # Try to get protocol and port from OpenVPN config or process
 if [ -f "/run/xt/nordvpn.ovpn" ]; then
@@ -293,6 +373,10 @@ fi
 
 echo "================================================================"
 echo "OpenVPN DIAG (full)   : $(date -Is 2>/dev/null || date)"
+[ -n "$MGMT_SOURCE" ] && echo "Data source           : $MGMT_SOURCE"
+[ -n "$IPTABLES_COMMAND" ] && echo "Iptables command      : $IPTABLES_COMMAND"
+[ -n "$IPTABLES_BACKEND" ] && echo "Iptables backend      : $IPTABLES_BACKEND"
+[ -n "$IPTABLES_VERSION" ] && echo "Iptables version      : $IPTABLES_VERSION"
 echo "Device                : $DEV_IF (type=$DEV_TYPE)"
 echo "Common Name           : $COMMON_NAME"
 echo "Ifconfig Local        : $IFCONF_LOCAL"
@@ -300,6 +384,7 @@ echo "Ifconfig Remote       : $IFCONF_REMOTE"
 echo "Route VPN Gateway     : $ROUTE_VPN_GW"
 echo "Trusted Peer          : $TRUSTED_PEER"
 echo "Proto/Local Port      : $PROTO/$LPORT"
+[ -n "$CONNECTION_UPTIME" ] && echo "Connection Uptime     : $CONNECTION_UPTIME"
 echo
 
 echo "### ip addr show $DEV_IF"
