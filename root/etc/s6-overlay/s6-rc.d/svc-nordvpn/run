@@ -7,9 +7,6 @@ echo "[SERVICE-NORDVPN] Starting nordvpn service..."
 
 # Paths (same as your original)
 authfile="/run/xt/auth"
-ovpnfile="/run/xt/nordvpn.ovpn"
-OPENVPN_OPTS="${OPENVPN_OPTS:-}"
-NETWORK_DIAGNOSTIC_ENABLED="${NETWORK_DIAGNOSTIC_ENABLED:-false}"
 
 . /usr/local/bin/backend-functions
 
@@ -53,7 +50,7 @@ if run4 $PIN_SPEC 2>/dev/null; then
 fi
 
 echo "[SERVICE-NORDVPN] launching OpenVPN..."
-openvpn --group nordvpn --config "$ovpnfile" --auth-user-pass "$authfile" --auth-nocache --management 127.0.0.1 7505 $OPENVPN_OPTS &
+openvpn --group nordvpn --config "$ovpnfile" --auth-user-pass "$authfile" --auth-nocache --management 127.0.0.1 7505 $openvpn_opts &
 
 # Wait for VPN connection
 echo "[SERVICE-NORDVPN] Waiting for VPN connection..."
@@ -66,7 +63,7 @@ done
 if is_vpn_connected; then
     echo "[SERVICE-NORDVPN] VPN connected successfully"
     # Run network diagnostic if enabled
-    if [ "$NETWORK_DIAGNOSTIC_ENABLED" = "true" ] || [ "$NETWORK_DIAGNOSTIC_ENABLED" = "1" ]; then
+    if [ "$network_diagnostic_enabled" = "true" ] || [ "$network_diagnostic_enabled" = "1" ]; then
         echo "[SERVICE-NORDVPN] Running network diagnostic..."
         network-diagnostic
     fi

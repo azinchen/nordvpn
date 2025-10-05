@@ -5,10 +5,7 @@ set -eu
 
 echo "[VPN-HEALTHCHECK] Starting VPN healthcheck script..."
 
-# Set default values for environment variables (validation done in init-setupcron)
-CHECK_CONNECTION_ATTEMPTS="${CHECK_CONNECTION_ATTEMPTS:-3}"
-CHECK_CONNECTION_URL="${CHECK_CONNECTION_URL:-https://www.google.com}"
-CHECK_CONNECTION_ATTEMPT_INTERVAL="${CHECK_CONNECTION_ATTEMPT_INTERVAL:-5}"
+. /usr/local/bin/backend-functions
 
 httpreq()
 {
@@ -20,10 +17,10 @@ httpreq()
 }
 
 counter=1
-while [ $counter -le "$CHECK_CONNECTION_ATTEMPTS" ]; do
+while [ $counter -le "$check_connection_attempts" ]; do
     # Convert semicolon separated list to space separated
     oldIFS="$IFS"; IFS=',;'
-    for url in $CHECK_CONNECTION_URL; do
+    for url in $check_connection_url; do
         if httpreq "$url"; then
             echo "[VPN-HEALTHCHECK] Connection via VPN is up"
             exit 0
@@ -31,7 +28,7 @@ while [ $counter -le "$CHECK_CONNECTION_ATTEMPTS" ]; do
     done
     IFS="$oldIFS"
 
-    sleep "$CHECK_CONNECTION_ATTEMPT_INTERVAL"
+    sleep "$check_connection_attempt_interval"
     counter=$((counter + 1))
 done
 

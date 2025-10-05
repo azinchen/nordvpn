@@ -30,10 +30,10 @@ if [ -n "$docker_network" ]; then
     run4 -A OUTPUT -p tcp --dport 443 -j VPN-SERVER
 
     # NordVPN API bootstrap (TCP/443) by resolved IPs
-    if [ -n "$NORDVPNAPI_IP" ]; then
-        echo "[INIT-FIREWALL] Processing NordVPN API IPv4 addresses from NORDVPNAPI_IP variable: ${NORDVPNAPI_IP}"
+    if [ -n "$nordvpnapi_ip" ]; then
+        echo "[INIT-FIREWALL] Processing NordVPN API IPv4 addresses from NORDVPNAPI_IP variable: ${nordvpnapi_ip}"
         oldIFS="$IFS"; IFS=',;'
-        for ip in $NORDVPNAPI_IP; do
+        for ip in $nordvpnapi_ip; do
             [ -z "$ip" ] && continue
             run4 -A OUTPUT -d "$ip" -p tcp --dport 443 -j ACCEPT
         done
@@ -41,10 +41,10 @@ if [ -n "$docker_network" ]; then
     fi
 
     # NETWORK rules (CIDRs). If present, restrict inbound to these nets; do NOT add the broad eth0 accept.
-    if [ -n "${NETWORK:-}" ]; then
-        echo "[INIT-FIREWALL] Processing custom IPv4 networks from NETWORK variable: ${NETWORK}"
+    if [ -n "${network:-}" ]; then
+        echo "[INIT-FIREWALL] Processing custom IPv4 networks from NETWORK variable: ${network}"
         oldIFS="$IFS"; IFS=',;'
-        for net in $NETWORK; do
+        for net in $network; do
             [ -z "$net" ] && continue
             # Best-effort route add (if not already present)
             if [ -n "$gw" ]; then
