@@ -4,6 +4,28 @@
 # Reuse backend selected by entrypoint
 [ -r /run/xt/backend.env ] && . /run/xt/backend.env
 
+# Create lowercase copies of environment variables
+country="${COUNTRY:-}"
+city="${CITY:-}"
+technology="${TECHNOLOGY:-OpenVPN UDP}"
+group="${GROUP:-}"
+random_top="${RANDOM_TOP:-0}"
+openvpn_opts="${OPENVPN_OPTS:-}"
+network_diagnostic_enabled="${NETWORK_DIAGNOSTIC_ENABLED:-false}"
+check_connection_attempts="${CHECK_CONNECTION_ATTEMPTS:-3}"
+check_connection_url="${CHECK_CONNECTION_URL:-https://www.google.com}"
+check_connection_attempt_interval="${CHECK_CONNECTION_ATTEMPT_INTERVAL:-5}"
+user="${USER:-}"
+pass="${PASS:-}"
+recreate_vpn_cron="${RECREATE_VPN_CRON:-}"
+check_connection_cron="${CHECK_CONNECTION_CRON:-}"
+nordvpnapi_ip="${NORDVPNAPI_IP:-}"
+network="${NETWORK:-}"
+
+# Common file paths
+ovpntemplatefile="/etc/nordvpn/template.ovpn"
+ovpnfile="/run/xt/nordvpn.ovpn"
+
 run4() {
     if ! ${IPT} "$@" 2>/dev/null; then
         echo "(IPv4) skipped: $*"

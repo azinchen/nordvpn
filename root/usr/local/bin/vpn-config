@@ -5,18 +5,9 @@ set -eu
 
 echo "[VPN-CONFIG] Starting vpn-config script..."
 
-# Set default values for environment variables
-COUNTRY="${COUNTRY:-}"
-CITY="${CITY:-}"
-TECHNOLOGY="${TECHNOLOGY:-OpenVPN UDP}"
-GROUP="${GROUP:-}"
-RANDOM_TOP="${RANDOM_TOP:-0}"
+. /usr/local/bin/backend-functions
 
 numericregex="^[0-9]+$"
-specific_server_regex="^[a-zA-Z]{2}[0-9]+$"
-
-ovpntemplatefile="/etc/nordvpn/template.ovpn"
-ovpnfile="/run/xt/nordvpn.ovpn"
 
 # Helper functions for pattern matching (sh-compatible)
 is_numeric()
@@ -332,10 +323,10 @@ locations_count=0
 
 # Validate technology and group IDs and build filter strings
 tech_filter=""
-if [ -n "$TECHNOLOGY" ]; then
-    tech_id=$(gettechnologyid "$TECHNOLOGY")
+if [ -n "$technology" ]; then
+    tech_id=$(gettechnologyid "$technology")
     if [ -z "$tech_id" ]; then
-        echo "[VPN-CONFIG] Warning: Could not find technology \"$TECHNOLOGY\""
+        echo "[VPN-CONFIG] Warning: Could not find technology \"$technology\""
     else
         tech_filter="--data-urlencode filters[servers_technologies][id]=$tech_id"
     fi
@@ -344,10 +335,10 @@ else
 fi
 
 group_filter=""
-if [ -n "$GROUP" ]; then
-    group_id=$(getgroupid "$GROUP")
+if [ -n "$group" ]; then
+    group_id=$(getgroupid "$group")
     if [ -z "$group_id" ]; then
-        echo "[VPN-CONFIG] Warning: Could not find group \"$GROUP\""
+        echo "[VPN-CONFIG] Warning: Could not find group \"$group\""
     else
         group_filter="--data-urlencode filters[servers_groups][id]=$group_id"
     fi
@@ -363,10 +354,10 @@ servers=""
 locations_count=0
 
 # Process COUNTRY if set
-if [ -n "$COUNTRY" ]; then
+if [ -n "$country" ]; then
     # Convert semicolon/comma separated list to space separated
     oldIFS="$IFS"; IFS=',;'; _rc=1
-    for value in $COUNTRY; do
+    for value in $country; do
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))
         fi
@@ -402,10 +393,10 @@ if [ -n "$COUNTRY" ]; then
 fi
 
 # Process CITY if set
-if [ -n "$CITY" ]; then
+if [ -n "$city" ]; then
     # Convert semicolon/comma separated list to space separated
     oldIFS="$IFS"; IFS=',;'
-    for value in $CITY; do
+    for value in $city; do
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))
         fi
@@ -476,7 +467,7 @@ if [ "$poollength" -eq 0 ]; then
 fi
 
 # Only sort by load if multiple locations are specified, otherwise keep recommended order
-if [ \( -n "$COUNTRY" \) -o \( -n "$CITY" \) ] && [ "$locations_count" -gt 1 ] && [ "$poollength" -gt 0 ]; then
+if [ \( -n "$country" \) -o \( -n "$city" \) ] && [ "$locations_count" -gt 1 ] && [ "$poollength" -gt 0 ]; then
     # Multiple locations - sort by load and remove duplicates
     servers=$(echo "$servers" | jq -s -c 'unique | sort_by(.load) | .[]')
 else
@@ -484,9 +475,9 @@ else
     servers=$(echo "$servers" | jq -s -c '.[]')
 fi
 
-if [ "$RANDOM_TOP" -ne 0 ]; then
-    if [ "$RANDOM_TOP" -lt "$poollength" ]; then
-        filtered=$(echo "$servers" | head -n "$RANDOM_TOP" | shuf)
+if [ "$random_top" -ne 0 ]; then
+    if [ "$random_top" -lt "$poollength" ]; then
+        filtered=$(echo "$servers" | head -n "$random_top" | shuf)
         servers="$filtered"$(echo "$servers" | tail -n +"$((RANDOM_TOP + 1))")
     else
         servers=$(echo "$servers" | shuf)
@@ -508,7 +499,7 @@ fi
 serverip=$(echo "$servers" | jq -r '.station' | head -n 1)
 name=$(echo "$servers" | jq -r '.name' | head -n 1)
 hostname=$(echo "$servers" | jq -r '.hostname' | head -n 1)
-protocol=$(getopenvpnprotocol "$TECHNOLOGY")
+protocol=$(getopenvpnprotocol "$technology")
 
 # Extract location information
 country_name=$(echo "$servers" | jq -r '.locations[0].country.name' | head -n 1)
@@ -528,7 +519,7 @@ if [ "$protocol" = "udp" ]; then
 elif [ "$protocol" = "tcp" ]; then
     sed -i "s/__PORT__/443/g" "$ovpnfile"
 else
-    echo "[VPN-CONFIG] CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$TECHNOLOGY\" - sleeping infinite"
+    echo "[VPN-CONFIG] CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$technology\" - sleeping infinite"
     sleep infinity
 fi
 
