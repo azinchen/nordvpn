@@ -1,4 +1,4 @@
-Last updated: 2025-10-04
+Last updated: 2025-10-05
 ---
 # List of CITIES with NordVPN servers
 
@@ -77,7 +77,7 @@ Italy | IT | 106 | Palermo | 4548074 | 12
 Italy | IT | 106 | Rome | 4555808 | 44
 Jamaica | JM | 107 | Kingston | 4576328 | 2
 Japan | JP | 108 | Osaka | 4621847 | 36
-Japan | JP | 108 | Tokyo | 4633349 | 223
+Japan | JP | 108 | Tokyo | 4633349 | 222
 Jersey | JE | 244 | Saint Helier | 4572281 | 4
 Jordan | JO | 109 | Amman | 4581203 | 2
 Kazakhstan | KZ | 110 | Astana | 4925732 | 2
@@ -139,7 +139,7 @@ Tunisia | TN | 219 | Tunis | 8295401 | 2
 Turkey | TR | 220 | Istanbul | 8401790 | 19
 Ukraine | UA | 225 | Kyiv | 8626766 | 14
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
-United Kingdom | GB | 227 | Edinburgh | 2975852 | 39
+United Kingdom | GB | 227 | Edinburgh | 2975852 | 41
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
 United Kingdom | GB | 227 | London | 2989907 | 870
 United Kingdom | GB | 227 | Manchester | 2991110 | 161
