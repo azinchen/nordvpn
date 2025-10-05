@@ -7,8 +7,6 @@ echo "[INIT-CREATEAUTH] Starting init-createauth script..."
 
 . /usr/local/bin/backend-functions
 
-authfile="/run/xt/auth"
-
 echo "$user" > "$authfile"
 echo "$pass" >> "$authfile"
 chmod 0600 "$authfile"
