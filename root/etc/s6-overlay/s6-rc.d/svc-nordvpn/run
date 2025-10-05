@@ -47,7 +47,7 @@ if run4 $PIN_SPEC 2>/dev/null; then
 fi
 
 echo "[SERVICE-NORDVPN] launching OpenVPN..."
-openvpn --group nordvpn --config "$ovpnfile" --auth-user-pass "$authfile" --auth-nocache --management 127.0.0.1 7505 --management-query-passwords $openvpn_opts &
+openvpn --group nordvpn --config "$ovpnfile" --auth-user-pass "$authfile" --auth-nocache --management 127.0.0.1 7505 $openvpn_opts &
 
 # Wait for VPN connection
 echo "[SERVICE-NORDVPN] Waiting for VPN connection..."
