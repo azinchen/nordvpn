@@ -84,19 +84,18 @@ is_private_ip()
 # Query OpenVPN management interface for connection details
 get_openvpn_status()
 {
+    MGMT_SOURCE=""
     # Try to connect to OpenVPN management interface
     if command -v nc >/dev/null 2>&1; then
-        # Use netcat to query management interface
-        MGMT_RESP="$(printf "status\nquit\n" | nc -w 2 127.0.0.1 7505 2>/dev/null || printf '')"
-    elif command -v telnet >/dev/null 2>&1 && command -v timeout >/dev/null 2>&1; then
-        # Fallback to telnet with timeout
-        MGMT_RESP="$(printf "status\nquit\n" | timeout 2 telnet 127.0.0.1 7505 2>/dev/null | sed -n '/^END/,/^END/p' || printf '')"
+        # Use netcat with delays to allow management interface to process commands
+        MGMT_RESP="$({ sleep 0.2; printf "status\n"; sleep 1; printf "quit\n"; } | nc 127.0.0.1 7505 2>/dev/null || printf '')"
     else
         MGMT_RESP=""
     fi
     
     # Parse the response for connection details
     if [ -n "$MGMT_RESP" ]; then
+        MGMT_SOURCE="management interface"
         # For client connections, try to extract from different lines
         # Look for remote server info in the status output
         COMMON_NAME="$(printf "%s" "$MGMT_RESP" | grep -o 'TCP connection established with \[AF_INET\][0-9.]*:[0-9]*' | sed 's/.*\[\([^]]*\)\].*/\1/' | cut -d: -f1 || printf '')"
@@ -112,7 +111,7 @@ get_openvpn_status()
         fi
         
         # Try to get port from management interface state
-        STATE_RESP="$(printf "state\nquit\n" | nc -w 2 127.0.0.1 7505 2>/dev/null || printf '')"
+        STATE_RESP="$({ sleep 0.2; printf "state\n"; sleep 1; printf "quit\n"; } | nc 127.0.0.1 7505 2>/dev/null || printf '')"
         if [ -n "$STATE_RESP" ]; then
             # Parse state line: >STATE:timestamp,connected,remote_ip,remote_port,local_ip,local_port
             STATE_LINE="$(printf "%s" "$STATE_RESP" | grep '^>STATE:' | head -1 || printf '')"
@@ -127,6 +126,7 @@ get_openvpn_status()
     
     # Fallback: try to get from config file if management interface didn't work
     if [ -z "$COMMON_NAME" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+        [ -z "$MGMT_SOURCE" ] && MGMT_SOURCE="config file"
         # Extract from verify-x509-name line first (preferred)
         COMMON_NAME="$(awk '/^[[:space:]]*verify-x509-name/ {for(i=1;i<=NF;i++) if($i ~ /CN=/) {sub(/CN=/,"",$i); print $i; exit}}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
         if [ -z "$COMMON_NAME" ]; then
@@ -142,10 +142,14 @@ get_openvpn_status()
         fi
     fi
     if [ -z "$TRUSTED_IP" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+        [ -z "$MGMT_SOURCE" ] && MGMT_SOURCE="config file"
         TRUSTED_IP="$(awk '/^[[:space:]]*remote[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
         TRUSTED_PORT="$(awk '/^[[:space:]]*remote[ \t]+/ {print $3; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
         [ -z "$TRUSTED_PORT" ] && TRUSTED_PORT="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
     fi
+    
+    # Export for use in output
+    export MGMT_SOURCE
 }
 
 # Get OpenVPN interface details from system
@@ -293,6 +297,7 @@ fi
 
 echo "================================================================"
 echo "OpenVPN DIAG (full)   : $(date -Is 2>/dev/null || date)"
+[ -n "$MGMT_SOURCE" ] && echo "Data source           : $MGMT_SOURCE"
 echo "Device                : $DEV_IF (type=$DEV_TYPE)"
 echo "Common Name           : $COMMON_NAME"
 echo "Ifconfig Local        : $IFCONF_LOCAL"
