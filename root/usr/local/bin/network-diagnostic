@@ -87,10 +87,10 @@ get_openvpn_status()
     # Try to connect to OpenVPN management interface
     if command -v nc >/dev/null 2>&1; then
         # Use netcat to query management interface
-        MGMT_RESP="$(printf "password admin\nstatus\nquit\n" | nc -w 2 127.0.0.1 7505 2>/dev/null || printf '')"
+        MGMT_RESP="$(printf "status\nquit\n" | nc -w 2 127.0.0.1 7505 2>/dev/null || printf '')"
     elif command -v telnet >/dev/null 2>&1 && command -v timeout >/dev/null 2>&1; then
         # Fallback to telnet with timeout
-        MGMT_RESP="$(printf "password admin\nstatus\nquit\n" | timeout 2 telnet 127.0.0.1 7505 2>/dev/null | sed -n '/^END/,/^END/p' || printf '')"
+        MGMT_RESP="$(printf "status\nquit\n" | timeout 2 telnet 127.0.0.1 7505 2>/dev/null | sed -n '/^END/,/^END/p' || printf '')"
     else
         MGMT_RESP=""
     fi
@@ -112,7 +112,7 @@ get_openvpn_status()
         fi
         
         # Try to get port from management interface state
-        STATE_RESP="$(printf "password admin\nstate\nquit\n" | nc -w 2 127.0.0.1 7505 2>/dev/null || printf '')"
+        STATE_RESP="$(printf "state\nquit\n" | nc -w 2 127.0.0.1 7505 2>/dev/null || printf '')"
         if [ -n "$STATE_RESP" ]; then
             # Parse state line: >STATE:timestamp,connected,remote_ip,remote_port,local_ip,local_port
             STATE_LINE="$(printf "%s" "$STATE_RESP" | grep '^>STATE:' | head -1 || printf '')"
