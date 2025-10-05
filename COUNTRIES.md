@@ -1,4 +1,4 @@
-Last updated: 2025-10-04
+Last updated: 2025-10-05
 ---
 # List of COUNTRIES with NordVPN servers
 
@@ -64,7 +64,7 @@ Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
 Italy | IT | 106 | 194
 Jamaica | JM | 107 | 2
-Japan | JP | 108 | 259
+Japan | JP | 108 | 258
 Jersey | JE | 244 | 4
 Jordan | JO | 109 | 2
 Kazakhstan | KZ | 110 | 2
@@ -125,7 +125,7 @@ Tunisia | TN | 219 | 2
 Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
-United Kingdom | GB | 227 | 1118
+United Kingdom | GB | 227 | 1120
 United States | US | 228 | 2889
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
