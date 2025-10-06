@@ -1,4 +1,4 @@
-Last updated: 2025-10-05
+Last updated: 2025-10-06
 ---
 # List of CITIES with NordVPN servers
 
@@ -126,7 +126,7 @@ Slovakia | SK | 196 | Bratislava | 7884305 | 15
 Slovenia | SI | 197 | Ljubljana | 7874306 | 6
 Somalia | SO | 199 | Mogadishu | 7971170 | 2
 South Africa | ZA | 200 | Johannesburg | 9383693 | 25
-South Korea | KR | 114 | Seoul | 4879586 | 44
+South Korea | KR | 114 | Seoul | 4879586 | 46
 Spain | ES | 202 | Barcelona | 2572757 | 32
 Spain | ES | 202 | Madrid | 2619989 | 78
 Sri Lanka | LK | 203 | Colombo | 5043197 | 2
@@ -141,7 +141,7 @@ Ukraine | UA | 225 | Kyiv | 8626766 | 14
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
 United Kingdom | GB | 227 | Edinburgh | 2975852 | 41
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
-United Kingdom | GB | 227 | London | 2989907 | 870
+United Kingdom | GB | 227 | London | 2989907 | 869
 United Kingdom | GB | 227 | Manchester | 2991110 | 161
 United States | US | 228 | Ashburn | 9103211 | 128
 United States | US | 228 | Atlanta | 8792429 | 191
@@ -156,7 +156,7 @@ United States | US | 228 | Kansas City | 8930717 | 35
 United States | US | 228 | Los Angeles | 8761958 | 292
 United States | US | 228 | McAllen | 9086162 | 20
 United States | US | 228 | Miami | 8787782 | 202
-United States | US | 228 | Nashville | 9071273 | 40
+United States | US | 228 | Nashville | 9071273 | 39
 United States | US | 228 | New York | 8971718 | 586
 United States | US | 228 | Omaha | 8943887 | 40
 United States | US | 228 | Phoenix | 8741960 | 52
