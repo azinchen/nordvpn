@@ -1,11 +1,11 @@
-Last updated: 2025-10-06
+Last updated: 2025-10-09
 ---
 # List of CITIES with NordVPN servers
 
 Country | Code | ID | City | ID | Servers
 --------|------|----|------|----|--------
 Afghanistan | AF | 1 | Kabul | 98270 | 2
-Albania | AL | 2 | Tirana | 308615 | 16
+Albania | AL | 2 | Tirana | 308615 | 18
 Algeria | DZ | 3 | Algiers | 2438216 | 4
 Andorra | AD | 5 | Andorra la Vella | 20 | 6
 Angola | AO | 6 | Luanda | 351407 | 2
@@ -15,7 +15,7 @@ Australia | AU | 13 | Adelaide | 452717 | 18
 Australia | AU | 13 | Brisbane | 456494 | 46
 Australia | AU | 13 | Melbourne | 470813 | 58
 Australia | AU | 13 | Perth | 475799 | 33
-Australia | AU | 13 | Sydney | 479570 | 112
+Australia | AU | 13 | Sydney | 479570 | 114
 Austria | AT | 14 | Vienna | 448799 | 69
 Azerbaijan | AZ | 15 | Baku | 490037 | 2
 Bahamas | BS | 16 | Nassau | 988382 | 5
@@ -26,13 +26,13 @@ Belize | BZ | 22 | Belmopan | 1037459 | 2
 Bermuda | BM | 24 | Hamilton | 809078 | 3
 Bhutan | BT | 25 | Thimphu | 989699 | 2
 Bolivia | BO | 26 | La Paz | 838514 | 2
-Bosnia and Herzegovina | BA | 27 | Novi Travnik | 548462 | 4
+Bosnia and Herzegovina | BA | 27 | Novi Travnik | 548462 | 3
 Brazil | BR | 30 | Sao Paulo | 890249 | 38
 Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | 2
 Bulgaria | BG | 33 | Sofia | 777368 | 25
 Cambodia | KH | 36 | Phnom Penh | 4658987 | 2
 Canada | CA | 38 | Montreal | 1048463 | 142
-Canada | CA | 38 | Toronto | 1054250 | 203
+Canada | CA | 38 | Toronto | 1054250 | 205
 Canada | CA | 38 | Vancouver | 1054610 | 93
 Cayman Islands | KY | 40 | George Town | 4922303 | 2
 Chile | CL | 43 | Santiago | 1227092 | 7
@@ -58,7 +58,7 @@ Germany | DE | 81 | Berlin | 2181458 | 79
 Germany | DE | 81 | Frankfurt | 2215709 | 310
 Germany | DE | 81 | Hamburg | 2234906 | 50
 Ghana | GH | 82 | Accra | 3040355 | 2
-Greece | GR | 84 | Athens | 3131903 | 20
+Greece | GR | 84 | Athens | 3131903 | 22
 Greenland | GL | 85 | Nuuk | 3085001 | 2
 Guam | GU | 88 | Hagatna | 8808314 | 2
 Guatemala | GT | 89 | Guatemala City | 3202463 | 2
@@ -77,7 +77,7 @@ Italy | IT | 106 | Palermo | 4548074 | 12
 Italy | IT | 106 | Rome | 4555808 | 44
 Jamaica | JM | 107 | Kingston | 4576328 | 2
 Japan | JP | 108 | Osaka | 4621847 | 36
-Japan | JP | 108 | Tokyo | 4633349 | 222
+Japan | JP | 108 | Tokyo | 4633349 | 223
 Jersey | JE | 244 | Saint Helier | 4572281 | 4
 Jordan | JO | 109 | Amman | 4581203 | 2
 Kazakhstan | KZ | 110 | Astana | 4925732 | 2
@@ -93,7 +93,7 @@ Luxembourg | LU | 126 | Luxembourg | 9521876 | 12
 Malaysia | MY | 131 | Kuala Lumpur | 5820143 | 10
 Malta | MT | 134 | Valletta | 5554481 | 2
 Mauritania | MR | 137 | Nouakchott | 5551598 | 2
-Mexico | MX | 140 | Mexico | 5677037 | 60
+Mexico | MX | 140 | Mexico | 5677037 | 62
 Moldova | MD | 142 | Chisinau | 5295179 | 3
 Monaco | MC | 143 | Monte Carlo | 5292332 | 4
 Mongolia | MN | 144 | Ulaanbaatar | 5543669 | 2
@@ -102,7 +102,7 @@ Morocco | MA | 147 | Rabat | 5271254 | 4
 Mozambique | MZ | 148 | Maputo | 5870336 | 2
 Myanmar | MM | 149 | Naypyidaw | 9521893 | 2
 Nepal | NP | 152 | Kathmandu | 6142175 | 2
-Netherlands | NL | 153 | Amsterdam | 6076868 | 266
+Netherlands | NL | 153 | Amsterdam | 6076868 | 265
 New Zealand | NZ | 156 | Auckland | 6144239 | 39
 Nigeria | NG | 159 | Lagos | 6010328 | 4
 North Macedonia | MK | 128 | Skopje | 5386019 | 2
@@ -121,7 +121,7 @@ Romania | RO | 179 | Bucharest | 6953096 | 25
 Rwanda | RW | 181 | Kigali | 7723910 | 2
 Senegal | SN | 191 | Dakar | 7924958 | 2
 Serbia | RS | 192 | Belgrade | 7030907 | 15
-Singapore | SG | 195 | Singapore | 7867982 | 82
+Singapore | SG | 195 | Singapore | 7867982 | 83
 Slovakia | SK | 196 | Bratislava | 7884305 | 15
 Slovenia | SI | 197 | Ljubljana | 7874306 | 6
 Somalia | SO | 199 | Mogadishu | 7971170 | 2
@@ -131,7 +131,7 @@ Spain | ES | 202 | Barcelona | 2572757 | 32
 Spain | ES | 202 | Madrid | 2619989 | 78
 Sri Lanka | LK | 203 | Colombo | 5043197 | 2
 Sweden | SE | 208 | Stockholm | 7852919 | 179
-Switzerland | CH | 209 | Zurich | 1171814 | 147
+Switzerland | CH | 209 | Zurich | 1171814 | 160
 Taiwan | TW | 211 | Taipei | 8544365 | 30
 Thailand | TH | 214 | Bangkok | 8121638 | 12
 Trinidad and Tobago | TT | 218 | Port of Spain | 9521887 | 2
@@ -141,29 +141,29 @@ Ukraine | UA | 225 | Kyiv | 8626766 | 14
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
 United Kingdom | GB | 227 | Edinburgh | 2975852 | 41
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
-United Kingdom | GB | 227 | London | 2989907 | 869
+United Kingdom | GB | 227 | London | 2989907 | 871
 United Kingdom | GB | 227 | Manchester | 2991110 | 161
 United States | US | 228 | Ashburn | 9103211 | 128
-United States | US | 228 | Atlanta | 8792429 | 191
-United States | US | 228 | Boston | 8895305 | 70
+United States | US | 228 | Atlanta | 8792429 | 193
+United States | US | 228 | Boston | 8895305 | 72
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
-United States | US | 228 | Chicago | 8815352 | 315
-United States | US | 228 | Dallas | 9080300 | 249
+United States | US | 228 | Chicago | 8815352 | 317
+United States | US | 228 | Dallas | 9080300 | 247
 United States | US | 228 | Denver | 8770934 | 118
 United States | US | 228 | Houston | 9083687 | 32
 United States | US | 228 | Kansas City | 8930717 | 35
 United States | US | 228 | Los Angeles | 8761958 | 292
 United States | US | 228 | McAllen | 9086162 | 20
-United States | US | 228 | Miami | 8787782 | 202
-United States | US | 228 | Nashville | 9071273 | 39
+United States | US | 228 | Miami | 8787782 | 204
+United States | US | 228 | Nashville | 9071273 | 40
 United States | US | 228 | New York | 8971718 | 586
 United States | US | 228 | Omaha | 8943887 | 40
 United States | US | 228 | Phoenix | 8741960 | 52
 United States | US | 228 | Saint Louis | 8934551 | 36
 United States | US | 228 | Salt Lake City | 9097865 | 29
 United States | US | 228 | San Francisco | 8766359 | 114
-United States | US | 228 | Seattle | 9128402 | 188
+United States | US | 228 | Seattle | 9128402 | 190
 Uruguay | UY | 230 | Montevideo | 9150812 | 2
 Uzbekistan | UZ | 231 | Tashkent | 9166826 | 2
 Venezuela | VE | 233 | Caracas | 9176843 | 2
