@@ -1,17 +1,17 @@
-Last updated: 2025-10-06
+Last updated: 2025-10-09
 ---
 # List of COUNTRIES with NordVPN servers
 
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 16
+Albania | AL | 2 | 18
 Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 6
 Angola | AO | 6 | 2
 Argentina | AR | 10 | 19
 Armenia | AM | 11 | 2
-Australia | AU | 13 | 267
+Australia | AU | 13 | 269
 Austria | AT | 14 | 69
 Azerbaijan | AZ | 15 | 2
 Bahamas | BS | 16 | 5
@@ -22,12 +22,12 @@ Belize | BZ | 22 | 2
 Bermuda | BM | 24 | 3
 Bhutan | BT | 25 | 2
 Bolivia | BO | 26 | 2
-Bosnia and Herzegovina | BA | 27 | 4
+Bosnia and Herzegovina | BA | 27 | 3
 Brazil | BR | 30 | 38
 Brunei Darussalam | BN | 32 | 2
 Bulgaria | BG | 33 | 25
 Cambodia | KH | 36 | 2
-Canada | CA | 38 | 438
+Canada | CA | 38 | 440
 Cayman Islands | KY | 40 | 2
 Chile | CL | 43 | 7
 Colombia | CO | 47 | 10
@@ -48,7 +48,7 @@ France | FR | 74 | 369
 Georgia | GE | 80 | 10
 Germany | DE | 81 | 439
 Ghana | GH | 82 | 2
-Greece | GR | 84 | 20
+Greece | GR | 84 | 22
 Greenland | GL | 85 | 2
 Guam | GU | 88 | 2
 Guatemala | GT | 89 | 2
@@ -64,7 +64,7 @@ Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
 Italy | IT | 106 | 194
 Jamaica | JM | 107 | 2
-Japan | JP | 108 | 258
+Japan | JP | 108 | 259
 Jersey | JE | 244 | 4
 Jordan | JO | 109 | 2
 Kazakhstan | KZ | 110 | 2
@@ -80,7 +80,7 @@ Luxembourg | LU | 126 | 12
 Malaysia | MY | 131 | 10
 Malta | MT | 134 | 2
 Mauritania | MR | 137 | 2
-Mexico | MX | 140 | 60
+Mexico | MX | 140 | 62
 Moldova | MD | 142 | 3
 Monaco | MC | 143 | 4
 Mongolia | MN | 144 | 2
@@ -89,7 +89,7 @@ Morocco | MA | 147 | 4
 Mozambique | MZ | 148 | 2
 Myanmar | MM | 149 | 2
 Nepal | NP | 152 | 2
-Netherlands | NL | 153 | 266
+Netherlands | NL | 153 | 265
 New Zealand | NZ | 156 | 39
 Nigeria | NG | 159 | 4
 North Macedonia | MK | 128 | 2
@@ -108,7 +108,7 @@ Romania | RO | 179 | 25
 Rwanda | RW | 181 | 2
 Senegal | SN | 191 | 2
 Serbia | RS | 192 | 15
-Singapore | SG | 195 | 82
+Singapore | SG | 195 | 83
 Slovakia | SK | 196 | 15
 Slovenia | SI | 197 | 6
 Somalia | SO | 199 | 2
@@ -117,7 +117,7 @@ South Korea | KR | 114 | 46
 Spain | ES | 202 | 110
 Sri Lanka | LK | 203 | 2
 Sweden | SE | 208 | 179
-Switzerland | CH | 209 | 147
+Switzerland | CH | 209 | 160
 Taiwan | TW | 211 | 30
 Thailand | TH | 214 | 12
 Trinidad and Tobago | TT | 218 | 2
@@ -125,8 +125,8 @@ Tunisia | TN | 219 | 2
 Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
-United Kingdom | GB | 227 | 1119
-United States | US | 228 | 2888
+United Kingdom | GB | 227 | 1121
+United States | US | 228 | 2897
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
