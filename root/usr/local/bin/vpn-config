@@ -305,7 +305,7 @@ nord_api_curl()
     shift 2>/dev/null || true
 
     oldIFS="$IFS"; IFS=',;'; _rc=1
-    for _ip in $NORDVPNAPI_IP; do
+    for _ip in $nordvpnapi_ip; do
         [ -n "$_ip" ] || continue
 
         curl -sG --connect-timeout 10 --max-time 30 \
@@ -478,7 +478,7 @@ fi
 if [ "$random_top" -ne 0 ]; then
     if [ "$random_top" -lt "$poollength" ]; then
         filtered=$(echo "$servers" | head -n "$random_top" | shuf)
-        servers="$filtered"$(echo "$servers" | tail -n +"$((RANDOM_TOP + 1))")
+        servers="$filtered"$(echo "$servers" | tail -n +"$((random_top + 1))")
     else
         servers=$(echo "$servers" | shuf)
     fi

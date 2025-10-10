@@ -346,7 +346,7 @@ jobs:
           echo "Fetching countries data from NordVPN API..."
 
           IPS=$(dig +short A api.nordvpn.com | sort -V | tr '\n' ';' | sed 's/;$//')
-          sed -i "s/^\(\s*\)NORDVPNAPI_IP=.*/\1NORDVPNAPI_IP=${IPS} \\\/" Dockerfile
+          sed -i "s/nordvpnapi_ip=\"\${NORDVPNAPI_IP:-\([^\"]*\)}\"/nordvpnapi_ip=\"\${NORDVPNAPI_IP:-\${IPS}}\"/" root/usr/local/bin/backend-functions
 
           UPDATE_DATE=$(date +%y%m%d)
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
@@ -355,13 +355,13 @@ jobs:
         uses: peter-evans/create-pull-request@v7.0.8
         with:
           branch: bot/update-nordvpn-api-ips
-          commit-message: "config: update `NORDVPNAPI_IP` in Dockerfile (${{ env.update_date }})"
+          commit-message: "config: update `NORDVPNAPI_IP` in backend-functions (${{ env.update_date }})"
           delete-branch: true
-          title: "🌍 Update `NORDVPNAPI_IP` in Dockerfile - ${{ env.update_date }}"
+          title: "🌍 Update `NORDVPNAPI_IP` in backend-functions - ${{ env.update_date }}"
           body: |
             ## 🌍 NORDVPNAPI_IP Update
             
-            **File**: `Dockerfile`
+            **File**: `root/usr/local/bin/backend-functions`
             **Date**: ${{ env.update_date }}
             **Source**: `dig +short A api.nordvpn.com | tr '\n' ';' | sed 's/;$//'`
             

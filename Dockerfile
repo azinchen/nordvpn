@@ -76,12 +76,7 @@ LABEL org.opencontainers.image.authors="Alexander Zinchenko <alexander@zinchenko
       org.opencontainers.image.version="${IMAGE_VERSION}" \
       org.opencontainers.image.created="${BUILD_DATE}"
 
-ENV TECHNOLOGY=openvpn_udp \
-    NORDVPNAPI_IP=104.16.208.203;104.19.159.190 \
-    RANDOM_TOP=0 \
-    CHECK_CONNECTION_ATTEMPTS=5 \
-    CHECK_CONNECTION_ATTEMPT_INTERVAL=10 \
-    PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+ENV PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=120000
 
 RUN echo "**** install security fix packages ****" && \
