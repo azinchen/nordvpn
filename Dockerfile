@@ -32,15 +32,20 @@ RUN echo "**** install security fix packages ****" && \
 # rootfs builder
 FROM alpine:3.22.2 AS rootfs-builder
 
+ARG IMAGE_VERSION=N/A
+ARG BUILD_DATE=N/A
+
 RUN echo "**** install security fix packages ****" && \
     echo "**** end run statement ****"
 
 COPY root/ /rootfs/
-RUN chmod +x /rootfs/usr/local/bin/* && \
-    chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/run && \
-    chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/finish && \
+RUN chmod +x /rootfs/usr/local/bin/*  || true && \
+    chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/run  || true && \
+    chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/finish || true && \
     chmod 644 /rootfs/etc/nordvpn/*.json && \
-    chmod 644 /rootfs/etc/nordvpn/template.ovpn
+    chmod 644 /rootfs/etc/nordvpn/template.ovpn && \
+    sed -i "s/__IMAGE_VERSION__/${IMAGE_VERSION}/g" /rootfs/usr/local/bin/entrypoint && \
+    sed -i "s/__BUILD_DATE__/${BUILD_DATE}/g" /rootfs/usr/local/bin/entrypoint
 COPY --from=s6-builder /s6/ /rootfs/
 
 # Main image
@@ -48,16 +53,11 @@ FROM alpine:3.22.2
 
 LABEL maintainer="Alexander Zinchenko <alexander@zinchenko.com>"
 
-ARG IMAGE_VERSION=N/A
-ARG BUILD_DATE=N/A
-
 ENV TECHNOLOGY=openvpn_udp \
     NORDVPNAPI_IP=104.16.208.203;104.19.159.190 \
     RANDOM_TOP=0 \
     CHECK_CONNECTION_ATTEMPTS=5 \
     CHECK_CONNECTION_ATTEMPT_INTERVAL=10 \
-    IMAGE_VERSION=${IMAGE_VERSION} \
-    BUILD_DATE=${BUILD_DATE} \
     PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=120000
 

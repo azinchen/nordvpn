@@ -11,8 +11,8 @@ echo "📋 Description: Docker container for NordVPN with OpenVPN and advanced n
 echo "👤 Author: Alexander Zinchenko <alexander@zinchenko.com>"
 echo "🔗 Repository: https://github.com/azinchen/nordvpn"
 echo "📚 Documentation: https://github.com/azinchen/nordvpn#readme"
-echo "🏷️ Image Version: $IMAGE_VERSION"
-echo "📅 Build Date: $BUILD_DATE"
+echo "🏷️ Image Version: __IMAGE_VERSION__"
+echo "📅 Build Date: __BUILD_DATE__"
 echo "=================================================================================="
 
 echo "[ENTRYPOINT] Applying immediate security rules..."
