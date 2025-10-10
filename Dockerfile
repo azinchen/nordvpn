@@ -44,8 +44,21 @@ RUN chmod +x /rootfs/usr/local/bin/*  || true && \
     chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/finish || true && \
     chmod 644 /rootfs/etc/nordvpn/*.json && \
     chmod 644 /rootfs/etc/nordvpn/template.ovpn && \
-    sed -i "s/__IMAGE_VERSION__/${IMAGE_VERSION}/g" /rootfs/usr/local/bin/entrypoint && \
-    sed -i "s/__BUILD_DATE__/${BUILD_DATE}/g" /rootfs/usr/local/bin/entrypoint
+    safe_sed() { \
+        local pattern="$1"; \
+        local replacement="$2"; \
+        local file="$3"; \
+        local delim; \
+        for delim in '/' '|' '#' '@' '%' '^' '&' '*' '+' '-' '_' '=' ':' ';' '<' '>' ',' '.' '?' '~' '`' '!' '$' '(' ')' '[' ']' '{' '}' '\\' '"' "'"; do \
+            if [[ "$replacement" != *"$delim"* ]]; then \
+                sed -i "s$delim$pattern$delim$replacement$delim g" "$file"; \
+                return; \
+            fi; \
+        done; \
+        echo "No safe delimiter found for $pattern in $file"; \
+    } && \
+    safe_sed "__IMAGE_VERSION__" "${IMAGE_VERSION}" /rootfs/usr/local/bin/entrypoint && \
+    safe_sed "__BUILD_DATE__" "${BUILD_DATE}" /rootfs/usr/local/bin/entrypoint
 COPY --from=s6-builder /s6/ /rootfs/
 
 # Main image
