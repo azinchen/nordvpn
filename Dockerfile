@@ -32,8 +32,8 @@ RUN echo "**** install security fix packages ****" && \
 # rootfs builder
 FROM alpine:3.22.2 AS rootfs-builder
 
-ARG IMAGE_VERSION=N/A
-ARG BUILD_DATE=N/A
+ARG IMAGE_VERSION=N/A \
+    BUILD_DATE=N/A
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** end run statement ****"
@@ -64,7 +64,17 @@ COPY --from=s6-builder /s6/ /rootfs/
 # Main image
 FROM alpine:3.22.2
 
-LABEL maintainer="Alexander Zinchenko <alexander@zinchenko.com>"
+ARG IMAGE_VERSION=N/A \
+    BUILD_DATE=N/A
+
+LABEL org.opencontainers.image.authors="Alexander Zinchenko <alexander@zinchenko.com>" \
+      org.opencontainers.image.description="OpenVPN client docker container that routes other containers' traffic through NordVPN servers automatically." \
+      org.opencontainers.image.source="https://github.com/azinchen/nordvpn" \
+      org.opencontainers.image.licenses="AGPL-3.0" \
+      org.opencontainers.image.title="NordVPN OpenVPN Docker Container" \
+      org.opencontainers.image.url="https://github.com/azinchen/nordvpn" \
+      org.opencontainers.image.version="${IMAGE_VERSION}" \
+      org.opencontainers.image.created="${BUILD_DATE}"
 
 ENV TECHNOLOGY=openvpn_udp \
     NORDVPNAPI_IP=104.16.208.203;104.19.159.190 \
