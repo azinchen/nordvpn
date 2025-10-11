@@ -42,8 +42,8 @@ COPY root/ /rootfs/
 RUN chmod +x /rootfs/usr/local/bin/*  || true && \
     chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/run  || true && \
     chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/finish || true && \
-    chmod 644 /rootfs/etc/nordvpn/*.json && \
-    chmod 644 /rootfs/etc/nordvpn/template.ovpn && \
+    chmod 644 /rootfs/usr/local/share/nordvpn/data/*.json && \
+    chmod 644 /rootfs/usr/local/share/nordvpn/data/template.ovpn && \
     safe_sed() { \
         local pattern="$1"; \
         local replacement="$2"; \

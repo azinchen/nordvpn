@@ -23,7 +23,7 @@ nordvpnapi_ip="${NORDVPNAPI_IP:-104.16.208.203;104.19.159.190}"
 network="${NETWORK:-}"
 
 # Common file paths
-ovpntemplatefile="/etc/nordvpn/template.ovpn"
+ovpntemplatefile="/usr/local/share/nordvpn/data/template.ovpn"
 ovpnfile="/run/xt/nordvpn.ovpn"
 authfile="/run/xt/auth"
 
