@@ -343,10 +343,16 @@ jobs:
         id: nordvpn-api-ips
         shell: bash
         run: |
-          echo "Fetching countries data from NordVPN API..."
+          echo "Fetching NordVPN API addresses..."
 
           IPS=$(dig +short A api.nordvpn.com | sort -V | tr '\n' ';' | sed 's/;$//')
-          sed -i "s/nordvpnapi_ip=\"\${NORDVPNAPI_IP:-\([^\"]*\)}\"/nordvpnapi_ip=\"\${NORDVPNAPI_IP:-\${IPS}}\"/" root/usr/local/bin/backend-functions
+          echo "Found IPs: $IPS"
+          
+          # Escape special characters for sed
+          IPS_ESCAPED=$(echo "$IPS" | sed 's/[&/\]/\\&/g')
+          
+          # Update the backend-functions file with actual IP addresses
+          sed -i "s|nordvpnapi_ip=\"\${NORDVPNAPI_IP:-[^\"]*}\"|nordvpnapi_ip=\"\${NORDVPNAPI_IP:-${IPS_ESCAPED}}\"|" root/usr/local/bin/backend-functions
 
           UPDATE_DATE=$(date +%y%m%d)
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
