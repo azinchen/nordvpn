@@ -19,7 +19,7 @@ user="${USER:-}"
 pass="${PASS:-}"
 recreate_vpn_cron="${RECREATE_VPN_CRON:-}"
 check_connection_cron="${CHECK_CONNECTION_CRON:-}"
-nordvpnapi_ip="${NORDVPNAPI_IP:-104.16.208.203;104.19.159.190}"
+nordvpnapi_ip="${NORDVPNAPI_IP:-${IPS}}"
 network="${NETWORK:-}"
 
 # Common file paths
