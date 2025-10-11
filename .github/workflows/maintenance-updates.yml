@@ -134,12 +134,12 @@ jobs:
           echo "Fetching countries data from NordVPN API..."
           
           # Create directory if it doesn't exist
-          mkdir -p root/etc/nordvpn
+          mkdir -p root/usr/local/share/nordvpn/data
           
           # Download and process countries.json with beautiful formatting
           curl -s "https://api.nordvpn.com/v1/servers/countries" \
             | jq '.[] | del(.serverCount) | .cities = [.cities[]? | del(.serverCount, .hub_score)] | .' \
-            > root/etc/nordvpn/countries.json
+            > root/usr/local/share/nordvpn/data/countries.json
 
           UPDATE_DATE=$(date +%y%m%d)
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
@@ -154,7 +154,7 @@ jobs:
           body: |
             ## 🌍 Countries Configuration Update
             
-            **File**: `root/etc/nordvpn/countries.json`
+            **File**: `root/usr/local/share/nordvpn/data/countries.json`
             **Date**: ${{ env.update_date }}
             **Source**: https://api.nordvpn.com/v1/servers/countries
             
@@ -183,12 +183,12 @@ jobs:
           echo "Fetching groups data from NordVPN API..."
           
           # Create directory if it doesn't exist
-          mkdir -p root/etc/nordvpn
+          mkdir -p root/usr/local/share/nordvpn/data
           
           # Download and process groups.json with beautiful formatting
           curl -s "https://api.nordvpn.com/v1/servers/groups" \
             | jq '.[] | .' \
-            > root/etc/nordvpn/groups.json
+            > root/usr/local/share/nordvpn/data/groups.json
 
           UPDATE_DATE=$(date +%y%m%d)
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
@@ -203,7 +203,7 @@ jobs:
           body: |
             ## 🏷️ Groups Configuration Update
             
-            **File**: `root/etc/nordvpn/groups.json`
+            **File**: `root/usr/local/share/nordvpn/data/groups.json`
             **Date**: ${{ env.update_date }}
             **Source**: https://api.nordvpn.com/v1/servers/groups
             
@@ -231,12 +231,12 @@ jobs:
           echo "Fetching technologies data from NordVPN API..."
           
           # Create directory if it doesn't exist
-          mkdir -p root/etc/nordvpn
+          mkdir -p root/usr/local/share/nordvpn/data
           
           # Download and process technologies.json with beautiful formatting
           curl -s "https://api.nordvpn.com/v1/technologies" \
             | jq '.[] | .' \
-            > root/etc/nordvpn/technologies.json
+            > root/usr/local/share/nordvpn/data/technologies.json
 
           UPDATE_DATE=$(date +%y%m%d)
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
@@ -251,7 +251,7 @@ jobs:
           body: |
             ## 🔧 Technologies Configuration Update
             
-            **File**: `root/etc/nordvpn/technologies.json`
+            **File**: `root/usr/local/share/nordvpn/data/technologies.json`
             **Date**: ${{ env.update_date }}
             **Source**: https://api.nordvpn.com/v1/technologies
             
@@ -279,7 +279,7 @@ jobs:
           echo "Downloading and updating OpenVPN template..."
           
           # Create directory if it doesn't exist
-          mkdir -p root/etc/nordvpn
+          mkdir -p root/usr/local/share/nordvpn/data
           
           # Download and extract OpenVPN configs
           wget -q https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip -O /tmp/ovpn.zip
@@ -290,17 +290,17 @@ jobs:
           echo "📄 Using ${RANDOM_FILE} as base for template.ovpn"
           
           # Create template with placeholders
-          cp "${RANDOM_FILE}" root/etc/nordvpn/template.ovpn
-          sed -i '/proto /c\proto __PROTOCOL__' root/etc/nordvpn/template.ovpn
-          sed -i '/remote /c\remote __IP__ __PORT__' root/etc/nordvpn/template.ovpn
-          sed -i '/verify-x509-name /c\verify-x509-name CN=__X509_NAME__' root/etc/nordvpn/template.ovpn
+          cp "${RANDOM_FILE}" root/usr/local/share/nordvpn/data/template.ovpn
+          sed -i '/proto /c\proto __PROTOCOL__' root/usr/local/share/nordvpn/data/template.ovpn
+          sed -i '/remote /c\remote __IP__ __PORT__' root/usr/local/share/nordvpn/data/template.ovpn
+          sed -i '/verify-x509-name /c\verify-x509-name CN=__X509_NAME__' root/usr/local/share/nordvpn/data/template.ovpn
 
           # Add custom scripts
           {
             echo "script-security 2"
             echo "up /etc/openvpn/up.sh"
             echo "down /etc/openvpn/down.sh"
-          } >> root/etc/nordvpn/template.ovpn
+          } >> root/usr/local/share/nordvpn/data/template.ovpn
 
           UPDATE_DATE=$(date +%y%m%d)
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
@@ -315,7 +315,7 @@ jobs:
           body: |
             ## 📝 OpenVPN Template Update
             
-            **File**: `root/etc/nordvpn/template.ovpn`
+            **File**: `root/usr/local/share/nordvpn/data/template.ovpn`
             **Date**: ${{ env.update_date }}
             **Source**: https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip
             
