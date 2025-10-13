@@ -39,7 +39,7 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** end run statement ****"
 
 COPY root/ /rootfs/
-RUN chmod +x /rootfs/usr/local/bin/*  || true && \
+RUN chmod +x /rootfs/usr/local/bin/* || true && \
     chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/run  || true && \
     chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/finish || true && \
     chmod 644 /rootfs/usr/local/share/nordvpn/data/*.json && \
