@@ -3,14 +3,14 @@
 
 set -eu
 
-echo "[INIT-CREATEAUTH] Starting init-createauth script..."
-
 . /usr/local/bin/backend-functions
+
+log "INIT-CREATEAUTH" "Starting init-createauth script..."
 
 echo "$user" > "$authfile"
 echo "$pass" >> "$authfile"
 chmod 0600 "$authfile"
 chown nordvpn:nordvpn "$authfile"
 
-echo "[INIT-CREATEAUTH] init-createauth script completed successfully"
+log "INIT-CREATEAUTH" "init-createauth script completed successfully"
 exit 0

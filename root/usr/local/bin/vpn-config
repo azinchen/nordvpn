@@ -3,9 +3,9 @@
 
 set -eu
 
-echo "[VPN-CONFIG] Starting vpn-config script..."
-
 . /usr/local/bin/backend-functions
+
+log "VPN-CONFIG" "Starting vpn-config script..."
 
 numericregex="^[0-9]+$"
 
@@ -326,29 +326,29 @@ tech_filter=""
 if [ -n "$technology" ]; then
     tech_id=$(gettechnologyid "$technology")
     if [ -z "$tech_id" ]; then
-        echo "[VPN-CONFIG] Warning: Could not find technology \"$technology\""
+        log "VPN-CONFIG" "Warning: Could not find technology \"$technology\""
     else
         tech_filter="--data-urlencode filters[servers_technologies][id]=$tech_id"
     fi
 else
-    echo "[VPN-CONFIG] No technology filter specified"
+    log "VPN-CONFIG" "No technology filter specified"
 fi
 
 group_filter=""
 if [ -n "$group" ]; then
     group_id=$(getgroupid "$group")
     if [ -z "$group_id" ]; then
-        echo "[VPN-CONFIG] Warning: Could not find group \"$group\""
+        log "VPN-CONFIG" "Warning: Could not find group \"$group\""
     else
         group_filter="--data-urlencode filters[servers_groups][id]=$group_id"
     fi
 else
-    echo "[VPN-CONFIG] No group filter specified"
+    log "VPN-CONFIG" "No group filter specified"
 fi
 
 test_response=$(nord_api_curl "v1/servers/recommendations" --data-urlencode "limit=1" 2>/dev/null || echo "")
 if [ -z "$test_response" ]; then
-    echo "[VPN-CONFIG] WARNING: API connectivity test failed - no response from NordVPN API"
+    log "VPN-CONFIG" "WARNING: API connectivity test failed - no response from NordVPN API"
 fi
 servers=""
 locations_count=0
@@ -378,14 +378,14 @@ if [ -n "$country" ]; then
                 # Execute curl with built parameters
                 serversincountry=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincountry" ]; then
-                    echo "[VPN-CONFIG] Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
+                    log "VPN-CONFIG" "Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
                     echo "$serversincountry" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
                     servers="$servers""$serversincountry"
                 else
-                    echo "[VPN-CONFIG] Warning: No servers returned for country \"$value\""
+                    log "VPN-CONFIG" "Warning: No servers returned for country \"$value\""
                 fi
             else
-                echo "[VPN-CONFIG] Warning: Could not find country \"$value\""
+                log "VPN-CONFIG" "Warning: Could not find country \"$value\""
             fi
         fi
     done
@@ -420,14 +420,14 @@ if [ -n "$city" ]; then
                 # Execute curl with built parameters
                 serversincity=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincity" ]; then
-                    echo "[VPN-CONFIG] Request servers in \"$(getcityname "$value")\", $(echo "$serversincity" | jq -s 'length') servers received"
+                    log "VPN-CONFIG" "Request servers in \"$(getcityname "$value")\", $(echo "$serversincity" | jq -s 'length') servers received"
                     echo "$serversincity" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
                     servers="$servers""$serversincity"
                 else
-                    echo "[VPN-CONFIG] Warning: No servers returned for city \"$value\""
+                    log "VPN-CONFIG" "Warning: No servers returned for city \"$value\""
                 fi
             else
-                echo "[VPN-CONFIG] Warning: Could not find coordinates for city \"$value\""
+                log "VPN-CONFIG" "Warning: Could not find coordinates for city \"$value\""
             fi
         fi
     done
@@ -438,12 +438,12 @@ poollength=0
 if [ -n "$servers" ]; then
     poollength=$(echo "$servers" | jq -s 'unique | length' 2>/dev/null || echo "0")
 else
-    echo "[VPN-CONFIG] No servers collected from any sources"
+    log "VPN-CONFIG" "No servers collected from any sources"
 fi
 
 # If no servers found, fallback to default recommended servers
 if [ "$poollength" -eq 0 ]; then
-    echo "[VPN-CONFIG] No servers found for specified criteria, requesting default recommended servers"
+    log "VPN-CONFIG" "No servers found for specified criteria, requesting default recommended servers"
     
     # Build curl parameters for fallback
     curl_params=""
@@ -457,11 +457,11 @@ if [ "$poollength" -eq 0 ]; then
     servers=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
     
     if [ -n "$servers" ]; then
-        echo "[VPN-CONFIG] Default recommended servers: $(echo "$servers" | jq -s 'length') servers received"
+        log "VPN-CONFIG" "Default recommended servers: $(echo "$servers" | jq -s 'length') servers received"
         echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
         poollength=$(echo "$servers" | jq -s 'unique | length')
     else
-        echo "[VPN-CONFIG] CRITICAL ERROR: Failed to get fallback servers - sleeping infinite"
+        log "VPN-CONFIG" "CRITICAL ERROR: Failed to get fallback servers - sleeping infinite"
         sleep infinity
     fi
 fi
@@ -484,15 +484,15 @@ if [ "$random_top" -ne 0 ]; then
     fi
 fi
 
-echo "[VPN-CONFIG] $poollength recommended servers in pool"
+log "VPN-CONFIG" "$poollength recommended servers in pool"
 if [ "$poollength" -ne 0 ]; then
-    echo "[VPN-CONFIG] --- Top 20 servers in filtered pool ---"
+    log "VPN-CONFIG" "--- Top 20 servers in filtered pool ---"
     echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"' | head -n 20
-    echo "[VPN-CONFIG] ---------------------------------------"
+    log "VPN-CONFIG" "---------------------------------------"
 fi
 
 if [ "$poollength" -eq 0 ]; then
-    echo "[VPN-CONFIG] CRITICAL ERROR: list of selected servers is empty - sleeping infinite"
+    log "VPN-CONFIG" "CRITICAL ERROR: list of selected servers is empty - sleeping infinite"
     sleep infinity
 fi
 
@@ -504,7 +504,7 @@ protocol=$(getopenvpnprotocol "$technology")
 # Extract location information
 country_name=$(echo "$servers" | jq -r '.locations[0].country.name' | head -n 1)
 city_name=$(echo "$servers" | jq -r '.locations[0].country.city.name' | head -n 1)
-echo "[VPN-CONFIG] Select server \"$name\" hostname=\"$hostname\" ip=\"$serverip\" protocol=\"$protocol\" location=\"$country_name, $city_name\""
+log "VPN-CONFIG" "Select server \"$name\" hostname=\"$hostname\" ip=\"$serverip\" protocol=\"$protocol\" location=\"$country_name, $city_name\""
 
 cp "$ovpntemplatefile" "$ovpnfile"
 chmod 0600 "$ovpnfile"
@@ -519,15 +519,15 @@ if [ "$protocol" = "udp" ]; then
 elif [ "$protocol" = "tcp" ]; then
     sed -i "s/__PORT__/443/g" "$ovpnfile"
 else
-    echo "[VPN-CONFIG] CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$technology\" - sleeping infinite"
+    log "VPN-CONFIG" "CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$technology\" - sleeping infinite"
     sleep infinity
 fi
 
 # Verify the config file was created successfully
 if [ ! -s "$ovpnfile" ]; then
-    echo "[VPN-CONFIG] CRITICAL ERROR: VPN config file was not created successfully - sleeping infinite"
+    log "VPN-CONFIG" "CRITICAL ERROR: VPN config file was not created successfully - sleeping infinite"
     sleep infinity
 fi
 
-echo "[VPN-CONFIG] vpn-config script completed successfully"
+log "VPN-CONFIG" "vpn-config script completed successfully"
 exit 0

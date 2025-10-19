@@ -3,16 +3,16 @@
 
 set -eu
 
-echo "[SERVICE-NORDVPN] Stopping nordvpn service..."
-
 . /usr/local/bin/backend-functions
 
-echo "[SERVICE-NORDVPN] Cleaning VPN pinhole..."
+log "SERVICE-NORDVPN" "Stopping nordvpn service..."
+
+log "SERVICE-NORDVPN" "Cleaning VPN pinhole..."
 run4 -F VPN-SERVER
 
-echo "[SERVICE-NORDVPN] Disconnecting OpenVPN cleanly..."
+log "SERVICE-NORDVPN" "Disconnecting OpenVPN cleanly..."
 echo "signal SIGTERM" | nc 127.0.0.1 7505
 sleep 5
 
-echo "[SERVICE-NORDVPN] nordvpn service stopped successfully"
+log "SERVICE-NORDVPN" "nordvpn service stopped successfully"
 exit 0
