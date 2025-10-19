@@ -149,6 +149,8 @@ mkdir -p /run/xt
 } > /run/xt/backend.env
 chmod 0644 /run/xt/backend.env
 
+. /run/xt/backend.env
+
 # ---- secure defaults (v4 + v6 if available) --------------------------------
 
 # Default DROP policies (set ASAP)
