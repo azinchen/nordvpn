@@ -1,17 +1,17 @@
-Last updated: 2025-10-11
+Last updated: 2025-10-19
 ---
 # List of COUNTRIES with NordVPN servers
 
 Country | Code | ID | Servers
 --------|------|----|--------
 Afghanistan | AF | 1 | 2
-Albania | AL | 2 | 19
-Algeria | DZ | 3 | 3
+Albania | AL | 2 | 24
+Algeria | DZ | 3 | 4
 Andorra | AD | 5 | 8
 Angola | AO | 6 | 2
 Argentina | AR | 10 | 19
 Armenia | AM | 11 | 2
-Australia | AU | 13 | 269
+Australia | AU | 13 | 270
 Austria | AT | 14 | 69
 Azerbaijan | AZ | 15 | 2
 Bahamas | BS | 16 | 5
@@ -22,20 +22,20 @@ Belize | BZ | 22 | 2
 Bermuda | BM | 24 | 3
 Bhutan | BT | 25 | 2
 Bolivia | BO | 26 | 2
-Bosnia and Herzegovina | BA | 27 | 3
+Bosnia and Herzegovina | BA | 27 | 4
 Brazil | BR | 30 | 38
 Brunei Darussalam | BN | 32 | 2
 Bulgaria | BG | 33 | 25
 Cambodia | KH | 36 | 2
-Canada | CA | 38 | 440
+Canada | CA | 38 | 442
 Cayman Islands | KY | 40 | 2
 Chile | CL | 43 | 7
-Colombia | CO | 47 | 10
+Colombia | CO | 47 | 18
 Comoros | KM | 48 | 2
 Costa Rica | CR | 52 | 6
 Croatia | HR | 54 | 16
 Cyprus | CY | 56 | 13
-Czech Republic | CZ | 57 | 53
+Czech Republic | CZ | 57 | 56
 Denmark | DK | 58 | 72
 Dominican Republic | DO | 61 | 2
 Ecuador | EC | 63 | 2
@@ -46,7 +46,7 @@ Ethiopia | ET | 69 | 2
 Finland | FI | 73 | 20
 France | FR | 74 | 369
 Georgia | GE | 80 | 10
-Germany | DE | 81 | 437
+Germany | DE | 81 | 433
 Ghana | GH | 82 | 2
 Greece | GR | 84 | 22
 Greenland | GL | 85 | 2
@@ -65,7 +65,7 @@ Israel | IL | 105 | 20
 Italy | IT | 106 | 194
 Jamaica | JM | 107 | 2
 Japan | JP | 108 | 259
-Jersey | JE | 244 | 3
+Jersey | JE | 244 | 4
 Jordan | JO | 109 | 2
 Kazakhstan | KZ | 110 | 2
 Kenya | KE | 111 | 2
@@ -89,7 +89,7 @@ Morocco | MA | 147 | 4
 Mozambique | MZ | 148 | 2
 Myanmar | MM | 149 | 2
 Nepal | NP | 152 | 2
-Netherlands | NL | 153 | 263
+Netherlands | NL | 153 | 265
 New Zealand | NZ | 156 | 39
 Nigeria | NG | 159 | 4
 North Macedonia | MK | 128 | 2
@@ -114,7 +114,7 @@ Slovenia | SI | 197 | 6
 Somalia | SO | 199 | 2
 South Africa | ZA | 200 | 25
 South Korea | KR | 114 | 46
-Spain | ES | 202 | 109
+Spain | ES | 202 | 110
 Sri Lanka | LK | 203 | 2
 Sweden | SE | 208 | 179
 Switzerland | CH | 209 | 159
@@ -125,8 +125,8 @@ Tunisia | TN | 219 | 2
 Turkey | TR | 220 | 19
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
-United Kingdom | GB | 227 | 1116
-United States | US | 228 | 2889
+United Kingdom | GB | 227 | 1123
+United States | US | 228 | 2909
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
