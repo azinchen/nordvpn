@@ -71,5 +71,5 @@ log()
 {
     script_name="${1:-unknown}"
     shift
-    printf "[%s] [%s] %s\n" "$(date +'%Y-%m-%d %H:%M:%S')" "${script_name}" "$*"
+    printf "%s [%s] %s\n" "$(date +'%Y-%m-%d %H:%M:%S')" "${script_name}" "$*"
 }
