@@ -3,6 +3,8 @@
 
 set -eu
 
-echo "[SERVICE-CRON] Starting cron service..."
+. /usr/local/bin/backend-functions
+
+log "SERVICE-CRON" "Starting cron service..."
 
 exec crond -f

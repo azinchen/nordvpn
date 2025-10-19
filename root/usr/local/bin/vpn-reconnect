@@ -3,11 +3,13 @@
 
 set -eu
 
-echo "[VPN-RECONNECT] Starting VPN reconnection script..."
+. /usr/local/bin/backend-functions
+
+log "VPN-RECONNECT" "Starting VPN reconnection script..."
 
 s6-rc stop svc-nordvpn
 sleep 2
 s6-rc start svc-nordvpn
 
-echo "[VPN-RECONNECT] VPN reconnection completed successfully"
+log "VPN-RECONNECT" "VPN reconnection completed successfully"
 exit 0
