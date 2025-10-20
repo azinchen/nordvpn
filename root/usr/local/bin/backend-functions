@@ -207,10 +207,9 @@ parse_cron()
         # Handle lists (val1,val2,val3) - can include multiple ranges
         has_comma=$(echo "$field_value" | grep -c ',')
         if [ "$has_comma" -gt 0 ]; then
-            IFS=',' read -ra VALUES <<< "$field_value"
             result=""
-            
-            for val in "${VALUES[@]}"; do
+            IFS=','
+            for val in $field_value; do
                 if [ -n "$result" ]; then
                     result="$result, "
                 fi
