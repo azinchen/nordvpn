@@ -45,7 +45,7 @@ r_ip="$(echo "$r_ip_raw" | sed 's,^\[,,' | sed 's,\]$,,' )"
 
 PIN_SPEC="-A VPN-SERVER -o eth0 -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"
 if run4 $PIN_SPEC 2>/dev/null; then
-    log "$SCRIPT_NAME" "pinhole added: $IPT $PIN_SPEC"
+    log "$SCRIPT_NAME" "Added firewall pinhole for ${r_proto} traffic to ${r_ip}:${r_port} on interface eth0"
 fi
 
 log "$SCRIPT_NAME" "Launching OpenVPN"
