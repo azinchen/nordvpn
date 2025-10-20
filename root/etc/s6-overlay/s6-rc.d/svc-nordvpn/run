@@ -55,7 +55,7 @@ if ! echo "$openvpn_opts" | grep -q -- "--data-ciphers"; then
 fi
 
 log "$SCRIPT_NAME" "Launching OpenVPN"
-openvpn --group nordvpn --config "$ovpnfile" --auth-user-pass "$authfile" --auth-nocache --management 127.0.0.1 7505 $openvpn_opts &
+openvpn --group nordvpn --config "$ovpnfile" --auth-user-pass "$authfile" --auth-nocache --management "$mgmtsockfile" unix $openvpn_opts &
 
 # Wait for VPN connection
 log "$SCRIPT_NAME" "Waiting for VPN connection..."
