@@ -5,11 +5,15 @@ set -eu
 
 . /usr/local/bin/backend-functions
 
-log "VPN-RECONNECT" "Starting VPN reconnection script..."
+SCRIPT_NAME="VPN-RECONNECT"
 
+log "$SCRIPT_NAME" "Starting VPN reconnection"
+
+log "$SCRIPT_NAME" "Stopping NordVPN service"
 s6-rc stop svc-nordvpn
 sleep 2
+log "$SCRIPT_NAME" "Starting NordVPN service"
 s6-rc start svc-nordvpn
 
-log "VPN-RECONNECT" "VPN reconnection completed successfully"
+log "$SCRIPT_NAME" "VPN reconnection completed"
 exit 0

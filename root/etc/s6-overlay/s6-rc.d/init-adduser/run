@@ -5,17 +5,19 @@ set -eu
 
 . /usr/local/bin/backend-functions
 
-log "INIT-ADDUSER" "Starting init-adduser script..."
+SCRIPT_NAME="INIT-ADDUSER"
+
+log "$SCRIPT_NAME" "Starting user initialization"
 
 if [ "$(id -g nordvpn)" -ne "$pgid" ]; then
-    log "INIT-ADDUSER" "Updating nordvpn group ID from $(id -g nordvpn) to $pgid"
+    log "$SCRIPT_NAME" "Updating nordvpn group ID from $(id -g nordvpn) to $pgid"
     groupmod --non-unique --gid "$pgid" nordvpn
 fi
 
 if [ "$(id -u nordvpn)" -ne "$puid" ]; then
-    log "INIT-ADDUSER" "Updating nordvpn user ID from $(id -u nordvpn) to $puid"
+    log "$SCRIPT_NAME" "Updating nordvpn user ID from $(id -u nordvpn) to $puid"
     usermod --non-unique --uid "$puid" nordvpn
 fi
 
-log "INIT-ADDUSER" "init-adduser script completed successfully"
+log "$SCRIPT_NAME" "User initialization completed"
 exit 0

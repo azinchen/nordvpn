@@ -5,7 +5,9 @@ set -eu
 
 . /usr/local/bin/backend-functions
 
-log "VPN-HEALTHCHECK" "Starting VPN healthcheck script..."
+SCRIPT_NAME="VPN-HEALTHCHECK"
+
+log "$SCRIPT_NAME" "Starting VPN health check"
 
 httpreq()
 {
@@ -22,16 +24,17 @@ while [ $counter -le "$check_connection_attempts" ]; do
     oldIFS="$IFS"; IFS=',;'
     for url in $check_connection_url; do
         if httpreq "$url"; then
-            log "VPN-HEALTHCHECK" "Connection via VPN is up"
+            log "$SCRIPT_NAME" "VPN connection is active"
             exit 0
         fi
     done
     IFS="$oldIFS"
 
+    log "$SCRIPT_NAME" "Connection attempt $counter/$check_connection_attempts failed, retrying in $check_connection_attempt_interval seconds"
     sleep "$check_connection_attempt_interval"
     counter=$((counter + 1))
 done
 
-log "VPN-HEALTHCHECK" "All connection attempts failed, initiating VPN reconnection"
+log "$SCRIPT_NAME" "All connection attempts failed, triggering VPN reconnection"
 vpn-reconnect
 exit 1

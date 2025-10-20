@@ -5,6 +5,8 @@ set -eu
 
 . /usr/local/bin/backend-functions
 
-log "SERVICE-CRON" "Starting cron service..."
+SCRIPT_NAME="SERVICE-CRON"
+
+log "$SCRIPT_NAME" "Starting cron service"
 
 exec crond -f

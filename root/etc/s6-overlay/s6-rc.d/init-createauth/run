@@ -5,12 +5,15 @@ set -eu
 
 . /usr/local/bin/backend-functions
 
-log "INIT-CREATEAUTH" "Starting init-createauth script..."
+SCRIPT_NAME="INIT-CREATEAUTH"
 
+log "$SCRIPT_NAME" "Starting authentication setup"
+
+log "$SCRIPT_NAME" "Creating VPN authentication file"
 echo "$user" > "$authfile"
 echo "$pass" >> "$authfile"
 chmod 0600 "$authfile"
 chown nordvpn:nordvpn "$authfile"
 
-log "INIT-CREATEAUTH" "init-createauth script completed successfully"
+log "$SCRIPT_NAME" "Authentication setup completed"
 exit 0

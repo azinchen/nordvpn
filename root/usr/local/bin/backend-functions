@@ -37,7 +37,7 @@ run4() {
 
 run4_critical() {
     if ! ${IPT} "$@" 2>/dev/null; then
-        log "BACKEND" "(IPv4) CRITICAL ERROR: Failed to execute: $* - sleeping infinite"
+        log_error "BACKEND" "(IPv4) CRITICAL ERROR: Failed to execute: $* - sleeping infinite"
         sleep infinity
     fi
 }
@@ -53,7 +53,7 @@ run6() {
 run6_critical() {
     if [ -n "$IP6T" ]; then
         if ! ${IP6T} "$@" 2>/dev/null; then
-            log "BACKEND" "(IPv6) CRITICAL ERROR: Failed to execute: $*"
+            log_error "BACKEND" "(IPv6) CRITICAL ERROR: Failed to execute: $*"
         fi
     fi
 }
@@ -72,4 +72,434 @@ log()
     script_name="${1:-unknown}"
     shift
     printf "%s [%s] %s\n" "$(date +'%Y-%m-%d %H:%M:%S')" "${script_name}" "$*"
+}
+
+log_error()
+{
+    script_name="${1:-unknown}"
+    shift
+    printf "%s [%s] [ERROR] %s\n" "$(date +'%Y-%m-%d %H:%M:%S')" "${script_name}" "$*" >&2
+}
+
+log_warning()
+{
+    script_name="${1:-unknown}"
+    shift
+    printf "%s [%s] [WARNING] %s\n" "$(date +'%Y-%m-%d %H:%M:%S')" "${script_name}" "$*"
+}
+
+# Parse cron expression and return human-readable description
+parse_cron()
+{
+    cron_expr="$1"
+    
+    # Handle 6-field cron (with seconds) by ignoring seconds
+    if echo "$cron_expr" | awk '{print NF}' | grep -q '^6$'; then
+        cron_expr=$(echo "$cron_expr" | awk '{print $2,$3,$4,$5,$6}')
+    fi
+    
+    # Split cron expression into fields
+    minute=$(echo "$cron_expr" | awk '{print $1}')
+    hour=$(echo "$cron_expr" | awk '{print $2}')
+    day=$(echo "$cron_expr" | awk '{print $3}')
+    month=$(echo "$cron_expr" | awk '{print $4}')
+    weekday=$(echo "$cron_expr" | awk '{print $5}')
+    
+    description=""
+    
+    # Helper function to parse cron field values
+    parse_field() {
+        local field_value="$1"
+        local field_type="$2"
+        local result=""
+        
+        # Handle asterisk (every value)
+        if [ "$field_value" = "*" ]; then
+            case "$field_type" in
+                "minute") result="every minute" ;;
+                "hour") result="every hour" ;;
+                "day") result="every day" ;;
+                "month") result="every month" ;;
+                "weekday") result="every day" ;;
+            esac
+            echo "$result"
+            return
+        fi
+        
+        # Handle step values (*/n)
+        if echo "$field_value" | grep -q '^*/'; then
+            step=$(echo "$field_value" | cut -d'/' -f2)
+            case "$field_type" in
+                "minute") 
+                    if [ "$step" = "1" ]; then
+                        result="every minute"
+                    else
+                        result="every $step minutes"
+                    fi ;;
+                "hour") 
+                    if [ "$step" = "1" ]; then
+                        result="every hour"
+                    else
+                        result="every $step hours"
+                    fi ;;
+                "day") 
+                    if [ "$step" = "1" ]; then
+                        result="every day"
+                    else
+                        result="every $step days"
+                    fi ;;
+                "month") 
+                    if [ "$step" = "1" ]; then
+                        result="every month"
+                    else
+                        result="every $step months"
+                    fi ;;
+                "weekday") 
+                    if [ "$step" = "1" ]; then
+                        result="every day"
+                    else
+                        result="every $step days"
+                    fi ;;
+            esac
+            echo "$result"
+            return
+        fi
+        
+        # Handle ranges with steps (start-end/step)
+        if echo "$field_value" | grep -q '/'; then
+            range=$(echo "$field_value" | cut -d'/' -f1)
+            step=$(echo "$field_value" | cut -d'/' -f2)
+            start=$(echo "$range" | cut -d'-' -f1)
+            end=$(echo "$range" | cut -d'-' -f2)
+            
+            case "$field_type" in
+                "minute") result="every $step minutes from minute $start to $end" ;;
+                "hour") 
+                    # Convert to readable time format
+                    if [ "$start" = "0" ]; then start_time="midnight"
+                    elif [ "$start" -lt 12 ]; then start_time="${start}:00 AM"
+                    elif [ "$start" = "12" ]; then start_time="noon"
+                    else start_time="$((start-12)):00 PM"
+                    fi
+                    
+                    if [ "$end" = "0" ]; then end_time="midnight"
+                    elif [ "$end" -lt 12 ]; then end_time="${end}:00 AM"
+                    elif [ "$end" = "12" ]; then end_time="noon"
+                    else end_time="$((end-12)):00 PM"
+                    fi
+                    
+                    result="every $step hours from $start_time to $end_time" ;;
+                "day") result="every $step days from day $start to $end" ;;
+                "month") result="every $step months from month $start to $end" ;;
+                "weekday") result="every $step days from weekday $start to $end" ;;
+            esac
+            echo "$result"
+            return
+        fi
+        
+        # Handle ranges (start-end) - but not if it contains commas (handled by lists)
+        has_comma=$(echo "$field_value" | grep -c ',')
+        if echo "$field_value" | grep -q '-' && [ "$has_comma" = "0" ]; then
+            start=$(echo "$field_value" | cut -d'-' -f1)
+            end=$(echo "$field_value" | cut -d'-' -f2)
+            
+            case "$field_type" in
+                "minute") result="minutes $start-$end" ;;
+                "hour") 
+                    # Convert to readable time format
+                    if [ "$start" = "0" ]; then start_time="midnight"
+                    elif [ "$start" -lt 12 ]; then start_time="${start}:00 AM"
+                    elif [ "$start" = "12" ]; then start_time="noon"
+                    else start_time="$((start-12)):00 PM"
+                    fi
+                    
+                    if [ "$end" = "0" ]; then end_time="midnight"
+                    elif [ "$end" -lt 12 ]; then end_time="${end}:00 AM"
+                    elif [ "$end" = "12" ]; then end_time="noon"
+                    else end_time="$((end-12)):00 PM"
+                    fi
+                    
+                    result="$start_time to $end_time" ;;
+                "day") result="days $start-$end" ;;
+                "month") 
+                    start_month=$(case "$start" in 1) echo "January";; 2) echo "February";; 3) echo "March";; 4) echo "April";; 5) echo "May";; 6) echo "June";; 7) echo "July";; 8) echo "August";; 9) echo "September";; 10) echo "October";; 11) echo "November";; 12) echo "December";; *) echo "$start";; esac)
+                    end_month=$(case "$end" in 1) echo "January";; 2) echo "February";; 3) echo "March";; 4) echo "April";; 5) echo "May";; 6) echo "June";; 7) echo "July";; 8) echo "August";; 9) echo "September";; 10) echo "October";; 11) echo "November";; 12) echo "December";; *) echo "$end";; esac)
+                    result="from $start_month to $end_month" ;;
+                "weekday")
+                    # Special cases for common weekday ranges
+                    if [ "$start" = "1" ] && [ "$end" = "5" ]; then
+                        result="weekdays"
+                    elif [ "$start" = "0" ] && [ "$end" = "6" ]; then
+                        result="every day"
+                    else
+                        start_day=$(case "$start" in 0) echo "Sunday";; 1) echo "Monday";; 2) echo "Tuesday";; 3) echo "Wednesday";; 4) echo "Thursday";; 5) echo "Friday";; 6) echo "Saturday";; *) echo "$start";; esac)
+                        end_day=$(case "$end" in 0) echo "Sunday";; 1) echo "Monday";; 2) echo "Tuesday";; 3) echo "Wednesday";; 4) echo "Thursday";; 5) echo "Friday";; 6) echo "Saturday";; *) echo "$end";; esac)
+                        result="from $start_day to $end_day"
+                    fi ;;
+            esac
+            echo "$result"
+            return
+        fi
+        
+        # Handle lists (val1,val2,val3) - can include multiple ranges
+        has_comma=$(echo "$field_value" | grep -c ',')
+        if [ "$has_comma" -gt 0 ]; then
+            result=""
+            IFS=','
+            for val in $field_value; do
+                if [ -n "$result" ]; then
+                    result="$result, "
+                fi
+                
+                # Handle ranges within lists (like 1-7,15-21)
+                if echo "$val" | grep -q '-'; then
+                    start=$(echo "$val" | cut -d'-' -f1)
+                    end=$(echo "$val" | cut -d'-' -f2)
+                    
+                    case "$field_type" in
+                        "minute") result="${result}minutes $start-$end" ;;
+                        "hour") 
+                            # Convert to readable time format for ranges in lists
+                            if [ "$start" = "0" ]; then start_time="midnight"
+                            elif [ "$start" -lt 12 ]; then start_time="${start}:00 AM"
+                            elif [ "$start" = "12" ]; then start_time="noon"
+                            else start_time="$((start-12)):00 PM"
+                            fi
+                            
+                            if [ "$end" = "0" ]; then end_time="midnight"
+                            elif [ "$end" -lt 12 ]; then end_time="${end}:00 AM"
+                            elif [ "$end" = "12" ]; then end_time="noon"
+                            else end_time="$((end-12)):00 PM"
+                            fi
+                            
+                            result="${result}$start_time to $end_time" ;;
+                        "day") result="${result}days $start-$end" ;;
+                        "month") 
+                            start_month=$(case "$start" in 1) echo "January";; 2) echo "February";; 3) echo "March";; 4) echo "April";; 5) echo "May";; 6) echo "June";; 7) echo "July";; 8) echo "August";; 9) echo "September";; 10) echo "October";; 11) echo "November";; 12) echo "December";; *) echo "$start";; esac)
+                            end_month=$(case "$end" in 1) echo "January";; 2) echo "February";; 3) echo "March";; 4) echo "April";; 5) echo "May";; 6) echo "June";; 7) echo "July";; 8) echo "August";; 9) echo "September";; 10) echo "October";; 11) echo "November";; 12) echo "December";; *) echo "$end";; esac)
+                            result="${result}$start_month-$end_month" ;;
+                        "weekday")
+                            start_day=$(case "$start" in 0) echo "Sunday";; 1) echo "Monday";; 2) echo "Tuesday";; 3) echo "Wednesday";; 4) echo "Thursday";; 5) echo "Friday";; 6) echo "Saturday";; *) echo "$start";; esac)
+                            end_day=$(case "$end" in 0) echo "Sunday";; 1) echo "Monday";; 2) echo "Tuesday";; 3) echo "Wednesday";; 4) echo "Thursday";; 5) echo "Friday";; 6) echo "Saturday";; *) echo "$end";; esac)
+                            result="${result}$start_day-$end_day" ;;
+                    esac
+                else
+                    # Handle individual values in the list
+                    case "$field_type" in
+                        "minute") result="${result}minute $val" ;;
+                        "hour") 
+                            if [ "$val" = "0" ]; then result="${result}midnight"
+                            elif [ "$val" -lt 12 ]; then result="${result}$val:00 AM"
+                            elif [ "$val" = "12" ]; then result="${result}noon"
+                            else result="${result}$(($val-12)):00 PM"
+                            fi ;;
+                        "day") 
+                            # Format day numbers nicely (1st, 2nd, 3rd, etc.)
+                            case "$val" in
+                                1) result="${result}the 1st" ;;
+                                2) result="${result}the 2nd" ;;
+                                3) result="${result}the 3rd" ;;
+                                21) result="${result}the 21st" ;;
+                                22) result="${result}the 22nd" ;;
+                                23) result="${result}the 23rd" ;;
+                                31) result="${result}the 31st" ;;
+                                *) 
+                                    if [ "$val" -ge 4 ] && [ "$val" -le 20 ]; then
+                                        result="${result}the ${val}th"
+                                    elif [ "$val" -ge 24 ] && [ "$val" -le 30 ]; then
+                                        result="${result}the ${val}th"
+                                    else
+                                        result="${result}day $val"
+                                    fi ;;
+                            esac ;;
+                        "month")
+                            case "$val" in
+                                1) result="${result}January" ;;
+                                2) result="${result}February" ;;
+                                3) result="${result}March" ;;
+                                4) result="${result}April" ;;
+                                5) result="${result}May" ;;
+                                6) result="${result}June" ;;
+                                7) result="${result}July" ;;
+                                8) result="${result}August" ;;
+                                9) result="${result}September" ;;
+                                10) result="${result}October" ;;
+                                11) result="${result}November" ;;
+                                12) result="${result}December" ;;
+                                *) result="${result}month $val" ;;
+                            esac ;;
+                        "weekday")
+                            case "$val" in
+                                0) result="${result}Sunday" ;;
+                                1) result="${result}Monday" ;;
+                                2) result="${result}Tuesday" ;;
+                                3) result="${result}Wednesday" ;;
+                                4) result="${result}Thursday" ;;
+                                5) result="${result}Friday" ;;
+                                6) result="${result}Saturday" ;;
+                                *) result="${result}weekday $val" ;;
+                            esac ;;
+                    esac
+                fi
+            done
+            
+            echo "$result"
+            return
+        fi
+        
+        # Handle single values
+        case "$field_type" in
+            "minute") result="minute $field_value" ;;
+            "hour") 
+                if [ "$field_value" = "0" ]; then result="midnight"
+                elif [ "$field_value" -lt 12 ]; then result="$field_value:00 AM"
+                elif [ "$field_value" = "12" ]; then result="noon"
+                else result="$(($field_value-12)):00 PM"
+                fi ;;
+            "day") 
+                # Format day numbers nicely (1st, 2nd, 3rd, etc.)
+                case "$field_value" in
+                    1) result="the 1st" ;;
+                    2) result="the 2nd" ;;
+                    3) result="the 3rd" ;;
+                    21) result="the 21st" ;;
+                    22) result="the 22nd" ;;
+                    23) result="the 23rd" ;;
+                    31) result="the 31st" ;;
+                    *) 
+                        if [ "$field_value" -ge 4 ] && [ "$field_value" -le 20 ]; then
+                            result="the ${field_value}th"
+                        elif [ "$field_value" -ge 24 ] && [ "$field_value" -le 30 ]; then
+                            result="the ${field_value}th"
+                        else
+                            result="day $field_value"
+                        fi ;;
+                esac ;;
+            "month")
+                case "$field_value" in
+                    1) result="January" ;;
+                    2) result="February" ;;
+                    3) result="March" ;;
+                    4) result="April" ;;
+                    5) result="May" ;;
+                    6) result="June" ;;
+                    7) result="July" ;;
+                    8) result="August" ;;
+                    9) result="September" ;;
+                    10) result="October" ;;
+                    11) result="November" ;;
+                    12) result="December" ;;
+                    *) result="month $field_value" ;;
+                esac ;;
+            "weekday")
+                case "$field_value" in
+                    0) result="Sunday" ;;
+                    1) result="Monday" ;;
+                    2) result="Tuesday" ;;
+                    3) result="Wednesday" ;;
+                    4) result="Thursday" ;;
+                    5) result="Friday" ;;
+                    6) result="Saturday" ;;
+                    *) result="weekday $field_value" ;;
+                esac ;;
+        esac
+        
+        echo "$result"
+    }
+    
+    # Parse each field
+    minute_desc=$(parse_field "$minute" "minute")
+    hour_desc=$(parse_field "$hour" "hour")
+    day_desc=$(parse_field "$day" "day")
+    month_desc=$(parse_field "$month" "month")
+    weekday_desc=$(parse_field "$weekday" "weekday")
+    
+    # Build description
+    description=""
+    
+    # Determine frequency based on which fields are restricted
+    has_day_restriction=$([ "$day" != "*" ] && echo "yes" || echo "no")
+    has_month_restriction=$([ "$month" != "*" ] && echo "yes" || echo "no")  
+    has_weekday_restriction=$([ "$weekday" != "*" ] && echo "yes" || echo "no")
+    
+    # Handle time components
+    if [ "$minute_desc" = "every minute" ] && [ "$hour_desc" = "every hour" ]; then
+        time_desc="every minute"
+    elif echo "$minute_desc" | grep -q "every.*minute" && [ "$hour_desc" = "every hour" ]; then
+        # Minute has step, hour is * (every hour) - just use minute description
+        time_desc="$minute_desc"
+    elif echo "$minute_desc" | grep -q "every.*minute" && echo "$hour_desc" | grep -q "every.*hour"; then
+        # Both have step values
+        time_desc="$minute_desc, $hour_desc"
+    elif echo "$minute_desc" | grep -q "every.*minute"; then
+        # Minute has step, hour is specific
+        time_desc="$minute_desc at $hour_desc"
+    elif [ "$minute_desc" = "minute 0" ] && [ "$hour_desc" = "every hour" ]; then
+        time_desc="hourly"
+    elif [ "$minute_desc" = "minute 0" ] && echo "$hour_desc" | grep -q "^every [0-9]* hours$"; then
+        time_desc="$hour_desc"
+    elif [ "$minute_desc" = "minute 0" ] && [ "$hour_desc" = "midnight" ]; then
+        time_desc="daily at midnight"
+    elif [ "$minute_desc" = "minute 0" ] && echo "$hour_desc" | grep -q "to"; then
+        # Minute 0 with hour range = hourly during that range
+        time_desc="hourly from $hour_desc"
+    elif echo "$hour_desc" | grep -q "to"; then
+        # Hour range like "9:00 AM to 5:00 PM"
+        if echo "$minute_desc" | grep -q "every.*minute"; then
+            time_desc="$minute_desc from $hour_desc"
+        else
+            time_desc="$minute_desc at $hour_desc"
+        fi
+    else
+        time_desc="$minute_desc at $hour_desc"
+    fi
+    
+    # Simplify "minute 0 at X" to just "at X"
+    if [ "$time_desc" = "minute 0 at $hour_desc" ]; then
+        time_desc="at $hour_desc"
+    fi
+    
+    # Build final description based on restrictions
+    if [ "$has_weekday_restriction" = "yes" ] && [ "$has_day_restriction" = "no" ] && [ "$has_month_restriction" = "no" ]; then
+        # Weekly pattern
+        if [ "$time_desc" = "daily at midnight" ]; then
+            description="weekly at midnight on $weekday_desc"
+        elif [ "$time_desc" = "at noon" ]; then
+            description="weekly at noon on $weekday_desc"
+        else
+            description="$time_desc on $weekday_desc"
+        fi
+    elif [ "$has_day_restriction" = "yes" ] && [ "$has_weekday_restriction" = "no" ] && [ "$has_month_restriction" = "no" ]; then
+        # Monthly pattern (specific days)
+        if [ "$time_desc" = "daily at midnight" ]; then
+            description="monthly at midnight on $day_desc"
+        elif [ "$time_desc" = "at noon" ]; then
+            description="monthly at noon on $day_desc"
+        else
+            description="$time_desc on $day_desc"
+        fi
+    elif [ "$has_month_restriction" = "yes" ] && [ "$has_day_restriction" = "no" ] && [ "$has_weekday_restriction" = "no" ]; then
+        # Yearly pattern (specific months)
+        if [ "$time_desc" = "daily at midnight" ]; then
+            description="yearly at midnight in $month_desc"
+        elif [ "$time_desc" = "at noon" ]; then
+            description="yearly at noon in $month_desc"
+        else
+            description="$time_desc in $month_desc"
+        fi
+    else
+        # Daily or complex pattern
+        description="$time_desc"
+        if [ "$has_day_restriction" = "yes" ]; then
+            description="$description on $day_desc"
+        fi
+        if [ "$has_month_restriction" = "yes" ]; then
+            description="$description in $month_desc"
+        fi
+        if [ "$has_weekday_restriction" = "yes" ]; then
+            description="$description on $weekday_desc"
+        fi
+    fi
+    
+    echo "$description"
 }

@@ -5,8 +5,15 @@ set -eu
 
 . /usr/local/bin/backend-functions
 
-log "INIT-FIREWALL" "Starting init-firewall script..."
-log "INIT-FIREWALL" "Setting up firewall - everything has to go through the VPN"
+SCRIPT_NAME="INIT-FIREWALL"
+
+log "$SCRIPT_NAME" "Starting firewall initialization"
+log "$SCRIPT_NAME" "Configuring firewall to route all traffic through VPN"
+
+
+# BusyBox-friendly helpers
+
+docker_network="$(ip addr show dev eth0 2>/dev/null | awk '/inet / {print $2; exit}')"
 
 # BusyBox-friendly helpers
 docker_network="$(ip addr show dev eth0 2>/dev/null | awk '/inet / {print $2; exit}')"
@@ -14,7 +21,7 @@ gw="$(ip route 2>/dev/null | awk '/default/ {print $3; exit}')"
 
 # ===================== IPv4 =====================
 if [ -n "$docker_network" ]; then
-    log "INIT-FIREWALL" "IPv4 rules..."
+    log "$SCRIPT_NAME" "Setting up IPv4 firewall rules..."
 
     # Stateful fast-path (skip gracefully if conntrack match absent)
     run4_critical -A INPUT  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
@@ -31,7 +38,7 @@ if [ -n "$docker_network" ]; then
 
     # NordVPN API bootstrap (TCP/443) by resolved IPs
     if [ -n "$nordvpnapi_ip" ]; then
-        log "INIT-FIREWALL" "Processing NordVPN API IPv4 addresses from NORDVPNAPI_IP variable: ${nordvpnapi_ip}"
+        log "$SCRIPT_NAME" "Allowing NordVPN API access for IPs: ${nordvpnapi_ip}"
         oldIFS="$IFS"; IFS=',;'
         for ip in $nordvpnapi_ip; do
             [ -z "$ip" ] && continue
@@ -42,7 +49,7 @@ if [ -n "$docker_network" ]; then
 
     # NETWORK rules (CIDRs). If present, restrict inbound to these nets; do NOT add the broad eth0 accept.
     if [ -n "${network:-}" ]; then
-        log "INIT-FIREWALL" "Processing custom IPv4 networks from NETWORK variable: ${network}"
+        log "$SCRIPT_NAME" "Allowing access to custom networks: ${network}"
         oldIFS="$IFS"; IFS=',;'
         for net in $network; do
             [ -z "$net" ] && continue
@@ -58,8 +65,8 @@ if [ -n "$docker_network" ]; then
         IFS="$oldIFS"
     fi
 else
-    log "INIT-FIREWALL" "No IPv4 on eth0; skipping v4 rules."
+    log "$SCRIPT_NAME" "No IPv4 address on eth0, skipping IPv4 rules"
 fi
 
-log "INIT-FIREWALL" "init-firewall script completed successfully"
+log "$SCRIPT_NAME" "Firewall initialization completed"
 exit 0
