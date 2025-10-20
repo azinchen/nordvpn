@@ -48,6 +48,12 @@ if run4 $PIN_SPEC 2>/dev/null; then
     log "$SCRIPT_NAME" "Added firewall pinhole for ${r_proto} traffic to ${r_ip}:${r_port} on interface eth0"
 fi
 
+# Add --data-ciphers if not already present in OPENVPN_OPTS
+if ! echo "$openvpn_opts" | grep -q -- "--data-ciphers"; then
+    log "$SCRIPT_NAME" "Adding default --data-ciphers to prevent cipher deprecation warning"
+    openvpn_opts="$openvpn_opts --data-ciphers AES-256-CBC:AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305"
+fi
+
 log "$SCRIPT_NAME" "Launching OpenVPN"
 openvpn --group nordvpn --config "$ovpnfile" --auth-user-pass "$authfile" --auth-nocache --management 127.0.0.1 7505 $openvpn_opts &
 
