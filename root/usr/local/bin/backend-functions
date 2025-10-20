@@ -87,3 +87,275 @@ log_warning()
     shift
     printf "%s [%s] [WARNING] %s\n" "$(date +'%Y-%m-%d %H:%M:%S')" "${script_name}" "$*"
 }
+
+# Parse cron expression and return human-readable description
+parse_cron()
+{
+    cron_expr="$1"
+    
+    # Split cron expression into fields
+    minute=$(echo "$cron_expr" | awk '{print $1}')
+    hour=$(echo "$cron_expr" | awk '{print $2}')
+    day=$(echo "$cron_expr" | awk '{print $3}')
+    month=$(echo "$cron_expr" | awk '{print $4}')
+    weekday=$(echo "$cron_expr" | awk '{print $5}')
+    
+    description=""
+    
+    # Parse minutes
+    case "$minute" in
+        "*") description="every minute" ;;
+        "*/15") description="every 15 minutes" ;;
+        "*/30") description="every 30 minutes" ;;
+        "0") description="at the start of the hour" ;;
+        "*/5") description="every 5 minutes" ;;
+        "*/10") description="every 10 minutes" ;;
+        "*/20") description="every 20 minutes" ;;
+        "*/30") description="every 30 minutes" ;;
+        "0,30") description="every 30 minutes" ;;
+        *) description="at minute $minute" ;;
+    esac
+    
+    # Parse hours
+    case "$hour" in
+        "*") 
+            if [ "$description" = "every minute" ]; then
+                description="every minute"
+            elif [ "$description" = "at the start of the hour" ]; then
+                description="hourly"
+            fi
+            ;;
+        "*/1") 
+            if [ "$description" = "every minute" ]; then
+                description="every minute"
+            elif [ "$description" = "at the start of the hour" ]; then
+                description="hourly"
+            fi
+            ;;
+        "*/2") description="$description, every 2 hours" ;;
+        "*/3") description="$description, every 3 hours" ;;
+        "*/4") description="$description, every 4 hours" ;;
+        "*/6") description="$description, every 6 hours" ;;
+        "*/8") description="$description, every 8 hours" ;;
+        "*/12") description="$description, every 12 hours" ;;
+        "0") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at midnight"
+            else
+                description="$description at midnight"
+            fi
+            ;;
+        "1") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 1:00 AM"
+            else
+                description="$description at 1:00 AM"
+            fi
+            ;;
+        "2") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 2:00 AM"
+            else
+                description="$description at 2:00 AM"
+            fi
+            ;;
+        "3") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 3:00 AM"
+            else
+                description="$description at 3:00 AM"
+            fi
+            ;;
+        "4") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 4:00 AM"
+            else
+                description="$description at 4:00 AM"
+            fi
+            ;;
+        "5") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 5:00 AM"
+            else
+                description="$description at 5:00 AM"
+            fi
+            ;;
+        "6") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 6:00 AM"
+            else
+                description="$description at 6:00 AM"
+            fi
+            ;;
+        "7") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 7:00 AM"
+            else
+                description="$description at 7:00 AM"
+            fi
+            ;;
+        "8") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 8:00 AM"
+            else
+                description="$description at 8:00 AM"
+            fi
+            ;;
+        "9") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 9:00 AM"
+            else
+                description="$description at 9:00 AM"
+            fi
+            ;;
+        "10") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 10:00 AM"
+            else
+                description="$description at 10:00 AM"
+            fi
+            ;;
+        "11") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 11:00 AM"
+            else
+                description="$description at 11:00 AM"
+            fi
+            ;;
+        "12") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at noon"
+            else
+                description="$description at noon"
+            fi
+            ;;
+        "13") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 1:00 PM"
+            else
+                description="$description at 1:00 PM"
+            fi
+            ;;
+        "14") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 2:00 PM"
+            else
+                description="$description at 2:00 PM"
+            fi
+            ;;
+        "15") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 3:00 PM"
+            else
+                description="$description at 3:00 PM"
+            fi
+            ;;
+        "16") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 4:00 PM"
+            else
+                description="$description at 4:00 PM"
+            fi
+            ;;
+        "17") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 5:00 PM"
+            else
+                description="$description at 5:00 PM"
+            fi
+            ;;
+        "18") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 6:00 PM"
+            else
+                description="$description at 6:00 PM"
+            fi
+            ;;
+        "19") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 7:00 PM"
+            else
+                description="$description at 7:00 PM"
+            fi
+            ;;
+        "20") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 8:00 PM"
+            else
+                description="$description at 8:00 PM"
+            fi
+            ;;
+        "21") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 9:00 PM"
+            else
+                description="$description at 9:00 PM"
+            fi
+            ;;
+        "22") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 10:00 PM"
+            else
+                description="$description at 10:00 PM"
+            fi
+            ;;
+        "23") 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at 11:00 PM"
+            else
+                description="$description at 11:00 PM"
+            fi
+            ;;
+        *) 
+            if [ "$description" = "at the start of the hour" ]; then
+                description="daily at $hour:00"
+            else
+                description="$description at $hour:00"
+            fi
+            ;;
+    esac
+    
+    # Parse days of month (simplified)
+    case "$day" in
+        "*") ;; # Every day is default
+        "1") description="$description on the 1st of the month" ;;
+        "15") description="$description on the 15th of the month" ;;
+        "*/7") description="$description every 7 days" ;;
+        *) description="$description on day $day of the month" ;;
+    esac
+    
+    # Parse months (simplified)
+    case "$month" in
+        "*") ;; # Every month is default
+        "1") description="$description in January" ;;
+        "2") description="$description in February" ;;
+        "3") description="$description in March" ;;
+        "4") description="$description in April" ;;
+        "5") description="$description in May" ;;
+        "6") description="$description in June" ;;
+        "7") description="$description in July" ;;
+        "8") description="$description in August" ;;
+        "9") description="$description in September" ;;
+        "10") description="$description in October" ;;
+        "11") description="$description in November" ;;
+        "12") description="$description in December" ;;
+        *) description="$description in month $month" ;;
+    esac
+    
+    # Parse weekdays (simplified)
+    case "$weekday" in
+        "*") ;; # Every day is default
+        "0") description="$description on Sundays" ;;
+        "1") description="$description on Mondays" ;;
+        "2") description="$description on Tuesdays" ;;
+        "3") description="$description on Wednesdays" ;;
+        "4") description="$description on Thursdays" ;;
+        "5") description="$description on Fridays" ;;
+        "6") description="$description on Saturdays" ;;
+        "1-5") description="$description on weekdays" ;;
+        "0,6") description="$description on weekends" ;;
+        *) description="$description on weekday $weekday" ;;
+    esac
+    
+    echo "$description"
+}

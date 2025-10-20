@@ -11,13 +11,13 @@ log "$SCRIPT_NAME" "Starting cron configuration"
 
 # Validate cron-related environment variables
 if [ -n "${recreate_vpn_cron:-}" ]; then
-    log "$SCRIPT_NAME" "VPN recreation cron: $recreate_vpn_cron"
+    log "$SCRIPT_NAME" "VPN recreation cron: $recreate_vpn_cron ($(parse_cron "$recreate_vpn_cron"))"
 else
     log "$SCRIPT_NAME" "VPN recreation cron not configured"
 fi
 
 if [ -n "${check_connection_cron:-}" ]; then
-    log "$SCRIPT_NAME" "Health check cron: $check_connection_cron"
+    log "$SCRIPT_NAME" "Health check cron: $check_connection_cron ($(parse_cron "$check_connection_cron"))"
     
     # Validate CHECK_CONNECTION_* variables that are used by vpn-healthcheck
     
