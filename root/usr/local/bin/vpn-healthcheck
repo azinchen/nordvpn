@@ -30,6 +30,7 @@ while [ $counter -le "$check_connection_attempts" ]; do
     done
     IFS="$oldIFS"
 
+    log "$SCRIPT_NAME" "Connection attempt $counter/$check_connection_attempts failed, retrying in $check_connection_attempt_interval seconds"
     sleep "$check_connection_attempt_interval"
     counter=$((counter + 1))
 done

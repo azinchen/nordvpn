@@ -507,10 +507,12 @@ country_name=$(echo "$servers" | jq -r '.locations[0].country.name' | head -n 1)
 city_name=$(echo "$servers" | jq -r '.locations[0].country.city.name' | head -n 1)
 log "$SCRIPT_NAME" "Selected server: $name ($hostname, $country_name, $city_name)"
 
+log "$SCRIPT_NAME" "Creating VPN configuration file"
 cp "$ovpntemplatefile" "$ovpnfile"
 chmod 0600 "$ovpnfile"
 chown nordvpn:nordvpn "$ovpnfile"
 
+log "$SCRIPT_NAME" "Configuring VPN settings (IP: $serverip, Protocol: $protocol)"
 sed -i "s/__IP__/$serverip/g" "$ovpnfile"
 sed -i "s/__PROTOCOL__/$protocol/g" "$ovpnfile"
 sed -i "s/__X509_NAME__/$hostname/g" "$ovpnfile"

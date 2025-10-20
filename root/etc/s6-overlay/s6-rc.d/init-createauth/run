@@ -9,6 +9,7 @@ SCRIPT_NAME="INIT-CREATEAUTH"
 
 log "$SCRIPT_NAME" "Starting authentication setup"
 
+log "$SCRIPT_NAME" "Creating VPN authentication file"
 echo "$user" > "$authfile"
 echo "$pass" >> "$authfile"
 chmod 0600 "$authfile"

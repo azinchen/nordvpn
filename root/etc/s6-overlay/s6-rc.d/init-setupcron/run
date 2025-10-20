@@ -36,9 +36,7 @@ if [ -n "${check_connection_cron:-}" ]; then
         exit 1
     fi
     
-    log "$SCRIPT_NAME" "Health check attempts: $check_connection_attempts"
-    log "$SCRIPT_NAME" "Health check URL: $check_connection_url"
-    log "$SCRIPT_NAME" "Health check interval: $check_connection_attempt_interval seconds"
+    # Validation passed
 else
     log "$SCRIPT_NAME" "Health check cron not configured, skipping validation"
 fi
