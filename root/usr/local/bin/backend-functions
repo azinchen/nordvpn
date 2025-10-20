@@ -425,10 +425,13 @@ parse_cron()
     # Handle time components
     if [ "$minute_desc" = "every minute" ] && [ "$hour_desc" = "every hour" ]; then
         time_desc="every minute"
+    elif echo "$minute_desc" | grep -q "every.*minute" && [ "$hour_desc" = "every hour" ]; then
+        # Minute has step, hour is * (every hour) - just use minute description
+        time_desc="$minute_desc"
     elif echo "$minute_desc" | grep -q "every.*minute" && echo "$hour_desc" | grep -q "every.*hour"; then
         # Both have step values
         time_desc="$minute_desc, $hour_desc"
-    elif echo "$minute_desc" | grep -q "every.*minute" && [ "$hour_desc" != "every hour" ]; then
+    elif echo "$minute_desc" | grep -q "every.*minute"; then
         # Minute has step, hour is specific
         time_desc="$minute_desc at $hour_desc"
     elif [ "$minute_desc" = "minute 0" ] && [ "$hour_desc" = "every hour" ]; then
