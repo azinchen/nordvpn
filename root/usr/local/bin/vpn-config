@@ -7,7 +7,7 @@ set -eu
 
 SCRIPT_NAME="VPN-CONFIG"
 
-log "$SCRIPT_NAME" "Starting vpn-config script..."
+log "$SCRIPT_NAME" "Starting VPN configuration"
 
 numericregex="^[0-9]+$"
 
@@ -380,7 +380,7 @@ if [ -n "$country" ]; then
                 # Execute curl with built parameters
                 serversincountry=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincountry" ]; then
-                    log "$SCRIPT_NAME" "Request servers in \"$(getcountryname "$value")\", $(echo "$serversincountry" | jq -s 'length') servers received"
+                    log "$SCRIPT_NAME" "Fetched $(echo "$serversincountry" | jq -s 'length') servers for $(getcountryname "$value")"
                     echo "$serversincountry" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
                     servers="$servers""$serversincountry"
                 else
@@ -422,7 +422,7 @@ if [ -n "$city" ]; then
                 # Execute curl with built parameters
                 serversincity=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincity" ]; then
-                    log "$SCRIPT_NAME" "Request servers in \"$(getcityname "$value")\", $(echo "$serversincity" | jq -s 'length') servers received"
+                    log "$SCRIPT_NAME" "Fetched $(echo "$serversincity" | jq -s 'length') servers for $(getcityname "$value")"
                     echo "$serversincity" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
                     servers="$servers""$serversincity"
                 else
@@ -440,12 +440,12 @@ poollength=0
 if [ -n "$servers" ]; then
     poollength=$(echo "$servers" | jq -s 'unique | length' 2>/dev/null || echo "0")
 else
-    log "$SCRIPT_NAME" "No servers collected from any sources"
+    log "$SCRIPT_NAME" "No servers found matching criteria"
 fi
 
 # If no servers found, fallback to default recommended servers
 if [ "$poollength" -eq 0 ]; then
-    log "$SCRIPT_NAME" "No servers found for specified criteria, requesting default recommended servers"
+    log "$SCRIPT_NAME" "Using default recommended servers"
     
     # Build curl parameters for fallback
     curl_params=""
@@ -459,7 +459,7 @@ if [ "$poollength" -eq 0 ]; then
     servers=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
     
     if [ -n "$servers" ]; then
-        log "$SCRIPT_NAME" "Default recommended servers: $(echo "$servers" | jq -s 'length') servers received"
+        log "$SCRIPT_NAME" "Fetched $(echo "$servers" | jq -s 'length') default servers"
         echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
         poollength=$(echo "$servers" | jq -s 'unique | length')
     else
@@ -486,11 +486,10 @@ if [ "$random_top" -ne 0 ]; then
     fi
 fi
 
-log "$SCRIPT_NAME" "$poollength recommended servers in pool"
+log "$SCRIPT_NAME" "Server pool contains $poollength servers"
 if [ "$poollength" -ne 0 ]; then
-    log "$SCRIPT_NAME" "--- Top 20 servers in filtered pool ---"
+    log "$SCRIPT_NAME" "Top servers in filtered pool:"
     echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"' | head -n 20
-    log "$SCRIPT_NAME" "---------------------------------------"
 fi
 
 if [ "$poollength" -eq 0 ]; then
@@ -506,7 +505,7 @@ protocol=$(getopenvpnprotocol "$technology")
 # Extract location information
 country_name=$(echo "$servers" | jq -r '.locations[0].country.name' | head -n 1)
 city_name=$(echo "$servers" | jq -r '.locations[0].country.city.name' | head -n 1)
-log "$SCRIPT_NAME" "Select server \"$name\" hostname=\"$hostname\" ip=\"$serverip\" protocol=\"$protocol\" location=\"$country_name, $city_name\""
+log "$SCRIPT_NAME" "Selected server: $name ($hostname, $country_name, $city_name)"
 
 cp "$ovpntemplatefile" "$ovpnfile"
 chmod 0600 "$ovpnfile"
@@ -531,5 +530,5 @@ if [ ! -s "$ovpnfile" ]; then
     sleep infinity
 fi
 
-log "$SCRIPT_NAME" "vpn-config script completed successfully"
+log "$SCRIPT_NAME" "VPN configuration completed"
 exit 0

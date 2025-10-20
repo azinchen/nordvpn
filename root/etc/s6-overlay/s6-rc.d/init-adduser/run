@@ -7,7 +7,7 @@ set -eu
 
 SCRIPT_NAME="INIT-ADDUSER"
 
-log "$SCRIPT_NAME" "Starting init-adduser script..."
+log "$SCRIPT_NAME" "Starting user initialization"
 
 if [ "$(id -g nordvpn)" -ne "$pgid" ]; then
     log "$SCRIPT_NAME" "Updating nordvpn group ID from $(id -g nordvpn) to $pgid"
@@ -19,5 +19,5 @@ if [ "$(id -u nordvpn)" -ne "$puid" ]; then
     usermod --non-unique --uid "$puid" nordvpn
 fi
 
-log "$SCRIPT_NAME" "init-adduser script completed successfully"
+log "$SCRIPT_NAME" "User initialization completed"
 exit 0

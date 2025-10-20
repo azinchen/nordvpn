@@ -7,7 +7,7 @@ set -eu
 
 SCRIPT_NAME="SERVICE-NORDVPN"
 
-log "$SCRIPT_NAME" "Starting nordvpn service..."
+log "$SCRIPT_NAME" "Starting NordVPN service"
 
 # -------- helpers --------
 normalize_proto()
@@ -48,7 +48,7 @@ if run4 $PIN_SPEC 2>/dev/null; then
     log "$SCRIPT_NAME" "pinhole added: $IPT $PIN_SPEC"
 fi
 
-log "$SCRIPT_NAME" "launching OpenVPN..."
+log "$SCRIPT_NAME" "Launching OpenVPN"
 openvpn --group nordvpn --config "$ovpnfile" --auth-user-pass "$authfile" --auth-nocache --management 127.0.0.1 7505 $openvpn_opts &
 
 # Wait for VPN connection
@@ -60,14 +60,14 @@ while ! is_vpn_connected && [ $counter -lt 30 ]; do
 done
 
 if is_vpn_connected; then
-    log "$SCRIPT_NAME" "VPN connected successfully"
+    log "$SCRIPT_NAME" "VPN connection established"
     # Run network diagnostic if enabled
     if [ "$network_diagnostic_enabled" = "true" ] || [ "$network_diagnostic_enabled" = "1" ]; then
         log "$SCRIPT_NAME" "Running network diagnostic..."
         network-diagnostic
     fi
 else
-    log "$SCRIPT_NAME" "VPN connection timeout"
+    log "$SCRIPT_NAME" "VPN connection timed out"
 fi
 
 # Wait for OpenVPN to exit

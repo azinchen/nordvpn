@@ -7,17 +7,17 @@ set -eu
 
 SCRIPT_NAME="INIT-SETUPCRON"
 
-log "$SCRIPT_NAME" "Starting init-setupcron script..."
+log "$SCRIPT_NAME" "Starting cron configuration"
 
 # Validate cron-related environment variables
 if [ -n "${recreate_vpn_cron:-}" ]; then
-    log "$SCRIPT_NAME" "RECREATE_VPN_CRON is set to: $recreate_vpn_cron"
+    log "$SCRIPT_NAME" "VPN recreation cron: $recreate_vpn_cron"
 else
-    log "$SCRIPT_NAME" "RECREATE_VPN_CRON is not set"
+    log "$SCRIPT_NAME" "VPN recreation cron not configured"
 fi
 
 if [ -n "${check_connection_cron:-}" ]; then
-    log "$SCRIPT_NAME" "CHECK_CONNECTION_CRON is set to: $check_connection_cron"
+    log "$SCRIPT_NAME" "Health check cron: $check_connection_cron"
     
     # Validate CHECK_CONNECTION_* variables that are used by vpn-healthcheck
     
@@ -36,11 +36,11 @@ if [ -n "${check_connection_cron:-}" ]; then
         exit 1
     fi
     
-    log "$SCRIPT_NAME" "CHECK_CONNECTION_ATTEMPTS: $check_connection_attempts"
-    log "$SCRIPT_NAME" "CHECK_CONNECTION_URL: $check_connection_url"
-    log "$SCRIPT_NAME" "CHECK_CONNECTION_ATTEMPT_INTERVAL: $check_connection_attempt_interval"
+    log "$SCRIPT_NAME" "Health check attempts: $check_connection_attempts"
+    log "$SCRIPT_NAME" "Health check URL: $check_connection_url"
+    log "$SCRIPT_NAME" "Health check interval: $check_connection_attempt_interval seconds"
 else
-    log "$SCRIPT_NAME" "CHECK_CONNECTION_CRON is not set - vpn-healthcheck validation skipped"
+    log "$SCRIPT_NAME" "Health check cron not configured, skipping validation"
 fi
 
 cron_dir="/var/spool/cron/crontabs"
@@ -52,14 +52,14 @@ touch "$cron_file"
 if [ -n "${recreate_vpn_cron:-}" ]; then
     echo "$recreate_vpn_cron vpn-reconnect" >> "$cron_file"
 else
-    log "$SCRIPT_NAME" "No VPN reconnection cron specified"
+    log "$SCRIPT_NAME" "VPN reconnection cron not configured"
 fi
 
 if [ -n "${check_connection_cron:-}" ]; then
     echo "$check_connection_cron vpn-healthcheck" >> "$cron_file"
 else
-    log "$SCRIPT_NAME" "No VPN health check cron specified"
+    log "$SCRIPT_NAME" "Health check cron not configured"
 fi
 
-log "$SCRIPT_NAME" "init-setupcron script completed successfully"
+log "$SCRIPT_NAME" "Cron configuration completed"
 exit 0

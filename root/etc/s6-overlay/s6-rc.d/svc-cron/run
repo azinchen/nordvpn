@@ -7,6 +7,6 @@ set -eu
 
 SCRIPT_NAME="SERVICE-CRON"
 
-log "$SCRIPT_NAME" "Starting cron service..."
+log "$SCRIPT_NAME" "Starting cron service"
 
 exec crond -f

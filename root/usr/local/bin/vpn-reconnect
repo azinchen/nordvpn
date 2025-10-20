@@ -7,11 +7,11 @@ set -eu
 
 SCRIPT_NAME="VPN-RECONNECT"
 
-log "$SCRIPT_NAME" "Starting VPN reconnection script..."
+log "$SCRIPT_NAME" "Starting VPN reconnection"
 
 s6-rc stop svc-nordvpn
 sleep 2
 s6-rc start svc-nordvpn
 
-log "$SCRIPT_NAME" "VPN reconnection completed successfully"
+log "$SCRIPT_NAME" "VPN reconnection completed"
 exit 0

@@ -7,7 +7,7 @@ set -eu
 
 SCRIPT_NAME="VPN-HEALTHCHECK"
 
-log "$SCRIPT_NAME" "Starting VPN healthcheck script..."
+log "$SCRIPT_NAME" "Starting VPN health check"
 
 httpreq()
 {
@@ -24,7 +24,7 @@ while [ $counter -le "$check_connection_attempts" ]; do
     oldIFS="$IFS"; IFS=',;'
     for url in $check_connection_url; do
         if httpreq "$url"; then
-            log "$SCRIPT_NAME" "Connection via VPN is up"
+            log "$SCRIPT_NAME" "VPN connection is active"
             exit 0
         fi
     done
@@ -34,6 +34,6 @@ while [ $counter -le "$check_connection_attempts" ]; do
     counter=$((counter + 1))
 done
 
-log "$SCRIPT_NAME" "All connection attempts failed, initiating VPN reconnection"
+log "$SCRIPT_NAME" "All connection attempts failed, triggering VPN reconnection"
 vpn-reconnect
 exit 1
