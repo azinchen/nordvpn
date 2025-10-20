@@ -89,7 +89,7 @@ pick_ipv4_backend()
         fi
         [ -n "$_IPT" ] || { command -v iptables >/dev/null 2>&1 && try_policy iptables && _IPT="iptables"; }
     fi
-    [ -n "$_IPT" ] || { log "$SCRIPT_NAME" "ERROR: no working iptables (IPv4) found"; exit 1; }
+    [ -n "$_IPT" ] || { log_error "$SCRIPT_NAME" "ERROR: no working iptables (IPv4) found"; exit 1; }
 
     log "$SCRIPT_NAME" "Kernel: $(uname -r)"
     log "$SCRIPT_NAME" "Using IPv4 backend: ${_IPT}"

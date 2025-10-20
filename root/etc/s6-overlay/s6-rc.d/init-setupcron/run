@@ -5,40 +5,42 @@ set -eu
 
 . /usr/local/bin/backend-functions
 
-log "INIT-SETUPCRON" "Starting init-setupcron script..."
+SCRIPT_NAME="INIT-SETUPCRON"
+
+log "$SCRIPT_NAME" "Starting init-setupcron script..."
 
 # Validate cron-related environment variables
 if [ -n "${recreate_vpn_cron:-}" ]; then
-    log "INIT-SETUPCRON" "RECREATE_VPN_CRON is set to: $recreate_vpn_cron"
+    log "$SCRIPT_NAME" "RECREATE_VPN_CRON is set to: $recreate_vpn_cron"
 else
-    log "INIT-SETUPCRON" "RECREATE_VPN_CRON is not set"
+    log "$SCRIPT_NAME" "RECREATE_VPN_CRON is not set"
 fi
 
 if [ -n "${check_connection_cron:-}" ]; then
-    log "INIT-SETUPCRON" "CHECK_CONNECTION_CRON is set to: $check_connection_cron"
+    log "$SCRIPT_NAME" "CHECK_CONNECTION_CRON is set to: $check_connection_cron"
     
     # Validate CHECK_CONNECTION_* variables that are used by vpn-healthcheck
     
     if [ -z "$check_connection_attempts" ] || [ "$check_connection_attempts" -le 0 ]; then
-        log "INIT-SETUPCRON" "ERROR: CHECK_CONNECTION_ATTEMPTS must be a positive integer, got: '$check_connection_attempts'"
+        log_error "$SCRIPT_NAME" "ERROR: CHECK_CONNECTION_ATTEMPTS must be a positive integer, got: '$check_connection_attempts'"
         exit 1
     fi
     
     if [ -z "$check_connection_url" ]; then
-        log "INIT-SETUPCRON" "ERROR: CHECK_CONNECTION_URL must be set"
+        log_error "$SCRIPT_NAME" "ERROR: CHECK_CONNECTION_URL must be set"
         exit 1
     fi
     
     if [ -z "$check_connection_attempt_interval" ] || [ "$check_connection_attempt_interval" -le 0 ]; then
-        log "INIT-SETUPCRON" "ERROR: CHECK_CONNECTION_ATTEMPT_INTERVAL must be a positive integer, got: '$check_connection_attempt_interval'"
+        log_error "$SCRIPT_NAME" "ERROR: CHECK_CONNECTION_ATTEMPT_INTERVAL must be a positive integer, got: '$check_connection_attempt_interval'"
         exit 1
     fi
     
-    log "INIT-SETUPCRON" "CHECK_CONNECTION_ATTEMPTS: $check_connection_attempts"
-    log "INIT-SETUPCRON" "CHECK_CONNECTION_URL: $check_connection_url"
-    log "INIT-SETUPCRON" "CHECK_CONNECTION_ATTEMPT_INTERVAL: $check_connection_attempt_interval"
+    log "$SCRIPT_NAME" "CHECK_CONNECTION_ATTEMPTS: $check_connection_attempts"
+    log "$SCRIPT_NAME" "CHECK_CONNECTION_URL: $check_connection_url"
+    log "$SCRIPT_NAME" "CHECK_CONNECTION_ATTEMPT_INTERVAL: $check_connection_attempt_interval"
 else
-    log "INIT-SETUPCRON" "CHECK_CONNECTION_CRON is not set - vpn-healthcheck validation skipped"
+    log "$SCRIPT_NAME" "CHECK_CONNECTION_CRON is not set - vpn-healthcheck validation skipped"
 fi
 
 cron_dir="/var/spool/cron/crontabs"
@@ -50,14 +52,14 @@ touch "$cron_file"
 if [ -n "${recreate_vpn_cron:-}" ]; then
     echo "$recreate_vpn_cron vpn-reconnect" >> "$cron_file"
 else
-    log "INIT-SETUPCRON" "No VPN reconnection cron specified"
+    log "$SCRIPT_NAME" "No VPN reconnection cron specified"
 fi
 
 if [ -n "${check_connection_cron:-}" ]; then
     echo "$check_connection_cron vpn-healthcheck" >> "$cron_file"
 else
-    log "INIT-SETUPCRON" "No VPN health check cron specified"
+    log "$SCRIPT_NAME" "No VPN health check cron specified"
 fi
 
-log "INIT-SETUPCRON" "init-setupcron script completed successfully"
+log "$SCRIPT_NAME" "init-setupcron script completed successfully"
 exit 0

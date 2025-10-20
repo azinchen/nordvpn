@@ -328,7 +328,7 @@ tech_filter=""
 if [ -n "$technology" ]; then
     tech_id=$(gettechnologyid "$technology")
     if [ -z "$tech_id" ]; then
-        log "$SCRIPT_NAME" "Warning: Could not find technology \"$technology\""
+        log_warning "$SCRIPT_NAME" "Warning: Could not find technology \"$technology\""
     else
         tech_filter="--data-urlencode filters[servers_technologies][id]=$tech_id"
     fi
@@ -340,7 +340,7 @@ group_filter=""
 if [ -n "$group" ]; then
     group_id=$(getgroupid "$group")
     if [ -z "$group_id" ]; then
-        log "$SCRIPT_NAME" "Warning: Could not find group \"$group\""
+        log_warning "$SCRIPT_NAME" "Warning: Could not find group \"$group\""
     else
         group_filter="--data-urlencode filters[servers_groups][id]=$group_id"
     fi
@@ -350,7 +350,7 @@ fi
 
 test_response=$(nord_api_curl "v1/servers/recommendations" --data-urlencode "limit=1" 2>/dev/null || echo "")
 if [ -z "$test_response" ]; then
-    log "$SCRIPT_NAME" "WARNING: API connectivity test failed - no response from NordVPN API"
+    log_warning "$SCRIPT_NAME" "WARNING: API connectivity test failed - no response from NordVPN API"
 fi
 servers=""
 locations_count=0
@@ -384,10 +384,10 @@ if [ -n "$country" ]; then
                     echo "$serversincountry" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
                     servers="$servers""$serversincountry"
                 else
-                    log "$SCRIPT_NAME" "Warning: No servers returned for country \"$value\""
+                    log_warning "$SCRIPT_NAME" "Warning: No servers returned for country \"$value\""
                 fi
             else
-                log "$SCRIPT_NAME" "Warning: Could not find country \"$value\""
+                log_warning "$SCRIPT_NAME" "Warning: Could not find country \"$value\""
             fi
         fi
     done
@@ -426,10 +426,10 @@ if [ -n "$city" ]; then
                     echo "$serversincity" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
                     servers="$servers""$serversincity"
                 else
-                    log "$SCRIPT_NAME" "Warning: No servers returned for city \"$value\""
+                    log_warning "$SCRIPT_NAME" "Warning: No servers returned for city \"$value\""
                 fi
             else
-                log "$SCRIPT_NAME" "Warning: Could not find coordinates for city \"$value\""
+                log_warning "$SCRIPT_NAME" "Warning: Could not find coordinates for city \"$value\""
             fi
         fi
     done
@@ -463,7 +463,7 @@ if [ "$poollength" -eq 0 ]; then
         echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
         poollength=$(echo "$servers" | jq -s 'unique | length')
     else
-        log "$SCRIPT_NAME" "CRITICAL ERROR: Failed to get fallback servers - sleeping infinite"
+        log_error "$SCRIPT_NAME" "CRITICAL ERROR: Failed to get fallback servers - sleeping infinite"
         sleep infinity
     fi
 fi
@@ -494,7 +494,7 @@ if [ "$poollength" -ne 0 ]; then
 fi
 
 if [ "$poollength" -eq 0 ]; then
-    log "$SCRIPT_NAME" "CRITICAL ERROR: list of selected servers is empty - sleeping infinite"
+    log_error "$SCRIPT_NAME" "CRITICAL ERROR: list of selected servers is empty - sleeping infinite"
     sleep infinity
 fi
 
@@ -521,13 +521,13 @@ if [ "$protocol" = "udp" ]; then
 elif [ "$protocol" = "tcp" ]; then
     sed -i "s/__PORT__/443/g" "$ovpnfile"
 else
-    log "$SCRIPT_NAME" "CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$technology\" - sleeping infinite"
+    log_error "$SCRIPT_NAME" "CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$technology\" - sleeping infinite"
     sleep infinity
 fi
 
 # Verify the config file was created successfully
 if [ ! -s "$ovpnfile" ]; then
-    log "$SCRIPT_NAME" "CRITICAL ERROR: VPN config file was not created successfully - sleeping infinite"
+    log_error "$SCRIPT_NAME" "CRITICAL ERROR: VPN config file was not created successfully - sleeping infinite"
     sleep infinity
 fi
 
