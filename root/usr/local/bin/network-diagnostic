@@ -5,6 +5,9 @@
 
 set -u  # be strict about undefined vars
 
+# OpenVPN management socket path
+MGMT_SOCK="/run/xt/openvpn-mgmt.sock"
+
 MODE="full"
 
 print_usage()
@@ -85,10 +88,10 @@ is_private_ip()
 get_openvpn_status()
 {
     MGMT_SOURCE=""
-    # Try to connect to OpenVPN management interface via TCP
+    # Try to connect to OpenVPN management interface via Unix socket
     if command -v nc >/dev/null 2>&1; then
         # Use netcat with delays to allow management interface to process commands
-        MGMT_RESP="$({ sleep 0.2; printf "status\n"; sleep 1; printf "quit\n"; } | nc 127.0.0.1 7505 2>/dev/null || printf '')"
+        MGMT_RESP="$({ sleep 0.2; printf "status\n"; sleep 1; printf "quit\n"; } | nc -U "$MGMT_SOCK" 2>/dev/null || printf '')"
     else
         MGMT_RESP=""
     fi
@@ -111,7 +114,7 @@ get_openvpn_status()
         fi
         
         # Try to get port and uptime from management interface state
-        STATE_RESP="$({ sleep 0.2; printf "state\n"; sleep 1; printf "quit\n"; } | nc 127.0.0.1 7505 2>/dev/null || printf '')"
+        STATE_RESP="$({ sleep 0.2; printf "state\n"; sleep 1; printf "quit\n"; } | nc -U "$MGMT_SOCK" 2>/dev/null || printf '')"
         if [ -n "$STATE_RESP" ]; then
             # Parse state line format: timestamp,CONNECTED,SUCCESS,local_ip,remote_ip,remote_port
             STATE_LINE="$(printf "%s" "$STATE_RESP" | grep -E '^[0-9]+,CONNECTED' | head -1 || printf '')"

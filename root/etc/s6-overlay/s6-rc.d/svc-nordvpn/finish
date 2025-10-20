@@ -13,7 +13,7 @@ log "$SCRIPT_NAME" "Cleaning up VPN firewall rules"
 run4 -F VPN-SERVER
 
 log "$SCRIPT_NAME" "Disconnecting OpenVPN"
-echo "signal SIGTERM" | nc 127.0.0.1 7505
+echo "signal SIGTERM" | nc -U "$mgmtsockfile"
 sleep 5
 
 log "$SCRIPT_NAME" "NordVPN service stopped"
