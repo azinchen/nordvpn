@@ -5,7 +5,9 @@ set -eu
 
 . /usr/local/bin/backend-functions
 
-log "SERVICE-NORDVPN" "Starting nordvpn service..."
+SCRIPT_NAME="SERVICE-NORDVPN"
+
+log "$SCRIPT_NAME" "Starting nordvpn service..."
 
 # -------- helpers --------
 normalize_proto()
@@ -21,10 +23,10 @@ normalize_proto()
 vpn-config
 
 # -------- parse the single 'remote' line --------
-[ -s "$ovpnfile" ] || { log "SERVICE-NORDVPN" "CRITICAL ERROR: OVPN file not found: $ovpnfile - sleeping infinite" >&2; sleep infinity; }
+[ -s "$ovpnfile" ] || { log "$SCRIPT_NAME" "CRITICAL ERROR: OVPN file not found: $ovpnfile - sleeping infinite" >&2; sleep infinity; }
 
 r_line="$(awk '/^[[:space:]]*remote[ \t]+/ {print; exit}' "$ovpnfile")"
-[ -n "$r_line" ] || { log "SERVICE-NORDVPN" "CRITICAL ERROR: No 'remote' line in $ovpnfile - sleeping infinite" >&2; sleep infinity; }
+[ -n "$r_line" ] || { log "$SCRIPT_NAME" "CRITICAL ERROR: No 'remote' line in $ovpnfile - sleeping infinite" >&2; sleep infinity; }
 
 # Fields: remote <ip> [port] [proto]
 r_ip_raw="$(echo "$r_line" | awk '{print $2}')"
@@ -43,14 +45,14 @@ r_ip="$(echo "$r_ip_raw" | sed 's,^\[,,' | sed 's,\]$,,' )"
 
 PIN_SPEC="-A VPN-SERVER -o eth0 -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"
 if run4 $PIN_SPEC 2>/dev/null; then
-    log "SERVICE-NORDVPN" "pinhole added: $IPT $PIN_SPEC"
+    log "$SCRIPT_NAME" "pinhole added: $IPT $PIN_SPEC"
 fi
 
-log "SERVICE-NORDVPN" "launching OpenVPN..."
+log "$SCRIPT_NAME" "launching OpenVPN..."
 openvpn --group nordvpn --config "$ovpnfile" --auth-user-pass "$authfile" --auth-nocache --management 127.0.0.1 7505 $openvpn_opts &
 
 # Wait for VPN connection
-log "SERVICE-NORDVPN" "Waiting for VPN connection..."
+log "$SCRIPT_NAME" "Waiting for VPN connection..."
 counter=0
 while ! is_vpn_connected && [ $counter -lt 30 ]; do
     sleep 2
@@ -58,14 +60,14 @@ while ! is_vpn_connected && [ $counter -lt 30 ]; do
 done
 
 if is_vpn_connected; then
-    log "SERVICE-NORDVPN" "VPN connected successfully"
+    log "$SCRIPT_NAME" "VPN connected successfully"
     # Run network diagnostic if enabled
     if [ "$network_diagnostic_enabled" = "true" ] || [ "$network_diagnostic_enabled" = "1" ]; then
-        log "SERVICE-NORDVPN" "Running network diagnostic..."
+        log "$SCRIPT_NAME" "Running network diagnostic..."
         network-diagnostic
     fi
 else
-    log "SERVICE-NORDVPN" "VPN connection timeout"
+    log "$SCRIPT_NAME" "VPN connection timeout"
 fi
 
 # Wait for OpenVPN to exit
