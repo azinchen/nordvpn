@@ -1,4 +1,4 @@
-Last updated: 2025-10-19
+Last updated: 2025-10-20
 ---
 # List of CITIES with NordVPN servers
 
@@ -141,7 +141,7 @@ Ukraine | UA | 225 | Kyiv | 8626766 | 14
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
 United Kingdom | GB | 227 | Edinburgh | 2975852 | 41
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
-United Kingdom | GB | 227 | London | 2989907 | 871
+United Kingdom | GB | 227 | London | 2989907 | 870
 United Kingdom | GB | 227 | Manchester | 2991110 | 163
 United States | US | 228 | Ashburn | 9103211 | 128
 United States | US | 228 | Atlanta | 8792429 | 193
