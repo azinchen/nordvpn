@@ -1,4 +1,4 @@
-Last updated: 2025-10-20
+Last updated: 2025-10-23
 ---
 # List of CITIES with NordVPN servers
 
@@ -12,7 +12,7 @@ Angola | AO | 6 | Luanda | 351407 | 2
 Argentina | AR | 10 | Buenos Aires | 384866 | 19
 Armenia | AM | 11 | Yerevan | 322385 | 2
 Australia | AU | 13 | Adelaide | 452717 | 18
-Australia | AU | 13 | Brisbane | 456494 | 45
+Australia | AU | 13 | Brisbane | 456494 | 46
 Australia | AU | 13 | Melbourne | 470813 | 60
 Australia | AU | 13 | Perth | 475799 | 33
 Australia | AU | 13 | Sydney | 479570 | 114
@@ -51,7 +51,7 @@ Estonia | EE | 68 | Tallinn | 2514182 | 10
 Ethiopia | ET | 69 | Addis Ababa | 2660744 | 2
 Finland | FI | 73 | Helsinki | 2704343 | 20
 France | FR | 74 | Marseille | 2867102 | 109
-France | FR | 74 | Paris | 2886284 | 236
+France | FR | 74 | Paris | 2886284 | 256
 France | FR | 74 | Strasbourg | 2929151 | 24
 Georgia | GE | 80 | Tbilisi | 3032063 | 10
 Germany | DE | 81 | Berlin | 2181458 | 79
@@ -141,7 +141,7 @@ Ukraine | UA | 225 | Kyiv | 8626766 | 14
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
 United Kingdom | GB | 227 | Edinburgh | 2975852 | 41
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
-United Kingdom | GB | 227 | London | 2989907 | 870
+United Kingdom | GB | 227 | London | 2989907 | 871
 United Kingdom | GB | 227 | Manchester | 2991110 | 163
 United States | US | 228 | Ashburn | 9103211 | 128
 United States | US | 228 | Atlanta | 8792429 | 193
@@ -149,11 +149,11 @@ United States | US | 228 | Boston | 8895305 | 72
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
 United States | US | 228 | Chicago | 8815352 | 319
-United States | US | 228 | Dallas | 9080300 | 249
+United States | US | 228 | Dallas | 9080300 | 248
 United States | US | 228 | Denver | 8770934 | 118
 United States | US | 228 | Houston | 9083687 | 34
 United States | US | 228 | Kansas City | 8930717 | 35
-United States | US | 228 | Los Angeles | 8761958 | 292
+United States | US | 228 | Los Angeles | 8761958 | 288
 United States | US | 228 | McAllen | 9086162 | 20
 United States | US | 228 | Miami | 8787782 | 204
 United States | US | 228 | Nashville | 9071273 | 40
