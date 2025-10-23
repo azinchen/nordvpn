@@ -358,7 +358,7 @@ locations_count=0
 # Process COUNTRY if set
 if [ -n "$country" ]; then
     # Convert semicolon/comma separated list to space separated
-    oldIFS="$IFS"; IFS=',;'; _rc=1
+    oldIFS="$IFS"; IFS=',;';
     for value in $country; do
         if [ -n "$value" ]; then
             locations_count=$((locations_count + 1))
