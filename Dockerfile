@@ -13,12 +13,13 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
     echo "**** download ${PACKAGE} ****" && \
+    # Map uname -m output to s6-overlay platform names
+    # x86_64=x86_64, aarch64=aarch64, armv7l=armhf, ppc64le=powerpc64le, riscv64=riscv64, s390x=s390x
     s6_arch=$(case $(uname -m) in \
-        i?86)           echo "i486"        ;; \
+        i?86|i686)      echo "i486"        ;; \
         x86_64)         echo "x86_64"      ;; \
         aarch64)        echo "aarch64"     ;; \
-        armv6l)         echo "arm"         ;; \
-        armv7l)         echo "armhf"       ;; \
+        armv6l|armv7l)  echo "armhf"       ;; \
         ppc64le)        echo "powerpc64le" ;; \
         riscv64)        echo "riscv64"     ;; \
         s390x)          echo "s390x"       ;; \

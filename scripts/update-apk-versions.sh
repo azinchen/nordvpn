@@ -116,21 +116,28 @@ extract_new_version()
 }
 
 # --- 3b. Function to Map uname -m to Alpine Package Repository Architecture ---
+# Based on actual uname -m output from Docker multi-platform builds:
+# - linux/amd64   -> x86_64
+# - linux/386     -> x86_64 (emulated, but Alpine uses 'x86' repo)
+# - linux/arm64   -> aarch64
+# - linux/arm/v7  -> armv7l
+# - linux/arm/v6  -> armv7l (on some systems)
+# - linux/ppc64le -> ppc64le
+# - linux/s390x   -> s390x
+# - linux/riscv64 -> riscv64
 map_uname_to_alpine_arch()
 {
     local uname_arch="$1"
     
     case "$uname_arch" in
-        x86_64)         echo "x86_64"      ;;
-        i?86|i386|i686) echo "x86"         ;;
-        aarch64)        echo "aarch64"     ;;
-        armv7l|armv7)   echo "armv7"       ;;
-        armv6l)         echo "armhf"       ;;
-        armhf)          echo "armhf"       ;;
-        ppc64le)        echo "ppc64le"     ;;
-        riscv64)        echo "riscv64"     ;;
-        s390x)          echo "s390x"       ;;
-        loongarch64)    echo "loongarch64" ;;
+        x86_64)         echo "x86_64"   ;;
+        i?86|i386|i686) echo "x86"      ;;
+        aarch64)        echo "aarch64"  ;;
+        armv7l)         echo "armv7"    ;;
+        armv6l)         echo "armhf"    ;;
+        ppc64le)        echo "ppc64le"  ;;
+        riscv64)        echo "riscv64"  ;;
+        s390x)          echo "s390x"    ;;
         *)              echo "$uname_arch" ;;
     esac
 }
