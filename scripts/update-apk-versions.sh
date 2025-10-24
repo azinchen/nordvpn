@@ -9,6 +9,30 @@
 # Usage: ./scripts/update-apk-versions.sh <path/to/Dockerfile>
 # If no argument is provided, it defaults to "Dockerfile" in the current directory.
 #
+# REGULAR PACKAGE VERSIONS (NO PLATFORM-SPECIFIC DIFFERENCES)
+# ============================================================
+# For packages that use the same version across all architectures, use the
+# standard apk add format with explicit version pinning.
+#
+# Format in Dockerfile:
+#   apk --no-cache --no-progress add \
+#       <package>=<version> \
+#       <another-package>=<version> \
+#
+# Example:
+#   apk --no-cache --no-progress add \
+#       curl=8.14.1-r2 \
+#       iptables=1.8.11-r1 \
+#       jq=1.8.0-r0 \
+#       openvpn=2.6.14-r0 \
+#       && \
+#
+# The script will:
+#   - Automatically detect all packages with version pins (package=version format)
+#   - Check the latest version from Alpine repositories (x86_64)
+#   - Update package versions in-place when newer versions are available
+#   - Skip packages using variables (e.g., ${variable_name})
+#
 # PLATFORM-SPECIFIC PACKAGE VERSIONS
 # ===================================
 # For packages that have different versions across architectures, use the
