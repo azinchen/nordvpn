@@ -39,25 +39,25 @@
 # PLATFORM_VERSIONS comment format. This allows the script to automatically
 # check and update versions for each platform.
 #
-# Format in Dockerfile:
-#   # PLATFORM_VERSIONS: <package-name>: <arch1>=<version1> <arch2>=<version2> ...
-#   <package>_version=$(case $(uname -m) in \
-#       <arch1>)        echo "<version1>"  ;; \
-#       <arch2>)        echo "<version2>"  ;; \
+# Format in Dockerfile (using TARGETPLATFORM from buildx):
+#   # PLATFORM_VERSIONS: <package-name>: <platform1>=<version1> <platform2>=<version2> ...
+#   <package>_version=$(case "${TARGETPLATFORM:-linux/amd64}" in \
+#       <platform1>)    echo "<version1>"  ;; \
+#       <platform2>    echo "<version2>"  ;; \
 #       *)              echo "<default-version>" ;; esac) && \
 #   apk --no-cache --no-progress add \
 #       <package>=${<package>_version} \
 #
-# Architecture names:
-#   - Use "default" for the wildcard (*) case (typically x86_64 and other platforms)
-#   - Use actual uname -m values for specific architectures: armv7l, riscv64, aarch64, etc.
-#   - The script automatically maps uname -m values to Alpine package repository architectures
+# Platform names:
+#   - Use "default" for the wildcard (*) case (linux/amd64 and other platforms)
+#   - Use TARGETPLATFORM values: linux/amd64, linux/arm64, linux/arm/v7, linux/arm/v6,
+#     linux/386, linux/ppc64le, linux/s390x, linux/riscv64
+#   - The script automatically maps TARGETPLATFORM values to Alpine package repository architectures
 #
 # Example:
-#   # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 armv7l=9.20.13-r0 riscv64=9.20.13-r0
-#   bind_tools_version=$(case $(uname -m) in \
-#       armv7l)         echo "9.20.13-r0"  ;; \
-#       riscv64)        echo "9.20.13-r0"  ;; \
+#   # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 linux/riscv64=9.20.13-r0
+#   bind_tools_version=$(case "${TARGETPLATFORM:-linux/amd64}" in \
+#       linux/riscv64)  echo "9.20.13-r0"  ;; \
 #       *)              echo "9.20.15-r0" ;; esac) && \
 #   apk --no-cache --no-progress add \
 #       bind-tools=${bind_tools_version} \
@@ -70,8 +70,8 @@
 #      automatically excluded from regular version checking
 #
 # The script will:
-#   - Check versions for "default" architecture against x86_64 packages
-#   - Check versions for other architectures against their specific packages
+#   - Check versions for "default" platform against x86_64 packages
+#   - Check versions for other platforms against their specific Alpine repository architectures
 #   - Update both the comment line and the case statement when new versions are found
 #   - Preserve indentation and alignment throughout the update process
 
@@ -115,27 +115,55 @@ extract_new_version()
     echo "$version"
 }
 
-# --- 3b. Function to Map uname -m to Alpine Package Repository Architecture ---
+# --- 3b. Function to Map TARGETPLATFORM to Alpine Package Repository Architecture ---
+# Based on TARGETPLATFORM values from Docker buildx and actual Alpine repository usage:
+# - linux/amd64    -> x86_64
+# - linux/386      -> x86
+# - linux/arm64    -> aarch64
+# - linux/arm/v7   -> armv7 (NOT armhf!)
+# - linux/arm/v6   -> armhf
+# - linux/ppc64le  -> ppc64le
+# - linux/s390x    -> s390x
+# - linux/riscv64  -> riscv64
+map_targetplatform_to_alpine_arch()
+{
+    local platform="$1"
+    
+    case "$platform" in
+        linux/amd64)    echo "x86_64"   ;;
+        linux/386)      echo "x86"      ;;
+        linux/arm64*)   echo "aarch64"  ;;
+        linux/arm/v7)   echo "armv7"    ;;
+        linux/arm/v6)   echo "armhf"    ;;
+        linux/arm*)     echo "armhf"    ;;
+        linux/ppc64le)  echo "ppc64le"  ;;
+        linux/s390x)    echo "s390x"    ;;
+        linux/riscv64)  echo "riscv64"  ;;
+        default)        echo "x86_64"   ;;
+        *)              echo "x86_64"   ;;
+    esac
+}
+
+# --- 3c. Legacy function for backward compatibility with uname -m ---
+# This function maps uname -m output to Alpine Package Repository Architecture
 map_uname_to_alpine_arch()
 {
     local uname_arch="$1"
     
     case "$uname_arch" in
-        x86_64)         echo "x86_64"      ;;
-        i?86|i386|i686) echo "x86"         ;;
-        aarch64)        echo "aarch64"     ;;
-        armv7l|armv7)   echo "armv7"       ;;
-        armv6l)         echo "armhf"       ;;
-        armhf)          echo "armhf"       ;;
-        ppc64le)        echo "ppc64le"     ;;
-        riscv64)        echo "riscv64"     ;;
-        s390x)          echo "s390x"       ;;
-        loongarch64)    echo "loongarch64" ;;
+        x86_64)         echo "x86_64"   ;;
+        i?86|i386|i686) echo "x86"      ;;
+        aarch64)        echo "aarch64"  ;;
+        armv7l)         echo "armv7"    ;;
+        armv6l)         echo "armhf"    ;;
+        ppc64le)        echo "ppc64le"  ;;
+        riscv64)        echo "riscv64"  ;;
+        s390x)          echo "s390x"    ;;
         *)              echo "$uname_arch" ;;
     esac
 }
 
-# --- 3c. Function to Extract Version for Specific Architecture ---
+# --- 3d. Function to Extract Version for Specific Architecture ---
 extract_version_for_arch()
 {
     local pkg="$1"
@@ -143,8 +171,17 @@ extract_version_for_arch()
     local alpine_arch
     local url
     
-    # Map uname architecture to Alpine package repository architecture
-    alpine_arch=$(map_uname_to_alpine_arch "$arch")
+    # Determine if this is a TARGETPLATFORM format (starts with "linux/") or uname format
+    case "$arch" in
+        linux/*)
+            # Map TARGETPLATFORM to Alpine package repository architecture
+            alpine_arch=$(map_targetplatform_to_alpine_arch "$arch")
+            ;;
+        *)
+            # Map uname architecture to Alpine package repository architecture
+            alpine_arch=$(map_uname_to_alpine_arch "$arch")
+            ;;
+    esac
     
     # Try main repository first
     url="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/main/${alpine_arch}/${pkg}"
