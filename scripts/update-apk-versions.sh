@@ -1,11 +1,54 @@
 #!/bin/sh
 # shellcheck shell=sh
 # scripts/update-apk-versions.sh
+#
 # This script extracts package names and versions from a specified Dockerfile,
 # checks for updates from Alpine package repositories (main first, then community),
 # and updates the Dockerfile if necessary.
+#
 # Usage: ./scripts/update-apk-versions.sh <path/to/Dockerfile>
 # If no argument is provided, it defaults to "Dockerfile" in the current directory.
+#
+# PLATFORM-SPECIFIC PACKAGE VERSIONS
+# ===================================
+# For packages that have different versions across architectures, use the
+# PLATFORM_VERSIONS comment format. This allows the script to automatically
+# check and update versions for each platform.
+#
+# Format in Dockerfile:
+#   # PLATFORM_VERSIONS: <package-name>: <arch1>=<version1> <arch2>=<version2> ...
+#   <package>_version=$(case $(uname -m) in \
+#       <arch1>)        echo "<version1>"  ;; \
+#       <arch2>)        echo "<version2>"  ;; \
+#       *)              echo "<default-version>" ;; esac) && \
+#   apk --no-cache --no-progress add \
+#       <package>=${<package>_version} \
+#
+# Architecture names:
+#   - Use "default" for the wildcard (*) case (typically x86_64 and other platforms)
+#   - Use actual uname -m values for specific architectures: armv7, riscv64, etc.
+#
+# Example:
+#   # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 armv7=9.20.13-r0 riscv64=9.20.13-r0
+#   bind_tools_version=$(case $(uname -m) in \
+#       armv7)          echo "9.20.13-r0"  ;; \
+#       riscv64)        echo "9.20.13-r0"  ;; \
+#       *)              echo "9.20.15-r0" ;; esac) && \
+#   apk --no-cache --no-progress add \
+#       bind-tools=${bind_tools_version} \
+#
+# Important formatting rules:
+#   1. The PLATFORM_VERSIONS comment must be indented with 4 spaces
+#   2. All 'echo' statements in the case statement must align in the same column
+#   3. Use 10 spaces between the closing parenthesis and 'echo' for alignment
+#   4. Package references using variables (e.g., ${bind_tools_version}) are
+#      automatically excluded from regular version checking
+#
+# The script will:
+#   - Check versions for "default" architecture against x86_64 packages
+#   - Check versions for other architectures against their specific packages
+#   - Update both the comment line and the case statement when new versions are found
+#   - Preserve indentation and alignment throughout the update process
 
 set -eu
 
