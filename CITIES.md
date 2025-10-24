@@ -1,4 +1,4 @@
-Last updated: 2025-10-23
+Last updated: 2025-10-24
 ---
 # List of CITIES with NordVPN servers
 
@@ -131,7 +131,7 @@ Spain | ES | 202 | Barcelona | 2572757 | 32
 Spain | ES | 202 | Madrid | 2619989 | 78
 Sri Lanka | LK | 203 | Colombo | 5043197 | 2
 Sweden | SE | 208 | Stockholm | 7852919 | 179
-Switzerland | CH | 209 | Zurich | 1171814 | 159
+Switzerland | CH | 209 | Zurich | 1171814 | 167
 Taiwan | TW | 211 | Taipei | 8544365 | 30
 Thailand | TH | 214 | Bangkok | 8121638 | 12
 Trinidad and Tobago | TT | 218 | Port of Spain | 9521887 | 2
@@ -149,11 +149,11 @@ United States | US | 228 | Boston | 8895305 | 72
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
 United States | US | 228 | Chicago | 8815352 | 319
-United States | US | 228 | Dallas | 9080300 | 248
+United States | US | 228 | Dallas | 9080300 | 249
 United States | US | 228 | Denver | 8770934 | 118
 United States | US | 228 | Houston | 9083687 | 34
 United States | US | 228 | Kansas City | 8930717 | 35
-United States | US | 228 | Los Angeles | 8761958 | 288
+United States | US | 228 | Los Angeles | 8761958 | 289
 United States | US | 228 | McAllen | 9086162 | 20
 United States | US | 228 | Miami | 8787782 | 204
 United States | US | 228 | Nashville | 9071273 | 40
