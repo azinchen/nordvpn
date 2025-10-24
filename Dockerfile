@@ -1,7 +1,7 @@
 # s6 overlay builder
 FROM alpine:3.22.2 AS s6-builder
 
-ARG TARGETPLATFORM
+ARG TARGETPLATFORM=linux/amd64
 
 ENV PACKAGE="just-containers/s6-overlay"
 ENV PACKAGEVERSION="3.2.1.0"
@@ -15,11 +15,11 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
     echo "**** download ${PACKAGE} ****" && \
-    echo "Target platform: ${TARGETPLATFORM:-linux/amd64}" && \
+    echo "Target platform: ${TARGETPLATFORM}" && \
     # Map TARGETPLATFORM to s6-overlay platform names
     # linux/amd64->x86_64, linux/arm64->aarch64, linux/arm/v7->armhf, linux/arm/v6->armhf
     # linux/386->i486, linux/ppc64le->powerpc64le, linux/s390x->s390x, linux/riscv64->riscv64
-    s6_arch=$(case "${TARGETPLATFORM:-linux/amd64}" in \
+    s6_arch=$(case "${TARGETPLATFORM}" in \
         linux/386)      echo "i486"        ;; \
         linux/amd64)    echo "x86_64"      ;; \
         linux/arm64*)   echo "aarch64"     ;; \
@@ -71,7 +71,7 @@ COPY --from=s6-builder /s6/ /rootfs/
 # Main image
 FROM alpine:3.22.2
 
-ARG TARGETPLATFORM
+ARG TARGETPLATFORM=linux/amd64
 ARG IMAGE_VERSION=N/A \
     BUILD_DATE=N/A
 
@@ -89,12 +89,9 @@ ENV PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
-    echo "Target platform: ${TARGETPLATFORM:-linux/amd64}" && \
+    echo "Target platform: ${TARGETPLATFORM}" && \
     # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 linux/arm/v7=9.20.13-r0 linux/riscv64=9.20.13-r0
-    # Map TARGETPLATFORM to Alpine repository architecture for package version selection
-    # linux/arm/v7 uses armv7 repo (9.20.13-r0), linux/riscv64 uses riscv64 repo (9.20.13-r0)
-    # All other platforms use 9.20.15-r0
-    bind_tools_version=$(case "${TARGETPLATFORM:-linux/amd64}" in \
+    bind_tools_version=$(case "${TARGETPLATFORM}" in \
         linux/arm/v7)   echo "9.20.13-r0"  ;; \
         linux/riscv64)  echo "9.20.13-r0"  ;; \
         *)              echo "9.20.15-r0" ;; esac) && \

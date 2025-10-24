@@ -163,7 +163,7 @@ map_uname_to_alpine_arch()
     esac
 }
 
-# --- 3c. Function to Extract Version for Specific Architecture ---
+# --- 3d. Function to Extract Version for Specific Architecture ---
 extract_version_for_arch()
 {
     local pkg="$1"
@@ -171,8 +171,17 @@ extract_version_for_arch()
     local alpine_arch
     local url
     
-    # Map uname architecture to Alpine package repository architecture
-    alpine_arch=$(map_uname_to_alpine_arch "$arch")
+    # Determine if this is a TARGETPLATFORM format (starts with "linux/") or uname format
+    case "$arch" in
+        linux/*)
+            # Map TARGETPLATFORM to Alpine package repository architecture
+            alpine_arch=$(map_targetplatform_to_alpine_arch "$arch")
+            ;;
+        *)
+            # Map uname architecture to Alpine package repository architecture
+            alpine_arch=$(map_uname_to_alpine_arch "$arch")
+            ;;
+    esac
     
     # Try main repository first
     url="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/main/${alpine_arch}/${pkg}"
