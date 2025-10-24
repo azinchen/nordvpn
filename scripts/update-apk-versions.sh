@@ -24,7 +24,8 @@ echo "Using Alpine branch version: $ALPINE_BRANCH"
 # --- 2. Extract Package List from Dockerfile ---
 joined_content=$(sed ':a;N;$!ba;s/\\\n/ /g' "$DOCKERFILE")
 package_lines=$(echo "$joined_content" | grep -oP 'apk --no-cache --no-progress add\s+\K[^&]+')
-packages=$(echo "$package_lines" | tr ' ' '\n' | sed '/^\s*$/d' | sort -u)
+# Filter out packages with variable references (containing ${ })
+packages=$(echo "$package_lines" | tr ' ' '\n' | sed '/^\s*$/d' | grep -v '\${' | sort -u)
 
 echo "Found packages in $DOCKERFILE:"
 echo "$packages"
@@ -43,6 +44,40 @@ extract_new_version()
             print a[1]
          }
       }' | head -n 1)
+    echo "$version"
+}
+
+# --- 3b. Function to Extract Version for Specific Architecture ---
+extract_version_for_arch()
+{
+    local pkg="$1"
+    local arch="$2"
+    local url
+    
+    # Try main repository first
+    url="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/main/${arch}/${pkg}"
+    local html
+    html=$(curl -s "$url")
+    local version
+    version=$(echo "$html" | awk 'BEGIN { RS="</tr>"; FS="\n" } 
+      /<th class="header">Version<\/th>/ {
+         if (match($0, /<strong>([^<]+)<\/strong>/, a)) {
+            print a[1]
+         }
+      }' | head -n 1)
+    
+    # If not found in main, try community
+    if [ -z "$version" ]; then
+        url="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/community/${arch}/${pkg}"
+        html=$(curl -s "$url")
+        version=$(echo "$html" | awk 'BEGIN { RS="</tr>"; FS="\n" } 
+          /<th class="header">Version<\/th>/ {
+             if (match($0, /<strong>([^<]+)<\/strong>/, a)) {
+                print a[1]
+             }
+          }' | head -n 1)
+    fi
+    
     echo "$version"
 }
 
@@ -107,7 +142,98 @@ for package in $packages; do
 done
 unset IFS
 
-# --- 7. Output summary ---
+# --- 7. Handle Platform-Specific Package Versions ---
+echo "=== Checking Platform-Specific Versions ==="
+platform_lines=$(grep -n "# PLATFORM_VERSIONS:" "$DOCKERFILE" || true)
+
+if [ -n "$platform_lines" ]; then
+    # Save to temp file to avoid subshell from pipe
+    temp_file=$(mktemp)
+    echo "$platform_lines" > "$temp_file"
+    
+    while IFS=: read -r line_num line_content; do
+        # Parse the comment line format: # PLATFORM_VERSIONS: package-name: arch1=version1 arch2=version2 ...
+        pkg_name=$(echo "$line_content" | sed -E 's/.*# PLATFORM_VERSIONS: ([^:]+):.*/\1/' | xargs)
+        
+        if [ -z "$pkg_name" ]; then
+            continue
+        fi
+        
+        echo "Processing platform-specific package: $pkg_name"
+        
+        # Extract all architecture-version pairs
+        arch_versions=$(echo "$line_content" | sed -E 's/.*# PLATFORM_VERSIONS: [^:]+: (.*)/\1/')
+        
+        # Parse each arch=version pair
+        updated_line="# PLATFORM_VERSIONS: $pkg_name:"
+        has_platform_update=0
+        
+        for pair in $arch_versions; do
+            arch=$(echo "$pair" | cut -d'=' -f1)
+            current_version=$(echo "$pair" | cut -d'=' -f2)
+            
+            echo "  Checking $arch: current=$current_version"
+            
+            # Get the latest version for this architecture
+            # Map "default" to x86_64 for package lookup
+            lookup_arch="$arch"
+            if [ "$arch" = "default" ]; then
+                lookup_arch="x86_64"
+            fi
+            new_version=$(extract_version_for_arch "$pkg_name" "$lookup_arch")
+            
+            if [ -z "$new_version" ]; then
+                echo "    Could not retrieve version for $pkg_name on $arch, keeping current"
+                updated_line="$updated_line $arch=$current_version"
+            elif [ "$current_version" != "$new_version" ]; then
+                echo "    Updating $arch: $current_version → $new_version"
+                updated_line="$updated_line $arch=$new_version"
+                has_platform_update=1
+                
+                # Update the case statement in the Dockerfile, preserving alignment
+                # For "default", update the "*)" wildcard pattern instead
+                if [ "$arch" = "default" ]; then
+                    case_pattern='\*'
+                else
+                    case_pattern="${arch}"
+                fi
+                
+                # Extract the exact spacing from the current line to preserve it
+                current_spacing=$(grep "${case_pattern})" "$DOCKERFILE" | sed -n "s/.*${case_pattern})\([[:space:]]*\)echo.*/\1/p" | head -1)
+                if [ -z "$current_spacing" ]; then
+                    # Default to 10 spaces if not found (to match standard formatting)
+                    current_spacing="          "
+                fi
+                sed -i "s/\(${case_pattern})\)[[:space:]]*echo \"\(${current_version}\)\"/\1${current_spacing}echo \"${new_version}\"/" "$DOCKERFILE"
+                
+                UPDATED_COUNT=$((UPDATED_COUNT + 1))
+                if [ -z "$UPDATED_PACKAGES" ]; then
+                    UPDATED_PACKAGES="- $pkg_name ($arch: $current_version → $new_version)"
+                else
+                    UPDATED_PACKAGES="$UPDATED_PACKAGES
+- $pkg_name ($arch: $current_version → $new_version)"
+                fi
+            else
+                echo "    $arch is up-to-date ($current_version)"
+                updated_line="$updated_line $arch=$current_version"
+            fi
+        done
+        
+        # Update the comment line with new versions if there were updates
+        if [ $has_platform_update -eq 1 ]; then
+            # Preserve indentation from original line
+            indent=$(echo "$line_content" | sed -n 's/^\([[:space:]]*\)#.*/\1/p')
+            escaped_new=$(echo "${indent}${updated_line}" | sed 's/[&/\]/\\&/g')
+            sed -i "${line_num}s/.*/${escaped_new}/" "$DOCKERFILE"
+        fi
+        
+        echo
+    done < "$temp_file"
+    
+    rm -f "$temp_file"
+fi
+
+# --- 8. Output summary ---
 echo "=== UPDATE SUMMARY ==="
 echo "Total packages checked: $TOTAL_PACKAGES"
 echo "Packages updated: $UPDATED_COUNT"

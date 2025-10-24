@@ -81,15 +81,25 @@ ENV PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
+    # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 armv7=9.20.13-r0 riscv64=9.20.13-r0
+    bind_tools_version=$(case $(uname -m) in \
+        armv7)          echo "9.20.13-r0"  ;; \
+        riscv64)        echo "9.20.13-r0"  ;; \
+        *)              echo "9.20.15-r0" ;; esac) && \
+    # PLATFORM_VERSIONS: curl: default=8.14.1-r2 armv7=8.14.1-r2 riscv64=8.14.1-r2
+    curl_version=$(case $(uname -m) in \
+        armv7)          echo "8.14.1-r2"  ;; \
+        riscv64)        echo "8.14.1-r2"  ;; \
+        *)              echo "8.14.1-r2" ;; esac) && \
     apk --no-cache --no-progress add \
-        curl=8.14.1-r2 \
+        curl=${curl_version} \
         iptables=1.8.11-r1 \
         iptables-legacy=1.8.11-r1 \
         jq=1.8.0-r0 \
         shadow=4.17.3-r0 \
         shadow-login=4.17.3-r0 \
         openvpn=2.6.14-r0 \
-        bind-tools=9.20.15-r0 \
+        bind-tools=${bind_tools_version} \
         netcat-openbsd=1.229.1-r0 \
         && \
     echo "**** create process user ****" && \
