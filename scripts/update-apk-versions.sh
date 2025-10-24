@@ -215,8 +215,9 @@ platform_lines=$(grep -n "# PLATFORM_VERSIONS:" "$DOCKERFILE" || true)
 
 if [ -n "$platform_lines" ]; then
     # Save to temp file to avoid subshell from pipe
+    # Process in reverse order so line number deletions don't affect earlier entries
     temp_file=$(mktemp)
-    echo "$platform_lines" > "$temp_file"
+    echo "$platform_lines" | sort -t: -k1 -nr > "$temp_file"
     
     while IFS=: read -r line_num line_content; do
         # Parse the comment line format: # PLATFORM_VERSIONS: package-name: arch1=version1 arch2=version2 ...
