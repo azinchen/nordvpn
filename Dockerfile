@@ -81,9 +81,9 @@ ENV PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
-    # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 armv7=9.20.13-r0 riscv64=9.20.13-r0
+    # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 armv7l=9.20.13-r0 riscv64=9.20.13-r0
     bind_tools_version=$(case $(uname -m) in \
-        armv7)          echo "9.20.13-r0"  ;; \
+        armv7l)         echo "9.20.13-r0"  ;; \
         riscv64)        echo "9.20.13-r0"  ;; \
         *)              echo "9.20.15-r0" ;; esac) && \
     apk --no-cache --no-progress add \

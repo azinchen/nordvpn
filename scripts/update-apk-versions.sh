@@ -50,12 +50,13 @@
 #
 # Architecture names:
 #   - Use "default" for the wildcard (*) case (typically x86_64 and other platforms)
-#   - Use actual uname -m values for specific architectures: armv7, riscv64, etc.
+#   - Use actual uname -m values for specific architectures: armv7l, riscv64, aarch64, etc.
+#   - The script automatically maps uname -m values to Alpine package repository architectures
 #
 # Example:
-#   # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 armv7=9.20.13-r0 riscv64=9.20.13-r0
+#   # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 armv7l=9.20.13-r0 riscv64=9.20.13-r0
 #   bind_tools_version=$(case $(uname -m) in \
-#       armv7)          echo "9.20.13-r0"  ;; \
+#       armv7l)         echo "9.20.13-r0"  ;; \
 #       riscv64)        echo "9.20.13-r0"  ;; \
 #       *)              echo "9.20.15-r0" ;; esac) && \
 #   apk --no-cache --no-progress add \
@@ -114,15 +115,39 @@ extract_new_version()
     echo "$version"
 }
 
-# --- 3b. Function to Extract Version for Specific Architecture ---
+# --- 3b. Function to Map uname -m to Alpine Package Repository Architecture ---
+map_uname_to_alpine_arch()
+{
+    local uname_arch="$1"
+    
+    case "$uname_arch" in
+        x86_64)         echo "x86_64"      ;;
+        i?86|i386|i686) echo "x86"         ;;
+        aarch64)        echo "aarch64"     ;;
+        armv7l|armv7)   echo "armv7"       ;;
+        armv6l)         echo "armhf"       ;;
+        armhf)          echo "armhf"       ;;
+        ppc64le)        echo "ppc64le"     ;;
+        riscv64)        echo "riscv64"     ;;
+        s390x)          echo "s390x"       ;;
+        loongarch64)    echo "loongarch64" ;;
+        *)              echo "$uname_arch" ;;
+    esac
+}
+
+# --- 3c. Function to Extract Version for Specific Architecture ---
 extract_version_for_arch()
 {
     local pkg="$1"
     local arch="$2"
+    local alpine_arch
     local url
     
+    # Map uname architecture to Alpine package repository architecture
+    alpine_arch=$(map_uname_to_alpine_arch "$arch")
+    
     # Try main repository first
-    url="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/main/${arch}/${pkg}"
+    url="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/main/${alpine_arch}/${pkg}"
     local html
     html=$(curl -s "$url")
     local version
@@ -135,7 +160,7 @@ extract_version_for_arch()
     
     # If not found in main, try community
     if [ -z "$version" ]; then
-        url="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/community/${arch}/${pkg}"
+        url="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/community/${alpine_arch}/${pkg}"
         html=$(curl -s "$url")
         version=$(echo "$html" | awk 'BEGIN { RS="</tr>"; FS="\n" } 
           /<th class="header">Version<\/th>/ {
