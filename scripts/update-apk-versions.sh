@@ -287,6 +287,37 @@ if [ -n "$platform_lines" ]; then
             fi
         done
         
+        # Extract default version for comparison
+        default_version=$(echo "$updated_line" | grep -o 'default=[^ ]*' | cut -d'=' -f2)
+        
+        # Remove platform-specific entries that match the default version
+        archs_to_remove=""
+        if [ -n "$default_version" ]; then
+            cleaned_line="# PLATFORM_VERSIONS: $pkg_name: default=$default_version"
+            has_cleanup=0
+            
+            for pair in $(echo "$updated_line" | sed -E 's/.*: //' | tr ' ' '\n'); do
+                arch=$(echo "$pair" | cut -d'=' -f1)
+                version=$(echo "$pair" | cut -d'=' -f2)
+                
+                if [ "$arch" != "default" ]; then
+                    if [ "$version" = "$default_version" ]; then
+                        echo "  ℹ Removing $arch (same as default: $default_version)"
+                        has_cleanup=1
+                        archs_to_remove="$archs_to_remove $arch"
+                    else
+                        cleaned_line="$cleaned_line $arch=$version"
+                    fi
+                fi
+            done
+            
+            updated_line="$cleaned_line"
+            
+            if [ $has_cleanup -eq 1 ]; then
+                has_platform_update=1
+            fi
+        fi
+        
         # Check if all platform-specific versions are the same
         all_versions=$(echo "$updated_line" | sed -E 's/.*: //' | tr ' ' '\n' | cut -d'=' -f2 | sort -u)
         version_count=$(echo "$all_versions" | wc -l)
@@ -328,6 +359,13 @@ if [ -n "$platform_lines" ]; then
 - $pkg_name (converted to regular format: $common_version)"
             fi
         else
+            # Remove case statement lines for architectures that match default
+            if [ -n "$archs_to_remove" ]; then
+                for arch in $archs_to_remove; do
+                    sed -i "/^[[:space:]]*${arch})[[:space:]]*echo/d" "$DOCKERFILE"
+                done
+            fi
+            
             # Update the comment line with new versions if there were updates
             if [ $has_platform_update -eq 1 ]; then
                 # Preserve indentation from original line
