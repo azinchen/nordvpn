@@ -286,12 +286,54 @@ if [ -n "$platform_lines" ]; then
             fi
         done
         
-        # Update the comment line with new versions if there were updates
-        if [ $has_platform_update -eq 1 ]; then
-            # Preserve indentation from original line
-            indent=$(echo "$line_content" | sed -n 's/^\([[:space:]]*\)#.*/\1/p')
-            escaped_new=$(echo "${indent}${updated_line}" | sed 's/[&/\]/\\&/g')
-            sed -i "${line_num}s/.*/${escaped_new}/" "$DOCKERFILE"
+        # Check if all platform-specific versions are the same
+        all_versions=$(echo "$updated_line" | sed -E 's/.*: //' | tr ' ' '\n' | cut -d'=' -f2 | sort -u)
+        version_count=$(echo "$all_versions" | wc -l)
+        
+        if [ "$version_count" -eq 1 ]; then
+            # All versions are the same - convert to regular package format
+            common_version=$(echo "$all_versions" | head -1)
+            echo "  ℹ All architectures use the same version ($common_version)"
+            echo "  Converting to regular package format..."
+            
+            # Find the package variable name (e.g., bind_tools_version)
+            var_name="${pkg_name}_version"
+            var_name=$(echo "$var_name" | tr '-' '_')
+            
+            # Remove the PLATFORM_VERSIONS comment line
+            sed -i "${line_num}d" "$DOCKERFILE"
+            
+            # Remove the case statement (find lines between variable assignment and apk add)
+            # Find the line with the variable assignment
+            case_start_line=$(grep -n "${var_name}=\$(case" "$DOCKERFILE" | cut -d: -f1 | head -1)
+            if [ -n "$case_start_line" ]; then
+                # Find the closing ;; esac) line
+                case_end_line=$(awk "NR>$case_start_line && /;; esac\)/ {print NR; exit}" "$DOCKERFILE")
+                if [ -n "$case_end_line" ]; then
+                    # Delete the case statement lines
+                    sed -i "${case_start_line},${case_end_line}d" "$DOCKERFILE"
+                fi
+            fi
+            
+            # Replace the variable reference with the actual version
+            sed -i "s/${pkg_name}=\${${var_name}}/${pkg_name}=${common_version}/" "$DOCKERFILE"
+            
+            echo "  ✓ Converted $pkg_name to regular format with version $common_version"
+            UPDATED_COUNT=$((UPDATED_COUNT + 1))
+            if [ -z "$UPDATED_PACKAGES" ]; then
+                UPDATED_PACKAGES="- $pkg_name (converted to regular format: $common_version)"
+            else
+                UPDATED_PACKAGES="$UPDATED_PACKAGES
+- $pkg_name (converted to regular format: $common_version)"
+            fi
+        else
+            # Update the comment line with new versions if there were updates
+            if [ $has_platform_update -eq 1 ]; then
+                # Preserve indentation from original line
+                indent=$(echo "$line_content" | sed -n 's/^\([[:space:]]*\)#.*/\1/p')
+                escaped_new=$(echo "${indent}${updated_line}" | sed 's/[&/\]/\\&/g')
+                sed -i "${line_num}s/.*/${escaped_new}/" "$DOCKERFILE"
+            fi
         fi
         
         echo

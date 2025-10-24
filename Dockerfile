@@ -86,13 +86,8 @@ RUN echo "**** install security fix packages ****" && \
         armv7)          echo "9.20.13-r0"  ;; \
         riscv64)        echo "9.20.13-r0"  ;; \
         *)              echo "9.20.15-r0" ;; esac) && \
-    # PLATFORM_VERSIONS: curl: default=8.14.1-r2 armv7=8.14.1-r2 riscv64=8.14.1-r2
-    curl_version=$(case $(uname -m) in \
-        armv7)          echo "8.14.1-r2"  ;; \
-        riscv64)        echo "8.14.1-r2"  ;; \
-        *)              echo "8.14.1-r2" ;; esac) && \
     apk --no-cache --no-progress add \
-        curl=${curl_version} \
+        curl=8.14.1-r2 \
         iptables=1.8.11-r1 \
         iptables-legacy=1.8.11-r1 \
         jq=1.8.0-r0 \
