@@ -1,6 +1,8 @@
 # s6 overlay builder
 FROM alpine:3.22.2 AS s6-builder
 
+ARG TARGETPLATFORM
+
 ENV PACKAGE="just-containers/s6-overlay"
 ENV PACKAGEVERSION="3.2.1.0"
 
@@ -13,17 +15,21 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
     echo "**** download ${PACKAGE} ****" && \
-    # Map uname -m output to s6-overlay platform names
-    # x86_64=x86_64, aarch64=aarch64, armv7l=armhf, ppc64le=powerpc64le, riscv64=riscv64, s390x=s390x
-    s6_arch=$(case $(uname -m) in \
-        i?86|i686)      echo "i486"        ;; \
-        x86_64)         echo "x86_64"      ;; \
-        aarch64)        echo "aarch64"     ;; \
-        armv6l|armv7l)  echo "armhf"       ;; \
-        ppc64le)        echo "powerpc64le" ;; \
-        riscv64)        echo "riscv64"     ;; \
-        s390x)          echo "s390x"       ;; \
-        *)              echo ""            ;; esac) && \
+    echo "Target platform: ${TARGETPLATFORM:-linux/amd64}" && \
+    # Map TARGETPLATFORM to s6-overlay platform names
+    # linux/amd64->x86_64, linux/arm64->aarch64, linux/arm/v7->armhf, linux/arm/v6->armhf
+    # linux/386->i486, linux/ppc64le->powerpc64le, linux/s390x->s390x, linux/riscv64->riscv64
+    s6_arch=$(case "${TARGETPLATFORM:-linux/amd64}" in \
+        linux/386)      echo "i486"        ;; \
+        linux/amd64)    echo "x86_64"      ;; \
+        linux/arm64*)   echo "aarch64"     ;; \
+        linux/arm/v6)   echo "armhf"       ;; \
+        linux/arm/v7)   echo "armhf"       ;; \
+        linux/arm*)     echo "armhf"       ;; \
+        linux/ppc64le)  echo "powerpc64le" ;; \
+        linux/riscv64)  echo "riscv64"     ;; \
+        linux/s390x)    echo "s390x"       ;; \
+        *)              echo "x86_64"      ;; esac) && \
     echo "Package ${PACKAGE} platform ${PACKAGEPLATFORM} version ${PACKAGEVERSION}" && \
     wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-noarch.tar.xz" -qO /tmp/s6-overlay-noarch.tar.xz && \
     wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-${s6_arch}.tar.xz" -qO /tmp/s6-overlay-binaries.tar.xz && \
@@ -65,6 +71,7 @@ COPY --from=s6-builder /s6/ /rootfs/
 # Main image
 FROM alpine:3.22.2
 
+ARG TARGETPLATFORM
 ARG IMAGE_VERSION=N/A \
     BUILD_DATE=N/A
 
@@ -82,10 +89,14 @@ ENV PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
-    # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 armv7l=9.20.13-r0 riscv64=9.20.13-r0
-    bind_tools_version=$(case $(uname -m) in \
-        armv7l)         echo "9.20.13-r0"  ;; \
-        riscv64)        echo "9.20.13-r0"  ;; \
+    echo "Target platform: ${TARGETPLATFORM:-linux/amd64}" && \
+    # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 linux/arm/v7=9.20.13-r0 linux/riscv64=9.20.13-r0
+    # Map TARGETPLATFORM to Alpine repository architecture for package version selection
+    # linux/arm/v7 uses armv7 repo (9.20.13-r0), linux/riscv64 uses riscv64 repo (9.20.13-r0)
+    # All other platforms use 9.20.15-r0
+    bind_tools_version=$(case "${TARGETPLATFORM:-linux/amd64}" in \
+        linux/arm/v7)   echo "9.20.13-r0"  ;; \
+        linux/riscv64)  echo "9.20.13-r0"  ;; \
         *)              echo "9.20.15-r0" ;; esac) && \
     apk --no-cache --no-progress add \
         curl=8.14.1-r2 \
