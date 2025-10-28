@@ -329,12 +329,13 @@ if [ -n "$platform_lines" ]; then
                 fi
                 
                 # Extract the exact spacing from the current line to preserve it
-                current_spacing=$(grep "${case_pattern})" "$DOCKERFILE" | sed -n "s/.*${case_pattern})\([[:space:]]*\)echo.*/\1/p" | head -1)
+                current_spacing=$(grep "${case_pattern})" "$DOCKERFILE" | sed -n "s|.*${case_pattern})\([[:space:]]*\)echo.*|\1|p" | head -1)
                 if [ -z "$current_spacing" ]; then
                     # Default to 10 spaces if not found (to match standard formatting)
                     current_spacing="          "
                 fi
-                sed -i "s/\(${case_pattern})\)[[:space:]]*echo \"\(${current_version}\)\"/\1${current_spacing}echo \"${new_version}\"/" "$DOCKERFILE"
+                # Use | as delimiter to avoid conflicts with / in platform names like linux/arm/v7
+                sed -i "s|\(${case_pattern})\)[[:space:]]*echo \"\(${current_version}\)\"|\1${current_spacing}echo \"${new_version}\"|" "$DOCKERFILE"
                 
                 UPDATED_COUNT=$((UPDATED_COUNT + 1))
                 if [ -z "$UPDATED_PACKAGES" ]; then
@@ -421,19 +422,23 @@ if [ -n "$platform_lines" ]; then
 - $pkg_name (converted to regular format: $common_version)"
             fi
         else
-            # Remove case statement lines for architectures that match default
-            if [ -n "$archs_to_remove" ]; then
-                for arch in $archs_to_remove; do
-                    sed -i "/^[[:space:]]*${arch})[[:space:]]*echo/d" "$DOCKERFILE"
-                done
-            fi
-            
             # Update the comment line with new versions if there were updates
+            # IMPORTANT: Do this BEFORE deleting case statement lines to preserve line numbers
             if [ $has_platform_update -eq 1 ]; then
                 # Preserve indentation from original line
                 indent=$(echo "$line_content" | sed -n 's/^\([[:space:]]*\)#.*/\1/p')
+                # Use | as delimiter instead of / to avoid conflicts with escaped slashes
                 escaped_new=$(echo "${indent}${updated_line}" | sed 's/[&/\]/\\&/g')
-                sed -i "${line_num}s/.*/${escaped_new}/" "$DOCKERFILE"
+                sed -i "${line_num}s|.*|${escaped_new}|" "$DOCKERFILE"
+            fi
+            
+            # Remove case statement lines for architectures that match default
+            # Do this AFTER updating the comment to avoid line number shifts
+            if [ -n "$archs_to_remove" ]; then
+                for arch in $archs_to_remove; do
+                    # Use | as delimiter to avoid conflicts with / in platform names
+                    sed -i "\|^[[:space:]]*${arch})[[:space:]]*echo|d" "$DOCKERFILE"
+                done
             fi
         fi
         
