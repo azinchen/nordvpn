@@ -11,7 +11,7 @@ Andorra | AD | 5 | 8
 Angola | AO | 6 | 2
 Argentina | AR | 10 | 19
 Armenia | AM | 11 | 2
-Australia | AU | 13 | 270
+Australia | AU | 13 | 271
 Austria | AT | 14 | 71
 Azerbaijan | AZ | 15 | 2
 Bahamas | BS | 16 | 5
@@ -27,7 +27,7 @@ Brazil | BR | 30 | 38
 Brunei Darussalam | BN | 32 | 2
 Bulgaria | BG | 33 | 25
 Cambodia | KH | 36 | 2
-Canada | CA | 38 | 444
+Canada | CA | 38 | 443
 Cayman Islands | KY | 40 | 2
 Chile | CL | 43 | 7
 Colombia | CO | 47 | 18
@@ -54,7 +54,7 @@ Guam | GU | 88 | 2
 Guatemala | GT | 89 | 2
 Honduras | HN | 96 | 2
 Hong Kong | HK | 97 | 72
-Hungary | HU | 98 | 26
+Hungary | HU | 98 | 28
 Iceland | IS | 99 | 10
 India | IN | 100 | 27
 Indonesia | ID | 101 | 16
@@ -64,7 +64,7 @@ Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
 Italy | IT | 106 | 194
 Jamaica | JM | 107 | 2
-Japan | JP | 108 | 260
+Japan | JP | 108 | 263
 Jersey | JE | 244 | 4
 Jordan | JO | 109 | 2
 Kazakhstan | KZ | 110 | 2
@@ -104,11 +104,11 @@ Poland | PL | 174 | 103
 Portugal | PT | 175 | 52
 Puerto Rico | PR | 176 | 2
 Qatar | QA | 177 | 2
-Romania | RO | 179 | 25
+Romania | RO | 179 | 27
 Rwanda | RW | 181 | 2
 Senegal | SN | 191 | 2
 Serbia | RS | 192 | 15
-Singapore | SG | 195 | 82
+Singapore | SG | 195 | 83
 Slovakia | SK | 196 | 15
 Slovenia | SI | 197 | 6
 Somalia | SO | 199 | 2
