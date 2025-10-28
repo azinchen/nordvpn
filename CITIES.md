@@ -1,4 +1,4 @@
-Last updated: 2025-10-27
+Last updated: 2025-10-28
 ---
 # List of CITIES with NordVPN servers
 
@@ -15,8 +15,8 @@ Australia | AU | 13 | Adelaide | 452717 | 18
 Australia | AU | 13 | Brisbane | 456494 | 46
 Australia | AU | 13 | Melbourne | 470813 | 60
 Australia | AU | 13 | Perth | 475799 | 33
-Australia | AU | 13 | Sydney | 479570 | 114
-Austria | AT | 14 | Vienna | 448799 | 69
+Australia | AU | 13 | Sydney | 479570 | 113
+Austria | AT | 14 | Vienna | 448799 | 71
 Azerbaijan | AZ | 15 | Baku | 490037 | 2
 Bahamas | BS | 16 | Nassau | 988382 | 5
 Bahrain | BH | 17 | Manama | 789398 | 2
@@ -31,8 +31,8 @@ Brazil | BR | 30 | Sao Paulo | 890249 | 38
 Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | 2
 Bulgaria | BG | 33 | Sofia | 777368 | 25
 Cambodia | KH | 36 | Phnom Penh | 4658987 | 2
-Canada | CA | 38 | Montreal | 1048463 | 143
-Canada | CA | 38 | Toronto | 1054250 | 205
+Canada | CA | 38 | Montreal | 1048463 | 144
+Canada | CA | 38 | Toronto | 1054250 | 207
 Canada | CA | 38 | Vancouver | 1054610 | 93
 Cayman Islands | KY | 40 | George Town | 4922303 | 2
 Chile | CL | 43 | Santiago | 1227092 | 7
@@ -63,7 +63,7 @@ Greenland | GL | 85 | Nuuk | 3085001 | 2
 Guam | GU | 88 | Hagatna | 8808314 | 2
 Guatemala | GT | 89 | Guatemala City | 3202463 | 2
 Honduras | HN | 96 | Tegucigalpa | 3270551 | 2
-Hong Kong | HK | 97 | Hong Kong | 3232931 | 73
+Hong Kong | HK | 97 | Hong Kong | 3232931 | 72
 Hungary | HU | 98 | Budapest | 3348344 | 26
 Iceland | IS | 99 | Reykjavik | 4509791 | 10
 India | IN | 100 | Mumbai | 4041548 | 27
@@ -76,8 +76,8 @@ Italy | IT | 106 | Milan | 4542737 | 138
 Italy | IT | 106 | Palermo | 4548074 | 12
 Italy | IT | 106 | Rome | 4555808 | 44
 Jamaica | JM | 107 | Kingston | 4576328 | 2
-Japan | JP | 108 | Osaka | 4621847 | 35
-Japan | JP | 108 | Tokyo | 4633349 | 227
+Japan | JP | 108 | Osaka | 4621847 | 36
+Japan | JP | 108 | Tokyo | 4633349 | 224
 Jersey | JE | 244 | Saint Helier | 4572281 | 4
 Jordan | JO | 109 | Amman | 4581203 | 2
 Kazakhstan | KZ | 110 | Astana | 4925732 | 2
@@ -102,18 +102,18 @@ Morocco | MA | 147 | Rabat | 5271254 | 4
 Mozambique | MZ | 148 | Maputo | 5870336 | 2
 Myanmar | MM | 149 | Naypyidaw | 9521893 | 2
 Nepal | NP | 152 | Kathmandu | 6142175 | 2
-Netherlands | NL | 153 | Amsterdam | 6076868 | 264
+Netherlands | NL | 153 | Amsterdam | 6076868 | 265
 New Zealand | NZ | 156 | Auckland | 6144239 | 39
 Nigeria | NG | 159 | Lagos | 6010328 | 4
 North Macedonia | MK | 128 | Skopje | 5386019 | 2
-Norway | NO | 163 | Oslo | 6127364 | 86
+Norway | NO | 163 | Oslo | 6127364 | 88
 Pakistan | PK | 165 | Karachi | 6600485 | 2
 Panama | PA | 168 | Panama City | 6176273 | 3
 Papua New Guinea | PG | 169 | Port Moresby | 6292406 | 2
 Paraguay | PY | 170 | Asuncion | 9521890 | 2
 Peru | PE | 171 | Lima | 6222584 | 2
 Philippines | PH | 172 | Manila | 6391379 | 6
-Poland | PL | 174 | Warsaw | 6863429 | 101
+Poland | PL | 174 | Warsaw | 6863429 | 103
 Portugal | PT | 175 | Lisbon | 6906665 | 52
 Puerto Rico | PR | 176 | San Juan | 9521884 | 2
 Qatar | QA | 177 | Doha | 6940529 | 2
@@ -121,7 +121,7 @@ Romania | RO | 179 | Bucharest | 6953096 | 25
 Rwanda | RW | 181 | Kigali | 7723910 | 2
 Senegal | SN | 191 | Dakar | 7924958 | 2
 Serbia | RS | 192 | Belgrade | 7030907 | 15
-Singapore | SG | 195 | Singapore | 7867982 | 83
+Singapore | SG | 195 | Singapore | 7867982 | 82
 Slovakia | SK | 196 | Bratislava | 7884305 | 15
 Slovenia | SI | 197 | Ljubljana | 7874306 | 6
 Somalia | SO | 199 | Mogadishu | 7971170 | 2
@@ -131,7 +131,7 @@ Spain | ES | 202 | Barcelona | 2572757 | 32
 Spain | ES | 202 | Madrid | 2619989 | 78
 Sri Lanka | LK | 203 | Colombo | 5043197 | 2
 Sweden | SE | 208 | Stockholm | 7852919 | 179
-Switzerland | CH | 209 | Zurich | 1171814 | 157
+Switzerland | CH | 209 | Zurich | 1171814 | 159
 Taiwan | TW | 211 | Taipei | 8544365 | 30
 Thailand | TH | 214 | Bangkok | 8121638 | 12
 Trinidad and Tobago | TT | 218 | Port of Spain | 9521887 | 2
@@ -144,18 +144,18 @@ United Kingdom | GB | 227 | Glasgow | 2978888 | 48
 United Kingdom | GB | 227 | London | 2989907 | 871
 United Kingdom | GB | 227 | Manchester | 2991110 | 163
 United States | US | 228 | Ashburn | 9103211 | 128
-United States | US | 228 | Atlanta | 8792429 | 193
+United States | US | 228 | Atlanta | 8792429 | 194
 United States | US | 228 | Boston | 8895305 | 72
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
 United States | US | 228 | Chicago | 8815352 | 321
 United States | US | 228 | Dallas | 9080300 | 249
-United States | US | 228 | Denver | 8770934 | 118
+United States | US | 228 | Denver | 8770934 | 119
 United States | US | 228 | Houston | 9083687 | 34
 United States | US | 228 | Kansas City | 8930717 | 35
 United States | US | 228 | Los Angeles | 8761958 | 289
 United States | US | 228 | McAllen | 9086162 | 20
-United States | US | 228 | Miami | 8787782 | 203
+United States | US | 228 | Miami | 8787782 | 204
 United States | US | 228 | Nashville | 9071273 | 40
 United States | US | 228 | New York | 8971718 | 600
 United States | US | 228 | Omaha | 8943887 | 40
