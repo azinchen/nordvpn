@@ -15,7 +15,7 @@ Australia | AU | 13 | Adelaide | 452717 | 18
 Australia | AU | 13 | Brisbane | 456494 | 46
 Australia | AU | 13 | Melbourne | 470813 | 60
 Australia | AU | 13 | Perth | 475799 | 33
-Australia | AU | 13 | Sydney | 479570 | 113
+Australia | AU | 13 | Sydney | 479570 | 114
 Austria | AT | 14 | Vienna | 448799 | 71
 Azerbaijan | AZ | 15 | Baku | 490037 | 2
 Bahamas | BS | 16 | Nassau | 988382 | 5
@@ -32,7 +32,7 @@ Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | 2
 Bulgaria | BG | 33 | Sofia | 777368 | 25
 Cambodia | KH | 36 | Phnom Penh | 4658987 | 2
 Canada | CA | 38 | Montreal | 1048463 | 144
-Canada | CA | 38 | Toronto | 1054250 | 207
+Canada | CA | 38 | Toronto | 1054250 | 206
 Canada | CA | 38 | Vancouver | 1054610 | 93
 Cayman Islands | KY | 40 | George Town | 4922303 | 2
 Chile | CL | 43 | Santiago | 1227092 | 7
@@ -64,7 +64,7 @@ Guam | GU | 88 | Hagatna | 8808314 | 2
 Guatemala | GT | 89 | Guatemala City | 3202463 | 2
 Honduras | HN | 96 | Tegucigalpa | 3270551 | 2
 Hong Kong | HK | 97 | Hong Kong | 3232931 | 72
-Hungary | HU | 98 | Budapest | 3348344 | 26
+Hungary | HU | 98 | Budapest | 3348344 | 28
 Iceland | IS | 99 | Reykjavik | 4509791 | 10
 India | IN | 100 | Mumbai | 4041548 | 27
 Indonesia | ID | 101 | Jakarta | 3560288 | 16
@@ -77,7 +77,7 @@ Italy | IT | 106 | Palermo | 4548074 | 12
 Italy | IT | 106 | Rome | 4555808 | 44
 Jamaica | JM | 107 | Kingston | 4576328 | 2
 Japan | JP | 108 | Osaka | 4621847 | 36
-Japan | JP | 108 | Tokyo | 4633349 | 224
+Japan | JP | 108 | Tokyo | 4633349 | 227
 Jersey | JE | 244 | Saint Helier | 4572281 | 4
 Jordan | JO | 109 | Amman | 4581203 | 2
 Kazakhstan | KZ | 110 | Astana | 4925732 | 2
@@ -117,11 +117,11 @@ Poland | PL | 174 | Warsaw | 6863429 | 103
 Portugal | PT | 175 | Lisbon | 6906665 | 52
 Puerto Rico | PR | 176 | San Juan | 9521884 | 2
 Qatar | QA | 177 | Doha | 6940529 | 2
-Romania | RO | 179 | Bucharest | 6953096 | 25
+Romania | RO | 179 | Bucharest | 6953096 | 27
 Rwanda | RW | 181 | Kigali | 7723910 | 2
 Senegal | SN | 191 | Dakar | 7924958 | 2
 Serbia | RS | 192 | Belgrade | 7030907 | 15
-Singapore | SG | 195 | Singapore | 7867982 | 82
+Singapore | SG | 195 | Singapore | 7867982 | 83
 Slovakia | SK | 196 | Bratislava | 7884305 | 15
 Slovenia | SI | 197 | Ljubljana | 7874306 | 6
 Somalia | SO | 199 | Mogadishu | 7971170 | 2
@@ -144,7 +144,7 @@ United Kingdom | GB | 227 | Glasgow | 2978888 | 48
 United Kingdom | GB | 227 | London | 2989907 | 871
 United Kingdom | GB | 227 | Manchester | 2991110 | 163
 United States | US | 228 | Ashburn | 9103211 | 128
-United States | US | 228 | Atlanta | 8792429 | 194
+United States | US | 228 | Atlanta | 8792429 | 195
 United States | US | 228 | Boston | 8895305 | 72
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
@@ -155,7 +155,7 @@ United States | US | 228 | Houston | 9083687 | 34
 United States | US | 228 | Kansas City | 8930717 | 35
 United States | US | 228 | Los Angeles | 8761958 | 289
 United States | US | 228 | McAllen | 9086162 | 20
-United States | US | 228 | Miami | 8787782 | 204
+United States | US | 228 | Miami | 8787782 | 203
 United States | US | 228 | Nashville | 9071273 | 40
 United States | US | 228 | New York | 8971718 | 600
 United States | US | 228 | Omaha | 8943887 | 40
