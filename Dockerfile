@@ -24,7 +24,6 @@ RUN echo "**** install security fix packages ****" && \
         linux/amd64)    echo "x86_64"      ;; \
         linux/arm64*)   echo "aarch64"     ;; \
         linux/arm/v6)   echo "armhf"       ;; \
-        linux/arm/v7)   echo "armhf"       ;; \
         linux/arm*)     echo "armhf"       ;; \
         linux/ppc64le)  echo "powerpc64le" ;; \
         linux/riscv64)  echo "riscv64"     ;; \
@@ -90,9 +89,8 @@ ENV PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     echo "Target platform: ${TARGETPLATFORM}" && \
-    # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 linux/arm/v7=9.20.13-r0 linux/riscv64=9.20.13-r0
+    # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 linux/riscv64=9.20.13-r0
     bind_tools_version=$(case "${TARGETPLATFORM:-linux/amd64}" in \
-        linux/arm/v7)   echo "9.20.13-r0"  ;; \
         linux/riscv64)  echo "9.20.13-r0"  ;; \
         *)              echo "9.20.15-r0" ;; esac) && \
     apk --no-cache --no-progress add \
