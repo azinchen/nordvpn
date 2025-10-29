@@ -89,10 +89,6 @@ ENV PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     echo "Target platform: ${TARGETPLATFORM}" && \
-    # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 linux/riscv64=9.20.13-r0
-    bind_tools_version=$(case "${TARGETPLATFORM:-linux/amd64}" in \
-        linux/riscv64)  echo "9.20.13-r0"  ;; \
-        *)              echo "9.20.15-r0" ;; esac) && \
     apk --no-cache --no-progress add \
         curl=8.14.1-r2 \
         iptables=1.8.11-r1 \
@@ -101,7 +97,7 @@ RUN echo "**** install security fix packages ****" && \
         shadow=4.17.3-r0 \
         shadow-login=4.17.3-r0 \
         openvpn=2.6.14-r0 \
-        bind-tools=${bind_tools_version} \
+        bind-tools=9.20.15-r0 \
         netcat-openbsd=1.229.1-r0 \
         && \
     echo "**** create process user ****" && \
