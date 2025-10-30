@@ -1,7 +1,8 @@
 # s6 overlay builder
 FROM alpine:3.22.2 AS s6-builder
 
-ARG TARGETPLATFORM
+ARG TARGETARCH
+ARG TARGETVARIANT
 
 ENV PACKAGE="just-containers/s6-overlay"
 ENV PACKAGEVERSION="3.2.1.0"
@@ -15,25 +16,30 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
     echo "**** download ${PACKAGE} ****" && \
-    echo "Target platform: ${TARGETPLATFORM}" && \
-    # Map TARGETPLATFORM to s6-overlay platform names
-    # linux/amd64->x86_64, linux/arm64->aarch64, linux/arm/v7->armhf, linux/arm/v6->armhf
-    # linux/386->i486, linux/ppc64le->powerpc64le, linux/s390x->s390x, linux/riscv64->riscv64
-    s6_arch=$(case "${TARGETPLATFORM:-linux/amd64}" in \
-        linux/386)      echo "i486"        ;; \
-        linux/amd64)    echo "x86_64"      ;; \
-        linux/arm64*)   echo "aarch64"     ;; \
-        linux/arm/v6)   echo "armhf"       ;; \
-        linux/arm*)     echo "armhf"       ;; \
-        linux/ppc64le)  echo "powerpc64le" ;; \
-        linux/riscv64)  echo "riscv64"     ;; \
-        linux/s390x)    echo "s390x"       ;; \
-        *)              echo "x86_64"      ;; esac) && \
+    echo "Target arch: ${TARGETARCH}${TARGETVARIANT}" && \
+    # Map Docker TARGETARCH to s6-overlay architecture names
+    case "${TARGETARCH}${TARGETVARIANT}" in \
+        amd64)      s6_arch="x86_64" ;; \
+        arm64)      s6_arch="aarch64" ;; \
+        armv7)      s6_arch="arm" ;; \
+        armv6)      s6_arch="armhf" ;; \
+        386)        s6_arch="i686" ;; \
+        ppc64)      s6_arch="powerpc64" ;; \
+        ppc64le)    s6_arch="powerpc64le" ;; \
+        riscv64)    s6_arch="riscv64" ;; \
+        s390x)      s6_arch="s390x" ;; \
+        *)          s6_arch="x86_64" ;; \
+    esac && \
     echo "Package ${PACKAGE} platform ${PACKAGEPLATFORM} version ${PACKAGEVERSION}" && \
-    wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-noarch.tar.xz" -qO /tmp/s6-overlay-noarch.tar.xz && \
-    wget -q "https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}/s6-overlay-${s6_arch}.tar.xz" -qO /tmp/s6-overlay-binaries.tar.xz && \
+    s6_url_base="https://github.com/${PACKAGE}/releases/download/v${PACKAGEVERSION}" && \
+    wget -q "${s6_url_base}/s6-overlay-noarch.tar.xz" -qO /tmp/s6-overlay-noarch.tar.xz && \
+    wget -q "${s6_url_base}/s6-overlay-${s6_arch}.tar.xz" -qO /tmp/s6-overlay-binaries.tar.xz && \
+    wget -q "${s6_url_base}/s6-overlay-symlinks-noarch.tar.xz" -qO /tmp/s6-overlay-symlinks-noarch.tar.xz && \
+    wget -q "${s6_url_base}/s6-overlay-symlinks-arch.tar.xz" -qO /tmp/s6-overlay-symlinks-arch.tar.xz && \
     tar -C /s6/ -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
-    tar -C /s6/ -Jxpf /tmp/s6-overlay-binaries.tar.xz
+    tar -C /s6/ -Jxpf /tmp/s6-overlay-binaries.tar.xz && \
+    tar -C /s6/ -Jxpf /tmp/s6-overlay-symlinks-noarch.tar.xz && \
+    tar -C /s6/ -Jxpf /tmp/s6-overlay-symlinks-arch.tar.xz
 
 # rootfs builder
 FROM alpine:3.22.2 AS rootfs-builder
@@ -83,8 +89,7 @@ LABEL org.opencontainers.image.authors="Alexander Zinchenko <alexander@zinchenko
       org.opencontainers.image.version="${IMAGE_VERSION}" \
       org.opencontainers.image.created="${BUILD_DATE}"
 
-ENV PATH=/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=120000
+ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=120000
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
