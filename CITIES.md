@@ -1,4 +1,4 @@
-Last updated: 2025-10-29
+Last updated: 2025-10-30
 ---
 # List of CITIES with NordVPN servers
 
@@ -32,7 +32,7 @@ Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | 2
 Bulgaria | BG | 33 | Sofia | 777368 | 25
 Cambodia | KH | 36 | Phnom Penh | 4658987 | 2
 Canada | CA | 38 | Montreal | 1048463 | 144
-Canada | CA | 38 | Toronto | 1054250 | 206
+Canada | CA | 38 | Toronto | 1054250 | 207
 Canada | CA | 38 | Vancouver | 1054610 | 93
 Cayman Islands | KY | 40 | George Town | 4922303 | 2
 Chile | CL | 43 | Santiago | 1227092 | 7
@@ -63,7 +63,7 @@ Greenland | GL | 85 | Nuuk | 3085001 | 2
 Guam | GU | 88 | Hagatna | 8808314 | 2
 Guatemala | GT | 89 | Guatemala City | 3202463 | 2
 Honduras | HN | 96 | Tegucigalpa | 3270551 | 2
-Hong Kong | HK | 97 | Hong Kong | 3232931 | 72
+Hong Kong | HK | 97 | Hong Kong | 3232931 | 73
 Hungary | HU | 98 | Budapest | 3348344 | 28
 Iceland | IS | 99 | Reykjavik | 4509791 | 10
 India | IN | 100 | Mumbai | 4041548 | 27
@@ -148,18 +148,18 @@ United States | US | 228 | Atlanta | 8792429 | 195
 United States | US | 228 | Boston | 8895305 | 72
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
-United States | US | 228 | Chicago | 8815352 | 320
+United States | US | 228 | Chicago | 8815352 | 321
 United States | US | 228 | Dallas | 9080300 | 249
 United States | US | 228 | Denver | 8770934 | 119
 United States | US | 228 | Houston | 9083687 | 34
 United States | US | 228 | Kansas City | 8930717 | 35
 United States | US | 228 | Los Angeles | 8761958 | 289
 United States | US | 228 | McAllen | 9086162 | 20
-United States | US | 228 | Miami | 8787782 | 203
+United States | US | 228 | Miami | 8787782 | 204
 United States | US | 228 | Nashville | 9071273 | 40
 United States | US | 228 | New York | 8971718 | 600
 United States | US | 228 | Omaha | 8943887 | 40
-United States | US | 228 | Phoenix | 8741960 | 53
+United States | US | 228 | Phoenix | 8741960 | 72
 United States | US | 228 | Saint Louis | 8934551 | 36
 United States | US | 228 | Salt Lake City | 9097865 | 29
 United States | US | 228 | San Francisco | 8766359 | 114
