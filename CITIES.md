@@ -1,4 +1,4 @@
-Last updated: 2025-10-30
+Last updated: 2025-11-01
 ---
 # List of CITIES with NordVPN servers
 
@@ -14,19 +14,19 @@ Armenia | AM | 11 | Yerevan | 322385 | 2
 Australia | AU | 13 | Adelaide | 452717 | 18
 Australia | AU | 13 | Brisbane | 456494 | 46
 Australia | AU | 13 | Melbourne | 470813 | 60
-Australia | AU | 13 | Perth | 475799 | 33
+Australia | AU | 13 | Perth | 475799 | 31
 Australia | AU | 13 | Sydney | 479570 | 114
 Austria | AT | 14 | Vienna | 448799 | 71
 Azerbaijan | AZ | 15 | Baku | 490037 | 2
 Bahamas | BS | 16 | Nassau | 988382 | 5
 Bahrain | BH | 17 | Manama | 789398 | 2
 Bangladesh | BD | 18 | Dhaka | 594935 | 2
-Belgium | BE | 21 | Brussels | 654293 | 88
+Belgium | BE | 21 | Brussels | 654293 | 83
 Belize | BZ | 22 | Belmopan | 1037459 | 2
 Bermuda | BM | 24 | Hamilton | 809078 | 3
 Bhutan | BT | 25 | Thimphu | 989699 | 2
 Bolivia | BO | 26 | La Paz | 838514 | 2
-Bosnia and Herzegovina | BA | 27 | Novi Travnik | 548462 | 5
+Bosnia and Herzegovina | BA | 27 | Novi Travnik | 548462 | 4
 Brazil | BR | 30 | Sao Paulo | 890249 | 38
 Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | 2
 Bulgaria | BG | 33 | Sofia | 777368 | 25
@@ -77,7 +77,7 @@ Italy | IT | 106 | Palermo | 4548074 | 12
 Italy | IT | 106 | Rome | 4555808 | 44
 Jamaica | JM | 107 | Kingston | 4576328 | 2
 Japan | JP | 108 | Osaka | 4621847 | 36
-Japan | JP | 108 | Tokyo | 4633349 | 227
+Japan | JP | 108 | Tokyo | 4633349 | 226
 Jersey | JE | 244 | Saint Helier | 4572281 | 4
 Jordan | JO | 109 | Amman | 4581203 | 2
 Kazakhstan | KZ | 110 | Astana | 4925732 | 2
@@ -127,7 +127,7 @@ Slovenia | SI | 197 | Ljubljana | 7874306 | 6
 Somalia | SO | 199 | Mogadishu | 7971170 | 2
 South Africa | ZA | 200 | Johannesburg | 9383693 | 25
 South Korea | KR | 114 | Seoul | 4879586 | 48
-Spain | ES | 202 | Barcelona | 2572757 | 32
+Spain | ES | 202 | Barcelona | 2572757 | 42
 Spain | ES | 202 | Madrid | 2619989 | 78
 Sri Lanka | LK | 203 | Colombo | 5043197 | 2
 Sweden | SE | 208 | Stockholm | 7852919 | 179
@@ -141,21 +141,21 @@ Ukraine | UA | 225 | Kyiv | 8626766 | 14
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
 United Kingdom | GB | 227 | Edinburgh | 2975852 | 41
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
-United Kingdom | GB | 227 | London | 2989907 | 871
+United Kingdom | GB | 227 | London | 2989907 | 870
 United Kingdom | GB | 227 | Manchester | 2991110 | 163
 United States | US | 228 | Ashburn | 9103211 | 128
 United States | US | 228 | Atlanta | 8792429 | 195
 United States | US | 228 | Boston | 8895305 | 72
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
-United States | US | 228 | Chicago | 8815352 | 321
+United States | US | 228 | Chicago | 8815352 | 320
 United States | US | 228 | Dallas | 9080300 | 249
 United States | US | 228 | Denver | 8770934 | 119
 United States | US | 228 | Houston | 9083687 | 34
 United States | US | 228 | Kansas City | 8930717 | 35
 United States | US | 228 | Los Angeles | 8761958 | 289
 United States | US | 228 | McAllen | 9086162 | 20
-United States | US | 228 | Miami | 8787782 | 204
+United States | US | 228 | Miami | 8787782 | 205
 United States | US | 228 | Nashville | 9071273 | 40
 United States | US | 228 | New York | 8971718 | 600
 United States | US | 228 | Omaha | 8943887 | 40
