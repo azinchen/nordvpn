@@ -1,4 +1,4 @@
-Last updated: 2025-11-03
+Last updated: 2025-11-06
 ---
 # List of COUNTRIES with NordVPN servers
 
@@ -11,7 +11,7 @@ Andorra | AD | 5 | 8
 Angola | AO | 6 | 2
 Argentina | AR | 10 | 19
 Armenia | AM | 11 | 2
-Australia | AU | 13 | 268
+Australia | AU | 13 | 271
 Austria | AT | 14 | 71
 Azerbaijan | AZ | 15 | 2
 Bahamas | BS | 16 | 5
@@ -62,9 +62,9 @@ Iraq | IQ | 103 | 2
 Ireland | IE | 104 | 90
 Isle of Man | IM | 243 | 4
 Israel | IL | 105 | 20
-Italy | IT | 106 | 194
+Italy | IT | 106 | 203
 Jamaica | JM | 107 | 2
-Japan | JP | 108 | 262
+Japan | JP | 108 | 263
 Jersey | JE | 244 | 4
 Jordan | JO | 109 | 2
 Kazakhstan | KZ | 110 | 2
@@ -80,6 +80,7 @@ Luxembourg | LU | 126 | 12
 Malaysia | MY | 131 | 10
 Malta | MT | 134 | 2
 Mauritania | MR | 137 | 2
+Mauritius | MU | 138 | 2
 Mexico | MX | 140 | 62
 Moldova | MD | 142 | 3
 Monaco | MC | 143 | 4
@@ -89,7 +90,7 @@ Morocco | MA | 147 | 4
 Mozambique | MZ | 148 | 2
 Myanmar | MM | 149 | 2
 Nepal | NP | 152 | 2
-Netherlands | NL | 153 | 264
+Netherlands | NL | 153 | 265
 New Zealand | NZ | 156 | 39
 Nigeria | NG | 159 | 4
 North Macedonia | MK | 128 | 2
@@ -117,16 +118,17 @@ South Korea | KR | 114 | 48
 Spain | ES | 202 | 120
 Sri Lanka | LK | 203 | 2
 Sweden | SE | 208 | 179
-Switzerland | CH | 209 | 159
-Taiwan | TW | 211 | 30
+Switzerland | CH | 209 | 169
+Taiwan | TW | 211 | 20
+Tajikistan | TJ | 212 | 2
 Thailand | TH | 214 | 12
 Trinidad and Tobago | TT | 218 | 2
 Tunisia | TN | 219 | 2
-Turkey | TR | 220 | 19
+Turkey | TR | 220 | 20
 Ukraine | UA | 225 | 14
 United Arab Emirates | AE | 226 | 17
-United Kingdom | GB | 227 | 1122
-United States | US | 228 | 2939
+United Kingdom | GB | 227 | 1123
+United States | US | 228 | 2923
 Uruguay | UY | 230 | 2
 Uzbekistan | UZ | 231 | 2
 Venezuela | VE | 233 | 2
