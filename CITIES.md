@@ -1,4 +1,4 @@
-Last updated: 2025-11-03
+Last updated: 2025-11-06
 ---
 # List of CITIES with NordVPN servers
 
@@ -12,9 +12,9 @@ Angola | AO | 6 | Luanda | 351407 | 2
 Argentina | AR | 10 | Buenos Aires | 384866 | 19
 Armenia | AM | 11 | Yerevan | 322385 | 2
 Australia | AU | 13 | Adelaide | 452717 | 18
-Australia | AU | 13 | Brisbane | 456494 | 45
+Australia | AU | 13 | Brisbane | 456494 | 46
 Australia | AU | 13 | Melbourne | 470813 | 60
-Australia | AU | 13 | Perth | 475799 | 31
+Australia | AU | 13 | Perth | 475799 | 33
 Australia | AU | 13 | Sydney | 479570 | 114
 Austria | AT | 14 | Vienna | 448799 | 71
 Azerbaijan | AZ | 15 | Baku | 490037 | 2
@@ -72,12 +72,12 @@ Iraq | IQ | 103 | Baghdad | 4093955 | 2
 Ireland | IE | 104 | Dublin | 3939200 | 90
 Isle of Man | IM | 243 | Douglas | 3965405 | 4
 Israel | IL | 105 | Tel Aviv | 3964220 | 20
-Italy | IT | 106 | Milan | 4542737 | 138
+Italy | IT | 106 | Milan | 4542737 | 139
 Italy | IT | 106 | Palermo | 4548074 | 12
-Italy | IT | 106 | Rome | 4555808 | 44
+Italy | IT | 106 | Rome | 4555808 | 52
 Jamaica | JM | 107 | Kingston | 4576328 | 2
 Japan | JP | 108 | Osaka | 4621847 | 36
-Japan | JP | 108 | Tokyo | 4633349 | 226
+Japan | JP | 108 | Tokyo | 4633349 | 227
 Jersey | JE | 244 | Saint Helier | 4572281 | 4
 Jordan | JO | 109 | Amman | 4581203 | 2
 Kazakhstan | KZ | 110 | Astana | 4925732 | 2
@@ -93,6 +93,7 @@ Luxembourg | LU | 126 | Luxembourg | 9521876 | 12
 Malaysia | MY | 131 | Kuala Lumpur | 5820143 | 10
 Malta | MT | 134 | Valletta | 5554481 | 2
 Mauritania | MR | 137 | Nouakchott | 5551598 | 2
+Mauritius | MU | 138 | Port Louis | 5556011 | 2
 Mexico | MX | 140 | Mexico | 5677037 | 62
 Moldova | MD | 142 | Chisinau | 5295179 | 3
 Monaco | MC | 143 | Monte Carlo | 5292332 | 4
@@ -102,7 +103,7 @@ Morocco | MA | 147 | Rabat | 5271254 | 4
 Mozambique | MZ | 148 | Maputo | 5870336 | 2
 Myanmar | MM | 149 | Naypyidaw | 9521893 | 2
 Nepal | NP | 152 | Kathmandu | 6142175 | 2
-Netherlands | NL | 153 | Amsterdam | 6076868 | 264
+Netherlands | NL | 153 | Amsterdam | 6076868 | 265
 New Zealand | NZ | 156 | Auckland | 6144239 | 39
 Nigeria | NG | 159 | Lagos | 6010328 | 4
 North Macedonia | MK | 128 | Skopje | 5386019 | 2
@@ -131,38 +132,39 @@ Spain | ES | 202 | Barcelona | 2572757 | 42
 Spain | ES | 202 | Madrid | 2619989 | 78
 Sri Lanka | LK | 203 | Colombo | 5043197 | 2
 Sweden | SE | 208 | Stockholm | 7852919 | 179
-Switzerland | CH | 209 | Zurich | 1171814 | 159
-Taiwan | TW | 211 | Taipei | 8544365 | 30
+Switzerland | CH | 209 | Zurich | 1171814 | 169
+Taiwan | TW | 211 | Taipei | 8544365 | 20
+Tajikistan | TJ | 212 | Dushanbe | 8269814 | 2
 Thailand | TH | 214 | Bangkok | 8121638 | 12
 Trinidad and Tobago | TT | 218 | Port of Spain | 9521887 | 2
 Tunisia | TN | 219 | Tunis | 8295401 | 2
-Turkey | TR | 220 | Istanbul | 8401790 | 19
+Turkey | TR | 220 | Istanbul | 8401790 | 20
 Ukraine | UA | 225 | Kyiv | 8626766 | 14
 United Arab Emirates | AE | 226 | Dubai | 728 | 17
 United Kingdom | GB | 227 | Edinburgh | 2975852 | 41
 United Kingdom | GB | 227 | Glasgow | 2978888 | 48
-United Kingdom | GB | 227 | London | 2989907 | 870
+United Kingdom | GB | 227 | London | 2989907 | 871
 United Kingdom | GB | 227 | Manchester | 2991110 | 163
-United States | US | 228 | Ashburn | 9103211 | 128
+United States | US | 228 | Ashburn | 9103211 | 130
 United States | US | 228 | Atlanta | 8792429 | 195
 United States | US | 228 | Boston | 8895305 | 72
 United States | US | 228 | Buffalo | 8963153 | 114
 United States | US | 228 | Charlotte | 8980922 | 38
-United States | US | 228 | Chicago | 8815352 | 320
+United States | US | 228 | Chicago | 8815352 | 321
 United States | US | 228 | Dallas | 9080300 | 249
 United States | US | 228 | Denver | 8770934 | 119
 United States | US | 228 | Houston | 9083687 | 34
 United States | US | 228 | Kansas City | 8930717 | 35
 United States | US | 228 | Los Angeles | 8761958 | 289
 United States | US | 228 | McAllen | 9086162 | 20
-United States | US | 228 | Miami | 8787782 | 205
+United States | US | 228 | Miami | 8787782 | 187
 United States | US | 228 | Nashville | 9071273 | 40
 United States | US | 228 | New York | 8971718 | 600
 United States | US | 228 | Omaha | 8943887 | 40
 United States | US | 228 | Phoenix | 8741960 | 72
 United States | US | 228 | Saint Louis | 8934551 | 36
 United States | US | 228 | Salt Lake City | 9097865 | 29
-United States | US | 228 | San Francisco | 8766359 | 114
+United States | US | 228 | San Francisco | 8766359 | 113
 United States | US | 228 | Seattle | 9128402 | 190
 Uruguay | UY | 230 | Montevideo | 9150812 | 2
 Uzbekistan | UZ | 231 | Tashkent | 9166826 | 2
