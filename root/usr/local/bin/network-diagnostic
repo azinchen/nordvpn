@@ -88,6 +88,7 @@ is_private_ip()
 get_openvpn_status()
 {
     MGMT_SOURCE=""
+    VPN_STATUS="Not Connected"
     # Try to connect to OpenVPN management interface via Unix socket
     if command -v nc >/dev/null 2>&1; then
         # Use netcat with delays to allow management interface to process commands
@@ -119,6 +120,7 @@ get_openvpn_status()
             # Parse state line format: timestamp,CONNECTED,SUCCESS,local_ip,remote_ip,remote_port
             STATE_LINE="$(printf "%s" "$STATE_RESP" | grep -E '^[0-9]+,CONNECTED' | head -1 || printf '')"
             if [ -n "$STATE_LINE" ]; then
+                VPN_STATUS="Connected"
                 # Extract connection timestamp (seconds since epoch)
                 CONN_TIMESTAMP="$(printf "%s" "$STATE_LINE" | cut -d, -f1 || printf '')"
                 STATE_IP="$(printf "%s" "$STATE_LINE" | cut -d, -f5 || printf '')"
@@ -150,8 +152,8 @@ get_openvpn_status()
         fi
     fi
     
-    # Fallback: try to get from config file if management interface didn't work
-    if [ -z "$COMMON_NAME" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+    # Fallback: try to get from config file if management interface didn't work and VPN is connected
+    if [ "$VPN_STATUS" = "Connected" ] && [ -z "$COMMON_NAME" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
         [ -z "$MGMT_SOURCE" ] && MGMT_SOURCE="config file"
         # Extract from verify-x509-name line first (preferred)
         COMMON_NAME="$(awk '/^[[:space:]]*verify-x509-name/ {for(i=1;i<=NF;i++) if($i ~ /CN=/) {sub(/CN=/,"",$i); print $i; exit}}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
@@ -167,7 +169,7 @@ get_openvpn_status()
             fi
         fi
     fi
-    if [ -z "$TRUSTED_IP" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+    if [ "$VPN_STATUS" = "Connected" ] && [ -z "$TRUSTED_IP" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
         [ -z "$MGMT_SOURCE" ] && MGMT_SOURCE="config file"
         TRUSTED_IP="$(awk '/^[[:space:]]*remote[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
         TRUSTED_PORT="$(awk '/^[[:space:]]*remote[ \t]+/ {print $3; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
@@ -177,6 +179,7 @@ get_openvpn_status()
     # Export for use in output
     export MGMT_SOURCE
     export CONNECTION_UPTIME
+    export VPN_STATUS
 }
 
 # Detect iptables backend (nft_tables or legacy)
@@ -335,6 +338,7 @@ CONNECTION_UPTIME=""
 IPTABLES_BACKEND=""
 IPTABLES_VERSION=""
 IPTABLES_COMMAND=""
+VPN_STATUS="Not Connected"
 
 # Try to get OpenVPN status from management interface
 get_openvpn_status
@@ -346,7 +350,7 @@ get_interface_details
 get_iptables_backend
 
 # Try to get protocol and port from OpenVPN config or process
-if [ -f "/run/xt/nordvpn.ovpn" ]; then
+if [ "$VPN_STATUS" = "Connected" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
     # Try to extract from config file
     PROTO="$(awk '/^[[:space:]]*proto[ \t]+/ {print tolower($2); exit}' "/run/xt/nordvpn.ovpn" || printf '?')"
     LPORT="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" || printf '?')"
@@ -376,6 +380,7 @@ fi
 
 echo "================================================================"
 echo "OpenVPN DIAG (full)   : $(date -Is 2>/dev/null || date)"
+echo "VPN Status            : $VPN_STATUS"
 [ -n "$MGMT_SOURCE" ] && echo "Data source           : $MGMT_SOURCE"
 [ -n "$IPTABLES_COMMAND" ] && echo "Iptables command      : $IPTABLES_COMMAND"
 [ -n "$IPTABLES_BACKEND" ] && echo "Iptables backend      : $IPTABLES_BACKEND"
