@@ -1154,6 +1154,20 @@
   ]
 }
 {
+  "id": 138,
+  "name": "Mauritius",
+  "code": "MU",
+  "cities": [
+    {
+      "id": 5556011,
+      "name": "Port Louis",
+      "latitude": -20.1619444,
+      "longitude": 57.4988889,
+      "dns_name": "port-louis"
+    }
+  ]
+}
+{
   "id": 140,
   "name": "Mexico",
   "code": "MX",
@@ -1703,6 +1717,20 @@
       "latitude": 25.0391667,
       "longitude": 121.525,
       "dns_name": "taipei"
+    }
+  ]
+}
+{
+  "id": 212,
+  "name": "Tajikistan",
+  "code": "TJ",
+  "cities": [
+    {
+      "id": 8269814,
+      "name": "Dushanbe",
+      "latitude": 38.56,
+      "longitude": 68.7738889,
+      "dns_name": "dushanbe"
     }
   ]
 }
