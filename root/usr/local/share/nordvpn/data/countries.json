@@ -1929,6 +1929,13 @@
       "dns_name": "kansas-city"
     },
     {
+      "id": 8869646,
+      "name": "Lewiston",
+      "latitude": 44.1002778,
+      "longitude": -70.2152778,
+      "dns_name": "lewiston"
+    },
+    {
       "id": 8761958,
       "name": "Los Angeles",
       "latitude": 34.0522222,
