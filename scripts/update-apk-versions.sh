@@ -87,14 +87,28 @@ fi
 # --- 1. Extract Alpine Version from Dockerfile ---
 ALPINE_VERSION_FULL=$(grep '^FROM alpine:' "$DOCKERFILE" | head -n1 | sed -E 's/FROM alpine:(.*)/\1/')
 ALPINE_BRANCH=$(echo "$ALPINE_VERSION_FULL" | cut -d. -f1,2)
-echo "Using Alpine branch version: $ALPINE_BRANCH"
 
 # --- 2. Extract Package List from Dockerfile ---
 joined_content=$(sed ':a;N;$!ba;s/\\\n/ /g' "$DOCKERFILE")
 package_lines=$(echo "$joined_content" | grep -oP 'apk --no-cache --no-progress add\s+\K[^&]+')
 # Filter out packages with variable references (containing ${ })
-packages=$(echo "$package_lines" | tr ' ' '\n' | sed '/^\s*$/d' | grep -v '\${' | sort -u)
+packages=$(echo "$package_lines" | tr ' ' '\n' | sed '/^\s*$/d' | grep -v '\${')
 
+# Sort packages by line number (forward order)
+temp_pkg_file=$(mktemp)
+for pkg in $packages; do
+    line_num=$(grep -n "${pkg}[[:space:]\\]" "$DOCKERFILE" | head -1 | cut -d: -f1)
+    echo "$line_num:$pkg" >> "$temp_pkg_file"
+done
+packages=$(sort -n -t: -k1 "$temp_pkg_file" | cut -d: -f2)
+rm -f "$temp_pkg_file"
+
+echo "=== Package Update Check ==="
+echo "Alpine version: $ALPINE_BRANCH"
+echo "Platform: x86_64"
+echo "Main repository: https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/main/x86_64/"
+echo "Community repository: https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/community/x86_64/"
+echo
 echo "Found packages in $DOCKERFILE:"
 echo "$packages"
 echo
@@ -228,37 +242,40 @@ update_package_with_tracking() {
         current_version=""
     fi
 
+    # Find the line number of this package occurrence
+    line_num=$(grep -n "${pkg}=${current_version}[[:space:]\\]" "$DOCKERFILE" | head -1 | cut -d: -f1)
+    
     # First try the "main" repository.
     URL="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/main/x86_64/${pkg}"
-    echo "Checking package '$pkg' (current version: $current_version) from: $URL"
+    echo "Checking '$pkg' (version: $current_version) [line $line_num]"
     new_version=$(extract_new_version "$URL")
     repo="main"
 
     # If not found in main, try the "community" repository.
     if [ -z "$new_version" ]; then
         URL="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/community/x86_64/${pkg}"
-        echo "  Not found in main, trying community: $URL"
         new_version=$(extract_new_version "$URL")
         repo="community"
     fi
 
     if [ -z "$new_version" ]; then
-        echo "  Could not retrieve new version for '$pkg' from either repository. Skipping."
+        echo "  ✗ Not found in either repository"
         return
     fi
 
     if [ "$current_version" != "$new_version" ]; then
-        echo "  Updating '$pkg' from $current_version to $new_version (found in $repo repo)"
-        sed -i "s/${pkg}=${current_version}/${pkg}=${new_version}/g" "$DOCKERFILE"
+        echo "  → Updating to $new_version (from $repo)"
+        # Match package=version followed by whitespace or backslash to ensure we match the complete version
+        sed -i "s/\(${pkg}=\)${current_version}\([[:space:]\\]\)/\1${new_version}\2/" "$DOCKERFILE"
         UPDATED_COUNT=$((UPDATED_COUNT + 1))
         if [ -z "$UPDATED_PACKAGES" ]; then
-            UPDATED_PACKAGES="- $pkg ($current_version → $new_version)"
+            UPDATED_PACKAGES="- $pkg ($current_version → $new_version) [line $line_num]"
         else
             UPDATED_PACKAGES="$UPDATED_PACKAGES
-- $pkg ($current_version → $new_version)"
+- $pkg ($current_version → $new_version) [line $line_num]"
         fi
     else
-        echo "  '$pkg' is up-to-date ($current_version)."
+        echo "  ✓ Up-to-date (from $repo)"
     fi
     echo
 }
@@ -272,10 +289,10 @@ done
 unset IFS
 
 # --- 7. Handle Platform-Specific Package Versions ---
-echo "=== Checking Platform-Specific Versions ==="
 platform_lines=$(grep -n "# PLATFORM_VERSIONS:" "$DOCKERFILE" || true)
 
 if [ -n "$platform_lines" ]; then
+    echo "=== Checking Platform-Specific Versions ==="
     # Save to temp file to avoid subshell from pipe
     # Process in reverse order so line number deletions don't affect earlier entries
     temp_file=$(mktemp)
@@ -337,12 +354,15 @@ if [ -n "$platform_lines" ]; then
                 # Use | as delimiter to avoid conflicts with / in platform names like linux/arm/v7
                 sed -i "s|\(${case_pattern})\)[[:space:]]*echo \"\(${current_version}\)\"|\1${current_spacing}echo \"${new_version}\"|" "$DOCKERFILE"
                 
+                # Find line number for the case pattern we just updated
+                case_line_num=$(grep -n "${case_pattern})" "$DOCKERFILE" | head -1 | cut -d: -f1)
+                
                 UPDATED_COUNT=$((UPDATED_COUNT + 1))
                 if [ -z "$UPDATED_PACKAGES" ]; then
-                    UPDATED_PACKAGES="- $pkg_name ($arch: $current_version → $new_version)"
+                    UPDATED_PACKAGES="- $pkg_name ($arch: $current_version → $new_version) [line $case_line_num]"
                 else
                     UPDATED_PACKAGES="$UPDATED_PACKAGES
-- $pkg_name ($arch: $current_version → $new_version)"
+- $pkg_name ($arch: $current_version → $new_version) [line $case_line_num]"
                 fi
             else
                 echo "    $arch is up-to-date ($current_version)"
@@ -411,15 +431,16 @@ if [ -n "$platform_lines" ]; then
             fi
             
             # Replace the variable reference with the actual version
+            apk_line_num=$(grep -n "${pkg_name}=\${${var_name}}" "$DOCKERFILE" | head -1 | cut -d: -f1)
             sed -i "s/${pkg_name}=\${${var_name}}/${pkg_name}=${common_version}/" "$DOCKERFILE"
             
-            echo "  ✓ Converted $pkg_name to regular format with version $common_version"
+            echo "  ✓ Converted $pkg_name to regular format with version $common_version [line $apk_line_num]"
             UPDATED_COUNT=$((UPDATED_COUNT + 1))
             if [ -z "$UPDATED_PACKAGES" ]; then
-                UPDATED_PACKAGES="- $pkg_name (converted to regular format: $common_version)"
+                UPDATED_PACKAGES="- $pkg_name (converted to regular format: $common_version) [line $apk_line_num]"
             else
                 UPDATED_PACKAGES="$UPDATED_PACKAGES
-- $pkg_name (converted to regular format: $common_version)"
+- $pkg_name (converted to regular format: $common_version) [line $apk_line_num]"
             fi
         else
             # Update the comment line with new versions if there were updates
