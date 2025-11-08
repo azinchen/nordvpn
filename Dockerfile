@@ -48,6 +48,10 @@ ARG IMAGE_VERSION=N/A \
     BUILD_DATE=N/A
 
 RUN echo "**** install security fix packages ****" && \
+    echo "**** install mandatory packages ****" && \
+    apk --no-cache --no-progress add \
+        jq=1.8.0-r0 \
+        && \
     echo "**** end run statement ****"
 
 COPY root/ /rootfs/
@@ -56,6 +60,9 @@ RUN chmod +x /rootfs/usr/local/bin/* || true && \
     chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/finish || true && \
     chmod 644 /rootfs/usr/local/share/nordvpn/data/*.json && \
     chmod 644 /rootfs/usr/local/share/nordvpn/data/template.ovpn && \
+    for f in /rootfs/usr/local/share/nordvpn/data/*.json; do \
+        jq -c . "$f" > "$f.tmp" && mv "$f.tmp" "$f"; \
+    done && \
     safe_sed() { \
         local pattern="$1"; \
         local replacement="$2"; \
