@@ -50,7 +50,7 @@ ARG IMAGE_VERSION=N/A \
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
-        jq=1.8.0-r0 \
+        jq=1.8.1-r0 \
         && \
     echo "**** end run statement ****"
 
@@ -105,7 +105,7 @@ RUN echo "**** install security fix packages ****" && \
         curl=8.14.1-r2 \
         iptables=1.8.11-r1 \
         iptables-legacy=1.8.11-r1 \
-        jq=1.8.0-r0 \
+        jq=1.8.1-r0 \
         shadow=4.17.3-r0 \
         shadow-login=4.17.3-r0 \
         openvpn=2.6.14-r0 \
