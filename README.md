@@ -3,16 +3,18 @@
 # NordVPN OpenVPN Docker Container
 
 [![Docker pulls][dockerhub-pulls]][dockerhub-link]
-[![Docker image size][dockerhub-size]][dockerhub-link]
 [![Docker stars][dockerhub-stars]][dockerhub-link]
+[![Docker image size][dockerhub-size]][dockerhub-link]
+
+[![GitHub release][github-release]][github-releases]
 [![GitHub stars][github-stars]][github-link]
 [![GitHub forks][github-forks]][github-link]
-[![GitHub release][github-release]][github-releases]
 [![GitHub release date][github-releasedate]][github-releases]
 [![GitHub build][github-build]][github-actions]
 [![GitHub last commit][github-lastcommit]][github-link]
-[![License][license-badge]][license-link]
-[![OpenVPN][openvpn-badge]](https://openvpn.net/)
+[![Open issues][github-issues]][github-issues-link]
+
+[![Multi-arch][multiarch-badge]](#supported-platforms)
 
 OpenVPN client docker container that routes other containers' traffic through NordVPN servers automatically.
 
@@ -532,7 +534,7 @@ This container supports multiple architectures and can run on various platforms:
 | `linux/amd64` | 64-bit x86 | Most common desktop/server |
 | `linux/arm/v6` | ARM v6 | Older ARM devices |
 | `linux/arm/v7` | ARM v7 | Raspberry Pi 2/3, many ARM SBCs |
-| `linux/arm64` | 64-bit ARM | Raspberry Pi 4, Apple M1, modern ARM |
+| `linux/arm64` | 64-bit ARM | Raspberry Pi 4/5, Apple M1, modern ARM |
 | `linux/ppc64le` | PowerPC 64-bit LE | IBM Power Systems |
 | `linux/riscv64` | 64-bit RISC-V | Emerging RISC-V hardware |
 | `linux/s390x` | IBM System z | Enterprise mainframes |
@@ -564,26 +566,26 @@ Consider using
 
 ## Issues
 
-If you have any problems with or questions about this image, please contact me through a [GitHub issue][github-issues] or [email][email-link].
+If you have any problems with or questions about this image, please contact me through a [GitHub issue][github-issues-link] or [email][email-link].
 
 [dockerhub-link]: https://hub.docker.com/r/azinchen/nordvpn
-[dockerhub-pulls]: https://img.shields.io/docker/pulls/azinchen/nordvpn?style=flat-square&logo=docker&logoColor=white
-[dockerhub-size]: https://img.shields.io/docker/image-size/azinchen/nordvpn/latest?style=flat-square&logo=docker&logoColor=white
-[dockerhub-stars]: https://img.shields.io/docker/stars/azinchen/nordvpn?style=flat-square&logo=docker&logoColor=white
+[dockerhub-pulls]: https://img.shields.io/docker/pulls/azinchen/nordvpn?logo=docker&logoColor=white
+[dockerhub-size]: https://img.shields.io/docker/image-size/azinchen/nordvpn/latest?logo=docker&logoColor=white
+[dockerhub-stars]: https://img.shields.io/docker/stars/azinchen/nordvpn?logo=docker&logoColor=white
 [github-link]: https://github.com/azinchen/nordvpn
-[github-issues]: https://github.com/azinchen/nordvpn/issues
+[github-issues]: https://img.shields.io/github/issues/azinchen/nordvpn?logo=github&logoColor=white
+[github-issues-link]: https://github.com/azinchen/nordvpn/issues
 [github-releases]: https://github.com/azinchen/nordvpn/releases
 [github-actions]: https://github.com/azinchen/nordvpn/actions
-[github-stars]: https://img.shields.io/github/stars/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
-[github-forks]: https://img.shields.io/github/forks/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
-[github-release]: https://img.shields.io/github/v/release/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
-[github-releasedate]: https://img.shields.io/github/release-date/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
-[github-build]: https://img.shields.io/github/actions/workflow/status/azinchen/nordvpn/ci-build-deploy.yml?branch=master&style=flat-square&logo=github&logoColor=white&label=build
-[github-lastcommit]: https://img.shields.io/github/last-commit/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
-[license-badge]: https://img.shields.io/github/license/azinchen/nordvpn?style=flat-square&logo=opensourceinitiative&logoColor=white
+[github-stars]: https://img.shields.io/github/stars/azinchen/nordvpn?logo=github
+[github-forks]: https://img.shields.io/github/forks/azinchen/nordvpn?logo=github
+[github-release]: https://img.shields.io/github/v/release/azinchen/nordvpn?logo=github&logoColor=white
+[github-releasedate]: https://img.shields.io/github/release-date/azinchen/nordvpn?logo=github&logoColor=white
+[github-build]: https://img.shields.io/github/actions/workflow/status/azinchen/nordvpn/ci-build-deploy.yml?branch=master&label=build&logo=github&logoColor=white
+[github-lastcommit]: https://img.shields.io/github/last-commit/azinchen/nordvpn?logo=github&logoColor=white
+[license-badge]: https://img.shields.io/github/license/azinchen/nordvpn?logo=opensourceinitiative&logoColor=white
 [license-link]: https://github.com/azinchen/nordvpn/blob/master/LICENSE
-[multiarch-badge]: https://img.shields.io/badge/multi--arch-linux%2F386%20%7C%20linux%2Famd64%20%7C%20linux%2Farm%2Fv6%20%7C%20linux%2Farm%2Fv7%20%7C%20linux%2Farm64%20%7C%20linux%2Fppc64le%20%7C%20linux%2Friscv64%20%7C%20linux%2Fs390x-blue?style=flat-square&logo=docker&logoColor=white
-[openvpn-badge]: https://img.shields.io/badge/OpenVPN-supported-green?style=flat-square&logo=openvpn&logoColor=white
+[multiarch-badge]: https://img.shields.io/badge/multi--arch-linux%2F386%20%7C%20linux%2Famd64%20%7C%20linux%2Farm%2Fv6%20%7C%20linux%2Farm%2Fv7%20%7C%20linux%2Farm64%20%7C%20linux%2Fppc64le%20%7C%20linux%2Friscv64%20%7C%20linux%2Fs390x-blue?logo=docker&logoColor=white
 [nordvpn-cities]: https://github.com/azinchen/nordvpn/blob/master/CITIES.md
 [nordvpn-countries]: https://github.com/azinchen/nordvpn/blob/master/COUNTRIES.md
 [nordvpn-groups]: https://github.com/azinchen/nordvpn/blob/master/GROUPS.md
