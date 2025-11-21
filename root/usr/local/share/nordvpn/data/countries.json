@@ -1978,6 +1978,13 @@
       "dns_name": "phoenix"
     },
     {
+      "id": 9036872,
+      "name": "Pittsburgh",
+      "latitude": 40.4405556,
+      "longitude": -79.9961111,
+      "dns_name": "pittsburgh"
+    },
+    {
       "id": 8934551,
       "name": "Saint Louis",
       "latitude": 38.6272222,
