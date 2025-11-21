@@ -108,7 +108,7 @@ RUN echo "**** install security fix packages ****" && \
         jq=1.8.1-r0 \
         shadow=4.17.3-r0 \
         shadow-login=4.17.3-r0 \
-        openvpn=2.6.14-r0 \
+        openvpn=2.6.16-r0 \
         bind-tools=9.20.15-r0 \
         netcat-openbsd=1.229.1-r0 \
         && \
