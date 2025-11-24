@@ -59,7 +59,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.0
 
       - name: Update ${{ matrix.file.name }}.md
         id: update-file
@@ -125,7 +125,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.0
 
       - name: Update countries.json
         id: update-countries
@@ -174,7 +174,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.0
 
       - name: Update groups.json
         id: update-groups
@@ -222,7 +222,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.0
 
       - name: Update technologies.json
         id: update-technologies
@@ -270,7 +270,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.0
 
       - name: Update template.ovpn
         id: update-template
@@ -337,7 +337,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.0
 
       - name: Update NordVPN's API addresses
         id: nordvpn-api-ips
@@ -385,7 +385,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.0
 
       - name: Update APK package versions
         id: update-apk
@@ -430,7 +430,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.0
 
       - name: Get latest version for ${{ matrix.repository }}
         id: get-version
