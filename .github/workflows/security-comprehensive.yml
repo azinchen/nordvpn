@@ -27,7 +27,7 @@ jobs:
       # SETUP & CHECKOUT
       # ============================================================================
       - name: Checkout repository
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.0
 
       # ============================================================================
       # CODEQL STATIC ANALYSIS
