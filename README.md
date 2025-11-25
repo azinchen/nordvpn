@@ -27,13 +27,13 @@ OpenVPN client docker container that routes other containers' traffic through No
 
 - **🚀 Easy Setup**: Route any container's traffic through VPN with `--net=container:vpn`
 - **🌍 Smart Server Selection**: Automatically selects optimal NordVPN servers by country, city, or group
-- **🔄 Auto-Reconnection**: Periodic server switching and connection health monitoring with cron
 - **⚖️ Load Balancing**: Intelligent sorting by server load when multiple locations specified
-- **🔒 Local/LAN Access (explicit)**: Allow specific LAN or inter‑container CIDRs with `NETWORK=...`
+- **🔄 Auto-Reconnection**: Periodic server switching and connection health monitoring with cron
 - **🛡️ Strict(er) Kill Switch**: Blocks all traffic when VPN is down except exempt networks
-- **🧱 iptables compatibility**: Automatically falls back to **iptables‑legacy** on older or nft‑broken hosts
-- **📵 IPv6**: IPv6 firewall is applied — built-in chains default to **DROP** if IPv6 is enabled
+- **🔒 Local/LAN Access (explicit)**: Allow specific LAN or inter‑container CIDRs with `NETWORK=...`
 - **📌 Pinned NordVPN API IPs**: Bootstrap uses `NORDVPNAPI_IP` to reach `api.nordvpn.com` **without DNS**
+- **📵 IPv6**: IPv6 firewall is applied — built-in chains default to **DROP** if IPv6 is enabled
+- **🧱 iptables compatibility**: Automatically falls back to **iptables‑legacy** on older or nft‑broken hosts
 
 ---
 
