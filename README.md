@@ -2,18 +2,23 @@
 
 # NordVPN OpenVPN Docker Container
 
+<!-- Build & Releases -->
+[![GitHub release][github-release]][github-releases]
+[![GitHub release date][github-releasedate]][github-releases]
+[![GitHub build][github-build]][github-actions]
+
+<!-- GitHub Repo -->
+[![GitHub stars][github-stars]][github-link]
+[![GitHub forks][github-forks]][github-link]
+[![Open issues][github-issues]][github-issues-link]
+[![GitHub last commit][github-lastcommit]][github-link]
+
+<!-- Docker Hub -->
 [![Docker pulls][dockerhub-pulls]][dockerhub-link]
 [![Docker stars][dockerhub-stars]][dockerhub-link]
 [![Docker image size][dockerhub-size]][dockerhub-link]
 
-[![GitHub release][github-release]][github-releases]
-[![GitHub stars][github-stars]][github-link]
-[![GitHub forks][github-forks]][github-link]
-[![GitHub release date][github-releasedate]][github-releases]
-[![GitHub build][github-build]][github-actions]
-[![GitHub last commit][github-lastcommit]][github-link]
-[![Open issues][github-issues]][github-issues-link]
-
+<!-- Platform Support -->
 [![Multi-arch][multiarch-badge]](#supported-platforms)
 
 OpenVPN client docker container that routes other containers' traffic through NordVPN servers automatically.
@@ -577,14 +582,12 @@ If you have any problems with or questions about this image, please contact me t
 [github-issues-link]: https://github.com/azinchen/nordvpn/issues
 [github-releases]: https://github.com/azinchen/nordvpn/releases
 [github-actions]: https://github.com/azinchen/nordvpn/actions
-[github-stars]: https://img.shields.io/github/stars/azinchen/nordvpn?logo=github
-[github-forks]: https://img.shields.io/github/forks/azinchen/nordvpn?logo=github
+[github-stars]: https://img.shields.io/github/stars/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
+[github-forks]: https://img.shields.io/github/forks/azinchen/nordvpn?style=flat-square&logo=github&logoColor=white
 [github-release]: https://img.shields.io/github/v/release/azinchen/nordvpn?logo=github&logoColor=white
 [github-releasedate]: https://img.shields.io/github/release-date/azinchen/nordvpn?logo=github&logoColor=white
 [github-build]: https://img.shields.io/github/actions/workflow/status/azinchen/nordvpn/ci-build-deploy.yml?branch=master&label=build&logo=github&logoColor=white
 [github-lastcommit]: https://img.shields.io/github/last-commit/azinchen/nordvpn?logo=github&logoColor=white
-[license-badge]: https://img.shields.io/github/license/azinchen/nordvpn?logo=opensourceinitiative&logoColor=white
-[license-link]: https://github.com/azinchen/nordvpn/blob/master/LICENSE
 [multiarch-badge]: https://img.shields.io/badge/multi--arch-linux%2F386%20%7C%20linux%2Famd64%20%7C%20linux%2Farm%2Fv6%20%7C%20linux%2Farm%2Fv7%20%7C%20linux%2Farm64%20%7C%20linux%2Fppc64le%20%7C%20linux%2Friscv64%20%7C%20linux%2Fs390x-blue?logo=docker&logoColor=white
 [nordvpn-cities]: https://github.com/azinchen/nordvpn/blob/master/CITIES.md
 [nordvpn-countries]: https://github.com/azinchen/nordvpn/blob/master/COUNTRIES.md
