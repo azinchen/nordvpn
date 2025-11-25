@@ -30,7 +30,7 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🔄 Auto-Reconnection**: Periodic server switching and connection health monitoring with cron
 - **⚖️ Load Balancing**: Intelligent sorting by server load when multiple locations specified
 - **🔒 Local/LAN Access (explicit)**: Allow specific LAN or inter‑container CIDRs with `NETWORK=...`
-- **🛡️ Strict(er) Kill Switch**: All non-exempt traffic blocked when VPN is down; exempt CIDRs and API bootstrap remain reachable
+- **🛡️ Strict(er) Kill Switch**: Blocks all traffic when VPN is down except exempt networks
 - **🧱 iptables compatibility**: Automatically falls back to **iptables‑legacy** on older or nft‑broken hosts
 - **📵 IPv6**: IPv6 firewall is applied — built-in chains default to **DROP** if IPv6 is enabled
 - **📌 Pinned NordVPN API IPs**: Bootstrap uses `NORDVPNAPI_IP` to reach `api.nordvpn.com` **without DNS**
