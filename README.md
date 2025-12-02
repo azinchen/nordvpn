@@ -31,7 +31,7 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🔄 Auto-Reconnection**: Periodic server switching and connection health monitoring with cron
 - **🛡️ Strict(er) Kill Switch**: Blocks all traffic when VPN is down except exempt networks
 - **🔒 Local/LAN Access (explicit)**: Allow specific LAN or inter‑container CIDRs with `NETWORK=...`
-- **📌 Pinned NordVPN API IPs**: Bootstrap uses `NORDVPNAPI_IP` to reach `api.nordvpn.com` **without DNS**
+- **📌 DNS Resolution with IP Fallback**: Bootstrap tries DNS first to reach `api.nordvpn.com`, then falls back to `NORDVPNAPI_IP` if DNS fails
 - **📵 IPv6**: IPv6 firewall is applied — built-in chains default to **DROP** if IPv6 is enabled
 - **🧱 iptables compatibility**: Automatically falls back to **iptables‑legacy** on older or nft‑broken hosts
 
@@ -105,7 +105,7 @@ docker run --net=container:vpn -d your/application
 
 **🛡️ Traffic Control & Kill Switch**
 - **Default‑deny (egress):** All outbound traffic is blocked unless it goes through the VPN interface, matches `NETWORK` (CIDRs you define) or is directed to NordVPN's API.
-- **Bootstrap (pre‑VPN):** DNS egress is **blocked**. The container contacts NordVPN’s API via **pinned IP addresses** from `NORDVPNAPI_IP` to select a server (no DNS queries before the tunnel is up).
+- **Bootstrap (pre‑VPN):** The container attempts DNS resolution first to reach NordVPN's API. If DNS fails, it falls back to **pinned IP addresses** from `NORDVPNAPI_IP` to ensure connectivity even when DNS is unavailable.
 - **Kill switch:** If the VPN drops, traffic remains blocked **except** for destinations within your `NETWORK` CIDRs (e.g., local/LAN ranges you explicitly allowed) and to NordVPN's API.
 - **Container routing:** Containers using `network_mode: "service:vpn"` share the VPN container’s network namespace and inherit these policies.
 - **Inbound (local/LAN only):** No connections from the host or LAN reach the stack **unless you publish ports on the VPN container**. **Public inbound via NordVPN is not supported** (no port forwarding).
@@ -115,7 +115,7 @@ docker run --net=container:vpn -d your/application
 - **No domain names allowed:** Use IPs in `NETWORK` for any non‑VPN access you require.
 
 **⚖️ Rule Precedence**
-1. **Bootstrap-only (when VPN is down & before first connect):** Allow HTTPS only to the **NordVPN API IPs from `NORDVPNAPI_IP`** used by the image’s bootstrap script.
+1. **Bootstrap-only (when VPN is down & before first connect):** Allow HTTPS to NordVPN API via DNS (preferred) or **fallback IPs from `NORDVPNAPI_IP`** if DNS fails.
 2. **Exceptions:** If destination matches `NETWORK` (CIDR), allow (bypass/LAN), regardless of VPN state.
 3. **VPN path:** If VPN is **up** and traffic is not an exception, allow only via the VPN interface.
 4. **Default‑deny:** Otherwise, block.
@@ -525,7 +525,7 @@ docker run -d --name api-service --net=container:vpn \
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPTS** | Number of connection test attempts. <br> **Default:** `5` <br> **Example:** `5` |
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPT<wbr>_INTERVAL** | Seconds between failed attempts. <br> **Default:** `10` <br> **Example:** `10` |
 | **NETWORK** | Local/LAN or inter‑container networks to allow; semicolon‑separated CIDRs. <br> **Default:** None <br> **Example:** `10.0.0.0/8;172.16.0.0/12;192.168.0.0/16` |
-| **NORDVPNAPI<wbr>_IP** | IPv4 list of `api.nordvpn.com` addresses (semicolon‑separated) used during **pre‑VPN bootstrap** to avoid DNS (HTTPS only). <br> **Default:** `104.16.208.203;104.19.159.190` <br> **Example:** `104.19.159.190;104.16.208.203` |
+| **NORDVPNAPI<wbr>_IP** | IPv4 list of `api.nordvpn.com` addresses (semicolon‑separated) used as **fallback** during pre‑VPN bootstrap if DNS resolution fails (HTTPS only). <br> **Default:** `104.16.208.203;104.19.159.190` <br> **Example:** `104.19.159.190;104.16.208.203` |
 | **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters. <br> **Default:** None <br> **Example:** `--mute-replay-warnings` |
 | **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable automatic network diagnostics on VPN connection and reconnection. <br> **Default:** `false` <br> **Example:** `true` |
 
