@@ -311,7 +311,6 @@ nord_api_curl()
         "https://api.nordvpn.com/${_path}" "$@"
     _rc=$?
     if [ $_rc -eq 0 ]; then
-        NORD_API_METHOD="DNS"
         return 0
     fi
 
@@ -325,7 +324,6 @@ nord_api_curl()
              "https://api.nordvpn.com/${_path}" "$@"
         _rc=$?
         if [ $_rc -eq 0 ]; then
-            NORD_API_METHOD="IP:${_ip}"
             IFS="$oldIFS"
             return 0
         fi
@@ -362,14 +360,6 @@ else
     log "$SCRIPT_NAME" "No group filter specified"
 fi
 
-test_response=$(nord_api_curl "v1/servers/recommendations" --data-urlencode "limit=1" 2>/dev/null || echo "")
-if [ -z "$test_response" ]; then
-    log_warning "$SCRIPT_NAME" "WARNING: API connectivity test failed - no response from NordVPN API"
-else
-    if [ -n "$NORD_API_METHOD" ]; then
-        log "$SCRIPT_NAME" "NordVPN API resolution method: $NORD_API_METHOD"
-    fi
-fi
 servers=""
 locations_count=0
 
