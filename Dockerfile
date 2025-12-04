@@ -10,7 +10,7 @@ ENV PACKAGEVERSION="3.2.1.0"
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
-        tar=1.35-r3 \
+        tar=1.35-r4 \
         xz=5.8.1-r0 \
         && \
     echo "**** create folders ****" && \
@@ -102,15 +102,15 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     echo "Target platform: ${TARGETPLATFORM}" && \
     apk --no-cache --no-progress add \
-        curl=8.14.1-r2 \
+        curl=8.17.0-r1 \
         iptables=1.8.11-r1 \
         iptables-legacy=1.8.11-r1 \
         jq=1.8.1-r0 \
-        shadow=4.17.3-r0 \
-        shadow-login=4.17.3-r0 \
+        shadow=4.18.0-r0 \
+        shadow-login=4.18.0-r0 \
         openvpn=2.6.16-r0 \
         bind-tools=9.20.16-r0 \
-        netcat-openbsd=1.229.1-r0 \
+        netcat-openbsd=1.234.1-r0 \
         && \
     echo "**** create process user ****" && \
     addgroup --system --gid 912 nordvpn && \
