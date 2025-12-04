@@ -1887,6 +1887,13 @@
       "dns_name": "buffalo"
     },
     {
+      "id": 9099731,
+      "name": "Burlington",
+      "latitude": 44.4758333,
+      "longitude": -73.2125,
+      "dns_name": "burlington"
+    },
+    {
       "id": 8980922,
       "name": "Charlotte",
       "latitude": 35.2269444,
@@ -1929,6 +1936,13 @@
       "dns_name": "kansas-city"
     },
     {
+      "id": 8869646,
+      "name": "Lewiston",
+      "latitude": 44.1002778,
+      "longitude": -70.2152778,
+      "dns_name": "lewiston"
+    },
+    {
       "id": 8761958,
       "name": "Los Angeles",
       "latitude": 34.0522222,
@@ -1948,6 +1962,13 @@
       "latitude": 25.7738889,
       "longitude": -80.1938889,
       "dns_name": "miami"
+    },
+    {
+      "id": 8948549,
+      "name": "Nashua",
+      "latitude": 42.7652778,
+      "longitude": -71.4680556,
+      "dns_name": "nashua"
     },
     {
       "id": 9071273,
