@@ -284,13 +284,6 @@
   "code": "BA",
   "cities": [
     {
-      "id": 548462,
-      "name": "Novi Travnik",
-      "latitude": 44.1711111,
-      "longitude": 17.6575,
-      "dns_name": "novi-travnik"
-    },
-    {
       "id": 556823,
       "name": "Sarajevo",
       "latitude": 43.85,
