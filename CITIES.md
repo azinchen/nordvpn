@@ -1,4 +1,4 @@
-Last updated: 2025-12-05
+Last updated: 2025-12-06
 ---
 # List of CITIES with NordVPN servers
 
@@ -26,7 +26,6 @@ Belize | BZ | 22 | Belmopan | 1037459
 Bermuda | BM | 24 | Hamilton | 809078
 Bhutan | BT | 25 | Thimphu | 989699
 Bolivia | BO | 26 | La Paz | 838514
-Bosnia and Herzegovina | BA | 27 | Novi Travnik | 548462
 Bosnia and Herzegovina | BA | 27 | Sarajevo | 556823
 Brazil | BR | 30 | Sao Paulo | 890249
 Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132
