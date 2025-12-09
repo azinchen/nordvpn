@@ -1815,6 +1815,13 @@
       "latitude": 25.258172,
       "longitude": 55.304717,
       "dns_name": "dubai"
+    },
+    {
+      "id": 800,
+      "name": "Fujairah",
+      "latitude": 25.116412,
+      "longitude": 56.341408,
+      "dns_name": "fujairah"
     }
   ]
 }
