@@ -1,4 +1,4 @@
-Last updated: 2025-12-06
+Last updated: 2025-12-09
 ---
 # List of CITIES with NordVPN servers
 
@@ -141,6 +141,7 @@ Tunisia | TN | 219 | Tunis | 8295401
 Turkey | TR | 220 | Istanbul | 8401790
 Ukraine | UA | 225 | Kyiv | 8626766
 United Arab Emirates | AE | 226 | Dubai | 728
+United Arab Emirates | AE | 226 | Fujairah | 800
 United Kingdom | GB | 227 | Edinburgh | 2975852
 United Kingdom | GB | 227 | Glasgow | 2978888
 United Kingdom | GB | 227 | London | 2989907
