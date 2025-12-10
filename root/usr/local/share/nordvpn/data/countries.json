@@ -2013,6 +2013,13 @@
       "dns_name": "pittsburgh"
     },
     {
+      "id": 9048614,
+      "name": "Providence",
+      "latitude": 41.8238889,
+      "longitude": -71.4133333,
+      "dns_name": "providence"
+    },
+    {
       "id": 8934551,
       "name": "Saint Louis",
       "latitude": 38.6272222,
