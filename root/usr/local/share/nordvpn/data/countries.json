@@ -1985,6 +1985,13 @@
       "dns_name": "nashville"
     },
     {
+      "id": 8775974,
+      "name": "New Haven",
+      "latitude": 41.3080556,
+      "longitude": -72.9286111,
+      "dns_name": "new-haven"
+    },
+    {
       "id": 8971718,
       "name": "New York",
       "latitude": 40.7141667,
