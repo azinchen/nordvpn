@@ -175,7 +175,7 @@ jobs:
           
           # Download and process countries.json with beautiful formatting
           curl -s "https://api.nordvpn.com/v1/servers/countries" \
-            | jq '.[] | del(.serverCount) | .cities = [.cities[]? | del(.serverCount, .hub_score)] | .' \
+            | jq '[.[] | del(.serverCount) | .cities = [.cities[]? | del(.serverCount, .hub_score)]]' \
             > root/usr/local/share/nordvpn/data/countries.json
 
           UPDATE_DATE=$(date +%y%m%d)
@@ -267,7 +267,7 @@ jobs:
           
           # Download and process groups.json with beautiful formatting
           curl -s "https://api.nordvpn.com/v1/servers/groups" \
-            | jq '.[] | .' \
+            | jq '.' \
             > root/usr/local/share/nordvpn/data/groups.json
 
           UPDATE_DATE=$(date +%y%m%d)
@@ -358,7 +358,7 @@ jobs:
           
           # Download and process technologies.json with beautiful formatting
           curl -s "https://api.nordvpn.com/v1/technologies" \
-            | jq '.[] | .' \
+            | jq '.' \
             > root/usr/local/share/nordvpn/data/technologies.json
 
           UPDATE_DATE=$(date +%y%m%d)
