@@ -1,4 +1,4 @@
-Last updated: 2025-12-11
+Last updated: 2025-12-13
 ---
 # List of CITIES with NordVPN servers
 
@@ -173,6 +173,8 @@ United States | US | 228 | Saint Louis | 8934551
 United States | US | 228 | Salt Lake City | 9097865
 United States | US | 228 | San Francisco | 8766359
 United States | US | 228 | Seattle | 9128402
+United States | US | 228 | Trenton | 8956166
+United States | US | 228 | Wilmington | 8781776
 Uruguay | UY | 230 | Montevideo | 9150812
 Uzbekistan | UZ | 231 | Tashkent | 9166826
 Venezuela | VE | 233 | Caracas | 9176843
