@@ -196,8 +196,9 @@ jobs:
           COUNTRIES_ADDED=$(comm -13 /tmp/old_countries.txt /tmp/new_countries.txt)
           COUNTRIES_REMOVED=$(comm -23 /tmp/old_countries.txt /tmp/new_countries.txt)
           
-          COUNTRIES_ADDED_COUNT=$(echo -n "$COUNTRIES_ADDED" | grep -c . || echo "0")
-          COUNTRIES_REMOVED_COUNT=$(echo -n "$COUNTRIES_REMOVED" | grep -c . || echo "0")
+          # Count changes properly (handle empty strings)
+          [ -n "$COUNTRIES_ADDED" ] && COUNTRIES_ADDED_COUNT=$(echo "$COUNTRIES_ADDED" | wc -l | tr -d ' ') || COUNTRIES_ADDED_COUNT=0
+          [ -n "$COUNTRIES_REMOVED" ] && COUNTRIES_REMOVED_COUNT=$(echo "$COUNTRIES_REMOVED" | wc -l | tr -d ' ') || COUNTRIES_REMOVED_COUNT=0
           
           # Get lists of cities before and after (country | city format)
           if [ -f root/usr/local/share/nordvpn/data/countries.json ]; then
@@ -210,8 +211,9 @@ jobs:
           CITIES_ADDED=$(comm -13 /tmp/old_cities.txt /tmp/new_cities.txt)
           CITIES_REMOVED=$(comm -23 /tmp/old_cities.txt /tmp/new_cities.txt)
           
-          CITIES_ADDED_COUNT=$(echo -n "$CITIES_ADDED" | grep -c . || echo "0")
-          CITIES_REMOVED_COUNT=$(echo -n "$CITIES_REMOVED" | grep -c . || echo "0")
+          # Count changes properly (handle empty strings)
+          [ -n "$CITIES_ADDED" ] && CITIES_ADDED_COUNT=$(echo "$CITIES_ADDED" | wc -l | tr -d ' ') || CITIES_ADDED_COUNT=0
+          [ -n "$CITIES_REMOVED" ] && CITIES_REMOVED_COUNT=$(echo "$CITIES_REMOVED" | wc -l | tr -d ' ') || CITIES_REMOVED_COUNT=0
           
           echo "changes_summary<<EOF" >> $GITHUB_OUTPUT
           # Check if there are any changes
