@@ -193,31 +193,62 @@ jobs:
           fi
           jq -r '.[] | "\(.name) (\(.code))"' root/usr/local/share/nordvpn/data/countries.json | sort > /tmp/new_countries.txt
           
-          ADDED=$(comm -13 /tmp/old_countries.txt /tmp/new_countries.txt)
-          REMOVED=$(comm -23 /tmp/old_countries.txt /tmp/new_countries.txt)
+          COUNTRIES_ADDED=$(comm -13 /tmp/old_countries.txt /tmp/new_countries.txt)
+          COUNTRIES_REMOVED=$(comm -23 /tmp/old_countries.txt /tmp/new_countries.txt)
           
-          ADDED_COUNT=$(echo "$ADDED" | grep -c . || echo "0")
-          REMOVED_COUNT=$(echo "$REMOVED" | grep -c . || echo "0")
+          COUNTRIES_ADDED_COUNT=$(echo "$COUNTRIES_ADDED" | grep -c . || echo "0")
+          COUNTRIES_REMOVED_COUNT=$(echo "$COUNTRIES_REMOVED" | grep -c . || echo "0")
+          
+          # Get lists of cities before and after (country | city format)
+          if [ -f root/usr/local/share/nordvpn/data/countries.json ]; then
+            git show HEAD:root/usr/local/share/nordvpn/data/countries.json 2>/dev/null | jq -r '.[] | . as $parent | .cities[]? | "\($parent.name) | \($parent.code) | \($parent.id) | \(.name) | \(.id)"' | sort > /tmp/old_cities.txt || touch /tmp/old_cities.txt
+          else
+            touch /tmp/old_cities.txt
+          fi
+          jq -r '.[] | . as $parent | .cities[]? | "\($parent.name) | \($parent.code) | \($parent.id) | \(.name) | \(.id)"' root/usr/local/share/nordvpn/data/countries.json | sort > /tmp/new_cities.txt
+          
+          CITIES_ADDED=$(comm -13 /tmp/old_cities.txt /tmp/new_cities.txt)
+          CITIES_REMOVED=$(comm -23 /tmp/old_cities.txt /tmp/new_cities.txt)
+          
+          CITIES_ADDED_COUNT=$(echo "$CITIES_ADDED" | grep -c . || echo "0")
+          CITIES_REMOVED_COUNT=$(echo "$CITIES_REMOVED" | grep -c . || echo "0")
           
           echo "changes_summary<<EOF" >> $GITHUB_OUTPUT
-          if [ "$ADDED_COUNT" -gt 0 ] || [ "$REMOVED_COUNT" -gt 0 ]; then
-            echo "**Added**: $ADDED_COUNT countries | **Removed**: $REMOVED_COUNT countries" >> $GITHUB_OUTPUT
-            if [ "$ADDED_COUNT" -gt 0 ]; then
+          # Check if there are any changes
+          if [ "$COUNTRIES_ADDED_COUNT" -gt 0 ] || [ "$COUNTRIES_REMOVED_COUNT" -gt 0 ] || [ "$CITIES_ADDED_COUNT" -gt 0 ] || [ "$CITIES_REMOVED_COUNT" -gt 0 ]; then
+            echo "**Countries**: +$COUNTRIES_ADDED_COUNT/-$COUNTRIES_REMOVED_COUNT | **Cities**: +$CITIES_ADDED_COUNT/-$CITIES_REMOVED_COUNT" >> $GITHUB_OUTPUT
+            
+            if [ "$COUNTRIES_ADDED_COUNT" -gt 0 ]; then
               echo "" >> $GITHUB_OUTPUT
-              echo "#### ✅ Added Countries ($ADDED_COUNT):" >> $GITHUB_OUTPUT
+              echo "#### ✅ Added Countries ($COUNTRIES_ADDED_COUNT):" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
-              echo "$ADDED" >> $GITHUB_OUTPUT
+              echo "$COUNTRIES_ADDED" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
             fi
-            if [ "$REMOVED_COUNT" -gt 0 ]; then
+            if [ "$COUNTRIES_REMOVED_COUNT" -gt 0 ]; then
               echo "" >> $GITHUB_OUTPUT
-              echo "#### ❌ Removed Countries ($REMOVED_COUNT):" >> $GITHUB_OUTPUT
+              echo "#### ❌ Removed Countries ($COUNTRIES_REMOVED_COUNT):" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
-              echo "$REMOVED" >> $GITHUB_OUTPUT
+              echo "$COUNTRIES_REMOVED" >> $GITHUB_OUTPUT
+              echo '```' >> $GITHUB_OUTPUT
+            fi
+            
+            if [ "$CITIES_ADDED_COUNT" -gt 0 ]; then
+              echo "" >> $GITHUB_OUTPUT
+              echo "#### ✅ Added Cities ($CITIES_ADDED_COUNT):" >> $GITHUB_OUTPUT
+              echo '```' >> $GITHUB_OUTPUT
+              echo "$CITIES_ADDED" >> $GITHUB_OUTPUT
+              echo '```' >> $GITHUB_OUTPUT
+            fi
+            if [ "$CITIES_REMOVED_COUNT" -gt 0 ]; then
+              echo "" >> $GITHUB_OUTPUT
+              echo "#### ❌ Removed Cities ($CITIES_REMOVED_COUNT):" >> $GITHUB_OUTPUT
+              echo '```' >> $GITHUB_OUTPUT
+              echo "$CITIES_REMOVED" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
             fi
           else
-            echo "No country changes detected" >> $GITHUB_OUTPUT
+            echo "No country or city changes detected" >> $GITHUB_OUTPUT
           fi
           echo "EOF" >> $GITHUB_OUTPUT
 
