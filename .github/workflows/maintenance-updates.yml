@@ -266,11 +266,7 @@ jobs:
             **Date**: ${{ env.update_date }}
             **Source**: https://api.nordvpn.com/v1/servers/countries
             
-            ### Changes:
-            - Updated countries data from NordVPN API
-            - Beautifully formatted JSON with proper indentation
-            - Removed serverCount and hub_score fields (frequently changing metrics)
-            - Optimized for both readability and runtime performance
+            This PR updates the countries.json file with the latest data from NordVPN API.
             
             ### Changes Summary:
             ${{ steps.diff-summary.outputs.changes_summary }}
