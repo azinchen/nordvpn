@@ -107,8 +107,9 @@ jobs:
           ADDED=$(git diff --no-color ${{ matrix.file.name }}.md | grep -E '^\+' | grep -vE '^(\+\+\+|\+Last updated:|\+---|\+# List of|\+$|\+Country \||\+Technology \||\+Group \|)' | sed 's/^+//' || true)
           REMOVED=$(git diff --no-color ${{ matrix.file.name }}.md | grep -E '^-' | grep -vE '^(---|\-Last updated:|\----|\-# List of|\-$|\-Country \||\-Technology \||\-Group \|)' | sed 's/^-//' || true)
           
-          ADDED_COUNT=$(echo "$ADDED" | grep -c . || echo "0")
-          REMOVED_COUNT=$(echo "$REMOVED" | grep -c . || echo "0")
+          # Count changes properly (handle empty strings)
+          [ -n "$ADDED" ] && ADDED_COUNT=$(echo "$ADDED" | wc -l | tr -d ' ') || ADDED_COUNT=0
+          [ -n "$REMOVED" ] && REMOVED_COUNT=$(echo "$REMOVED" | wc -l | tr -d ' ') || REMOVED_COUNT=0
           
           echo "changes_summary<<EOF" >> $GITHUB_OUTPUT
           if [ "$ADDED_COUNT" -gt 0 ] || [ "$REMOVED_COUNT" -gt 0 ]; then
