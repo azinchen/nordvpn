@@ -2054,6 +2054,20 @@
         "latitude": 47.6063889,
         "longitude": -122.3308333,
         "dns_name": "seattle"
+      },
+      {
+        "id": 8956166,
+        "name": "Trenton",
+        "latitude": 40.2169444,
+        "longitude": -74.7433333,
+        "dns_name": "trenton"
+      },
+      {
+        "id": 8781776,
+        "name": "Wilmington",
+        "latitude": 39.7458333,
+        "longitude": -75.5469444,
+        "dns_name": "wilmington"
       }
     ]
   },
