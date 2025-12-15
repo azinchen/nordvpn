@@ -135,7 +135,7 @@ jobs:
 
       - name: Create Pull Request for ${{ matrix.file.name }}.md
         if: steps.update-file.outputs.has_changes == 'true'
-        uses: peter-evans/create-pull-request@v7.0.11
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           branch: bot/update-${{ matrix.file.name }}-md
           commit-message: "docs: update ${{ matrix.file.name }}.md (${{ env.update_date }})"
@@ -256,7 +256,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request for countries.json
-        uses: peter-evans/create-pull-request@v7.0.11
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           branch: bot/update-countries-json
           commit-message: "config: update countries.json (${{ env.update_date }})"
@@ -344,7 +344,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request for groups.json
-        uses: peter-evans/create-pull-request@v7.0.11
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           branch: bot/update-groups-json
           commit-message: "config: update groups.json (${{ env.update_date }})"
@@ -435,7 +435,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request for technologies.json
-        uses: peter-evans/create-pull-request@v7.0.11
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           branch: bot/update-technologies-json
           commit-message: "config: update technologies.json (${{ env.update_date }})"
@@ -502,7 +502,7 @@ jobs:
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
 
       - name: Create Pull Request for template.ovpn
-        uses: peter-evans/create-pull-request@v7.0.11
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           branch: bot/update-openvpn-template
           commit-message: "config: update OpenVPN template (${{ env.update_date }})"
@@ -554,7 +554,7 @@ jobs:
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
 
       - name: Create Pull Request for NordVPN's API addresses
-        uses: peter-evans/create-pull-request@v7.0.11
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           branch: bot/update-nordvpn-api-ips
           commit-message: "config: update `NORDVPNAPI_IP` in backend-functions (${{ env.update_date }})"
@@ -594,7 +594,7 @@ jobs:
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request for APK updates
-        uses: peter-evans/create-pull-request@v7.0.11
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           branch: bot/update-apk-packages
           commit-message: "deps: update ${{ steps.update-apk.outputs.updated_count }} APK package(s) (${{ env.update_date }})"
@@ -647,7 +647,7 @@ jobs:
           sed -i "/.*${ESCAPED_SEARCH}.*/{n;s/.*/ENV PACKAGEVERSION=\"${{ env.package_version }}\"/}" Dockerfile
 
       - name: Create Pull Request for ${{ matrix.repository }}
-        uses: peter-evans/create-pull-request@v7.0.11
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           branch: bot/${{ env.branch_name }}
           commit-message: "deps: bump ${{ env.repo_name }} to v${{ env.package_version }}"
