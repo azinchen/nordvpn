@@ -1881,6 +1881,13 @@
         "dns_name": "atlanta"
       },
       {
+        "id": 8873894,
+        "name": "Baltimore",
+        "latitude": 39.2902778,
+        "longitude": -76.6125,
+        "dns_name": "baltimore"
+      },
+      {
         "id": 8895305,
         "name": "Boston",
         "latitude": 42.3583333,
