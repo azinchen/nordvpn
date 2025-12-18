@@ -732,7 +732,7 @@ jobs:
         if: steps.update-dockerfile.outputs.updated == 'true'
         uses: peter-evans/create-pull-request@v8.0.0
         with:
-          branch: bot/update-alpine-${{ steps.get-alpine.outputs.latest }}
+          branch: bot/update-alpine
           commit-message: "deps: bump Alpine to v${{ steps.get-alpine.outputs.latest }} (${{ env.update_date }})"
           delete-branch: true
           title: "🐧 Bump Alpine to v${{ steps.get-alpine.outputs.latest }} - ${{ env.update_date }}"
