@@ -1944,6 +1944,13 @@
         "dns_name": "houston"
       },
       {
+        "id": 9134528,
+        "name": "Huntington",
+        "latitude": 38.4191667,
+        "longitude": -82.4452778,
+        "dns_name": "huntington"
+      },
+      {
         "id": 8930717,
         "name": "Kansas City",
         "latitude": 39.0997222,
