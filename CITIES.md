@@ -1,4 +1,4 @@
-Last updated: 2025-12-16
+Last updated: 2025-12-23
 ---
 # List of CITIES with NordVPN servers
 
@@ -157,6 +157,7 @@ United States | US | 228 | Chicago | 8815352
 United States | US | 228 | Dallas | 9080300
 United States | US | 228 | Denver | 8770934
 United States | US | 228 | Houston | 9083687
+United States | US | 228 | Huntington | 9134528
 United States | US | 228 | Kansas City | 8930717
 United States | US | 228 | Lewiston | 8869646
 United States | US | 228 | Los Angeles | 8761958
