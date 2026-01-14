@@ -1,4 +1,4 @@
-Last updated: 2025-12-23
+Last updated: 2026-01-14
 ---
 # List of CITIES with NordVPN servers
 
@@ -70,7 +70,6 @@ India | IN | 100 | Mumbai | 4041548
 Indonesia | ID | 101 | Jakarta | 3560288
 Iraq | IQ | 103 | Baghdad | 4093955
 Ireland | IE | 104 | Dublin | 3939200
-Isle of Man | IM | 243 | Douglas | 3965405
 Israel | IL | 105 | Tel Aviv | 3964220
 Italy | IT | 106 | Milan | 4542737
 Italy | IT | 106 | Palermo | 4548074
@@ -78,10 +77,10 @@ Italy | IT | 106 | Rome | 4555808
 Jamaica | JM | 107 | Kingston | 4576328
 Japan | JP | 108 | Osaka | 4621847
 Japan | JP | 108 | Tokyo | 4633349
-Jersey | JE | 244 | Saint Helier | 4572281
 Jordan | JO | 109 | Amman | 4581203
 Kazakhstan | KZ | 110 | Astana | 4925732
 Kenya | KE | 111 | Nairobi | 4646603
+South Korea | KR | 114 | Seoul | 4879586
 Kuwait | KW | 116 | Kuwait City | 9521894
 Lao People's Democratic Republic | LA | 118 | Vientiane | 5015876
 Latvia | LV | 119 | Riga | 5192828
@@ -90,6 +89,7 @@ Libyan Arab Jamahiriya | LY | 123 | Tripoli | 5206697
 Liechtenstein | LI | 124 | Vaduz | 5037212
 Lithuania | LT | 125 | Vilnius | 5166932
 Luxembourg | LU | 126 | Luxembourg | 9521876
+North Macedonia | MK | 128 | Skopje | 5386019
 Malaysia | MY | 131 | Kuala Lumpur | 5820143
 Malta | MT | 134 | Valletta | 5554481
 Mauritania | MR | 137 | Nouakchott | 5551598
@@ -106,7 +106,6 @@ Nepal | NP | 152 | Kathmandu | 6142175
 Netherlands | NL | 153 | Amsterdam | 6076868
 New Zealand | NZ | 156 | Auckland | 6144239
 Nigeria | NG | 159 | Lagos | 6010328
-North Macedonia | MK | 128 | Skopje | 5386019
 Norway | NO | 163 | Oslo | 6127364
 Pakistan | PK | 165 | Karachi | 6600485
 Panama | PA | 168 | Panama City | 6176273
@@ -127,7 +126,6 @@ Slovakia | SK | 196 | Bratislava | 7884305
 Slovenia | SI | 197 | Ljubljana | 7874306
 Somalia | SO | 199 | Mogadishu | 7971170
 South Africa | ZA | 200 | Johannesburg | 9383693
-South Korea | KR | 114 | Seoul | 4879586
 Spain | ES | 202 | Barcelona | 2572757
 Spain | ES | 202 | Madrid | 2619989
 Sri Lanka | LK | 203 | Colombo | 5043197
@@ -182,3 +180,5 @@ Uzbekistan | UZ | 231 | Tashkent | 9166826
 Venezuela | VE | 233 | Caracas | 9176843
 Vietnam | VN | 234 | Hanoi | 9270302
 Vietnam | VN | 234 | Ho Chi Minh City | 9271799
+Isle of Man | IM | 243 | Douglas | 3965405
+Jersey | JE | 244 | Saint Helier | 4572281
