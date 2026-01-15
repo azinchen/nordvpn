@@ -43,11 +43,11 @@ jobs:
         file: 
           - name: "CITIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
-            jq_filter: '.[] | . as $parent | .cities[] | [$parent.name, $parent.code, $parent.id, .name, .id] | "\(.[0]) | \(.[1]) | \(.[2]) | \(.[3]) | \(.[4])"'
+            jq_filter: '[.[] | . as $parent | .cities[] | {country: $parent.name, code: $parent.code, cid: $parent.id, city: .name, cityid: .id}] | sort_by(.country, .city) | .[] | "\(.country) | \(.code) | \(.cid) | \(.city) | \(.cityid)"'
             header: "Country | Code | ID | City | ID"
           - name: "COUNTRIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
-            jq_filter: '.[] | [.name, .code, .id] | "\(.[0]) | \(.[1]) | \(.[2])"'
+            jq_filter: 'sort_by(.name) | .[] | [.name, .code, .id] | "\(.[0]) | \(.[1]) | \(.[2])"'
             header: "Country | Code | ID"
           - name: "TECHNOLOGIES"
             url: "https://api.nordvpn.com/v1/technologies"
@@ -176,8 +176,9 @@ jobs:
           mkdir -p root/usr/local/share/nordvpn/data
           
           # Download and process countries.json with beautiful formatting
+          # Sort countries by name and cities by name within each country
           curl -s "https://api.nordvpn.com/v1/servers/countries" \
-            | jq '[.[] | del(.serverCount) | .cities = [.cities[]? | del(.serverCount, .hub_score)]]' \
+            | jq '[.[] | del(.serverCount) | .cities = ([.cities[]? | del(.serverCount, .hub_score)] | sort_by(.name))] | sort_by(.name)' \
             > root/usr/local/share/nordvpn/data/countries.json
 
           UPDATE_DATE=$(date +%y%m%d)
