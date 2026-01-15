@@ -1,4 +1,4 @@
-Last updated: 2025-09-26
+Last updated: 2026-01-15
 ---
 # List of TECHNOLOGIES with NordVPN servers
 
