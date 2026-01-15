@@ -218,6 +218,9 @@ jobs:
           [ -n "$CITIES_ADDED" ] && CITIES_ADDED_COUNT=$(echo "$CITIES_ADDED" | wc -l | tr -d ' ') || CITIES_ADDED_COUNT=0
           [ -n "$CITIES_REMOVED" ] && CITIES_REMOVED_COUNT=$(echo "$CITIES_REMOVED" | wc -l | tr -d ' ') || CITIES_REMOVED_COUNT=0
           
+          # Check if file has actual git changes (for detecting reordering)
+          HAS_GIT_CHANGES=$(git diff --quiet root/usr/local/share/nordvpn/data/countries.json && echo "false" || echo "true")
+          
           echo "changes_summary<<EOF" >> $GITHUB_OUTPUT
           # Check if there are any changes
           if [ "$COUNTRIES_ADDED_COUNT" -gt 0 ] || [ "$COUNTRIES_REMOVED_COUNT" -gt 0 ] || [ "$CITIES_ADDED_COUNT" -gt 0 ] || [ "$CITIES_REMOVED_COUNT" -gt 0 ]; then
@@ -252,6 +255,8 @@ jobs:
               echo "$CITIES_REMOVED" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
             fi
+          elif [ "$HAS_GIT_CHANGES" == "true" ]; then
+            echo "File updated (ordering/formatting changes only - no countries or cities added/removed)" >> $GITHUB_OUTPUT
           else
             echo "No country or city changes detected" >> $GITHUB_OUTPUT
           fi
