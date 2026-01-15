@@ -112,6 +112,9 @@ jobs:
           [ -n "$ADDED" ] && ADDED_COUNT=$(echo "$ADDED" | wc -l | tr -d ' ') || ADDED_COUNT=0
           [ -n "$REMOVED" ] && REMOVED_COUNT=$(echo "$REMOVED" | wc -l | tr -d ' ') || REMOVED_COUNT=0
           
+          # Check if file has any git changes (including date)
+          HAS_GIT_CHANGES=$(git diff --quiet ${{ matrix.file.name }}.md && echo "false" || echo "true")
+          
           echo "changes_summary<<EOF" >> $GITHUB_OUTPUT
           if [ "$ADDED_COUNT" -gt 0 ] || [ "$REMOVED_COUNT" -gt 0 ]; then
             echo "**Added**: $ADDED_COUNT | **Removed**: $REMOVED_COUNT" >> $GITHUB_OUTPUT
@@ -129,6 +132,8 @@ jobs:
               echo "$REMOVED" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
             fi
+          elif [ "$HAS_GIT_CHANGES" == "true" ]; then
+            echo "📅 Date updated only (no content changes)" >> $GITHUB_OUTPUT
           else
             echo "No content changes detected" >> $GITHUB_OUTPUT
           fi
@@ -188,68 +193,83 @@ jobs:
         id: diff-summary
         shell: bash
         run: |
-          # Get lists of countries before and after
-          if [ -f root/usr/local/share/nordvpn/data/countries.json ]; then
-            git show HEAD:root/usr/local/share/nordvpn/data/countries.json 2>/dev/null | jq -r '.[] | "\(.name) (\(.code))"' | sort > /tmp/old_countries.txt || touch /tmp/old_countries.txt
-          else
-            touch /tmp/old_countries.txt
-          fi
-          jq -r '.[] | "\(.name) (\(.code))"' root/usr/local/share/nordvpn/data/countries.json | sort > /tmp/new_countries.txt
+          # Use git diff to detect actual line changes (like CITIES.md does)
+          # This correctly detects ordering changes as added/removed
           
-          COUNTRIES_ADDED=$(comm -13 /tmp/old_countries.txt /tmp/new_countries.txt)
-          COUNTRIES_REMOVED=$(comm -23 /tmp/old_countries.txt /tmp/new_countries.txt)
+          # Get added and removed country lines from git diff
+          COUNTRIES_ADDED=$(git diff --no-color root/usr/local/share/nordvpn/data/countries.json | grep -E '^\+.*"name":' | grep -v '^\+\+\+' | sed 's/^+//' | jq -r '.name' 2>/dev/null || true)
+          COUNTRIES_REMOVED=$(git diff --no-color root/usr/local/share/nordvpn/data/countries.json | grep -E '^\-.*"name":' | grep -v '^\-\-\-' | sed 's/^-//' | jq -r '.name' 2>/dev/null || true)
           
           # Count changes properly (handle empty strings)
           [ -n "$COUNTRIES_ADDED" ] && COUNTRIES_ADDED_COUNT=$(echo "$COUNTRIES_ADDED" | wc -l | tr -d ' ') || COUNTRIES_ADDED_COUNT=0
           [ -n "$COUNTRIES_REMOVED" ] && COUNTRIES_REMOVED_COUNT=$(echo "$COUNTRIES_REMOVED" | wc -l | tr -d ' ') || COUNTRIES_REMOVED_COUNT=0
           
-          # Get lists of cities before and after (country | city format)
-          if [ -f root/usr/local/share/nordvpn/data/countries.json ]; then
-            git show HEAD:root/usr/local/share/nordvpn/data/countries.json 2>/dev/null | jq -r '.[] | . as $parent | .cities[]? | "\($parent.name) | \($parent.code) | \($parent.id) | \(.name) | \(.id)"' | sort > /tmp/old_cities.txt || touch /tmp/old_cities.txt
-          else
-            touch /tmp/old_cities.txt
-          fi
-          jq -r '.[] | . as $parent | .cities[]? | "\($parent.name) | \($parent.code) | \($parent.id) | \(.name) | \(.id)"' root/usr/local/share/nordvpn/data/countries.json | sort > /tmp/new_cities.txt
-          
-          CITIES_ADDED=$(comm -13 /tmp/old_cities.txt /tmp/new_cities.txt)
-          CITIES_REMOVED=$(comm -23 /tmp/old_cities.txt /tmp/new_cities.txt)
+          # Get added and removed cities from git diff (look for city objects with dns_name)
+          CITIES_ADDED=$(git diff --no-color root/usr/local/share/nordvpn/data/countries.json | grep -E '^\+.*"dns_name":' | grep -v '^\+\+\+' | sed 's/^+//' | jq -r '.dns_name' 2>/dev/null || true)
+          CITIES_REMOVED=$(git diff --no-color root/usr/local/share/nordvpn/data/countries.json | grep -E '^\-.*"dns_name":' | grep -v '^\-\-\-' | sed 's/^-//' | jq -r '.dns_name' 2>/dev/null || true)
           
           # Count changes properly (handle empty strings)
           [ -n "$CITIES_ADDED" ] && CITIES_ADDED_COUNT=$(echo "$CITIES_ADDED" | wc -l | tr -d ' ') || CITIES_ADDED_COUNT=0
           [ -n "$CITIES_REMOVED" ] && CITIES_REMOVED_COUNT=$(echo "$CITIES_REMOVED" | wc -l | tr -d ' ') || CITIES_REMOVED_COUNT=0
           
+          # For detailed output, extract full country/city info
+          # Get old and new file content for comparison
+          git show HEAD:root/usr/local/share/nordvpn/data/countries.json 2>/dev/null > /tmp/old_countries.json || echo "[]" > /tmp/old_countries.json
+          cp root/usr/local/share/nordvpn/data/countries.json /tmp/new_countries.json
+          
+          # Extract country list (unsorted) for position comparison
+          jq -r '.[] | "\(.name) (\(.code))"' /tmp/old_countries.json > /tmp/old_countries_list.txt
+          jq -r '.[] | "\(.name) (\(.code))"' /tmp/new_countries.json > /tmp/new_countries_list.txt
+          
+          # Extract city list (unsorted) for position comparison
+          jq -r '.[] | . as $parent | .cities[]? | "\($parent.name) | \($parent.code) | \($parent.id) | \(.name) | \(.id)"' /tmp/old_countries.json > /tmp/old_cities_list.txt
+          jq -r '.[] | . as $parent | .cities[]? | "\($parent.name) | \($parent.code) | \($parent.id) | \(.name) | \(.id)"' /tmp/new_countries.json > /tmp/new_cities_list.txt
+          
+          # Find actual additions and removals (items that exist in one but not the other, or changed position)
+          COUNTRIES_DIFF_ADDED=$(diff /tmp/old_countries_list.txt /tmp/new_countries_list.txt | grep '^>' | sed 's/^> //' || true)
+          COUNTRIES_DIFF_REMOVED=$(diff /tmp/old_countries_list.txt /tmp/new_countries_list.txt | grep '^<' | sed 's/^< //' || true)
+          
+          CITIES_DIFF_ADDED=$(diff /tmp/old_cities_list.txt /tmp/new_cities_list.txt | grep '^>' | sed 's/^> //' || true)
+          CITIES_DIFF_REMOVED=$(diff /tmp/old_cities_list.txt /tmp/new_cities_list.txt | grep '^<' | sed 's/^< //' || true)
+          
+          # Count diff changes
+          [ -n "$COUNTRIES_DIFF_ADDED" ] && COUNTRIES_DIFF_ADDED_COUNT=$(echo "$COUNTRIES_DIFF_ADDED" | wc -l | tr -d ' ') || COUNTRIES_DIFF_ADDED_COUNT=0
+          [ -n "$COUNTRIES_DIFF_REMOVED" ] && COUNTRIES_DIFF_REMOVED_COUNT=$(echo "$COUNTRIES_DIFF_REMOVED" | wc -l | tr -d ' ') || COUNTRIES_DIFF_REMOVED_COUNT=0
+          [ -n "$CITIES_DIFF_ADDED" ] && CITIES_DIFF_ADDED_COUNT=$(echo "$CITIES_DIFF_ADDED" | wc -l | tr -d ' ') || CITIES_DIFF_ADDED_COUNT=0
+          [ -n "$CITIES_DIFF_REMOVED" ] && CITIES_DIFF_REMOVED_COUNT=$(echo "$CITIES_DIFF_REMOVED" | wc -l | tr -d ' ') || CITIES_DIFF_REMOVED_COUNT=0
+          
           echo "changes_summary<<EOF" >> $GITHUB_OUTPUT
           # Check if there are any changes
-          if [ "$COUNTRIES_ADDED_COUNT" -gt 0 ] || [ "$COUNTRIES_REMOVED_COUNT" -gt 0 ] || [ "$CITIES_ADDED_COUNT" -gt 0 ] || [ "$CITIES_REMOVED_COUNT" -gt 0 ]; then
-            echo "**Countries**: +$COUNTRIES_ADDED_COUNT/-$COUNTRIES_REMOVED_COUNT | **Cities**: +$CITIES_ADDED_COUNT/-$CITIES_REMOVED_COUNT" >> $GITHUB_OUTPUT
+          if [ "$COUNTRIES_DIFF_ADDED_COUNT" -gt 0 ] || [ "$COUNTRIES_DIFF_REMOVED_COUNT" -gt 0 ] || [ "$CITIES_DIFF_ADDED_COUNT" -gt 0 ] || [ "$CITIES_DIFF_REMOVED_COUNT" -gt 0 ]; then
+            echo "**Countries**: +$COUNTRIES_DIFF_ADDED_COUNT/-$COUNTRIES_DIFF_REMOVED_COUNT | **Cities**: +$CITIES_DIFF_ADDED_COUNT/-$CITIES_DIFF_REMOVED_COUNT" >> $GITHUB_OUTPUT
             
-            if [ "$COUNTRIES_ADDED_COUNT" -gt 0 ]; then
+            if [ "$COUNTRIES_DIFF_ADDED_COUNT" -gt 0 ]; then
               echo "" >> $GITHUB_OUTPUT
-              echo "#### ✅ Added Countries ($COUNTRIES_ADDED_COUNT):" >> $GITHUB_OUTPUT
+              echo "#### ✅ Added Countries ($COUNTRIES_DIFF_ADDED_COUNT):" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
-              echo "$COUNTRIES_ADDED" >> $GITHUB_OUTPUT
+              echo "$COUNTRIES_DIFF_ADDED" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
             fi
-            if [ "$COUNTRIES_REMOVED_COUNT" -gt 0 ]; then
+            if [ "$COUNTRIES_DIFF_REMOVED_COUNT" -gt 0 ]; then
               echo "" >> $GITHUB_OUTPUT
-              echo "#### ❌ Removed Countries ($COUNTRIES_REMOVED_COUNT):" >> $GITHUB_OUTPUT
+              echo "#### ❌ Removed Countries ($COUNTRIES_DIFF_REMOVED_COUNT):" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
-              echo "$COUNTRIES_REMOVED" >> $GITHUB_OUTPUT
+              echo "$COUNTRIES_DIFF_REMOVED" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
             fi
             
-            if [ "$CITIES_ADDED_COUNT" -gt 0 ]; then
+            if [ "$CITIES_DIFF_ADDED_COUNT" -gt 0 ]; then
               echo "" >> $GITHUB_OUTPUT
-              echo "#### ✅ Added Cities ($CITIES_ADDED_COUNT):" >> $GITHUB_OUTPUT
+              echo "#### ✅ Added Cities ($CITIES_DIFF_ADDED_COUNT):" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
-              echo "$CITIES_ADDED" >> $GITHUB_OUTPUT
+              echo "$CITIES_DIFF_ADDED" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
             fi
-            if [ "$CITIES_REMOVED_COUNT" -gt 0 ]; then
+            if [ "$CITIES_DIFF_REMOVED_COUNT" -gt 0 ]; then
               echo "" >> $GITHUB_OUTPUT
-              echo "#### ❌ Removed Cities ($CITIES_REMOVED_COUNT):" >> $GITHUB_OUTPUT
+              echo "#### ❌ Removed Cities ($CITIES_DIFF_REMOVED_COUNT):" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
-              echo "$CITIES_REMOVED" >> $GITHUB_OUTPUT
+              echo "$CITIES_DIFF_REMOVED" >> $GITHUB_OUTPUT
               echo '```' >> $GITHUB_OUTPUT
             fi
           else
