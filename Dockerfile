@@ -5,7 +5,7 @@ ARG TARGETARCH
 ARG TARGETVARIANT
 
 ENV PACKAGE="just-containers/s6-overlay"
-ENV PACKAGEVERSION="3.2.1.0"
+ENV PACKAGEVERSION="3.2.2.0"
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
