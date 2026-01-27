@@ -1680,6 +1680,20 @@
     ]
   },
   {
+    "id": 205,
+    "name": "Suriname",
+    "code": "SR",
+    "cities": [
+      {
+        "id": 7976870,
+        "name": "Paramaribo",
+        "latitude": 5.8333333,
+        "longitude": -55.1666667,
+        "dns_name": "paramaribo"
+      }
+    ]
+  },
+  {
     "id": 208,
     "name": "Sweden",
     "code": "SE",
