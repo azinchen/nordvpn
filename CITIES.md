@@ -1,4 +1,4 @@
-Last updated: 2026-01-15
+Last updated: 2026-01-29
 ---
 # List of CITIES with NordVPN servers
 
@@ -131,6 +131,7 @@ South Korea | KR | 114 | Seoul | 4879586
 Spain | ES | 202 | Barcelona | 2572757
 Spain | ES | 202 | Madrid | 2619989
 Sri Lanka | LK | 203 | Colombo | 5043197
+Suriname | SR | 205 | Paramaribo | 7976870
 Sweden | SE | 208 | Stockholm | 7852919
 Switzerland | CH | 209 | Zurich | 1171814
 Taiwan | TW | 211 | Taipei | 8544365
