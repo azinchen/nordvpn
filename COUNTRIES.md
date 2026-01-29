@@ -1,4 +1,4 @@
-Last updated: 2026-01-15
+Last updated: 2026-01-29
 ---
 # List of COUNTRIES with NordVPN servers
 
@@ -117,6 +117,7 @@ South Africa | ZA | 200
 South Korea | KR | 114
 Spain | ES | 202
 Sri Lanka | LK | 203
+Suriname | SR | 205
 Sweden | SE | 208
 Switzerland | CH | 209
 Taiwan | TW | 211
