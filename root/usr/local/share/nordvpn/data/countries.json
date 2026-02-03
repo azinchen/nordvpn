@@ -607,6 +607,13 @@
     "code": "FR",
     "cities": [
       {
+        "id": 2767493,
+        "name": "Bordeaux",
+        "latitude": 44.840439,
+        "longitude": -0.5805,
+        "dns_name": "bordeaux"
+      },
+      {
         "id": 2867102,
         "name": "Marseille",
         "latitude": 43.285413,
