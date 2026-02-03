@@ -1,4 +1,4 @@
-Last updated: 2026-01-29
+Last updated: 2026-02-03
 ---
 # List of CITIES with NordVPN servers
 
@@ -50,6 +50,7 @@ El Salvador | SV | 65 | San Salvador | 7990847
 Estonia | EE | 68 | Tallinn | 2514182
 Ethiopia | ET | 69 | Addis Ababa | 2660744
 Finland | FI | 73 | Helsinki | 2704343
+France | FR | 74 | Bordeaux | 2767493
 France | FR | 74 | Marseille | 2867102
 France | FR | 74 | Paris | 2886284
 France | FR | 74 | Strasbourg | 2929151
