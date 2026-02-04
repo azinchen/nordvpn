@@ -1,0 +1,22 @@
+#!/command/with-contenv sh
+# shellcheck shell=sh
+
+set -eu
+
+. /usr/local/bin/backend-functions
+
+SCRIPT_NAME="INIT-CREATEMGMTPWFILE"
+
+log "$SCRIPT_NAME" "Starting creation of management password file"
+
+# Create management password file using user credentials
+if [ -n "$mgmt_pw" ]; then
+    printf "%s" "$mgmt_pw" > "$mgmtpwfile"
+    chmod 600 "$mgmtpwfile"
+    log "$SCRIPT_NAME" "Management interface password file created"
+else
+    log_warning "$SCRIPT_NAME" "No user credentials available for management interface authentication"
+fi
+
+log "$SCRIPT_NAME" "Management password file creation completed"
+exit 0

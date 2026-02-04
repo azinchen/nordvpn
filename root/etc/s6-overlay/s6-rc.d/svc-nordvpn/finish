@@ -27,7 +27,6 @@ sleep 5
 
 log "$SCRIPT_NAME" "Cleaning up VPN configuration files"
 rm -f "$ovpnfile"
-rm -f "$mgmtpwfile"
 
 log "$SCRIPT_NAME" "NordVPN service stopped"
 exit 0

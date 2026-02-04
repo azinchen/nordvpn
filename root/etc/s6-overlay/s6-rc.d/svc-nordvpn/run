@@ -54,16 +54,6 @@ if ! echo "$openvpn_opts" | grep -q -- "--data-ciphers"; then
     openvpn_opts="$openvpn_opts --data-ciphers AES-256-CBC:AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305"
 fi
 
-# Create management password file using user credentials
-mgmt_pw="${user:-${USER:-}}"
-if [ -n "$mgmt_pw" ]; then
-    printf "%s" "$mgmt_pw" > "$mgmtpwfile"
-    chmod 600 "$mgmtpwfile"
-    log "$SCRIPT_NAME" "Management interface password file created"
-else
-    log_warning "$SCRIPT_NAME" "No user credentials available for management interface authentication"
-fi
-
 log "$SCRIPT_NAME" "Launching OpenVPN"
 openvpn --group nordvpn --config "$ovpnfile" --auth-user-pass "$authfile" --auth-nocache --management "$mgmt_host" "$mgmt_port" "$mgmtpwfile" $openvpn_opts &
 
