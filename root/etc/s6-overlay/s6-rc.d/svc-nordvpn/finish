@@ -13,11 +13,20 @@ log "$SCRIPT_NAME" "Cleaning up VPN firewall rules"
 run4 -F VPN-SERVER
 
 log "$SCRIPT_NAME" "Disconnecting OpenVPN"
-echo "signal SIGTERM" | nc -U "$mgmtsockfile"
+if is_mgmt_available; then
+    MGMT_RESULT="$(mgmt_cmd "signal SIGTERM" 2)"
+    if [ -n "$MGMT_RESULT" ]; then
+        log "$SCRIPT_NAME" "Sent SIGTERM via management interface"
+    else
+        log "$SCRIPT_NAME" "Failed to send SIGTERM via management interface"
+    fi
+else
+    log "$SCRIPT_NAME" "Management interface not available, skipping graceful shutdown"
+fi
 sleep 5
 
 log "$SCRIPT_NAME" "Cleaning up VPN configuration files"
-rm -f /run/xt/nordvpn.ovpn
+rm -f "$ovpnfile"
 
 log "$SCRIPT_NAME" "NordVPN service stopped"
 exit 0

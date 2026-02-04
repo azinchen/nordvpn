@@ -17,6 +17,7 @@ check_connection_url="${CHECK_CONNECTION_URL:-https://www.google.com}"
 check_connection_attempt_interval="${CHECK_CONNECTION_ATTEMPT_INTERVAL:-10}"
 user="${USER:-}"
 pass="${PASS:-}"
+mgmt_pw="$pass"
 recreate_vpn_cron="${RECREATE_VPN_CRON:-}"
 check_connection_cron="${CHECK_CONNECTION_CRON:-}"
 nordvpnapi_ip="${NORDVPNAPI_IP:-104.16.208.203;104.19.159.190}"
@@ -28,7 +29,11 @@ pgid=${PGID:-912}
 ovpntemplatefile="/usr/local/share/nordvpn/data/template.ovpn"
 ovpnfile="/run/xt/nordvpn.ovpn"
 authfile="/run/xt/auth"
-mgmtsockfile="/run/xt/openvpn-mgmt.sock"
+mgmtpwfile="/run/xt/mgmt-pw"
+
+# Management interface TCP settings
+mgmt_host="127.0.0.1"
+mgmt_port="7505"
 
 run4() {
     if ! ${IPT} "$@" 2>/dev/null; then
@@ -66,6 +71,46 @@ is_vpn_connected() {
     else
         return 1
     fi
+}
+
+# Check if management interface is available
+is_mgmt_available() {
+    nc -z -w 1 "$mgmt_host" "$mgmt_port" 2>/dev/null
+}
+
+# Send command to OpenVPN management interface with authentication
+# Usage: mgmt_cmd "command" [timeout]
+# Returns: command output or empty string on failure
+mgmt_cmd() {
+    _cmd="$1"
+    _timeout="${2:-5}"
+    
+    # Get password from file or environment
+    if [ -f "$mgmtpwfile" ]; then
+        _pw="$(cat "$mgmtpwfile" 2>/dev/null)"
+    else
+        # Fallback to environment variables (user/pass from backend or USER/PASS env)
+        _pw="${user:-${USER:-}}"
+    fi
+    
+    if [ -z "$_pw" ]; then
+        printf '' 2>/dev/null
+        return 1
+    fi
+    
+    if ! command -v nc >/dev/null 2>&1; then
+        printf '' 2>/dev/null
+        return 1
+    fi
+    
+    if ! is_mgmt_available; then
+        printf '' 2>/dev/null
+        return 1
+    fi
+    
+    # Send password, wait for prompt, send command, then quit
+    { sleep 0.2; printf "%s\n" "$_pw"; sleep 0.3; printf "%s\n" "$_cmd"; sleep 1; printf "quit\n"; } | \
+        nc -w "$_timeout" "$mgmt_host" "$mgmt_port" 2>/dev/null || printf ''
 }
 
 log()

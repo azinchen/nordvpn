@@ -5,9 +5,6 @@
 
 set -u  # be strict about undefined vars
 
-# OpenVPN management socket path
-MGMT_SOCK="/run/xt/openvpn-mgmt.sock"
-
 MODE="full"
 
 print_usage()
@@ -89,10 +86,10 @@ get_openvpn_status()
 {
     MGMT_SOURCE=""
     VPN_STATUS="Not Connected"
-    # Try to connect to OpenVPN management interface via Unix socket
-    if command -v nc >/dev/null 2>&1; then
-        # Use netcat with delays to allow management interface to process commands
-        MGMT_RESP="$({ sleep 0.2; printf "status\n"; sleep 1; printf "quit\n"; } | nc -U "$MGMT_SOCK" 2>/dev/null || printf '')"
+    # Try to connect to OpenVPN management interface via TCP
+    if command -v nc >/dev/null 2>&1 && is_mgmt_available; then
+        # Use mgmt_cmd helper for authenticated connection
+        MGMT_RESP="$(mgmt_cmd "status" 5)"
     else
         MGMT_RESP=""
     fi
@@ -115,7 +112,7 @@ get_openvpn_status()
         fi
         
         # Try to get port and uptime from management interface state
-        STATE_RESP="$({ sleep 0.2; printf "state\n"; sleep 1; printf "quit\n"; } | nc -U "$MGMT_SOCK" 2>/dev/null || printf '')"
+        STATE_RESP="$(mgmt_cmd "state" 5)"
         if [ -n "$STATE_RESP" ]; then
             # Parse state line format: timestamp,CONNECTED,SUCCESS,local_ip,remote_ip,remote_port
             STATE_LINE="$(printf "%s" "$STATE_RESP" | grep -E '^[0-9]+,CONNECTED' | head -1 || printf '')"
@@ -153,13 +150,13 @@ get_openvpn_status()
     fi
     
     # Fallback: try to get from config file if management interface didn't work and VPN is connected
-    if [ "$VPN_STATUS" = "Connected" ] && [ -z "$COMMON_NAME" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+    if [ "$VPN_STATUS" = "Connected" ] && [ -z "$COMMON_NAME" ] && [ -f "$ovpnfile" ]; then
         [ -z "$MGMT_SOURCE" ] && MGMT_SOURCE="config file"
         # Extract from verify-x509-name line first (preferred)
-        COMMON_NAME="$(awk '/^[[:space:]]*verify-x509-name/ {for(i=1;i<=NF;i++) if($i ~ /CN=/) {sub(/CN=/,"",$i); print $i; exit}}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
+        COMMON_NAME="$(awk '/^[[:space:]]*verify-x509-name/ {for(i=1;i<=NF;i++) if($i ~ /CN=/) {sub(/CN=/,"",$i); print $i; exit}}' "$ovpnfile" 2>/dev/null || printf '')"
         if [ -z "$COMMON_NAME" ]; then
             # Fallback to remote hostname/IP
-            REMOTE_VAL="$(awk '/^[[:space:]]*remote[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
+            REMOTE_VAL="$(awk '/^[[:space:]]*remote[ \t]+/ {print $2; exit}' "$ovpnfile" 2>/dev/null || printf '')"
             # If it's an IP address, try to construct hostname
             if printf "%s" "$REMOTE_VAL" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' >/dev/null 2>&1; then
                 # It's an IP, we can't easily get hostname, so leave empty for now
@@ -169,11 +166,11 @@ get_openvpn_status()
             fi
         fi
     fi
-    if [ "$VPN_STATUS" = "Connected" ] && [ -z "$TRUSTED_IP" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+    if [ "$VPN_STATUS" = "Connected" ] && [ -z "$TRUSTED_IP" ] && [ -f "$ovpnfile" ]; then
         [ -z "$MGMT_SOURCE" ] && MGMT_SOURCE="config file"
-        TRUSTED_IP="$(awk '/^[[:space:]]*remote[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
-        TRUSTED_PORT="$(awk '/^[[:space:]]*remote[ \t]+/ {print $3; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
-        [ -z "$TRUSTED_PORT" ] && TRUSTED_PORT="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" 2>/dev/null || printf '')"
+        TRUSTED_IP="$(awk '/^[[:space:]]*remote[ \t]+/ {print $2; exit}' "$ovpnfile" 2>/dev/null || printf '')"
+        TRUSTED_PORT="$(awk '/^[[:space:]]*remote[ \t]+/ {print $3; exit}' "$ovpnfile" 2>/dev/null || printf '')"
+        [ -z "$TRUSTED_PORT" ] && TRUSTED_PORT="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "$ovpnfile" 2>/dev/null || printf '')"
     fi
     
     # Export for use in output
@@ -350,13 +347,13 @@ get_interface_details
 get_iptables_backend
 
 # Try to get protocol and port from OpenVPN config or process
-if [ "$VPN_STATUS" = "Connected" ] && [ -f "/run/xt/nordvpn.ovpn" ]; then
+if [ "$VPN_STATUS" = "Connected" ] && [ -f "$ovpnfile" ]; then
     # Try to extract from config file
-    PROTO="$(awk '/^[[:space:]]*proto[ \t]+/ {print tolower($2); exit}' "/run/xt/nordvpn.ovpn" || printf '?')"
-    LPORT="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "/run/xt/nordvpn.ovpn" || printf '?')"
+    PROTO="$(awk '/^[[:space:]]*proto[ \t]+/ {print tolower($2); exit}' "$ovpnfile" || printf '?')"
+    LPORT="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "$ovpnfile" || printf '?')"
     if [ -z "$LPORT" ] || [ "$LPORT" = "?" ]; then
         # Try from remote line
-        LPORT="$(awk '/^[[:space:]]*remote[ \t]+/ {print $3; exit}' "/run/xt/nordvpn.ovpn" | grep '^[0-9]*$' || printf '?')"
+        LPORT="$(awk '/^[[:space:]]*remote[ \t]+/ {print $3; exit}' "$ovpnfile" | grep '^[0-9]*$' || printf '?')"
     fi
 elif command -v pgrep >/dev/null 2>&1 && command -v ps >/dev/null 2>&1; then
     OVPN_PID="$(pgrep -f openvpn || printf '')"
