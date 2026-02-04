@@ -76,8 +76,8 @@ jobs:
         run: |
           # Default values for scheduled runs (conservative settings)
           DRY_RUN="false"
-          MAX_RELEASE_DAYS="365"  # Keep release tags for 1 year
-          MAX_DEV_DAYS="90"       # Keep dev tags for 3 months
+          MAX_RELEASE_DAYS="1095"     # Keep release tags for 3 years
+          MAX_DEV_DAYS="90"           # Keep dev tags for 3 months
           PROTECT_LATEST_PER="minor"  # Default protection level
           
           # Override with manual inputs if workflow_dispatch
