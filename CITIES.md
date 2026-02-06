@@ -1,4 +1,4 @@
-Last updated: 2026-02-03
+Last updated: 2026-02-06
 ---
 # List of CITIES with NordVPN servers
 
@@ -154,6 +154,7 @@ United States | US | 228 | Baltimore | 8873894
 United States | US | 228 | Boston | 8895305
 United States | US | 228 | Buffalo | 8963153
 United States | US | 228 | Burlington | 9099731
+United States | US | 228 | Charleston | 9050567
 United States | US | 228 | Charlotte | 8980922
 United States | US | 228 | Chicago | 8815352
 United States | US | 228 | Dallas | 9080300
