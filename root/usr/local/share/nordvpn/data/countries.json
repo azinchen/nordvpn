@@ -1930,6 +1930,13 @@
         "dns_name": "burlington"
       },
       {
+        "id": 9050567,
+        "name": "Charleston",
+        "latitude": 32.7763889,
+        "longitude": -79.9311111,
+        "dns_name": "charleston"
+      },
+      {
         "id": 8980922,
         "name": "Charlotte",
         "latitude": 35.2269444,
