@@ -112,7 +112,7 @@ jobs:
       # === BUILD AND PUSH PHASE ===
       - name: Build and push image (Development)
         if: ${{ steps.git.outputs.push_to_prod == 'false' }}
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           platforms: ${{ steps.git.outputs.platforms }}
           push: true
@@ -126,7 +126,7 @@ jobs:
 
       - name: Build and push image (Production)
         if: ${{ steps.git.outputs.push_to_prod == 'true' }}
-        uses: docker/build-push-action@v6.18.0
+        uses: docker/build-push-action@v6.19.2
         with:
           platforms: ${{ steps.git.outputs.platforms }}
           push: true
