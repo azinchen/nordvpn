@@ -1965,6 +1965,13 @@
         "dns_name": "denver"
       },
       {
+        "id": 8808860,
+        "name": "Honolulu",
+        "latitude": 21.3069444,
+        "longitude": -157.8583333,
+        "dns_name": "honolulu"
+      },
+      {
         "id": 9083687,
         "name": "Houston",
         "latitude": 29.7630556,
