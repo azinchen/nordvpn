@@ -1,4 +1,4 @@
-Last updated: 2026-02-19
+Last updated: 2026-02-20
 ---
 # List of CITIES with NordVPN servers
 
@@ -151,6 +151,7 @@ United Kingdom | GB | 227 | Manchester | 2991110
 United States | US | 228 | Ashburn | 9103211
 United States | US | 228 | Atlanta | 8792429
 United States | US | 228 | Baltimore | 8873894
+United States | US | 228 | Billings | 8937212
 United States | US | 228 | Boston | 8895305
 United States | US | 228 | Buffalo | 8963153
 United States | US | 228 | Burlington | 9099731
