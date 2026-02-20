@@ -1909,6 +1909,13 @@
         "dns_name": "baltimore"
       },
       {
+        "id": 8937212,
+        "name": "Billings",
+        "latitude": 45.7833333,
+        "longitude": -108.5,
+        "dns_name": "billings"
+      },
+      {
         "id": 8895305,
         "name": "Boston",
         "latitude": 42.3583333,
