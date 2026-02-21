@@ -1888,6 +1888,13 @@
     "code": "US",
     "cities": [
       {
+        "id": 8736005,
+        "name": "Anchorage",
+        "latitude": 61.2180556,
+        "longitude": -149.9002778,
+        "dns_name": "anchorage"
+      },
+      {
         "id": 9103211,
         "name": "Ashburn",
         "latitude": 39.0436111,
@@ -1998,6 +2005,13 @@
         "latitude": 39.0997222,
         "longitude": -94.5783333,
         "dns_name": "kansas-city"
+      },
+      {
+        "id": 8945963,
+        "name": "Las Vegas",
+        "latitude": 36.175,
+        "longitude": -115.1363889,
+        "dns_name": "las-vegas"
       },
       {
         "id": 8869646,
