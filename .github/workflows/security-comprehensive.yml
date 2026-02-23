@@ -33,7 +33,7 @@ jobs:
       # CODEQL STATIC ANALYSIS
       # ============================================================================
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.32.3
+        uses: github/codeql-action/init@v4.32.4
         with:
           languages: javascript
           build-mode: none
@@ -55,7 +55,7 @@ jobs:
 
       - name: Perform CodeQL Analysis
         id: codeql-analysis
-        uses: github/codeql-action/analyze@v4.32.3
+        uses: github/codeql-action/analyze@v4.32.4
         continue-on-error: true
         with:
           category: "/language:javascript"
@@ -170,7 +170,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v4.32.3
+        uses: github/codeql-action/upload-sarif@v4.32.4
         if: always() && hashFiles('trivy-results.sarif') != ''
         continue-on-error: true
         with:
