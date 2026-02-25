@@ -1,4 +1,4 @@
-Last updated: 2026-02-21
+Last updated: 2026-02-25
 ---
 # List of CITIES with NordVPN servers
 
@@ -153,11 +153,13 @@ United States | US | 228 | Ashburn | 9103211
 United States | US | 228 | Atlanta | 8792429
 United States | US | 228 | Baltimore | 8873894
 United States | US | 228 | Billings | 8937212
+United States | US | 228 | Boise | 8810342
 United States | US | 228 | Boston | 8895305
 United States | US | 228 | Buffalo | 8963153
 United States | US | 228 | Burlington | 9099731
 United States | US | 228 | Charleston | 9050567
 United States | US | 228 | Charlotte | 8980922
+United States | US | 228 | Cheyenne | 9147794
 United States | US | 228 | Chicago | 8815352
 United States | US | 228 | Dallas | 9080300
 United States | US | 228 | Denver | 8770934
@@ -177,6 +179,7 @@ United States | US | 228 | New York | 8971718
 United States | US | 228 | Omaha | 8943887
 United States | US | 228 | Phoenix | 8741960
 United States | US | 228 | Pittsburgh | 9036872
+United States | US | 228 | Portland | 9017738
 United States | US | 228 | Providence | 9048614
 United States | US | 228 | Saint Louis | 8934551
 United States | US | 228 | Salt Lake City | 9097865
