@@ -1923,6 +1923,13 @@
         "dns_name": "billings"
       },
       {
+        "id": 8810342,
+        "name": "Boise",
+        "latitude": 43.6136111,
+        "longitude": -116.2025,
+        "dns_name": "boise"
+      },
+      {
         "id": 8895305,
         "name": "Boston",
         "latitude": 42.3583333,
@@ -1956,6 +1963,13 @@
         "latitude": 35.2269444,
         "longitude": -80.8433333,
         "dns_name": "charlotte"
+      },
+      {
+        "id": 9147794,
+        "name": "Cheyenne",
+        "latitude": 41.14,
+        "longitude": -104.8197222,
+        "dns_name": "cheyenne"
       },
       {
         "id": 8815352,
@@ -2089,6 +2103,13 @@
         "latitude": 40.4405556,
         "longitude": -79.9961111,
         "dns_name": "pittsburgh"
+      },
+      {
+        "id": 9017738,
+        "name": "Portland",
+        "latitude": 45.5236111,
+        "longitude": -122.675,
+        "dns_name": "portland"
       },
       {
         "id": 9048614,
