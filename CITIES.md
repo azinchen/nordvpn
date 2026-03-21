@@ -1,4 +1,4 @@
-Last updated: 2026-02-25
+Last updated: 2026-03-21
 ---
 # List of CITIES with NordVPN servers
 
@@ -161,20 +161,31 @@ United States | US | 228 | Charleston | 9050567
 United States | US | 228 | Charlotte | 8980922
 United States | US | 228 | Cheyenne | 9147794
 United States | US | 228 | Chicago | 8815352
+United States | US | 228 | Columbus | 8997560
 United States | US | 228 | Dallas | 9080300
 United States | US | 228 | Denver | 8770934
+United States | US | 228 | Des Moines | 8835473
+United States | US | 228 | Detroit | 8903312
+United States | US | 228 | Fargo | 8993042
 United States | US | 228 | Honolulu | 8808860
 United States | US | 228 | Houston | 9083687
 United States | US | 228 | Huntington | 9134528
+United States | US | 228 | Indianapolis | 8828528
+United States | US | 228 | Jackson | 8920961
 United States | US | 228 | Kansas City | 8930717
 United States | US | 228 | Las Vegas | 8945963
 United States | US | 228 | Lewiston | 8869646
+United States | US | 228 | Little Rock | 8749055
 United States | US | 228 | Los Angeles | 8761958
+United States | US | 228 | Louisville | 8852234
 United States | US | 228 | McAllen | 9086162
 United States | US | 228 | Miami | 8787782
+United States | US | 228 | Milwaukee | 9144572
+United States | US | 228 | Minneapolis | 8915105
 United States | US | 228 | Nashua | 8948549
 United States | US | 228 | Nashville | 9071273
 United States | US | 228 | New Haven | 8775974
+United States | US | 228 | New Orleans | 8863781
 United States | US | 228 | New York | 8971718
 United States | US | 228 | Omaha | 8943887
 United States | US | 228 | Phoenix | 8741960
@@ -185,7 +196,9 @@ United States | US | 228 | Saint Louis | 8934551
 United States | US | 228 | Salt Lake City | 9097865
 United States | US | 228 | San Francisco | 8766359
 United States | US | 228 | Seattle | 9128402
+United States | US | 228 | Sioux Falls | 9061658
 United States | US | 228 | Trenton | 8956166
+United States | US | 228 | Wichita | 8845130
 United States | US | 228 | Wilmington | 8781776
 Uruguay | UY | 230 | Montevideo | 9150812
 Uzbekistan | UZ | 231 | Tashkent | 9166826
