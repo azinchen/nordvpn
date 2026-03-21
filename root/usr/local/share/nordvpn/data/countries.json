@@ -1979,6 +1979,13 @@
         "dns_name": "chicago"
       },
       {
+        "id": 8997560,
+        "name": "Columbus",
+        "latitude": 39.9611111,
+        "longitude": -82.9988889,
+        "dns_name": "columbus"
+      },
+      {
         "id": 9080300,
         "name": "Dallas",
         "latitude": 32.7833333,
@@ -1991,6 +1998,27 @@
         "latitude": 39.7391667,
         "longitude": -104.9841667,
         "dns_name": "denver"
+      },
+      {
+        "id": 8835473,
+        "name": "Des Moines",
+        "latitude": 41.6005556,
+        "longitude": -93.6088889,
+        "dns_name": "des-moines"
+      },
+      {
+        "id": 8903312,
+        "name": "Detroit",
+        "latitude": 42.3313889,
+        "longitude": -83.0458333,
+        "dns_name": "detroit"
+      },
+      {
+        "id": 8993042,
+        "name": "Fargo",
+        "latitude": 46.8772222,
+        "longitude": -96.7894444,
+        "dns_name": "fargo"
       },
       {
         "id": 8808860,
@@ -2014,6 +2042,20 @@
         "dns_name": "huntington"
       },
       {
+        "id": 8828528,
+        "name": "Indianapolis",
+        "latitude": 39.7683333,
+        "longitude": -86.1580556,
+        "dns_name": "indianapolis"
+      },
+      {
+        "id": 8920961,
+        "name": "Jackson",
+        "latitude": 32.2986111,
+        "longitude": -90.1847222,
+        "dns_name": "jackson"
+      },
+      {
         "id": 8930717,
         "name": "Kansas City",
         "latitude": 39.0997222,
@@ -2035,11 +2077,25 @@
         "dns_name": "lewiston"
       },
       {
+        "id": 8749055,
+        "name": "Little Rock",
+        "latitude": 34.7463889,
+        "longitude": -92.2894444,
+        "dns_name": "little-rock"
+      },
+      {
         "id": 8761958,
         "name": "Los Angeles",
         "latitude": 34.0522222,
         "longitude": -118.2427778,
         "dns_name": "los-angeles"
+      },
+      {
+        "id": 8852234,
+        "name": "Louisville",
+        "latitude": 38.2541667,
+        "longitude": -85.7594444,
+        "dns_name": "louisville"
       },
       {
         "id": 9086162,
@@ -2054,6 +2110,20 @@
         "latitude": 25.7738889,
         "longitude": -80.1938889,
         "dns_name": "miami"
+      },
+      {
+        "id": 9144572,
+        "name": "Milwaukee",
+        "latitude": 43.0388889,
+        "longitude": -87.9063889,
+        "dns_name": "milwaukee"
+      },
+      {
+        "id": 8915105,
+        "name": "Minneapolis",
+        "latitude": 44.98,
+        "longitude": -93.2636111,
+        "dns_name": "minneapolis"
       },
       {
         "id": 8948549,
@@ -2075,6 +2145,13 @@
         "latitude": 41.3080556,
         "longitude": -72.9286111,
         "dns_name": "new-haven"
+      },
+      {
+        "id": 8863781,
+        "name": "New Orleans",
+        "latitude": 29.9544444,
+        "longitude": -90.075,
+        "dns_name": "new-orleans"
       },
       {
         "id": 8971718,
@@ -2147,11 +2224,25 @@
         "dns_name": "seattle"
       },
       {
+        "id": 9061658,
+        "name": "Sioux Falls",
+        "latitude": 43.55,
+        "longitude": -96.7,
+        "dns_name": "sioux-falls"
+      },
+      {
         "id": 8956166,
         "name": "Trenton",
         "latitude": 40.2169444,
         "longitude": -74.7433333,
         "dns_name": "trenton"
+      },
+      {
+        "id": 8845130,
+        "name": "Wichita",
+        "latitude": 37.6922222,
+        "longitude": -97.3372222,
+        "dns_name": "wichita"
       },
       {
         "id": 8781776,
