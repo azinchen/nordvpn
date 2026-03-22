@@ -114,6 +114,7 @@ jobs:
         if: ${{ steps.git.outputs.push_to_prod == 'false' }}
         uses: docker/build-push-action@v7.0.0
         with:
+          context: .
           platforms: ${{ steps.git.outputs.platforms }}
           push: true
           cache-from: type=gha
@@ -128,6 +129,7 @@ jobs:
         if: ${{ steps.git.outputs.push_to_prod == 'true' }}
         uses: docker/build-push-action@v7.0.0
         with:
+          context: .
           platforms: ${{ steps.git.outputs.platforms }}
           push: true
           cache-from: type=gha

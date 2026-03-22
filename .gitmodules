@@ -1,3 +1,3 @@
 [submodule "wiki"]
 	path = wiki
-	url = git@github.com:azinchen/nordvpn.wiki.git
+	url = https://github.com/azinchen/nordvpn.wiki.git
