@@ -2161,6 +2161,13 @@
         "dns_name": "new-york"
       },
       {
+        "id": 9013061,
+        "name": "Oklahoma City",
+        "latitude": 35.4675,
+        "longitude": -97.5161111,
+        "dns_name": "oklahoma-city"
+      },
+      {
         "id": 8943887,
         "name": "Omaha",
         "latitude": 41.2586111,
