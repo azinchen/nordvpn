@@ -1,4 +1,4 @@
-Last updated: 2026-03-21
+Last updated: 2026-03-24
 ---
 # List of CITIES with NordVPN servers
 
@@ -187,6 +187,7 @@ United States | US | 228 | Nashville | 9071273
 United States | US | 228 | New Haven | 8775974
 United States | US | 228 | New Orleans | 8863781
 United States | US | 228 | New York | 8971718
+United States | US | 228 | Oklahoma City | 9013061
 United States | US | 228 | Omaha | 8943887
 United States | US | 228 | Phoenix | 8741960
 United States | US | 228 | Pittsburgh | 9036872
