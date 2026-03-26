@@ -456,7 +456,7 @@
         "id": 3308120,
         "name": "Zagreb",
         "latitude": 45.8,
-        "longitude": 16,
+        "longitude": 16.0,
         "dns_name": "zagreb"
       }
     ]
@@ -673,7 +673,7 @@
         "id": 2234906,
         "name": "Hamburg",
         "latitude": 53.55,
-        "longitude": 10,
+        "longitude": 10.0,
         "dns_name": "hamburg"
       }
     ]
@@ -924,7 +924,7 @@
       {
         "id": 4576328,
         "name": "Kingston",
-        "latitude": 18,
+        "latitude": 18.0,
         "longitude": -76.8,
         "dns_name": "kingston"
       }
@@ -1351,7 +1351,7 @@
       {
         "id": 5386019,
         "name": "Skopje",
-        "latitude": 42,
+        "latitude": 42.0,
         "longitude": 21.4333333,
         "dns_name": "skopje"
       }
@@ -1464,7 +1464,7 @@
         "id": 6863429,
         "name": "Warsaw",
         "latitude": 52.25,
-        "longitude": 21,
+        "longitude": 21.0,
         "dns_name": "warsaw"
       }
     ]
@@ -1888,6 +1888,13 @@
     "code": "US",
     "cities": [
       {
+        "id": 8957066,
+        "name": "Albuquerque",
+        "latitude": 35.0844444,
+        "longitude": -106.6505556,
+        "dns_name": "albuquerque"
+      },
+      {
         "id": 8736005,
         "name": "Anchorage",
         "latitude": 61.2180556,
@@ -2124,6 +2131,13 @@
         "latitude": 44.98,
         "longitude": -93.2636111,
         "dns_name": "minneapolis"
+      },
+      {
+        "id": 8730710,
+        "name": "Montgomery",
+        "latitude": 32.3666667,
+        "longitude": -86.3,
+        "dns_name": "montgomery"
       },
       {
         "id": 8948549,
