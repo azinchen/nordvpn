@@ -19,7 +19,7 @@
 [![Docker image size][dockerhub-size]][dockerhub-link]
 
 <!-- Platform Support -->
-[![Multi-arch][multiarch-badge]](#supported-platforms)
+[![Multi-arch][multiarch-badge]][wiki-platforms]
 
 OpenVPN client docker container that routes other containers' traffic through NordVPN servers automatically.
 
@@ -122,21 +122,6 @@ services:
 | **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters. |
 | **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable network diagnostics on connect. Default: `false` |
 
-## Supported Platforms
-
-| Architecture | Platform |
-|--------------|----------|
-| `386` | 32-bit x86 |
-| `amd64` | 64-bit x86 |
-| `arm/v6` | ARM v6 |
-| `arm/v7` | ARM v7 (Raspberry Pi 2/3) |
-| `arm64` | 64-bit ARM (Raspberry Pi 4/5, Apple M1) |
-| `ppc64le` | PowerPC 64-bit LE |
-| `riscv64` | 64-bit RISC-V |
-| `s390x` | IBM System z |
-
-Docker will automatically pull the correct architecture.
-
 ## Issues
 
 If you have any problems with or questions about this image, please contact me through a [GitHub issue][github-issues-link] or [email][email-link].
@@ -181,5 +166,6 @@ Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki 
 [wiki-run]: https://github.com/azinchen/nordvpn/wiki/Docker-Run-Examples
 [wiki-troubleshoot]: https://github.com/azinchen/nordvpn/wiki/Troubleshooting
 [wiki-faq]: https://github.com/azinchen/nordvpn/wiki/FAQ
+[wiki-platforms]: https://github.com/azinchen/nordvpn/wiki/Supported-Platforms
 
 [email-link]: mailto:alexander@zinchenko.com
