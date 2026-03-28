@@ -1,4 +1,4 @@
-Last updated: 2026-03-26
+Last updated: 2026-03-28
 ---
 # List of CITIES with NordVPN servers
 
@@ -21,6 +21,7 @@ Azerbaijan | AZ | 15 | Baku | 490037
 Bahamas | BS | 16 | Nassau | 988382
 Bahrain | BH | 17 | Manama | 789398
 Bangladesh | BD | 18 | Dhaka | 594935
+Barbados | BB | 19 | Bridgetown | 567650
 Belgium | BE | 21 | Brussels | 654293
 Belize | BZ | 22 | Belmopan | 1037459
 Bermuda | BM | 24 | Hamilton | 809078
@@ -35,10 +36,12 @@ Canada | CA | 38 | Montreal | 1048463
 Canada | CA | 38 | Toronto | 1054250
 Canada | CA | 38 | Vancouver | 1054610
 Cayman Islands | KY | 40 | George Town | 4922303
+Chad | TD | 42 | NDjamena | 8075072
 Chile | CL | 43 | Santiago | 1227092
 Colombia | CO | 47 | Bogota | 1980695
 Comoros | KM | 48 | Moroni | 4698371
 Costa Rica | CR | 52 | San Jose | 2062994
+Cote Divoire | CI | 53 | Yamoussoukro | 1212512
 Croatia | HR | 54 | Zagreb | 3308120
 Cyprus | CY | 56 | Nicosia | 2099627
 Czech Republic | CZ | 57 | Prague | 2144945
@@ -49,6 +52,7 @@ Egypt | EG | 64 | Cairo | 2528003
 El Salvador | SV | 65 | San Salvador | 7990847
 Estonia | EE | 68 | Tallinn | 2514182
 Ethiopia | ET | 69 | Addis Ababa | 2660744
+Fiji | FJ | 72 | Suva | 2743211
 Finland | FI | 73 | Helsinki | 2704343
 France | FR | 74 | Bordeaux | 2767493
 France | FR | 74 | Marseille | 2867102
@@ -138,6 +142,7 @@ Switzerland | CH | 209 | Zurich | 1171814
 Taiwan | TW | 211 | Taipei | 8544365
 Tajikistan | TJ | 212 | Dushanbe | 8269814
 Thailand | TH | 214 | Bangkok | 8121638
+Togo | TG | 215 | Lome | 8091425
 Trinidad and Tobago | TT | 218 | Port of Spain | 9521887
 Tunisia | TN | 219 | Tunis | 8295401
 Turkey | TR | 220 | Istanbul | 8401790
