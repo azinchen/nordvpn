@@ -210,6 +210,20 @@
     ]
   },
   {
+    "id": 19,
+    "name": "Barbados",
+    "code": "BB",
+    "cities": [
+      {
+        "id": 567650,
+        "name": "Bridgetown",
+        "latitude": 13.1,
+        "longitude": -59.6166667,
+        "dns_name": "bridgetown"
+      }
+    ]
+  },
+  {
     "id": 21,
     "name": "Belgium",
     "code": "BE",
@@ -392,6 +406,20 @@
     ]
   },
   {
+    "id": 42,
+    "name": "Chad",
+    "code": "TD",
+    "cities": [
+      {
+        "id": 8075072,
+        "name": "NDjamena",
+        "latitude": 12.1130556,
+        "longitude": 15.0491667,
+        "dns_name": "ndjamena"
+      }
+    ]
+  },
+  {
     "id": 43,
     "name": "Chile",
     "code": "CL",
@@ -444,6 +472,20 @@
         "latitude": 9.893385,
         "longitude": -84.105407,
         "dns_name": "san-jose"
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "name": "Cote Divoire",
+    "code": "CI",
+    "cities": [
+      {
+        "id": 1212512,
+        "name": "Yamoussoukro",
+        "latitude": 6.820548,
+        "longitude": -5.276741,
+        "dns_name": "yamoussoukro"
       }
     ]
   },
@@ -584,6 +626,20 @@
         "latitude": 9.024325,
         "longitude": 38.749226,
         "dns_name": "addis-ababa"
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "name": "Fiji",
+    "code": "FJ",
+    "cities": [
+      {
+        "id": 2743211,
+        "name": "Suva",
+        "latitude": -18.1333333,
+        "longitude": 178.4166667,
+        "dns_name": "suva"
       }
     ]
   },
@@ -1767,6 +1823,20 @@
         "latitude": 13.753979,
         "longitude": 100.501444,
         "dns_name": "bangkok"
+      }
+    ]
+  },
+  {
+    "id": 215,
+    "name": "Togo",
+    "code": "TG",
+    "cities": [
+      {
+        "id": 8091425,
+        "name": "Lome",
+        "latitude": 6.1319444,
+        "longitude": 1.2227778,
+        "dns_name": "lome"
       }
     ]
   },
