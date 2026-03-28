@@ -1,4 +1,4 @@
-Last updated: 2026-01-29
+Last updated: 2026-03-28
 ---
 # List of COUNTRIES with NordVPN servers
 
@@ -17,6 +17,7 @@ Azerbaijan | AZ | 15
 Bahamas | BS | 16
 Bahrain | BH | 17
 Bangladesh | BD | 18
+Barbados | BB | 19
 Belgium | BE | 21
 Belize | BZ | 22
 Bermuda | BM | 24
@@ -29,10 +30,12 @@ Bulgaria | BG | 33
 Cambodia | KH | 36
 Canada | CA | 38
 Cayman Islands | KY | 40
+Chad | TD | 42
 Chile | CL | 43
 Colombia | CO | 47
 Comoros | KM | 48
 Costa Rica | CR | 52
+Cote Divoire | CI | 53
 Croatia | HR | 54
 Cyprus | CY | 56
 Czech Republic | CZ | 57
@@ -43,6 +46,7 @@ Egypt | EG | 64
 El Salvador | SV | 65
 Estonia | EE | 68
 Ethiopia | ET | 69
+Fiji | FJ | 72
 Finland | FI | 73
 France | FR | 74
 Georgia | GE | 80
@@ -123,6 +127,7 @@ Switzerland | CH | 209
 Taiwan | TW | 211
 Tajikistan | TJ | 212
 Thailand | TH | 214
+Togo | TG | 215
 Trinidad and Tobago | TT | 218
 Tunisia | TN | 219
 Turkey | TR | 220
