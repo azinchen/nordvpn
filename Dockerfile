@@ -98,9 +98,13 @@ LABEL org.opencontainers.image.authors="Alexander Zinchenko <alexander@zinchenko
 
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=120000
 
+    # PLATFORM_VERSIONS: bind-tools: default=9.20.21-r0 linux/riscv64=9.20.20-r0
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     echo "Target platform: ${TARGETPLATFORM}" && \
+    bind_tools_version=$(case "${TARGETPLATFORM:-linux/amd64}" in \
+        linux/riscv64)  echo "9.20.20-r0"  ;; \
+        *)              echo "9.20.21-r0" ;; esac) && \
     apk --no-cache --no-progress add \
         curl=8.17.0-r1 \
         iptables=1.8.11-r1 \
@@ -109,7 +113,7 @@ RUN echo "**** install security fix packages ****" && \
         shadow=4.18.0-r0 \
         shadow-login=4.18.0-r0 \
         openvpn=2.6.16-r0 \
-        bind-tools=9.20.21-r0 \
+        bind-tools=${bind_tools_version} \
         && \
     echo "**** create process user ****" && \
     addgroup --system --gid 912 nordvpn && \
