@@ -54,8 +54,19 @@ if ! echo "$openvpn_opts" | grep -q -- "--data-ciphers"; then
     openvpn_opts="$openvpn_opts --data-ciphers AES-256-CBC:AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305"
 fi
 
+# Write extra options to a config fragment so OpenVPN parses them
+# directly (avoids eval and preserves quoted multi-word arguments)
+openvpn_extra="/run/xt/openvpn-extra.conf"
+printf '%s\n' "$openvpn_opts" \
+    | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' \
+    | sed 's/ --/\n--/g' \
+    | sed 's/^--//' \
+    | grep -v '^$' \
+    > "$openvpn_extra" || true
+chmod 0600 "$openvpn_extra"
+
 log "$SCRIPT_NAME" "Launching OpenVPN"
-eval openvpn --group nordvpn --config '"$ovpnfile"' --auth-user-pass '"$authfile"' --auth-nocache --management '"$mgmt_host"' '"$mgmt_port"' '"$mgmtpwfile"' $openvpn_opts '&'
+openvpn --group nordvpn --config "$ovpnfile" --config "$openvpn_extra" --auth-user-pass "$authfile" --auth-nocache --management "$mgmt_host" "$mgmt_port" "$mgmtpwfile" &
 
 # Wait for VPN connection
 log "$SCRIPT_NAME" "Waiting for VPN connection..."
