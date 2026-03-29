@@ -43,8 +43,8 @@ jobs:
         file: 
           - name: "CITIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
-            jq_filter: '[.[] | . as $parent | .cities[] | {country: $parent.name, code: $parent.code, cid: $parent.id, city: .name, cityid: .id}] | sort_by(.country, .city) | .[] | "\(.country) | \(.code) | \(.cid) | \(.city) | \(.cityid)"'
-            header: "Country | Code | ID | City | ID"
+            jq_filter: '[.[] | . as $parent | .cities[] | {country: $parent.name, code: $parent.code, cid: $parent.id, city: .name, cityid: .id, lat: .latitude, lon: .longitude}] | sort_by(.country, .city) | .[] | "\(.country) | \(.code) | \(.cid) | \(.city) | \(.cityid) | [\(.lat),\(.lon)](https://www.google.com/maps?q=\(.lat),\(.lon))"'
+            header: "Country | Code | ID | City | ID | Map"
           - name: "COUNTRIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
             jq_filter: 'sort_by(.name) | .[] | [.name, .code, .id] | "\(.[0]) | \(.[1]) | \(.[2])"'
