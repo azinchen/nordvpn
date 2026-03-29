@@ -36,6 +36,7 @@ r_proto_raw="$(echo "$r_line" | awk '{print $4}')"
 # Fallbacks from file if not specified on the remote line
 [ -n "${r_port:-}" ] || r_port="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "$ovpnfile" || true)"
 [ -n "${r_port:-}" ] || r_port=1194
+[ -n "${r_proto_raw:-}" ] || r_proto_raw="$(awk '/^[[:space:]]*proto[ \t]+/ {print $2; exit}' "$ovpnfile" || true)"
 r_proto="$(normalize_proto "$r_proto_raw")"
 
 # Clean up any bracketed IPv6 (just in case)
