@@ -1,215 +1,215 @@
-Last updated: 2026-03-28
+Last updated: 2026-03-29
 ---
 # List of CITIES with NordVPN servers
 
-Country | Code | ID | City | ID
---------|------|----|------|---
-Afghanistan | AF | 1 | Kabul | 98270
-Albania | AL | 2 | Tirana | 308615
-Algeria | DZ | 3 | Algiers | 2438216
-Andorra | AD | 5 | Andorra la Vella | 20
-Angola | AO | 6 | Luanda | 351407
-Argentina | AR | 10 | Buenos Aires | 384866
-Armenia | AM | 11 | Yerevan | 322385
-Australia | AU | 13 | Adelaide | 452717
-Australia | AU | 13 | Brisbane | 456494
-Australia | AU | 13 | Melbourne | 470813
-Australia | AU | 13 | Perth | 475799
-Australia | AU | 13 | Sydney | 479570
-Austria | AT | 14 | Vienna | 448799
-Azerbaijan | AZ | 15 | Baku | 490037
-Bahamas | BS | 16 | Nassau | 988382
-Bahrain | BH | 17 | Manama | 789398
-Bangladesh | BD | 18 | Dhaka | 594935
-Barbados | BB | 19 | Bridgetown | 567650
-Belgium | BE | 21 | Brussels | 654293
-Belize | BZ | 22 | Belmopan | 1037459
-Bermuda | BM | 24 | Hamilton | 809078
-Bhutan | BT | 25 | Thimphu | 989699
-Bolivia | BO | 26 | La Paz | 838514
-Bosnia and Herzegovina | BA | 27 | Sarajevo | 556823
-Brazil | BR | 30 | Sao Paulo | 890249
-Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132
-Bulgaria | BG | 33 | Sofia | 777368
-Cambodia | KH | 36 | Phnom Penh | 4658987
-Canada | CA | 38 | Montreal | 1048463
-Canada | CA | 38 | Toronto | 1054250
-Canada | CA | 38 | Vancouver | 1054610
-Cayman Islands | KY | 40 | George Town | 4922303
-Chad | TD | 42 | NDjamena | 8075072
-Chile | CL | 43 | Santiago | 1227092
-Colombia | CO | 47 | Bogota | 1980695
-Comoros | KM | 48 | Moroni | 4698371
-Costa Rica | CR | 52 | San Jose | 2062994
-Cote Divoire | CI | 53 | Yamoussoukro | 1212512
-Croatia | HR | 54 | Zagreb | 3308120
-Cyprus | CY | 56 | Nicosia | 2099627
-Czech Republic | CZ | 57 | Prague | 2144945
-Denmark | DK | 58 | Copenhagen | 2382515
-Dominican Republic | DO | 61 | Santo Domingo | 2434841
-Ecuador | EC | 63 | Quito | 2485688
-Egypt | EG | 64 | Cairo | 2528003
-El Salvador | SV | 65 | San Salvador | 7990847
-Estonia | EE | 68 | Tallinn | 2514182
-Ethiopia | ET | 69 | Addis Ababa | 2660744
-Fiji | FJ | 72 | Suva | 2743211
-Finland | FI | 73 | Helsinki | 2704343
-France | FR | 74 | Bordeaux | 2767493
-France | FR | 74 | Marseille | 2867102
-France | FR | 74 | Paris | 2886284
-France | FR | 74 | Strasbourg | 2929151
-Georgia | GE | 80 | Tbilisi | 3032063
-Germany | DE | 81 | Berlin | 2181458
-Germany | DE | 81 | Frankfurt | 2215709
-Germany | DE | 81 | Hamburg | 2234906
-Ghana | GH | 82 | Accra | 3040355
-Greece | GR | 84 | Athens | 3131903
-Greenland | GL | 85 | Nuuk | 3085001
-Guam | GU | 88 | Hagatna | 8808314
-Guatemala | GT | 89 | Guatemala City | 3202463
-Honduras | HN | 96 | Tegucigalpa | 3270551
-Hong Kong | HK | 97 | Hong Kong | 3232931
-Hungary | HU | 98 | Budapest | 3348344
-Iceland | IS | 99 | Reykjavik | 4509791
-India | IN | 100 | Mumbai | 4041548
-Indonesia | ID | 101 | Jakarta | 3560288
-Iraq | IQ | 103 | Baghdad | 4093955
-Ireland | IE | 104 | Dublin | 3939200
-Isle of Man | IM | 243 | Douglas | 3965405
-Israel | IL | 105 | Tel Aviv | 3964220
-Italy | IT | 106 | Milan | 4542737
-Italy | IT | 106 | Palermo | 4548074
-Italy | IT | 106 | Rome | 4555808
-Jamaica | JM | 107 | Kingston | 4576328
-Japan | JP | 108 | Osaka | 4621847
-Japan | JP | 108 | Tokyo | 4633349
-Jersey | JE | 244 | Saint Helier | 4572281
-Jordan | JO | 109 | Amman | 4581203
-Kazakhstan | KZ | 110 | Astana | 4925732
-Kenya | KE | 111 | Nairobi | 4646603
-Kuwait | KW | 116 | Kuwait City | 9521894
-Lao People's Democratic Republic | LA | 118 | Vientiane | 5015876
-Latvia | LV | 119 | Riga | 5192828
-Lebanon | LB | 120 | Beirut | 5022080
-Libyan Arab Jamahiriya | LY | 123 | Tripoli | 5206697
-Liechtenstein | LI | 124 | Vaduz | 5037212
-Lithuania | LT | 125 | Vilnius | 5166932
-Luxembourg | LU | 126 | Luxembourg | 9521876
-Malaysia | MY | 131 | Kuala Lumpur | 5820143
-Malta | MT | 134 | Valletta | 5554481
-Mauritania | MR | 137 | Nouakchott | 5551598
-Mauritius | MU | 138 | Port Louis | 5556011
-Mexico | MX | 140 | Mexico | 5677037
-Moldova | MD | 142 | Chisinau | 5295179
-Monaco | MC | 143 | Monte Carlo | 5292332
-Mongolia | MN | 144 | Ulaanbaatar | 5543669
-Montenegro | ME | 146 | Podgorica | 5318561
-Morocco | MA | 147 | Rabat | 5271254
-Mozambique | MZ | 148 | Maputo | 5870336
-Myanmar | MM | 149 | Naypyidaw | 9521893
-Nepal | NP | 152 | Kathmandu | 6142175
-Netherlands | NL | 153 | Amsterdam | 6076868
-New Zealand | NZ | 156 | Auckland | 6144239
-Nigeria | NG | 159 | Lagos | 6010328
-North Macedonia | MK | 128 | Skopje | 5386019
-Norway | NO | 163 | Oslo | 6127364
-Pakistan | PK | 165 | Karachi | 6600485
-Panama | PA | 168 | Panama City | 6176273
-Papua New Guinea | PG | 169 | Port Moresby | 6292406
-Paraguay | PY | 170 | Asuncion | 9521890
-Peru | PE | 171 | Lima | 6222584
-Philippines | PH | 172 | Manila | 6391379
-Poland | PL | 174 | Warsaw | 6863429
-Portugal | PT | 175 | Lisbon | 6906665
-Puerto Rico | PR | 176 | San Juan | 9521884
-Qatar | QA | 177 | Doha | 6940529
-Romania | RO | 179 | Bucharest | 6953096
-Rwanda | RW | 181 | Kigali | 7723910
-Senegal | SN | 191 | Dakar | 7924958
-Serbia | RS | 192 | Belgrade | 7030907
-Singapore | SG | 195 | Singapore | 7867982
-Slovakia | SK | 196 | Bratislava | 7884305
-Slovenia | SI | 197 | Ljubljana | 7874306
-Somalia | SO | 199 | Mogadishu | 7971170
-South Africa | ZA | 200 | Johannesburg | 9383693
-South Korea | KR | 114 | Seoul | 4879586
-Spain | ES | 202 | Barcelona | 2572757
-Spain | ES | 202 | Madrid | 2619989
-Sri Lanka | LK | 203 | Colombo | 5043197
-Suriname | SR | 205 | Paramaribo | 7976870
-Sweden | SE | 208 | Stockholm | 7852919
-Switzerland | CH | 209 | Zurich | 1171814
-Taiwan | TW | 211 | Taipei | 8544365
-Tajikistan | TJ | 212 | Dushanbe | 8269814
-Thailand | TH | 214 | Bangkok | 8121638
-Togo | TG | 215 | Lome | 8091425
-Trinidad and Tobago | TT | 218 | Port of Spain | 9521887
-Tunisia | TN | 219 | Tunis | 8295401
-Turkey | TR | 220 | Istanbul | 8401790
-Ukraine | UA | 225 | Kyiv | 8626766
-United Arab Emirates | AE | 226 | Dubai | 728
-United Arab Emirates | AE | 226 | Fujairah | 800
-United Kingdom | GB | 227 | Edinburgh | 2975852
-United Kingdom | GB | 227 | Glasgow | 2978888
-United Kingdom | GB | 227 | London | 2989907
-United Kingdom | GB | 227 | Manchester | 2991110
-United States | US | 228 | Albuquerque | 8957066
-United States | US | 228 | Anchorage | 8736005
-United States | US | 228 | Ashburn | 9103211
-United States | US | 228 | Atlanta | 8792429
-United States | US | 228 | Baltimore | 8873894
-United States | US | 228 | Billings | 8937212
-United States | US | 228 | Boise | 8810342
-United States | US | 228 | Boston | 8895305
-United States | US | 228 | Buffalo | 8963153
-United States | US | 228 | Burlington | 9099731
-United States | US | 228 | Charleston | 9050567
-United States | US | 228 | Charlotte | 8980922
-United States | US | 228 | Cheyenne | 9147794
-United States | US | 228 | Chicago | 8815352
-United States | US | 228 | Columbus | 8997560
-United States | US | 228 | Dallas | 9080300
-United States | US | 228 | Denver | 8770934
-United States | US | 228 | Des Moines | 8835473
-United States | US | 228 | Detroit | 8903312
-United States | US | 228 | Fargo | 8993042
-United States | US | 228 | Honolulu | 8808860
-United States | US | 228 | Houston | 9083687
-United States | US | 228 | Huntington | 9134528
-United States | US | 228 | Indianapolis | 8828528
-United States | US | 228 | Jackson | 8920961
-United States | US | 228 | Kansas City | 8930717
-United States | US | 228 | Las Vegas | 8945963
-United States | US | 228 | Lewiston | 8869646
-United States | US | 228 | Little Rock | 8749055
-United States | US | 228 | Los Angeles | 8761958
-United States | US | 228 | Louisville | 8852234
-United States | US | 228 | McAllen | 9086162
-United States | US | 228 | Miami | 8787782
-United States | US | 228 | Milwaukee | 9144572
-United States | US | 228 | Minneapolis | 8915105
-United States | US | 228 | Montgomery | 8730710
-United States | US | 228 | Nashua | 8948549
-United States | US | 228 | Nashville | 9071273
-United States | US | 228 | New Haven | 8775974
-United States | US | 228 | New Orleans | 8863781
-United States | US | 228 | New York | 8971718
-United States | US | 228 | Oklahoma City | 9013061
-United States | US | 228 | Omaha | 8943887
-United States | US | 228 | Phoenix | 8741960
-United States | US | 228 | Pittsburgh | 9036872
-United States | US | 228 | Portland | 9017738
-United States | US | 228 | Providence | 9048614
-United States | US | 228 | Saint Louis | 8934551
-United States | US | 228 | Salt Lake City | 9097865
-United States | US | 228 | San Francisco | 8766359
-United States | US | 228 | Seattle | 9128402
-United States | US | 228 | Sioux Falls | 9061658
-United States | US | 228 | Trenton | 8956166
-United States | US | 228 | Wichita | 8845130
-United States | US | 228 | Wilmington | 8781776
-Uruguay | UY | 230 | Montevideo | 9150812
-Uzbekistan | UZ | 231 | Tashkent | 9166826
-Venezuela | VE | 233 | Caracas | 9176843
-Vietnam | VN | 234 | Hanoi | 9270302
-Vietnam | VN | 234 | Ho Chi Minh City | 9271799
+Country | Code | ID | City | ID | Map
+--------|------|----|------|----|----
+Afghanistan | AF | 1 | Kabul | 98270 | [34.516667,69.183333](https://www.google.com/maps?q=34.516667,69.183333)
+Albania | AL | 2 | Tirana | 308615 | [41.3275,19.8188889](https://www.google.com/maps?q=41.3275,19.8188889)
+Algeria | DZ | 3 | Algiers | 2438216 | [36.7630556,3.0505556](https://www.google.com/maps?q=36.7630556,3.0505556)
+Andorra | AD | 5 | Andorra la Vella | 20 | [42.5,1.5166667](https://www.google.com/maps?q=42.5,1.5166667)
+Angola | AO | 6 | Luanda | 351407 | [-8.836804,13.233174](https://www.google.com/maps?q=-8.836804,13.233174)
+Argentina | AR | 10 | Buenos Aires | 384866 | [-34.5875,-58.6725](https://www.google.com/maps?q=-34.5875,-58.6725)
+Armenia | AM | 11 | Yerevan | 322385 | [40.1811111,44.5136111](https://www.google.com/maps?q=40.1811111,44.5136111)
+Australia | AU | 13 | Adelaide | 452717 | [-34.928661,138.598633](https://www.google.com/maps?q=-34.928661,138.598633)
+Australia | AU | 13 | Brisbane | 456494 | [-27.47101,153.024292](https://www.google.com/maps?q=-27.47101,153.024292)
+Australia | AU | 13 | Melbourne | 470813 | [-37.813938,144.963425](https://www.google.com/maps?q=-37.813938,144.963425)
+Australia | AU | 13 | Perth | 475799 | [-31.95224,115.861397](https://www.google.com/maps?q=-31.95224,115.861397)
+Australia | AU | 13 | Sydney | 479570 | [-33.861481,151.205475](https://www.google.com/maps?q=-33.861481,151.205475)
+Austria | AT | 14 | Vienna | 448799 | [48.2,16.366667](https://www.google.com/maps?q=48.2,16.366667)
+Azerbaijan | AZ | 15 | Baku | 490037 | [40.395278,49.882222](https://www.google.com/maps?q=40.395278,49.882222)
+Bahamas | BS | 16 | Nassau | 988382 | [25.078056,-77.338611](https://www.google.com/maps?q=25.078056,-77.338611)
+Bahrain | BH | 17 | Manama | 789398 | [26.2361111,50.5830556](https://www.google.com/maps?q=26.2361111,50.5830556)
+Bangladesh | BD | 18 | Dhaka | 594935 | [23.7230556,90.4086111](https://www.google.com/maps?q=23.7230556,90.4086111)
+Barbados | BB | 19 | Bridgetown | 567650 | [13.1,-59.6166667](https://www.google.com/maps?q=13.1,-59.6166667)
+Belgium | BE | 21 | Brussels | 654293 | [50.833333,4.333333](https://www.google.com/maps?q=50.833333,4.333333)
+Belize | BZ | 22 | Belmopan | 1037459 | [17.25,-88.7666667](https://www.google.com/maps?q=17.25,-88.7666667)
+Bermuda | BM | 24 | Hamilton | 809078 | [32.2941667,-64.7838889](https://www.google.com/maps?q=32.2941667,-64.7838889)
+Bhutan | BT | 25 | Thimphu | 989699 | [27.472222,89.636111](https://www.google.com/maps?q=27.472222,89.636111)
+Bolivia | BO | 26 | La Paz | 838514 | [-16.5,-68.15](https://www.google.com/maps?q=-16.5,-68.15)
+Bosnia and Herzegovina | BA | 27 | Sarajevo | 556823 | [43.85,18.3833333](https://www.google.com/maps?q=43.85,18.3833333)
+Brazil | BR | 30 | Sao Paulo | 890249 | [-23.533333,-46.616667](https://www.google.com/maps?q=-23.533333,-46.616667)
+Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | [4.8833333,114.9333333](https://www.google.com/maps?q=4.8833333,114.9333333)
+Bulgaria | BG | 33 | Sofia | 777368 | [42.6833333,23.3166667](https://www.google.com/maps?q=42.6833333,23.3166667)
+Cambodia | KH | 36 | Phnom Penh | 4658987 | [11.55,104.9166667](https://www.google.com/maps?q=11.55,104.9166667)
+Canada | CA | 38 | Montreal | 1048463 | [45.5,-73.583333](https://www.google.com/maps?q=45.5,-73.583333)
+Canada | CA | 38 | Toronto | 1054250 | [43.666667,-79.416667](https://www.google.com/maps?q=43.666667,-79.416667)
+Canada | CA | 38 | Vancouver | 1054610 | [49.25,-123.133333](https://www.google.com/maps?q=49.25,-123.133333)
+Cayman Islands | KY | 40 | George Town | 4922303 | [19.3,-81.3833333](https://www.google.com/maps?q=19.3,-81.3833333)
+Chad | TD | 42 | NDjamena | 8075072 | [12.1130556,15.0491667](https://www.google.com/maps?q=12.1130556,15.0491667)
+Chile | CL | 43 | Santiago | 1227092 | [-33.45,-70.666667](https://www.google.com/maps?q=-33.45,-70.666667)
+Colombia | CO | 47 | Bogota | 1980695 | [4.649178,-74.062827](https://www.google.com/maps?q=4.649178,-74.062827)
+Comoros | KM | 48 | Moroni | 4698371 | [-11.7041667,43.2402778](https://www.google.com/maps?q=-11.7041667,43.2402778)
+Costa Rica | CR | 52 | San Jose | 2062994 | [9.893385,-84.105407](https://www.google.com/maps?q=9.893385,-84.105407)
+Cote Divoire | CI | 53 | Yamoussoukro | 1212512 | [6.820548,-5.276741](https://www.google.com/maps?q=6.820548,-5.276741)
+Croatia | HR | 54 | Zagreb | 3308120 | [45.8,16.0](https://www.google.com/maps?q=45.8,16.0)
+Cyprus | CY | 56 | Nicosia | 2099627 | [35.1666667,33.3666667](https://www.google.com/maps?q=35.1666667,33.3666667)
+Czech Republic | CZ | 57 | Prague | 2144945 | [50.083333,14.466667](https://www.google.com/maps?q=50.083333,14.466667)
+Denmark | DK | 58 | Copenhagen | 2382515 | [55.666667,12.583333](https://www.google.com/maps?q=55.666667,12.583333)
+Dominican Republic | DO | 61 | Santo Domingo | 2434841 | [18.4666667,-69.9](https://www.google.com/maps?q=18.4666667,-69.9)
+Ecuador | EC | 63 | Quito | 2485688 | [-0.2166667,-78.5](https://www.google.com/maps?q=-0.2166667,-78.5)
+Egypt | EG | 64 | Cairo | 2528003 | [30.05,31.25](https://www.google.com/maps?q=30.05,31.25)
+El Salvador | SV | 65 | San Salvador | 7990847 | [13.7086111,-89.2030556](https://www.google.com/maps?q=13.7086111,-89.2030556)
+Estonia | EE | 68 | Tallinn | 2514182 | [59.4338889,24.7280556](https://www.google.com/maps?q=59.4338889,24.7280556)
+Ethiopia | ET | 69 | Addis Ababa | 2660744 | [9.024325,38.749226](https://www.google.com/maps?q=9.024325,38.749226)
+Fiji | FJ | 72 | Suva | 2743211 | [-18.1333333,178.4166667](https://www.google.com/maps?q=-18.1333333,178.4166667)
+Finland | FI | 73 | Helsinki | 2704343 | [60.175556,24.934167](https://www.google.com/maps?q=60.175556,24.934167)
+France | FR | 74 | Bordeaux | 2767493 | [44.840439,-0.5805](https://www.google.com/maps?q=44.840439,-0.5805)
+France | FR | 74 | Marseille | 2867102 | [43.285413,5.37606](https://www.google.com/maps?q=43.285413,5.37606)
+France | FR | 74 | Paris | 2886284 | [48.866667,2.333333](https://www.google.com/maps?q=48.866667,2.333333)
+France | FR | 74 | Strasbourg | 2929151 | [48.600381,7.787355](https://www.google.com/maps?q=48.600381,7.787355)
+Georgia | GE | 80 | Tbilisi | 3032063 | [41.725,44.7908333](https://www.google.com/maps?q=41.725,44.7908333)
+Germany | DE | 81 | Berlin | 2181458 | [52.516667,13.4](https://www.google.com/maps?q=52.516667,13.4)
+Germany | DE | 81 | Frankfurt | 2215709 | [50.116667,8.683333](https://www.google.com/maps?q=50.116667,8.683333)
+Germany | DE | 81 | Hamburg | 2234906 | [53.55,10.0](https://www.google.com/maps?q=53.55,10.0)
+Ghana | GH | 82 | Accra | 3040355 | [5.55,-0.2166667](https://www.google.com/maps?q=5.55,-0.2166667)
+Greece | GR | 84 | Athens | 3131903 | [37.9833333,23.7333333](https://www.google.com/maps?q=37.9833333,23.7333333)
+Greenland | GL | 85 | Nuuk | 3085001 | [64.1833333,-51.75](https://www.google.com/maps?q=64.1833333,-51.75)
+Guam | GU | 88 | Hagatna | 8808314 | [13.4741667,144.7477778](https://www.google.com/maps?q=13.4741667,144.7477778)
+Guatemala | GT | 89 | Guatemala City | 3202463 | [14.621111,-90.526944](https://www.google.com/maps?q=14.621111,-90.526944)
+Honduras | HN | 96 | Tegucigalpa | 3270551 | [14.1,-87.2166667](https://www.google.com/maps?q=14.1,-87.2166667)
+Hong Kong | HK | 97 | Hong Kong | 3232931 | [22.2833333,114.15](https://www.google.com/maps?q=22.2833333,114.15)
+Hungary | HU | 98 | Budapest | 3348344 | [47.5,19.083333](https://www.google.com/maps?q=47.5,19.083333)
+Iceland | IS | 99 | Reykjavik | 4509791 | [64.15,-21.95](https://www.google.com/maps?q=64.15,-21.95)
+India | IN | 100 | Mumbai | 4041548 | [18.975,72.825833](https://www.google.com/maps?q=18.975,72.825833)
+Indonesia | ID | 101 | Jakarta | 3560288 | [-6.174444,106.829444](https://www.google.com/maps?q=-6.174444,106.829444)
+Iraq | IQ | 103 | Baghdad | 4093955 | [33.3386111,44.3938889](https://www.google.com/maps?q=33.3386111,44.3938889)
+Ireland | IE | 104 | Dublin | 3939200 | [53.3330556,-6.2488889](https://www.google.com/maps?q=53.3330556,-6.2488889)
+Isle of Man | IM | 243 | Douglas | 3965405 | [54.15,-4.483333](https://www.google.com/maps?q=54.15,-4.483333)
+Israel | IL | 105 | Tel Aviv | 3964220 | [32.066667,34.766667](https://www.google.com/maps?q=32.066667,34.766667)
+Italy | IT | 106 | Milan | 4542737 | [45.466667,9.2](https://www.google.com/maps?q=45.466667,9.2)
+Italy | IT | 106 | Palermo | 4548074 | [38.116667,13.366667](https://www.google.com/maps?q=38.116667,13.366667)
+Italy | IT | 106 | Rome | 4555808 | [41.8902,12.4922](https://www.google.com/maps?q=41.8902,12.4922)
+Jamaica | JM | 107 | Kingston | 4576328 | [18.0,-76.8](https://www.google.com/maps?q=18.0,-76.8)
+Japan | JP | 108 | Osaka | 4621847 | [34.6937,135.5023](https://www.google.com/maps?q=34.6937,135.5023)
+Japan | JP | 108 | Tokyo | 4633349 | [35.685,139.751389](https://www.google.com/maps?q=35.685,139.751389)
+Jersey | JE | 244 | Saint Helier | 4572281 | [49.183333,-2.1](https://www.google.com/maps?q=49.183333,-2.1)
+Jordan | JO | 109 | Amman | 4581203 | [31.95,35.933333](https://www.google.com/maps?q=31.95,35.933333)
+Kazakhstan | KZ | 110 | Astana | 4925732 | [51.181111,71.427778](https://www.google.com/maps?q=51.181111,71.427778)
+Kenya | KE | 111 | Nairobi | 4646603 | [-1.2833333,36.8166667](https://www.google.com/maps?q=-1.2833333,36.8166667)
+Kuwait | KW | 116 | Kuwait City | 9521894 | [29.3759,47.9774](https://www.google.com/maps?q=29.3759,47.9774)
+Lao People's Democratic Republic | LA | 118 | Vientiane | 5015876 | [17.966667,102.6](https://www.google.com/maps?q=17.966667,102.6)
+Latvia | LV | 119 | Riga | 5192828 | [56.95,24.1](https://www.google.com/maps?q=56.95,24.1)
+Lebanon | LB | 120 | Beirut | 5022080 | [33.8719444,35.5097222](https://www.google.com/maps?q=33.8719444,35.5097222)
+Libyan Arab Jamahiriya | LY | 123 | Tripoli | 5206697 | [32.8925,13.18](https://www.google.com/maps?q=32.8925,13.18)
+Liechtenstein | LI | 124 | Vaduz | 5037212 | [47.1333333,9.5166667](https://www.google.com/maps?q=47.1333333,9.5166667)
+Lithuania | LT | 125 | Vilnius | 5166932 | [54.6833333,25.3166667](https://www.google.com/maps?q=54.6833333,25.3166667)
+Luxembourg | LU | 126 | Luxembourg | 9521876 | [49.6117,6.13](https://www.google.com/maps?q=49.6117,6.13)
+Malaysia | MY | 131 | Kuala Lumpur | 5820143 | [3.166667,101.7](https://www.google.com/maps?q=3.166667,101.7)
+Malta | MT | 134 | Valletta | 5554481 | [35.899722,14.514722](https://www.google.com/maps?q=35.899722,14.514722)
+Mauritania | MR | 137 | Nouakchott | 5551598 | [18.0863889,-15.9752778](https://www.google.com/maps?q=18.0863889,-15.9752778)
+Mauritius | MU | 138 | Port Louis | 5556011 | [-20.1619444,57.4988889](https://www.google.com/maps?q=-20.1619444,57.4988889)
+Mexico | MX | 140 | Mexico | 5677037 | [19.434167,-99.138611](https://www.google.com/maps?q=19.434167,-99.138611)
+Moldova | MD | 142 | Chisinau | 5295179 | [47.005556,28.8575](https://www.google.com/maps?q=47.005556,28.8575)
+Monaco | MC | 143 | Monte Carlo | 5292332 | [43.739722,7.427222](https://www.google.com/maps?q=43.739722,7.427222)
+Mongolia | MN | 144 | Ulaanbaatar | 5543669 | [47.9166667,106.9166667](https://www.google.com/maps?q=47.9166667,106.9166667)
+Montenegro | ME | 146 | Podgorica | 5318561 | [42.441111,19.263611](https://www.google.com/maps?q=42.441111,19.263611)
+Morocco | MA | 147 | Rabat | 5271254 | [34.013784,-6.844268](https://www.google.com/maps?q=34.013784,-6.844268)
+Mozambique | MZ | 148 | Maputo | 5870336 | [-25.9652778,32.5891667](https://www.google.com/maps?q=-25.9652778,32.5891667)
+Myanmar | MM | 149 | Naypyidaw | 9521893 | [19.7475,96.115](https://www.google.com/maps?q=19.7475,96.115)
+Nepal | NP | 152 | Kathmandu | 6142175 | [27.7166667,85.3166667](https://www.google.com/maps?q=27.7166667,85.3166667)
+Netherlands | NL | 153 | Amsterdam | 6076868 | [52.35,4.916667](https://www.google.com/maps?q=52.35,4.916667)
+New Zealand | NZ | 156 | Auckland | 6144239 | [-36.866667,174.766667](https://www.google.com/maps?q=-36.866667,174.766667)
+Nigeria | NG | 159 | Lagos | 6010328 | [6.453056,3.395833](https://www.google.com/maps?q=6.453056,3.395833)
+North Macedonia | MK | 128 | Skopje | 5386019 | [42.0,21.4333333](https://www.google.com/maps?q=42.0,21.4333333)
+Norway | NO | 163 | Oslo | 6127364 | [59.916667,10.75](https://www.google.com/maps?q=59.916667,10.75)
+Pakistan | PK | 165 | Karachi | 6600485 | [24.9056,67.0822](https://www.google.com/maps?q=24.9056,67.0822)
+Panama | PA | 168 | Panama City | 6176273 | [8.9666667,-79.5333333](https://www.google.com/maps?q=8.9666667,-79.5333333)
+Papua New Guinea | PG | 169 | Port Moresby | 6292406 | [-9.4647222,147.1925](https://www.google.com/maps?q=-9.4647222,147.1925)
+Paraguay | PY | 170 | Asuncion | 9521890 | [-25.3,-57.633333](https://www.google.com/maps?q=-25.3,-57.633333)
+Peru | PE | 171 | Lima | 6222584 | [-12.05,-77.05](https://www.google.com/maps?q=-12.05,-77.05)
+Philippines | PH | 172 | Manila | 6391379 | [14.6042,120.9822](https://www.google.com/maps?q=14.6042,120.9822)
+Poland | PL | 174 | Warsaw | 6863429 | [52.25,21.0](https://www.google.com/maps?q=52.25,21.0)
+Portugal | PT | 175 | Lisbon | 6906665 | [38.716667,-9.133333](https://www.google.com/maps?q=38.716667,-9.133333)
+Puerto Rico | PR | 176 | San Juan | 9521884 | [18.406389,-66.063889](https://www.google.com/maps?q=18.406389,-66.063889)
+Qatar | QA | 177 | Doha | 6940529 | [25.286667,51.533333](https://www.google.com/maps?q=25.286667,51.533333)
+Romania | RO | 179 | Bucharest | 6953096 | [44.433333,26.1](https://www.google.com/maps?q=44.433333,26.1)
+Rwanda | RW | 181 | Kigali | 7723910 | [-1.9536111,30.0605556](https://www.google.com/maps?q=-1.9536111,30.0605556)
+Senegal | SN | 191 | Dakar | 7924958 | [14.6708333,-17.4380556](https://www.google.com/maps?q=14.6708333,-17.4380556)
+Serbia | RS | 192 | Belgrade | 7030907 | [44.818611,20.468056](https://www.google.com/maps?q=44.818611,20.468056)
+Singapore | SG | 195 | Singapore | 7867982 | [1.2930556,103.8558333](https://www.google.com/maps?q=1.2930556,103.8558333)
+Slovakia | SK | 196 | Bratislava | 7884305 | [48.15,17.1166667](https://www.google.com/maps?q=48.15,17.1166667)
+Slovenia | SI | 197 | Ljubljana | 7874306 | [46.0552778,14.5144444](https://www.google.com/maps?q=46.0552778,14.5144444)
+Somalia | SO | 199 | Mogadishu | 7971170 | [2.0666667,45.3666667](https://www.google.com/maps?q=2.0666667,45.3666667)
+South Africa | ZA | 200 | Johannesburg | 9383693 | [-26.205171,28.049815](https://www.google.com/maps?q=-26.205171,28.049815)
+South Korea | KR | 114 | Seoul | 4879586 | [37.5985,126.9783](https://www.google.com/maps?q=37.5985,126.9783)
+Spain | ES | 202 | Barcelona | 2572757 | [41.398371,2.1741](https://www.google.com/maps?q=41.398371,2.1741)
+Spain | ES | 202 | Madrid | 2619989 | [40.408566,-3.69222](https://www.google.com/maps?q=40.408566,-3.69222)
+Sri Lanka | LK | 203 | Colombo | 5043197 | [6.9319444,79.8477778](https://www.google.com/maps?q=6.9319444,79.8477778)
+Suriname | SR | 205 | Paramaribo | 7976870 | [5.8333333,-55.1666667](https://www.google.com/maps?q=5.8333333,-55.1666667)
+Sweden | SE | 208 | Stockholm | 7852919 | [59.333333,18.05](https://www.google.com/maps?q=59.333333,18.05)
+Switzerland | CH | 209 | Zurich | 1171814 | [47.366667,8.55](https://www.google.com/maps?q=47.366667,8.55)
+Taiwan | TW | 211 | Taipei | 8544365 | [25.0391667,121.525](https://www.google.com/maps?q=25.0391667,121.525)
+Tajikistan | TJ | 212 | Dushanbe | 8269814 | [38.56,68.7738889](https://www.google.com/maps?q=38.56,68.7738889)
+Thailand | TH | 214 | Bangkok | 8121638 | [13.753979,100.501444](https://www.google.com/maps?q=13.753979,100.501444)
+Togo | TG | 215 | Lome | 8091425 | [6.1319444,1.2227778](https://www.google.com/maps?q=6.1319444,1.2227778)
+Trinidad and Tobago | TT | 218 | Port of Spain | 9521887 | [10.666667,-61.516667](https://www.google.com/maps?q=10.666667,-61.516667)
+Tunisia | TN | 219 | Tunis | 8295401 | [36.806112,10.171078](https://www.google.com/maps?q=36.806112,10.171078)
+Turkey | TR | 220 | Istanbul | 8401790 | [41.018611,28.964722](https://www.google.com/maps?q=41.018611,28.964722)
+Ukraine | UA | 225 | Kyiv | 8626766 | [50.433333,30.516667](https://www.google.com/maps?q=50.433333,30.516667)
+United Arab Emirates | AE | 226 | Dubai | 728 | [25.258172,55.304717](https://www.google.com/maps?q=25.258172,55.304717)
+United Arab Emirates | AE | 226 | Fujairah | 800 | [25.116412,56.341408](https://www.google.com/maps?q=25.116412,56.341408)
+United Kingdom | GB | 227 | Edinburgh | 2975852 | [55.95,-3.2](https://www.google.com/maps?q=55.95,-3.2)
+United Kingdom | GB | 227 | Glasgow | 2978888 | [55.833333,-4.25](https://www.google.com/maps?q=55.833333,-4.25)
+United Kingdom | GB | 227 | London | 2989907 | [51.514125,-0.093689](https://www.google.com/maps?q=51.514125,-0.093689)
+United Kingdom | GB | 227 | Manchester | 2991110 | [53.5,-2.216667](https://www.google.com/maps?q=53.5,-2.216667)
+United States | US | 228 | Albuquerque | 8957066 | [35.0844444,-106.6505556](https://www.google.com/maps?q=35.0844444,-106.6505556)
+United States | US | 228 | Anchorage | 8736005 | [61.2180556,-149.9002778](https://www.google.com/maps?q=61.2180556,-149.9002778)
+United States | US | 228 | Ashburn | 9103211 | [39.0436111,-77.4877778](https://www.google.com/maps?q=39.0436111,-77.4877778)
+United States | US | 228 | Atlanta | 8792429 | [33.7488889,-84.3880556](https://www.google.com/maps?q=33.7488889,-84.3880556)
+United States | US | 228 | Baltimore | 8873894 | [39.2902778,-76.6125](https://www.google.com/maps?q=39.2902778,-76.6125)
+United States | US | 228 | Billings | 8937212 | [45.7833333,-108.5](https://www.google.com/maps?q=45.7833333,-108.5)
+United States | US | 228 | Boise | 8810342 | [43.6136111,-116.2025](https://www.google.com/maps?q=43.6136111,-116.2025)
+United States | US | 228 | Boston | 8895305 | [42.3583333,-71.0602778](https://www.google.com/maps?q=42.3583333,-71.0602778)
+United States | US | 228 | Buffalo | 8963153 | [42.8863889,-78.8786111](https://www.google.com/maps?q=42.8863889,-78.8786111)
+United States | US | 228 | Burlington | 9099731 | [44.4758333,-73.2125](https://www.google.com/maps?q=44.4758333,-73.2125)
+United States | US | 228 | Charleston | 9050567 | [32.7763889,-79.9311111](https://www.google.com/maps?q=32.7763889,-79.9311111)
+United States | US | 228 | Charlotte | 8980922 | [35.2269444,-80.8433333](https://www.google.com/maps?q=35.2269444,-80.8433333)
+United States | US | 228 | Cheyenne | 9147794 | [41.14,-104.8197222](https://www.google.com/maps?q=41.14,-104.8197222)
+United States | US | 228 | Chicago | 8815352 | [41.85,-87.65](https://www.google.com/maps?q=41.85,-87.65)
+United States | US | 228 | Columbus | 8997560 | [39.9611111,-82.9988889](https://www.google.com/maps?q=39.9611111,-82.9988889)
+United States | US | 228 | Dallas | 9080300 | [32.7833333,-96.8](https://www.google.com/maps?q=32.7833333,-96.8)
+United States | US | 228 | Denver | 8770934 | [39.7391667,-104.9841667](https://www.google.com/maps?q=39.7391667,-104.9841667)
+United States | US | 228 | Des Moines | 8835473 | [41.6005556,-93.6088889](https://www.google.com/maps?q=41.6005556,-93.6088889)
+United States | US | 228 | Detroit | 8903312 | [42.3313889,-83.0458333](https://www.google.com/maps?q=42.3313889,-83.0458333)
+United States | US | 228 | Fargo | 8993042 | [46.8772222,-96.7894444](https://www.google.com/maps?q=46.8772222,-96.7894444)
+United States | US | 228 | Honolulu | 8808860 | [21.3069444,-157.8583333](https://www.google.com/maps?q=21.3069444,-157.8583333)
+United States | US | 228 | Houston | 9083687 | [29.7630556,-95.3630556](https://www.google.com/maps?q=29.7630556,-95.3630556)
+United States | US | 228 | Huntington | 9134528 | [38.4191667,-82.4452778](https://www.google.com/maps?q=38.4191667,-82.4452778)
+United States | US | 228 | Indianapolis | 8828528 | [39.7683333,-86.1580556](https://www.google.com/maps?q=39.7683333,-86.1580556)
+United States | US | 228 | Jackson | 8920961 | [32.2986111,-90.1847222](https://www.google.com/maps?q=32.2986111,-90.1847222)
+United States | US | 228 | Kansas City | 8930717 | [39.0997222,-94.5783333](https://www.google.com/maps?q=39.0997222,-94.5783333)
+United States | US | 228 | Las Vegas | 8945963 | [36.175,-115.1363889](https://www.google.com/maps?q=36.175,-115.1363889)
+United States | US | 228 | Lewiston | 8869646 | [44.1002778,-70.2152778](https://www.google.com/maps?q=44.1002778,-70.2152778)
+United States | US | 228 | Little Rock | 8749055 | [34.7463889,-92.2894444](https://www.google.com/maps?q=34.7463889,-92.2894444)
+United States | US | 228 | Los Angeles | 8761958 | [34.0522222,-118.2427778](https://www.google.com/maps?q=34.0522222,-118.2427778)
+United States | US | 228 | Louisville | 8852234 | [38.2541667,-85.7594444](https://www.google.com/maps?q=38.2541667,-85.7594444)
+United States | US | 228 | McAllen | 9086162 | [26.2030556,-98.2297222](https://www.google.com/maps?q=26.2030556,-98.2297222)
+United States | US | 228 | Miami | 8787782 | [25.7738889,-80.1938889](https://www.google.com/maps?q=25.7738889,-80.1938889)
+United States | US | 228 | Milwaukee | 9144572 | [43.0388889,-87.9063889](https://www.google.com/maps?q=43.0388889,-87.9063889)
+United States | US | 228 | Minneapolis | 8915105 | [44.98,-93.2636111](https://www.google.com/maps?q=44.98,-93.2636111)
+United States | US | 228 | Montgomery | 8730710 | [32.3666667,-86.3](https://www.google.com/maps?q=32.3666667,-86.3)
+United States | US | 228 | Nashua | 8948549 | [42.7652778,-71.4680556](https://www.google.com/maps?q=42.7652778,-71.4680556)
+United States | US | 228 | Nashville | 9071273 | [36.1658333,-86.7844444](https://www.google.com/maps?q=36.1658333,-86.7844444)
+United States | US | 228 | New Haven | 8775974 | [41.3080556,-72.9286111](https://www.google.com/maps?q=41.3080556,-72.9286111)
+United States | US | 228 | New Orleans | 8863781 | [29.9544444,-90.075](https://www.google.com/maps?q=29.9544444,-90.075)
+United States | US | 228 | New York | 8971718 | [40.7141667,-74.0063889](https://www.google.com/maps?q=40.7141667,-74.0063889)
+United States | US | 228 | Oklahoma City | 9013061 | [35.4675,-97.5161111](https://www.google.com/maps?q=35.4675,-97.5161111)
+United States | US | 228 | Omaha | 8943887 | [41.2586111,-95.9375](https://www.google.com/maps?q=41.2586111,-95.9375)
+United States | US | 228 | Phoenix | 8741960 | [33.4483333,-112.0733333](https://www.google.com/maps?q=33.4483333,-112.0733333)
+United States | US | 228 | Pittsburgh | 9036872 | [40.4405556,-79.9961111](https://www.google.com/maps?q=40.4405556,-79.9961111)
+United States | US | 228 | Portland | 9017738 | [45.5236111,-122.675](https://www.google.com/maps?q=45.5236111,-122.675)
+United States | US | 228 | Providence | 9048614 | [41.8238889,-71.4133333](https://www.google.com/maps?q=41.8238889,-71.4133333)
+United States | US | 228 | Saint Louis | 8934551 | [38.6272222,-90.1977778](https://www.google.com/maps?q=38.6272222,-90.1977778)
+United States | US | 228 | Salt Lake City | 9097865 | [40.7608333,-111.8902778](https://www.google.com/maps?q=40.7608333,-111.8902778)
+United States | US | 228 | San Francisco | 8766359 | [37.7698135,-122.4660005](https://www.google.com/maps?q=37.7698135,-122.4660005)
+United States | US | 228 | Seattle | 9128402 | [47.6063889,-122.3308333](https://www.google.com/maps?q=47.6063889,-122.3308333)
+United States | US | 228 | Sioux Falls | 9061658 | [43.55,-96.7](https://www.google.com/maps?q=43.55,-96.7)
+United States | US | 228 | Trenton | 8956166 | [40.2169444,-74.7433333](https://www.google.com/maps?q=40.2169444,-74.7433333)
+United States | US | 228 | Wichita | 8845130 | [37.6922222,-97.3372222](https://www.google.com/maps?q=37.6922222,-97.3372222)
+United States | US | 228 | Wilmington | 8781776 | [39.7458333,-75.5469444](https://www.google.com/maps?q=39.7458333,-75.5469444)
+Uruguay | UY | 230 | Montevideo | 9150812 | [-34.8580556,-56.1708333](https://www.google.com/maps?q=-34.8580556,-56.1708333)
+Uzbekistan | UZ | 231 | Tashkent | 9166826 | [41.3166667,69.25](https://www.google.com/maps?q=41.3166667,69.25)
+Venezuela | VE | 233 | Caracas | 9176843 | [10.5,-66.9166667](https://www.google.com/maps?q=10.5,-66.9166667)
+Vietnam | VN | 234 | Hanoi | 9270302 | [21.033333,105.85](https://www.google.com/maps?q=21.033333,105.85)
+Vietnam | VN | 234 | Ho Chi Minh City | 9271799 | [10.75,106.666667](https://www.google.com/maps?q=10.75,106.666667)
