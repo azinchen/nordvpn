@@ -375,6 +375,30 @@ else
     TRUSTED_PEER="?:?"
 fi
 
+# Detect technology type and XOR details from config
+TECH_TYPE="Standard"
+XOR_ACTIVE_PORT=""
+REMOTE_COUNT=0
+if [ "$VPN_STATUS" = "Connected" ] && [ -f "$ovpnfile" ]; then
+    if grep -q '^scramble obfuscate' "$ovpnfile" 2>/dev/null; then
+        TECH_TYPE="XOR Obfuscated"
+    elif grep -q 'legacy_dedicated_ip\|dedicated' "$ovpnfile" 2>/dev/null; then
+        TECH_TYPE="Dedicated IP"
+    fi
+    REMOTE_COUNT="$(grep -c '^remote ' "$ovpnfile" 2>/dev/null || printf '0')"
+    # For XOR, show which port OpenVPN actually connected on
+    if [ "$TECH_TYPE" = "XOR Obfuscated" ] && [ -n "$TRUSTED_PORT" ] && [ "$TRUSTED_PORT" != "0" ]; then
+        XOR_ACTIVE_PORT="$TRUSTED_PORT"
+    fi
+fi
+# Also check the TECHNOLOGY env var as a fallback
+if [ "$TECH_TYPE" = "Standard" ] && [ -n "${technology:-}" ]; then
+    case "$technology" in
+        *xor*) TECH_TYPE="XOR Obfuscated" ;;
+        *dedicated*) TECH_TYPE="Dedicated IP" ;;
+    esac
+fi
+
 echo "================================================================"
 echo "OpenVPN DIAG (full)   : $(date -Is 2>/dev/null || date)"
 echo "VPN Status            : $VPN_STATUS"
@@ -390,6 +414,11 @@ echo "Ifconfig Remote       : $IFCONF_REMOTE"
 echo "Route VPN Gateway     : $ROUTE_VPN_GW"
 echo "Trusted Peer          : $TRUSTED_PEER"
 echo "Proto/Local Port      : $PROTO/$LPORT"
+echo "Technology            : $TECH_TYPE"
+if [ "$TECH_TYPE" = "XOR Obfuscated" ]; then
+    [ -n "$XOR_ACTIVE_PORT" ] && echo "XOR Active Port       : $XOR_ACTIVE_PORT"
+    echo "XOR Remote Count      : $REMOTE_COUNT"
+fi
 [ -n "$CONNECTION_UPTIME" ] && echo "Connection Uptime     : $CONNECTION_UPTIME"
 echo
 

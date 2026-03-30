@@ -22,32 +22,27 @@ normalize_proto()
 
 vpn-config
 
-# -------- parse the single 'remote' line --------
+# -------- parse remote lines and protocol --------
 [ -s "$ovpnfile" ] || { log_error "$SCRIPT_NAME" "CRITICAL ERROR: OVPN file not found: $ovpnfile - sleeping infinite" >&2; sleep infinity; }
 
-r_line="$(awk '/^[[:space:]]*remote[ \t]+/ {print; exit}' "$ovpnfile")"
-[ -n "$r_line" ] || { log_error "$SCRIPT_NAME" "CRITICAL ERROR: No 'remote' line in $ovpnfile - sleeping infinite" >&2; sleep infinity; }
-
-# Fields: remote <ip> [port] [proto]
-r_ip_raw="$(echo "$r_line" | awk '{print $2}')"
-r_port="$(echo "$r_line"   | awk '{print $3}')"
-r_proto_raw="$(echo "$r_line" | awk '{print $4}')"
-
-# Fallbacks from file if not specified on the remote line
-[ -n "${r_port:-}" ] || r_port="$(awk '/^[[:space:]]*port[ \t]+/ {print $2; exit}' "$ovpnfile" || true)"
-[ -n "${r_port:-}" ] || r_port=1194
-[ -n "${r_proto_raw:-}" ] || r_proto_raw="$(awk '/^[[:space:]]*proto[ \t]+/ {print $2; exit}' "$ovpnfile" || true)"
+# Get protocol from file
+r_proto_raw="$(awk '/^[[:space:]]*proto[ \t]+/ {print $2; exit}' "$ovpnfile" || true)"
 r_proto="$(normalize_proto "$r_proto_raw")"
 
-# Clean up any bracketed IPv6 (just in case)
-r_ip="$(echo "$r_ip_raw" | sed 's,^\[,,' | sed 's,\]$,,' )"
+# -------- add firewall pinholes for all remote entries --------
+remote_count="$(awk '/^[[:space:]]*remote[ \t]+/ {c++} END {print c+0}' "$ovpnfile")"
+[ "$remote_count" -gt 0 ] || { log_error "$SCRIPT_NAME" "CRITICAL ERROR: no remote entries found in $ovpnfile - sleeping infinite" >&2; sleep infinity; }
 
-# -------- add a single temporary pinhole on eth0 --------
+awk '/^[[:space:]]*remote[ \t]+/ {print $2, $3}' "$ovpnfile" | while read -r r_ip r_port; do
+    # Clean up any bracketed IPv6
+    r_ip="$(echo "$r_ip" | sed 's,^\[,,' | sed 's,\]$,,' )"
+    [ -n "${r_port:-}" ] || r_port=1194
 
-PIN_SPEC="-A VPN-SERVER -o eth0 -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"
-if run4 $PIN_SPEC 2>/dev/null; then
-    log "$SCRIPT_NAME" "Added firewall pinhole for ${r_proto} traffic to ${r_ip}:${r_port} on interface eth0"
-fi
+    PIN_SPEC="-A VPN-SERVER -o eth0 -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"
+    if run4 $PIN_SPEC 2>/dev/null; then
+        log "$SCRIPT_NAME" "Added firewall pinhole for ${r_proto} traffic to ${r_ip}:${r_port} on interface eth0"
+    fi
+done
 
 # Add --data-ciphers if not already present in OPENVPN_OPTS
 if ! echo "$openvpn_opts" | grep -q -- "--data-ciphers"; then

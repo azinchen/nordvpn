@@ -32,9 +32,11 @@ if [ -n "$docker_network" ]; then
     run4_critical -t nat -A POSTROUTING -o tun0 -j MASQUERADE
 
     # Create named chain for VPN Server rules
+    # Do not restrict by port here — svc-nordvpn adds per-IP:port rules
+    # into VPN-SERVER at runtime (XOR uses non-standard ports)
     run4 -N VPN-SERVER
-    run4 -A OUTPUT -p udp --dport 1194 -j VPN-SERVER
-    run4 -A OUTPUT -p tcp --dport 443 -j VPN-SERVER
+    run4 -A OUTPUT -p udp -j VPN-SERVER
+    run4 -A OUTPUT -p tcp -j VPN-SERVER
 
     # NordVPN API bootstrap (TCP/443) by resolved IPs
     if [ -n "$nordvpnapi_ip" ]; then

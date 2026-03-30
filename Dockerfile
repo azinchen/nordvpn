@@ -1,3 +1,5 @@
+ARG OPENVPN_VERSION=2.7.0
+
 # s6 overlay builder
 FROM alpine:3.23.3 AS s6-builder
 
@@ -41,6 +43,58 @@ RUN echo "**** install security fix packages ****" && \
     tar -C /s6/ -Jxpf /tmp/s6-overlay-symlinks-noarch.tar.xz && \
     tar -C /s6/ -Jxpf /tmp/s6-overlay-symlinks-arch.tar.xz
 
+# OpenVPN XOR builder
+FROM alpine:3.23.3 AS openvpn-builder
+
+ARG OPENVPN_VERSION
+ARG OPENVPN_XOR_PATCH_VERSION=${OPENVPN_VERSION}
+
+RUN echo "**** install build dependencies ****" && \
+    apk --no-cache --no-progress add \
+        autoconf=2.72-r1 \
+        automake=1.18.1-r0 \
+        build-base=0.5-r3 \
+        curl=8.17.0-r1 \
+        libcap-ng-dev=0.8.5-r0 \
+        linux-headers=6.16.12-r0 \
+        libnl3-dev=3.11.0-r0 \
+        libtool=2.5.4-r2 \
+        lz4-dev=1.10.0-r0 \
+        lzo-dev=2.10-r5 \
+        openssl-dev=3.5.5-r0 \
+        patch=2.8-r0 \
+        && \
+    echo "**** download OpenVPN ${OPENVPN_VERSION} source ****" && \
+    curl -sSL "https://github.com/OpenVPN/openvpn/archive/refs/tags/v${OPENVPN_VERSION}.tar.gz" \
+        -o /tmp/openvpn.tar.gz && \
+    mkdir -p /tmp/openvpn && \
+    tar xf /tmp/openvpn.tar.gz -C /tmp/openvpn --strip-components=1 && \
+    echo "**** apply Tunnelblick XOR patches ****" && \
+    cd /tmp/openvpn && \
+    for p in 02-tunnelblick-openvpn_xorpatch-a.diff \
+             03-tunnelblick-openvpn_xorpatch-b.diff \
+             04-tunnelblick-openvpn_xorpatch-c.diff \
+             05-tunnelblick-openvpn_xorpatch-d.diff \
+             06-tunnelblick-openvpn_xorpatch-e.diff; do \
+        echo "Applying $p" && \
+        curl -sSL "https://raw.githubusercontent.com/Tunnelblick/Tunnelblick/main/third_party/sources/openvpn/openvpn-${OPENVPN_XOR_PATCH_VERSION}/patches/$p" | \
+            patch -p1 || exit 1; \
+    done && \
+    echo "**** build OpenVPN with XOR support ****" && \
+    autoreconf -ivf && \
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc/openvpn \
+        --enable-iproute2 \
+        --enable-plugins \
+        --enable-x509-alt-username \
+        --enable-lzo \
+        --enable-lz4 \
+        --disable-plugin-auth-pam && \
+    make -j"$(nproc)" && \
+    strip src/openvpn/openvpn && \
+    cp src/openvpn/openvpn /tmp/openvpn-binary
+
 # rootfs builder
 FROM alpine:3.23.3 AS rootfs-builder
 
@@ -58,6 +112,7 @@ COPY root/ /rootfs/
 RUN chmod +x /rootfs/usr/local/bin/* || true && \
     chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/run  || true && \
     chmod +x /rootfs/etc/s6-overlay/s6-rc.d/*/finish || true && \
+    chmod +x /rootfs/etc/openvpn/*.sh && \
     chmod 644 /rootfs/usr/local/share/nordvpn/data/*.json && \
     chmod 644 /rootfs/usr/local/share/nordvpn/data/template.ovpn && \
     for f in /rootfs/usr/local/share/nordvpn/data/*.json; do \
@@ -79,11 +134,13 @@ RUN chmod +x /rootfs/usr/local/bin/* || true && \
     safe_sed "__IMAGE_VERSION__" "${IMAGE_VERSION}" /rootfs/usr/local/bin/entrypoint && \
     safe_sed "__BUILD_DATE__" "${BUILD_DATE}" /rootfs/usr/local/bin/entrypoint
 COPY --from=s6-builder /s6/ /rootfs/
+COPY --from=openvpn-builder /tmp/openvpn-binary /rootfs/usr/sbin/openvpn
 
 # Main image
 FROM alpine:3.23.3
 
 ARG TARGETPLATFORM
+ARG OPENVPN_VERSION
 ARG IMAGE_VERSION=N/A \
     BUILD_DATE=N/A
 
@@ -94,7 +151,9 @@ LABEL org.opencontainers.image.authors="Alexander Zinchenko <alexander@zinchenko
       org.opencontainers.image.title="NordVPN OpenVPN Docker Container" \
       org.opencontainers.image.url="https://github.com/azinchen/nordvpn" \
       org.opencontainers.image.version="${IMAGE_VERSION}" \
-      org.opencontainers.image.created="${BUILD_DATE}"
+      org.opencontainers.image.created="${BUILD_DATE}" \
+      com.nordvpn.openvpn.version="${OPENVPN_VERSION}" \
+      com.nordvpn.openvpn.xor="true"
 
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=120000
 
@@ -112,7 +171,10 @@ RUN echo "**** install security fix packages ****" && \
         jq=1.8.1-r0 \
         shadow=4.18.0-r0 \
         shadow-login=4.18.0-r0 \
-        openvpn=2.6.16-r0 \
+        libcap-ng=0.8.5-r0 \
+        libnl3=3.11.0-r0 \
+        lz4-libs=1.10.0-r0 \
+        lzo=2.10-r5 \
         bind-tools=${bind_tools_version} \
         && \
     echo "**** create process user ****" && \
