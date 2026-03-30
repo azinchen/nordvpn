@@ -23,16 +23,17 @@
 
 OpenVPN client docker container that routes other containers' traffic through NordVPN servers automatically.
 
-## Key Features
+## ✨ Key Features
 
-- **Easy Setup** — Route any container's traffic through VPN with `--net=container:vpn`
-- **Smart Server Selection** — Auto-select servers by country, city, group, or specific hostname ([details][wiki-server])
-- **Load Balancing** — Intelligent sorting by server load when multiple locations specified
-- **Auto-Reconnection** — Periodic server switching and health monitoring ([details][wiki-reconnect])
-- **Kill Switch** — Default-deny firewall blocks all traffic when VPN is down ([details][wiki-security])
-- **Local/LAN Access** — Allow specific CIDRs with `NETWORK=...` ([details][wiki-network])
-- **IPv6 Firewall** — Built-in chains default to DROP ([details][wiki-ipv6])
-- **iptables Compatibility** — Auto-selects nft or legacy backend ([details][wiki-firewall])
+- **🚀 Easy Setup** — Route any container's traffic through VPN with `--net=container:vpn`
+- **🌍 Smart Server Selection** — Auto-select servers by country, city, group, or specific hostname ([details][wiki-server])
+- **⚖️ Load Balancing** — Intelligent sorting by server load when multiple locations specified
+- **🔄 Auto-Reconnection** — Periodic server switching and health monitoring ([details][wiki-reconnect])
+- **🕵️ XOR Obfuscation** — Built-in Tunnelblick XOR patches disguise OpenVPN traffic to bypass DPI ([details][wiki-tech])
+- **🛡️ Kill Switch** — Default-deny firewall blocks all traffic when VPN is down ([details][wiki-security])
+- **🏠 Local/LAN Access** — Allow specific CIDRs with `NETWORK=...` ([details][wiki-network])
+- **📵 IPv6 Firewall** — Built-in chains default to DROP ([details][wiki-ipv6])
+- **🧱 iptables Compatibility** — Auto-selects nft or legacy backend ([details][wiki-firewall])
 
 > **📖 [Full documentation on the Wiki][wiki-home]** — configuration guides, examples, troubleshooting, FAQ, and architecture.
 
@@ -119,6 +120,7 @@ services:
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPT<wbr>_INTERVAL** | Seconds between retries. Default: `10` |
 | **NETWORK** | LAN/inter‑container CIDRs to allow; semicolon‑separated. Default: none |
 | **NORDVPNAPI<wbr>_IP** | API bootstrap IPs (semicolon‑separated). Default: `104.16.208.203;104.19.159.190` |
+| **XOR<wbr>_KEY** | XOR scramble obfuscation key for `openvpn_xor_*` technologies. Default: NordVPN's built-in key |
 | **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters. |
 | **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable network diagnostics on connect. Default: `false` |
 
@@ -162,6 +164,7 @@ Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki 
 [wiki-network]: https://github.com/azinchen/nordvpn/wiki/Local-Network-Access
 [wiki-ipv6]: https://github.com/azinchen/nordvpn/wiki/IPv6-Configuration
 [wiki-firewall]: https://github.com/azinchen/nordvpn/wiki/Firewall-Backends
+[wiki-tech]: https://github.com/azinchen/nordvpn/wiki/Technologies
 [wiki-compose]: https://github.com/azinchen/nordvpn/wiki/Docker-Compose-Examples
 [wiki-run]: https://github.com/azinchen/nordvpn/wiki/Docker-Run-Examples
 [wiki-troubleshoot]: https://github.com/azinchen/nordvpn/wiki/Troubleshooting

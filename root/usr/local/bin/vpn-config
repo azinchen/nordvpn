@@ -521,17 +521,64 @@ chmod 0600 "$ovpnfile"
 chown nordvpn:nordvpn "$ovpnfile"
 
 log "$SCRIPT_NAME" "Configuring VPN settings (IP: $serverip, Protocol: $protocol)"
-sed -i "s/__IP__/$serverip/g" "$ovpnfile"
 sed -i "s/__PROTOCOL__/$protocol/g" "$ovpnfile"
 sed -i "s/__X509_NAME__/$hostname/g" "$ovpnfile"
 
-if [ "$protocol" = "udp" ]; then
-    sed -i "s/__PORT__/1194/g" "$ovpnfile"
+# Resolve technology identifier for port and XOR configuration
+tech_ident="$technology"
+_tmp_ident=$(jq -r --arg NAME "$technology" '.[] | select(.name == $NAME) | .identifier' < "/usr/local/share/nordvpn/data/technologies.json")
+[ -n "$_tmp_ident" ] && tech_ident="$_tmp_ident"
+
+# Generate remote lines and scramble config based on technology
+remotes_tmp="/tmp/ovpn-remotes.tmp"
+if contains_substring "$tech_ident" "xor"; then
+    # XOR obfuscated: multiple ports + scramble
+    scramble_line="scramble obfuscate $xor_key"
+    if [ "$protocol" = "tcp" ]; then
+        printf '%s\n' \
+            "remote $serverip 20" "remote $serverip 21" \
+            "remote $serverip 80" "remote $serverip 443" \
+            "remote $serverip 465" "remote $serverip 587" \
+            "remote $serverip 993" "remote $serverip 995" > "$remotes_tmp"
+    else
+        printf '%s\n' \
+            "remote $serverip 53" "remote $serverip 1194" \
+            "remote $serverip 1198" "remote $serverip 1214" \
+            "remote $serverip 1215" "remote $serverip 1216" \
+            "remote $serverip 2231" > "$remotes_tmp"
+    fi
+    log "$SCRIPT_NAME" "XOR obfuscation enabled with multiple remote ports"
+elif [ "$protocol" = "udp" ]; then
+    scramble_line=""
+    printf '%s\n' "remote $serverip 1194" > "$remotes_tmp"
 elif [ "$protocol" = "tcp" ]; then
-    sed -i "s/__PORT__/443/g" "$ovpnfile"
+    scramble_line=""
+    printf '%s\n' "remote $serverip 443" > "$remotes_tmp"
 else
     log_error "$SCRIPT_NAME" "CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$technology\" - sleeping infinite"
     sleep infinity
+fi
+
+# Apply remotes and scramble to config
+sed -i '/^__REMOTES__$/r '"$remotes_tmp" "$ovpnfile"
+sed -i '/^__REMOTES__$/d' "$ovpnfile"
+rm -f "$remotes_tmp"
+if [ -n "$scramble_line" ]; then
+    sed -i "s|^__SCRAMBLE__$|$scramble_line|" "$ovpnfile"
+else
+    sed -i '/^__SCRAMBLE__$/d' "$ovpnfile"
+fi
+
+# XOR servers use a different tls-auth key than standard servers
+if contains_substring "$tech_ident" "xor"; then
+    xor_tls_auth="/usr/local/share/nordvpn/data/tls-auth-xor.pem"
+    if [ -f "$xor_tls_auth" ]; then
+        sed -i '/^key-direction/,/<\/tls-auth>/d' "$ovpnfile"
+        cat "$xor_tls_auth" >> "$ovpnfile"
+        log "$SCRIPT_NAME" "Replaced tls-auth key with XOR-specific key"
+    else
+        log_error "$SCRIPT_NAME" "WARNING: XOR tls-auth key file not found at $xor_tls_auth"
+    fi
 fi
 
 # Verify the config file was created successfully
