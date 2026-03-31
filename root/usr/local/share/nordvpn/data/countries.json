@@ -1813,6 +1813,20 @@
     ]
   },
   {
+    "id": 213,
+    "name": "Tanzania",
+    "code": "TZ",
+    "cities": [
+      {
+        "id": 8554790,
+        "name": "Dodoma",
+        "latitude": -6.1833333,
+        "longitude": 35.75,
+        "dns_name": "dodoma"
+      }
+    ]
+  },
+  {
     "id": 214,
     "name": "Thailand",
     "code": "TH",
@@ -2404,6 +2418,20 @@
         "latitude": 10.75,
         "longitude": 106.666667,
         "dns_name": "ho-chi-minh-city"
+      }
+    ]
+  },
+  {
+    "id": 239,
+    "name": "Yemen",
+    "code": "YE",
+    "cities": [
+      {
+        "id": 9367184,
+        "name": "Sanaa",
+        "latitude": 15.3547222,
+        "longitude": 44.2066667,
+        "dns_name": "sanaa"
       }
     ]
   }
