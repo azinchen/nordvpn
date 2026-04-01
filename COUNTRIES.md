@@ -1,4 +1,4 @@
-Last updated: 2026-03-28
+Last updated: 2026-03-31
 ---
 # List of COUNTRIES with NordVPN servers
 
@@ -126,6 +126,7 @@ Sweden | SE | 208
 Switzerland | CH | 209
 Taiwan | TW | 211
 Tajikistan | TJ | 212
+Tanzania | TZ | 213
 Thailand | TH | 214
 Togo | TG | 215
 Trinidad and Tobago | TT | 218
@@ -139,3 +140,4 @@ Uruguay | UY | 230
 Uzbekistan | UZ | 231
 Venezuela | VE | 233
 Vietnam | VN | 234
+Yemen | YE | 239
