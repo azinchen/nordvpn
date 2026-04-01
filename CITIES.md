@@ -1,4 +1,4 @@
-Last updated: 2026-03-29
+Last updated: 2026-03-31
 ---
 # List of CITIES with NordVPN servers
 
@@ -141,6 +141,7 @@ Sweden | SE | 208 | Stockholm | 7852919 | [59.333333,18.05](https://www.google.c
 Switzerland | CH | 209 | Zurich | 1171814 | [47.366667,8.55](https://www.google.com/maps?q=47.366667,8.55)
 Taiwan | TW | 211 | Taipei | 8544365 | [25.0391667,121.525](https://www.google.com/maps?q=25.0391667,121.525)
 Tajikistan | TJ | 212 | Dushanbe | 8269814 | [38.56,68.7738889](https://www.google.com/maps?q=38.56,68.7738889)
+Tanzania | TZ | 213 | Dodoma | 8554790 | [-6.1833333,35.75](https://www.google.com/maps?q=-6.1833333,35.75)
 Thailand | TH | 214 | Bangkok | 8121638 | [13.753979,100.501444](https://www.google.com/maps?q=13.753979,100.501444)
 Togo | TG | 215 | Lome | 8091425 | [6.1319444,1.2227778](https://www.google.com/maps?q=6.1319444,1.2227778)
 Trinidad and Tobago | TT | 218 | Port of Spain | 9521887 | [10.666667,-61.516667](https://www.google.com/maps?q=10.666667,-61.516667)
@@ -213,3 +214,4 @@ Uzbekistan | UZ | 231 | Tashkent | 9166826 | [41.3166667,69.25](https://www.goog
 Venezuela | VE | 233 | Caracas | 9176843 | [10.5,-66.9166667](https://www.google.com/maps?q=10.5,-66.9166667)
 Vietnam | VN | 234 | Hanoi | 9270302 | [21.033333,105.85](https://www.google.com/maps?q=21.033333,105.85)
 Vietnam | VN | 234 | Ho Chi Minh City | 9271799 | [10.75,106.666667](https://www.google.com/maps?q=10.75,106.666667)
+Yemen | YE | 239 | Sanaa | 9367184 | [15.3547222,44.2066667](https://www.google.com/maps?q=15.3547222,44.2066667)
