@@ -113,6 +113,7 @@ services:
 | **GROUP** | Filter by server group ([list][nordvpn-groups]). |
 | **TECHNOLOGY** | OpenVPN protocol ([list][nordvpn-technologies]). Default: `openvpn_udp` |
 | **RANDOM_TOP** | Randomize top N servers. Default: `0` |
+| **PORT** | Force a specific port for the VPN connection. Must be supported by the server. Default: auto |
 | **RECREATE<wbr>_VPN<wbr>_CRON** | Server switching schedule (cron). Default: disabled |
 | **CHECK<wbr>_CONNECTION<wbr>_CRON** | Health monitoring schedule (cron). Default: disabled |
 | **CHECK<wbr>_CONNECTION<wbr>_URL** | URLs to test connectivity; semicolon‑separated. Default: `https://www.google.com` |
