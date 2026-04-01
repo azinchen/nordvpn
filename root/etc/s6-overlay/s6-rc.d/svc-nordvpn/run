@@ -38,6 +38,11 @@ awk '/^[[:space:]]*remote[ \t]+/ {print $2, $3}' "$ovpnfile" | while read -r r_i
     r_ip="$(echo "$r_ip" | sed 's,^\[,,' | sed 's,\]$,,' )"
     [ -n "${r_port:-}" ] || r_port=1194
 
+    # If PORT is defined, only allow that specific port
+    if [ -n "$port" ] && [ "$r_port" != "$port" ]; then
+        continue
+    fi
+
     PIN_SPEC="-A VPN-SERVER -o eth0 -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"
     if run4 $PIN_SPEC 2>/dev/null; then
         log "$SCRIPT_NAME" "Added firewall pinhole for ${r_proto} traffic to ${r_ip}:${r_port} on interface eth0"
