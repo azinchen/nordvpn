@@ -532,28 +532,43 @@ _tmp_ident=$(jq -r --arg NAME "$technology" '.[] | select(.name == $NAME) | .ide
 # Generate remote lines and scramble config based on technology
 remotes_tmp="/tmp/ovpn-remotes.tmp"
 if contains_substring "$tech_ident" "xor"; then
-    # XOR obfuscated: multiple ports + scramble
+    # XOR obfuscated: scramble + port(s)
     scramble_line="scramble obfuscate $xor_key"
-    if [ "$protocol" = "tcp" ]; then
+    if [ -n "$port" ]; then
+        # User-specified port override
+        printf '%s\n' "remote $serverip $port" > "$remotes_tmp"
+        log "$SCRIPT_NAME" "XOR obfuscation enabled with custom port $port"
+    elif [ "$protocol" = "tcp" ]; then
         printf '%s\n' \
             "remote $serverip 20" "remote $serverip 21" \
             "remote $serverip 80" "remote $serverip 443" \
             "remote $serverip 465" "remote $serverip 587" \
             "remote $serverip 993" "remote $serverip 995" > "$remotes_tmp"
+        log "$SCRIPT_NAME" "XOR obfuscation enabled with multiple remote ports"
     else
         printf '%s\n' \
             "remote $serverip 53" "remote $serverip 1194" \
             "remote $serverip 1198" "remote $serverip 1214" \
             "remote $serverip 1215" "remote $serverip 1216" \
             "remote $serverip 2231" > "$remotes_tmp"
+        log "$SCRIPT_NAME" "XOR obfuscation enabled with multiple remote ports"
     fi
-    log "$SCRIPT_NAME" "XOR obfuscation enabled with multiple remote ports"
 elif [ "$protocol" = "udp" ]; then
     scramble_line=""
-    printf '%s\n' "remote $serverip 1194" > "$remotes_tmp"
+    if [ -n "$port" ]; then
+        printf '%s\n' "remote $serverip $port" > "$remotes_tmp"
+        log "$SCRIPT_NAME" "Using custom port $port"
+    else
+        printf '%s\n' "remote $serverip 1194" > "$remotes_tmp"
+    fi
 elif [ "$protocol" = "tcp" ]; then
     scramble_line=""
-    printf '%s\n' "remote $serverip 443" > "$remotes_tmp"
+    if [ -n "$port" ]; then
+        printf '%s\n' "remote $serverip $port" > "$remotes_tmp"
+        log "$SCRIPT_NAME" "Using custom port $port"
+    else
+        printf '%s\n' "remote $serverip 443" > "$remotes_tmp"
+    fi
 else
     log_error "$SCRIPT_NAME" "CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$technology\" - sleeping infinite"
     sleep infinity
