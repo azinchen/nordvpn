@@ -171,7 +171,7 @@ RUN echo "**** install security fix packages ****" && \
         libnl3=3.11.0-r0 \
         lz4-libs=1.10.0-r0 \
         lzo=2.10-r5 \
-        bind-tools=9.20.21-r0 \
+        bind-tools=9.20.22-r0 \
         && \
     echo "**** create process user ****" && \
     addgroup --system --gid 912 nordvpn && \
