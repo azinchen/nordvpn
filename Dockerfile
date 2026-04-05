@@ -1,4 +1,7 @@
 ARG OPENVPN_VERSION=2.7.0
+ARG OPENVPN_XOR_PATCH_VERSION=2.7.0
+ARG IMAGE_VERSION=N/A
+ARG BUILD_DATE=N/A
 
 # s6 overlay builder
 FROM alpine:3.23.3 AS s6-builder
@@ -47,7 +50,7 @@ RUN echo "**** install security fix packages ****" && \
 FROM alpine:3.23.3 AS openvpn-builder
 
 ARG OPENVPN_VERSION
-ARG OPENVPN_XOR_PATCH_VERSION=${OPENVPN_VERSION}
+ARG OPENVPN_XOR_PATCH_VERSION
 
 RUN echo "**** install build dependencies ****" && \
     apk --no-cache --no-progress add \
@@ -98,8 +101,8 @@ RUN echo "**** install build dependencies ****" && \
 # rootfs builder
 FROM alpine:3.23.3 AS rootfs-builder
 
-ARG IMAGE_VERSION=N/A \
-    BUILD_DATE=N/A
+ARG IMAGE_VERSION
+ARG BUILD_DATE
 
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
@@ -141,8 +144,8 @@ FROM alpine:3.23.3
 
 ARG TARGETPLATFORM
 ARG OPENVPN_VERSION
-ARG IMAGE_VERSION=N/A \
-    BUILD_DATE=N/A
+ARG IMAGE_VERSION
+ARG BUILD_DATE
 
 LABEL org.opencontainers.image.authors="Alexander Zinchenko <alexander@zinchenko.com>" \
       org.opencontainers.image.description="OpenVPN client docker container that routes other containers' traffic through NordVPN servers automatically." \
