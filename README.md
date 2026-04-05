@@ -29,7 +29,7 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🌍 Smart Server Selection** — Auto-select servers by country, city, group, or specific hostname ([details][wiki-server])
 - **⚖️ Load Balancing** — Intelligent sorting by server load when multiple locations specified
 - **🔄 Auto-Reconnection** — Periodic server switching and health monitoring ([details][wiki-reconnect])
-- **🕵️ XOR Obfuscation** — Built-in Tunnelblick XOR patches disguise OpenVPN traffic to bypass DPI ([details][wiki-tech])
+- **🕵️ XOR Obfuscation** — Built-in XOR patches disguise OpenVPN traffic to bypass DPI ([details][wiki-tech])
 - **🛡️ Kill Switch** — Default-deny firewall blocks all traffic when VPN is down ([details][wiki-security])
 - **🏠 Local/LAN Access** — Allow specific CIDRs with `NETWORK=...` ([details][wiki-network])
 - **📵 IPv6 Firewall** — Built-in chains default to DROP ([details][wiki-ipv6])
