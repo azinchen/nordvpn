@@ -809,8 +809,9 @@ jobs:
           CURRENT: ${{ steps.check-update.outputs.current }}
           PATCH_LIST: ${{ steps.check-update.outputs.patch_list }}
         run: |
-          # Update global ARG version (XOR patch version derives from it automatically)
+          # Update both version ARGs (they must match since the XOR patches are version-specific)
           sed -i "s/^ARG OPENVPN_VERSION=.*/ARG OPENVPN_VERSION=${LATEST}/" Dockerfile
+          sed -i "s/^ARG OPENVPN_XOR_PATCH_VERSION=.*/ARG OPENVPN_XOR_PATCH_VERSION=${LATEST}/" Dockerfile
 
           # Replace the 'for p in ...; do' block with the new patch list
           # Use awk to find and replace the multi-line for block
