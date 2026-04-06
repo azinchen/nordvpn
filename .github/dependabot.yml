@@ -16,10 +16,6 @@ updates:
       - "github-actions"
       - "automation"
     open-pull-requests-limit: 5
-    reviewers:
-      - "azinchen"
-    assignees:
-      - "azinchen"
 
   # Configuration for Dockerfile - Security-focused updates
   - package-ecosystem: "docker"
@@ -36,7 +32,3 @@ updates:
       - "docker"
       - "security"
     open-pull-requests-limit: 5
-    reviewers:
-      - "azinchen"
-    assignees:
-      - "azinchen"
