@@ -64,7 +64,7 @@ RUN echo "**** install build dependencies ****" && \
         libtool=2.5.4-r2 \
         lz4-dev=1.10.0-r0 \
         lzo-dev=2.10-r5 \
-        openssl-dev=3.5.5-r0 \
+        openssl-dev=3.5.6-r0 \
         patch=2.8-r0 \
         && \
     echo "**** download OpenVPN ${OPENVPN_VERSION} source ****" && \
