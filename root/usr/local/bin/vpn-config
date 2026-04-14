@@ -23,14 +23,33 @@ is_numeric()
 is_specific_server()
 {
     case "$1" in
-        [a-zA-Z][a-zA-Z][0-9]*)
-            # Check if it's exactly 2 letters followed by numbers
-            prefix=$(echo "$1" | cut -c1-2)
-            suffix=$(echo "$1" | cut -c3-)
-            case "$prefix" in
-                [a-zA-Z][a-zA-Z]) ;;
-                *) return 1 ;;
+        # SOCKS pattern: socks-xx{num} (e.g., socks-nl1, socks-se8)
+        socks-[a-zA-Z][a-zA-Z][0-9]*)
+            suffix=$(echo "$1" | sed 's/^socks-[a-zA-Z][a-zA-Z]//')
+            case "$suffix" in
+                ''|*[!0-9]*) return 1 ;;
+                *) return 0 ;;
             esac
+            ;;
+        # Onion pattern: xx-onion{num} (e.g., nl-onion6, ch-onion2)
+        [a-zA-Z][a-zA-Z]-onion[0-9]*)
+            suffix=$(echo "$1" | sed 's/^[a-zA-Z][a-zA-Z]-onion//')
+            case "$suffix" in
+                ''|*[!0-9]*) return 1 ;;
+                *) return 0 ;;
+            esac
+            ;;
+        # Cross-country pattern: xx-yy{num} (e.g., ca-us100, uk-fr17)
+        [a-zA-Z][a-zA-Z]-[a-zA-Z][a-zA-Z][0-9]*)
+            suffix=$(echo "$1" | sed 's/^[a-zA-Z][a-zA-Z]-[a-zA-Z][a-zA-Z]//')
+            case "$suffix" in
+                ''|*[!0-9]*) return 1 ;;
+                *) return 0 ;;
+            esac
+            ;;
+        # Standard pattern: xx{num} (e.g., us5063, uk1784)
+        [a-zA-Z][a-zA-Z][0-9]*)
+            suffix=$(echo "$1" | cut -c3-)
             case "$suffix" in
                 ''|*[!0-9]*) return 1 ;;
                 *) return 0 ;;
@@ -289,16 +308,47 @@ handle_specific_server()
 {
     value=$1
     
-    # Convert to lowercase using tr instead of ${value,,}
     hostname="$(echo "$value" | tr '[:upper:]' '[:lower:]').nordvpn.com"
-    ip="$(host -t A "$hostname" | awk '{print $4}')"
-    # Extract country code (first 2 chars) and number part
-    country_code=$(echo "$value" | cut -c1-2)
-    country_num=$(echo "$value" | cut -c3-)
-    name="$(getcountryname "$country_code") #$country_num"
-    constructed_json=$(printf '{"name":"%s","hostname":"%s","load":0,"station":"%s"}' "$name" "$hostname" "$ip")
     
-    printf '%s' "$constructed_json"
+    # Note: all log calls use >&2 to avoid polluting stdout (captured by caller via $(...))
+    
+    # Extract country code prefix from hostname pattern
+    case "$value" in
+        socks-*) cc=$(echo "$value" | cut -c7-8) ;;
+        *) cc=$(echo "$value" | cut -c1-2) ;;
+    esac
+    cc=$(echo "$cc" | tr '[:lower:]' '[:upper:]')
+    
+    # Try to find country ID for optimized query (smaller response)
+    country_id=$(getcountryid "$cc" 2>/dev/null || echo "")
+    
+    server_json=""
+    if [ -n "$country_id" ]; then
+        log "$SCRIPT_NAME" "Querying servers filtered by country code $cc (id=$country_id)" >&2
+        server_json=$(nord_api_curl "v1/servers" \
+            --data-urlencode "filters[country_id]=$country_id" \
+            --data-urlencode "limit=0" 2>/dev/null \
+            | jq -c --arg H "$hostname" '.[] | select(.hostname == $H)' 2>/dev/null \
+            | head -n 1 || echo "")
+    fi
+    
+    # Fallback: query all servers if country code not found or country-filtered query didn't match
+    if [ -z "$server_json" ] || [ "$server_json" = "null" ]; then
+        log "$SCRIPT_NAME" "Querying all servers (country code $cc not matched or server not in country)" >&2
+        server_json=$(nord_api_curl "v1/servers" \
+            --data-urlencode "limit=0" 2>/dev/null \
+            | jq -c --arg H "$hostname" '.[] | select(.hostname == $H)' 2>/dev/null \
+            | head -n 1 || echo "")
+    fi
+    
+    if [ -n "$server_json" ] && [ "$server_json" != "null" ]; then
+        log "$SCRIPT_NAME" "Found server $hostname via API (station: $(echo "$server_json" | jq -r '.station'))" >&2
+        printf '%s' "$server_json"
+        return 0
+    fi
+    
+    log_error "$SCRIPT_NAME" "ERROR: Could not find server $hostname in NordVPN server list"
+    return 1
 }
 
 nord_api_curl()
@@ -372,6 +422,8 @@ if [ -n "$country" ]; then
             locations_count=$((locations_count + 1))
         fi
         if is_specific_server "$value"; then
+            log "$SCRIPT_NAME" "Specific server requested: $value"
+            log_warning "$SCRIPT_NAME" "Warning: Ensure server $value supports TECHNOLOGY=$technology and GROUP=$group, otherwise connection will fail"
             servers="$servers$(handle_specific_server "$value")"
         elif [ -n "$value" ]; then
             countryid=$(getcountryid "$value")
@@ -411,6 +463,8 @@ if [ -n "$city" ]; then
             locations_count=$((locations_count + 1))
         fi
         if is_specific_server "$value"; then
+            log "$SCRIPT_NAME" "Specific server requested: $value"
+            log_warning "$SCRIPT_NAME" "Warning: Ensure server $value supports TECHNOLOGY=$technology and GROUP=$group, otherwise connection will fail"
             servers="$servers$(handle_specific_server "$value")"
         elif [ -n "$value" ]; then
             coords=$(getcitycoordinates "$value")
