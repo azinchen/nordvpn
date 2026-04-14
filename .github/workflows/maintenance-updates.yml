@@ -828,10 +828,9 @@ jobs:
             exit 0
           fi
 
-          # Build the new 'for p in ...' block (indented with 13 spaces for Dockerfile alignment)
-          PATCH_LIST=$(echo "$PATCHES" | awk 'NR==1{printf "%s", $0; next} {printf " \\\n             %s", $0}')
+          # Pass raw patch filenames (one per line) — formatting happens in the Update step
           echo "patch_list<<EOF" >> $GITHUB_OUTPUT
-          echo "$PATCH_LIST" >> $GITHUB_OUTPUT
+          echo "$PATCHES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
           echo "has_update=true" >> $GITHUB_OUTPUT
@@ -855,12 +854,21 @@ jobs:
           sed -i "s/^ARG OPENVPN_VERSION=.*/ARG OPENVPN_VERSION=${LATEST_OVPN}/" Dockerfile
           sed -i "s/^ARG OPENVPN_XOR_PATCH_VERSION=.*/ARG OPENVPN_XOR_PATCH_VERSION=${LATEST_XOR}/" Dockerfile
 
-          # Replace the 'for p in ...; do' block with the new patch list
-          # Use awk to find and replace the multi-line for block
-          awk -v patches="$PATCH_LIST" '
+          # Build the formatted for-block from raw patch filenames (one per line in PATCH_LIST)
+          FORMATTED=$(echo "$PATCH_LIST" | awk '
+            NR==1 { printf "    for p in %s", $0; next }
+            { printf " \\\n             %s", $0 }
+            END { printf "; do \\\n" }
+          ')
+
+          # Write to temp file to avoid shell escaping issues with awk -v
+          echo "$FORMATTED" > /tmp/for_block.txt
+
+          # Replace the multi-line 'for p in ...; do \' block in the Dockerfile
+          awk '
             /for p in/ {
-              printf "    for p in %s; do \\\n", patches
-              # Skip until the closing "; do"
+              while ((getline line < "/tmp/for_block.txt") > 0) print line
+              # Skip old lines until we find the "; do \" closing line
               while ($0 !~ /; do/) { getline }
               next
             }
