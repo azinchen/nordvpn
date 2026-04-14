@@ -58,6 +58,7 @@ RUN echo "**** install build dependencies ****" && \
         automake=1.18.1-r0 \
         build-base=0.5-r3 \
         curl=8.17.0-r1 \
+        jq=1.8.1-r0 \
         libcap-ng-dev=0.8.5-r0 \
         linux-headers=6.16.12-r0 \
         libnl3-dev=3.11.0-r0 \
@@ -72,16 +73,15 @@ RUN echo "**** install build dependencies ****" && \
         -o /tmp/openvpn.tar.gz && \
     mkdir -p /tmp/openvpn && \
     tar xf /tmp/openvpn.tar.gz -C /tmp/openvpn --strip-components=1 && \
-    echo "**** apply Tunnelblick XOR patches ****" && \
+    echo "**** apply Tunnelblick XOR patches ${OPENVPN_XOR_PATCH_VERSION} ****" && \
     cd /tmp/openvpn && \
-    for p in 02-tunnelblick-openvpn_xorpatch-a.diff \
-             03-tunnelblick-openvpn_xorpatch-b.diff \
-             04-tunnelblick-openvpn_xorpatch-c.diff \
-             05-tunnelblick-openvpn_xorpatch-d.diff \
-             06-tunnelblick-openvpn_xorpatch-e.diff; do \
+    PATCH_BASE="https://raw.githubusercontent.com/Tunnelblick/Tunnelblick/main/third_party/sources/openvpn/openvpn-${OPENVPN_XOR_PATCH_VERSION}/patches" && \
+    PATCH_LIST=$(curl -sf "https://api.github.com/repos/Tunnelblick/Tunnelblick/contents/third_party/sources/openvpn/openvpn-${OPENVPN_XOR_PATCH_VERSION}/patches" \
+        | jq -r '.[].name | select(contains("xorpatch"))' | sort) && \
+    [ -n "$PATCH_LIST" ] || { echo "ERROR: No XOR patches found for ${OPENVPN_XOR_PATCH_VERSION}"; exit 1; } && \
+    for p in $PATCH_LIST; do \
         echo "Applying $p" && \
-        curl -sSL "https://raw.githubusercontent.com/Tunnelblick/Tunnelblick/main/third_party/sources/openvpn/openvpn-${OPENVPN_XOR_PATCH_VERSION}/patches/$p" | \
-            patch -p1 || exit 1; \
+        curl -sSL "${PATCH_BASE}/$p" | patch -p1 || exit 1; \
     done && \
     echo "**** build OpenVPN with XOR support ****" && \
     autoreconf -ivf && \

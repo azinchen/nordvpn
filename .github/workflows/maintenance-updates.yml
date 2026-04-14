@@ -828,11 +828,6 @@ jobs:
             exit 0
           fi
 
-          # Pass raw patch filenames (one per line) — formatting happens in the Update step
-          echo "patch_list<<EOF" >> $GITHUB_OUTPUT
-          echo "$PATCHES" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
           echo "has_update=true" >> $GITHUB_OUTPUT
           echo "current_ovpn=${CURRENT_OVPN}" >> $GITHUB_OUTPUT
           echo "current_xor=${CURRENT_XOR}" >> $GITHUB_OUTPUT
@@ -848,32 +843,10 @@ jobs:
         env:
           LATEST_OVPN: ${{ steps.check-update.outputs.latest_ovpn }}
           LATEST_XOR: ${{ steps.check-update.outputs.latest_xor }}
-          PATCH_LIST: ${{ steps.check-update.outputs.patch_list }}
         run: |
           # Update version ARGs (OpenVPN patch may be higher than XOR patch)
           sed -i "s/^ARG OPENVPN_VERSION=.*/ARG OPENVPN_VERSION=${LATEST_OVPN}/" Dockerfile
           sed -i "s/^ARG OPENVPN_XOR_PATCH_VERSION=.*/ARG OPENVPN_XOR_PATCH_VERSION=${LATEST_XOR}/" Dockerfile
-
-          # Build the formatted for-block from raw patch filenames (one per line in PATCH_LIST)
-          FORMATTED=$(echo "$PATCH_LIST" | awk '
-            NR==1 { printf "    for p in %s", $0; next }
-            { printf " \\\n             %s", $0 }
-            END { printf "; do \\\n" }
-          ')
-
-          # Write to temp file to avoid shell escaping issues with awk -v
-          echo "$FORMATTED" > /tmp/for_block.txt
-
-          # Replace the multi-line 'for p in ...; do \' block in the Dockerfile
-          awk '
-            /for p in/ {
-              while ((getline line < "/tmp/for_block.txt") > 0) print line
-              # Skip old lines until we find the "; do \" closing line
-              while ($0 !~ /; do/) { getline }
-              next
-            }
-            { print }
-          ' Dockerfile > Dockerfile.tmp && mv Dockerfile.tmp Dockerfile
 
           echo "Updated Dockerfile to OpenVPN ${LATEST_OVPN} with XOR patches from ${LATEST_XOR}"
 
@@ -895,7 +868,7 @@ jobs:
             ### Change
             - OpenVPN: `${{ steps.check-update.outputs.current_ovpn }}` → `${{ steps.check-update.outputs.latest_ovpn }}`
             - XOR patches: `${{ steps.check-update.outputs.current_xor }}` → `${{ steps.check-update.outputs.latest_xor }}`
-            - Patch file list updated from Tunnelblick repository
+            - Patch files are discovered dynamically at build time from Tunnelblick repository
 
             ### ⚠️ Manual Steps Required
             - Verify the XOR-patched build succeeds
