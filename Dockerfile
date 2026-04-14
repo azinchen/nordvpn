@@ -75,13 +75,12 @@ RUN echo "**** install build dependencies ****" && \
     tar xf /tmp/openvpn.tar.gz -C /tmp/openvpn --strip-components=1 && \
     echo "**** apply Tunnelblick XOR patches ${OPENVPN_XOR_PATCH_VERSION} ****" && \
     cd /tmp/openvpn && \
-    PATCH_BASE="https://raw.githubusercontent.com/Tunnelblick/Tunnelblick/main/third_party/sources/openvpn/openvpn-${OPENVPN_XOR_PATCH_VERSION}/patches" && \
-    PATCH_LIST=$(curl -sf "https://api.github.com/repos/Tunnelblick/Tunnelblick/contents/third_party/sources/openvpn/openvpn-${OPENVPN_XOR_PATCH_VERSION}/patches" \
-        | jq -r '.[].name | select(contains("xorpatch"))' | sort) && \
-    [ -n "$PATCH_LIST" ] || { echo "ERROR: No XOR patches found for ${OPENVPN_XOR_PATCH_VERSION}"; exit 1; } && \
-    for p in $PATCH_LIST; do \
-        echo "Applying $p" && \
-        curl -sSL "${PATCH_BASE}/$p" | patch -p1 || exit 1; \
+    PATCH_URLS=$(curl -sf "https://api.github.com/repos/Tunnelblick/Tunnelblick/contents/third_party/sources/openvpn/openvpn-${OPENVPN_XOR_PATCH_VERSION}/patches" \
+        | jq -r '.[] | select(.name | contains("xorpatch")) | .download_url' | sort) && \
+    [ -n "$PATCH_URLS" ] || { echo "ERROR: No XOR patches found for ${OPENVPN_XOR_PATCH_VERSION}"; exit 1; } && \
+    for url in $PATCH_URLS; do \
+        echo "Applying $(basename "$url")" && \
+        curl -sSL "$url" | patch -p1 || exit 1; \
     done && \
     echo "**** build OpenVPN with XOR support ****" && \
     autoreconf -ivf && \
