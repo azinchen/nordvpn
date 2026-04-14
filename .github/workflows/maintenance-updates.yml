@@ -733,8 +733,10 @@ jobs:
         shell: bash
         run: |
           # Get current versions from Dockerfile
-          CURRENT=$(grep -oP 'ARG OPENVPN_VERSION=\K[^ ]+' Dockerfile)
-          echo "Current OpenVPN version: ${CURRENT}"
+          CURRENT_OVPN=$(grep -oP 'ARG OPENVPN_VERSION=\K[^ ]+' Dockerfile)
+          CURRENT_XOR=$(grep -oP 'ARG OPENVPN_XOR_PATCH_VERSION=\K[^ ]+' Dockerfile)
+          echo "Current OpenVPN version: ${CURRENT_OVPN}"
+          echo "Current XOR patch version: ${CURRENT_XOR}"
 
           # List all Tunnelblick XOR-patched OpenVPN versions (newest first)
           TB_VERSIONS=$(curl -sf "https://api.github.com/repos/Tunnelblick/Tunnelblick/contents/third_party/sources/openvpn" \
@@ -747,7 +749,7 @@ jobs:
           fi
           echo "Tunnelblick has patches for: $(echo $TB_VERSIONS | tr '\n' ' ')"
 
-          # Get all stable OpenVPN releases
+          # Get all stable OpenVPN releases (newest first)
           OVPN_RELEASES=$(curl -sf "https://api.github.com/repos/OpenVPN/openvpn/releases?per_page=50" \
             | jq -r '.[] | select(.prerelease == false and .draft == false) | .tag_name | ltrimstr("v")')
 
@@ -756,34 +758,72 @@ jobs:
             exit 1
           fi
 
-          # Find the latest version that exists in BOTH Tunnelblick and OpenVPN releases
-          LATEST=""
+          # Extract unique major.minor versions from Tunnelblick patches (newest first)
+          TB_MAJMIN=$(echo "$TB_VERSIONS" | sed 's/\.[0-9]*$//' | sort -ruV)
+          # Extract unique major.minor versions from OpenVPN releases (newest first)
+          OVPN_MAJMIN=$(echo "$OVPN_RELEASES" | sed 's/\.[0-9]*$//' | sort -ruV)
+
+          # Find the highest major.minor that exists in BOTH
+          BEST_MAJMIN=""
+          for mm in $TB_MAJMIN; do
+            if echo "$OVPN_MAJMIN" | grep -qxF "$mm"; then
+              BEST_MAJMIN="$mm"
+              break
+            fi
+          done
+
+          if [ -z "$BEST_MAJMIN" ]; then
+            echo "::warning::No common major.minor version found between OpenVPN releases and Tunnelblick XOR patches"
+            echo "has_update=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          echo "Best common major.minor: ${BEST_MAJMIN}"
+
+          # Find the highest XOR patch version for this major.minor (and verify it has xorpatch diffs)
+          LATEST_XOR=""
           PATCHES=""
           for ver in $TB_VERSIONS; do
-            if echo "$OVPN_RELEASES" | grep -qxF "$ver"; then
-              # Verify this version actually has xorpatch diffs
+            ver_mm=$(echo "$ver" | sed 's/\.[0-9]*$//')
+            if [ "$ver_mm" = "$BEST_MAJMIN" ]; then
               TB_URL="https://api.github.com/repos/Tunnelblick/Tunnelblick/contents/third_party/sources/openvpn/openvpn-${ver}/patches"
               FOUND=$(curl -sf "$TB_URL" | jq -r '.[].name | select(contains("xorpatch"))' | sort)
               if [ -n "$FOUND" ]; then
-                LATEST="$ver"
+                LATEST_XOR="$ver"
                 PATCHES="$FOUND"
                 break
               fi
             fi
           done
 
-          if [ -z "$LATEST" ]; then
-            echo "::warning::No OpenVPN version found with both a stable release and Tunnelblick XOR patches"
+          if [ -z "$LATEST_XOR" ]; then
+            echo "::warning::No Tunnelblick XOR patches found for major.minor ${BEST_MAJMIN}"
             echo "has_update=false" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          echo "Best available version: ${LATEST}"
+          # Find the highest OpenVPN release for this major.minor
+          LATEST_OVPN=""
+          for ver in $(echo "$OVPN_RELEASES" | sort -rV); do
+            ver_mm=$(echo "$ver" | sed 's/\.[0-9]*$//')
+            if [ "$ver_mm" = "$BEST_MAJMIN" ]; then
+              LATEST_OVPN="$ver"
+              break
+            fi
+          done
+
+          if [ -z "$LATEST_OVPN" ]; then
+            echo "::warning::No OpenVPN release found for major.minor ${BEST_MAJMIN}"
+            echo "has_update=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "Best OpenVPN version: ${LATEST_OVPN}"
+          echo "Best XOR patch version: ${LATEST_XOR}"
           echo "Found XOR patches:"
           echo "$PATCHES"
 
-          if [ "$CURRENT" = "$LATEST" ]; then
-            echo "Already on latest version ${LATEST}"
+          if [ "$CURRENT_OVPN" = "$LATEST_OVPN" ] && [ "$CURRENT_XOR" = "$LATEST_XOR" ]; then
+            echo "Already on latest versions (OpenVPN ${LATEST_OVPN}, XOR ${LATEST_XOR})"
             echo "has_update=false" >> $GITHUB_OUTPUT
             exit 0
           fi
@@ -795,8 +835,10 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
           echo "has_update=true" >> $GITHUB_OUTPUT
-          echo "current=${CURRENT}" >> $GITHUB_OUTPUT
-          echo "latest=${LATEST}" >> $GITHUB_OUTPUT
+          echo "current_ovpn=${CURRENT_OVPN}" >> $GITHUB_OUTPUT
+          echo "current_xor=${CURRENT_XOR}" >> $GITHUB_OUTPUT
+          echo "latest_ovpn=${LATEST_OVPN}" >> $GITHUB_OUTPUT
+          echo "latest_xor=${LATEST_XOR}" >> $GITHUB_OUTPUT
 
           UPDATE_DATE=$(date +%y%m%d)
           echo "update_date=${UPDATE_DATE}" >> $GITHUB_ENV
@@ -805,13 +847,13 @@ jobs:
         if: steps.check-update.outputs.has_update == 'true'
         shell: bash
         env:
-          LATEST: ${{ steps.check-update.outputs.latest }}
-          CURRENT: ${{ steps.check-update.outputs.current }}
+          LATEST_OVPN: ${{ steps.check-update.outputs.latest_ovpn }}
+          LATEST_XOR: ${{ steps.check-update.outputs.latest_xor }}
           PATCH_LIST: ${{ steps.check-update.outputs.patch_list }}
         run: |
-          # Update both version ARGs (they must match since the XOR patches are version-specific)
-          sed -i "s/^ARG OPENVPN_VERSION=.*/ARG OPENVPN_VERSION=${LATEST}/" Dockerfile
-          sed -i "s/^ARG OPENVPN_XOR_PATCH_VERSION=.*/ARG OPENVPN_XOR_PATCH_VERSION=${LATEST}/" Dockerfile
+          # Update version ARGs (OpenVPN patch may be higher than XOR patch)
+          sed -i "s/^ARG OPENVPN_VERSION=.*/ARG OPENVPN_VERSION=${LATEST_OVPN}/" Dockerfile
+          sed -i "s/^ARG OPENVPN_XOR_PATCH_VERSION=.*/ARG OPENVPN_XOR_PATCH_VERSION=${LATEST_XOR}/" Dockerfile
 
           # Replace the 'for p in ...; do' block with the new patch list
           # Use awk to find and replace the multi-line for block
@@ -825,16 +867,16 @@ jobs:
             { print }
           ' Dockerfile > Dockerfile.tmp && mv Dockerfile.tmp Dockerfile
 
-          echo "Updated Dockerfile to OpenVPN ${LATEST}"
+          echo "Updated Dockerfile to OpenVPN ${LATEST_OVPN} with XOR patches from ${LATEST_XOR}"
 
       - name: Create Pull Request for OpenVPN update
         if: steps.check-update.outputs.has_update == 'true'
         uses: peter-evans/create-pull-request@v8.1.1
         with:
           branch: bot/update-openvpn
-          commit-message: "deps: bump OpenVPN to v${{ steps.check-update.outputs.latest }} (${{ env.update_date }})"
+          commit-message: "deps: bump OpenVPN to v${{ steps.check-update.outputs.latest_ovpn }}, XOR patches v${{ steps.check-update.outputs.latest_xor }} (${{ env.update_date }})"
           delete-branch: true
-          title: "🔧 Bump OpenVPN to v${{ steps.check-update.outputs.latest }} - ${{ env.update_date }}"
+          title: "🔧 Bump OpenVPN to v${{ steps.check-update.outputs.latest_ovpn }} - ${{ env.update_date }}"
           body: |
             ## 🔧 OpenVPN Version Update
 
@@ -843,7 +885,8 @@ jobs:
             **Source**: [OpenVPN releases](https://github.com/OpenVPN/openvpn/releases) + [Tunnelblick XOR patches](https://github.com/Tunnelblick/Tunnelblick/tree/main/third_party/sources/openvpn)
 
             ### Change
-            - OpenVPN: `${{ steps.check-update.outputs.current }}` → `${{ steps.check-update.outputs.latest }}`
+            - OpenVPN: `${{ steps.check-update.outputs.current_ovpn }}` → `${{ steps.check-update.outputs.latest_ovpn }}`
+            - XOR patches: `${{ steps.check-update.outputs.current_xor }}` → `${{ steps.check-update.outputs.latest_xor }}`
             - Patch file list updated from Tunnelblick repository
 
             ### ⚠️ Manual Steps Required
