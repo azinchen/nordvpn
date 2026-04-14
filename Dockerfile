@@ -74,7 +74,11 @@ RUN echo "**** install build dependencies ****" && \
     tar xf /tmp/openvpn.tar.gz -C /tmp/openvpn --strip-components=1 && \
     echo "**** apply Tunnelblick XOR patches ****" && \
     cd /tmp/openvpn && \
-    for p in 02-tunnelblick-openvpn_xorpatch-a.diff              03-tunnelblick-openvpn_xorpatch-b.diff              04-tunnelblick-openvpn_xorpatch-c.diff              05-tunnelblick-openvpn_xorpatch-d.diff              06-tunnelblick-openvpn_xorpatch-e.diff; do \
+    for p in 02-tunnelblick-openvpn_xorpatch-a.diff \
+             03-tunnelblick-openvpn_xorpatch-b.diff \
+             04-tunnelblick-openvpn_xorpatch-c.diff \
+             05-tunnelblick-openvpn_xorpatch-d.diff \
+             06-tunnelblick-openvpn_xorpatch-e.diff; do \
         echo "Applying $p" && \
         curl -sSL "https://raw.githubusercontent.com/Tunnelblick/Tunnelblick/main/third_party/sources/openvpn/openvpn-${OPENVPN_XOR_PATCH_VERSION}/patches/$p" | \
             patch -p1 || exit 1; \
