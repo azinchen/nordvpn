@@ -4,7 +4,7 @@ ARG IMAGE_VERSION=N/A
 ARG BUILD_DATE=N/A
 
 # s6 overlay builder
-FROM alpine:3.23.3 AS s6-builder
+FROM alpine:3.23.4 AS s6-builder
 
 ARG TARGETARCH
 ARG TARGETVARIANT
@@ -47,7 +47,7 @@ RUN echo "**** install security fix packages ****" && \
     tar -C /s6/ -Jxpf /tmp/s6-overlay-symlinks-arch.tar.xz
 
 # OpenVPN XOR builder
-FROM alpine:3.23.3 AS openvpn-builder
+FROM alpine:3.23.4 AS openvpn-builder
 
 ARG OPENVPN_VERSION
 ARG OPENVPN_XOR_PATCH_VERSION
@@ -98,7 +98,7 @@ RUN echo "**** install build dependencies ****" && \
     cp src/openvpn/openvpn /tmp/openvpn-binary
 
 # rootfs builder
-FROM alpine:3.23.3 AS rootfs-builder
+FROM alpine:3.23.4 AS rootfs-builder
 
 ARG IMAGE_VERSION
 ARG BUILD_DATE
@@ -139,7 +139,7 @@ COPY --from=s6-builder /s6/ /rootfs/
 COPY --from=openvpn-builder /tmp/openvpn-binary /rootfs/usr/sbin/openvpn
 
 # Main image
-FROM alpine:3.23.3
+FROM alpine:3.23.4
 
 ARG TARGETPLATFORM
 ARG OPENVPN_VERSION
