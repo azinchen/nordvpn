@@ -2,23 +2,16 @@
 
 # NordVPN OpenVPN Docker Container
 
-<!-- Build & Releases -->
 [![GitHub release][github-release]][github-releases]
 [![GitHub release date][github-releasedate]][github-releases]
-[![GitHub build][github-build]][github-actions]
-
-<!-- GitHub Repo -->
+[![GitHub build][github-build]][github-actions]<br>
 [![GitHub stars][github-stars]][github-link]
 [![GitHub forks][github-forks]][github-link]
 [![Open issues][github-issues]][github-issues-link]
-[![GitHub last commit][github-lastcommit]][github-link]
-
-<!-- Docker Hub -->
+[![GitHub last commit][github-lastcommit]][github-link]<br>
 [![Docker pulls][dockerhub-pulls]][dockerhub-link]
 [![Docker stars][dockerhub-stars]][dockerhub-link]
-[![Docker image size][dockerhub-size]][dockerhub-link]
-
-<!-- Platform Support -->
+[![Docker image size][dockerhub-size]][dockerhub-link]<br>
 [![Multi-arch][multiarch-badge]][wiki-platforms]
 
 OpenVPN client docker container that routes other containers' traffic through NordVPN servers automatically.
