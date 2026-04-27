@@ -857,9 +857,9 @@ jobs:
           branch: bot/update-openvpn
           commit-message: "deps: bump OpenVPN to v${{ steps.check-update.outputs.latest_ovpn }}, XOR patches v${{ steps.check-update.outputs.latest_xor }} (${{ env.update_date }})"
           delete-branch: true
-          title: "🔧 Bump OpenVPN to v${{ steps.check-update.outputs.latest_ovpn }} - ${{ env.update_date }}"
+          title: "🔧 Bump OpenVPN to v${{ steps.check-update.outputs.latest_ovpn }}, XOR patches v${{ steps.check-update.outputs.latest_xor }} - ${{ env.update_date }}"
           body: |
-            ## 🔧 OpenVPN Version Update
+            ## 🔧 OpenVPN & XOR Patches Version Update
 
             **File**: `Dockerfile`
             **Date**: ${{ env.update_date }}
