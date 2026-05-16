@@ -57,7 +57,7 @@ RUN echo "**** install build dependencies ****" && \
         autoconf=2.72-r1 \
         automake=1.18.1-r0 \
         build-base=0.5-r3 \
-        curl=8.17.0-r1 \
+        curl=8.19.0-r0 \
         jq=1.8.1-r0 \
         libcap-ng-dev=0.8.5-r0 \
         linux-headers=6.16.12-r0 \
@@ -163,7 +163,7 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     echo "Target platform: ${TARGETPLATFORM}" && \
     apk --no-cache --no-progress add \
-        curl=8.17.0-r1 \
+        curl=8.19.0-r0 \
         iptables=1.8.11-r1 \
         iptables-legacy=1.8.11-r1 \
         jq=1.8.1-r0 \
