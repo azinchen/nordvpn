@@ -1,4 +1,4 @@
-Last updated: 2026-03-31
+Last updated: 2026-05-26
 ---
 # List of CITIES with NordVPN servers
 
@@ -32,6 +32,7 @@ Brazil | BR | 30 | Sao Paulo | 890249 | [-23.533333,-46.616667](https://www.goog
 Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | [4.8833333,114.9333333](https://www.google.com/maps?q=4.8833333,114.9333333)
 Bulgaria | BG | 33 | Sofia | 777368 | [42.6833333,23.3166667](https://www.google.com/maps?q=42.6833333,23.3166667)
 Cambodia | KH | 36 | Phnom Penh | 4658987 | [11.55,104.9166667](https://www.google.com/maps?q=11.55,104.9166667)
+Canada | CA | 38 | Calgary | 1041023 | [51.083333,-114.083333](https://www.google.com/maps?q=51.083333,-114.083333)
 Canada | CA | 38 | Montreal | 1048463 | [45.5,-73.583333](https://www.google.com/maps?q=45.5,-73.583333)
 Canada | CA | 38 | Toronto | 1054250 | [43.666667,-79.416667](https://www.google.com/maps?q=43.666667,-79.416667)
 Canada | CA | 38 | Vancouver | 1054610 | [49.25,-123.133333](https://www.google.com/maps?q=49.25,-123.133333)
