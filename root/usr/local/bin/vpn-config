@@ -160,7 +160,9 @@ getcitycoordinates()
     input=$1
 
     # First get the city ID using existing function
-    cityid=$(getcityid "$input")
+    # `|| true` prevents `set -e` from killing the caller via command substitution
+    # when getcityid returns 1; the -z guard below handles the empty result.
+    cityid=$(getcityid "$input" || true)
     if [ -z "$cityid" ]; then
         return 1
     fi
@@ -388,7 +390,10 @@ locations_count=0
 # Validate technology and group IDs and build filter strings
 tech_filter=""
 if [ -n "$technology" ]; then
-    tech_id=$(gettechnologyid "$technology")
+    # `|| true` prevents `set -e` from terminating the script via the
+    # command substitution when gettechnologyid returns 1 (unknown value);
+    # the -z guard below logs the proper warning instead.
+    tech_id=$(gettechnologyid "$technology" || true)
     if [ -z "$tech_id" ]; then
         log_warning "$SCRIPT_NAME" "Warning: Could not find technology \"$technology\""
     else
@@ -400,7 +405,8 @@ fi
 
 group_filter=""
 if [ -n "$group" ]; then
-    group_id=$(getgroupid "$group")
+    # See gettechnologyid above for the rationale behind `|| true`.
+    group_id=$(getgroupid "$group" || true)
     if [ -z "$group_id" ]; then
         log_warning "$SCRIPT_NAME" "Warning: Could not find group \"$group\""
     else
@@ -426,7 +432,10 @@ if [ -n "$country" ]; then
             log_warning "$SCRIPT_NAME" "Warning: Ensure server $value supports TECHNOLOGY=$technology and GROUP=$group, otherwise connection will fail"
             servers="$servers$(handle_specific_server "$value")"
         elif [ -n "$value" ]; then
-            countryid=$(getcountryid "$value")
+            # `|| true` so an unknown country (e.g. user passing a US state code)
+            # doesn't silently kill the script under `set -e`; the -z branch
+            # below logs a warning and the loop continues with remaining values.
+            countryid=$(getcountryid "$value" || true)
             if [ -n "$countryid" ]; then
                 # Build curl parameters
                 curl_params="--data-urlencode filters[country_id]=$countryid"
@@ -467,7 +476,8 @@ if [ -n "$city" ]; then
             log_warning "$SCRIPT_NAME" "Warning: Ensure server $value supports TECHNOLOGY=$technology and GROUP=$group, otherwise connection will fail"
             servers="$servers$(handle_specific_server "$value")"
         elif [ -n "$value" ]; then
-            coords=$(getcitycoordinates "$value")
+            # See COUNTRY loop above for the rationale behind `|| true`.
+            coords=$(getcitycoordinates "$value" || true)
             if [ -n "$coords" ]; then
                 latitude=$(echo "$coords" | cut -d',' -f1)
                 longitude=$(echo "$coords" | cut -d',' -f2)
