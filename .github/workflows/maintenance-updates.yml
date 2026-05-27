@@ -531,9 +531,10 @@ jobs:
           # proto → __PROTOCOL__
           sed -i '/^proto /c\proto __PROTOCOL__' "$TEMPLATE"
           # remote line(s) → single __REMOTES__ placeholder (vpn-config generates single or multi-port remotes).
-          # NordVPN configs may contain multiple `remote` entries; replace the first and delete the rest
-          # to avoid emitting one __REMOTES__ per original remote line.
-          sed -i -e '0,/^remote /s//__REMOTES__/' -e '/^remote /d' "$TEMPLATE"
+          # NordVPN configs may contain multiple `remote` entries; replace the first whole line and
+          # delete the rest to avoid emitting one __REMOTES__ per original remote line or leaving the
+          # original IP/port text appended to the placeholder.
+          sed -i -e '0,/^remote /s/^remote .*/__REMOTES__/' -e '/^remote /d' "$TEMPLATE"
           # Add __SCRAMBLE__ placeholder after proto line (vpn-config fills or removes it)
           sed -i '/^proto __PROTOCOL__$/a __SCRAMBLE__' "$TEMPLATE"
           # verify-x509-name → __X509_NAME__
