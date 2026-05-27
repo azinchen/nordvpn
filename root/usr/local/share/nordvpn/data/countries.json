@@ -9,9 +9,11 @@
         "name": "Kabul",
         "latitude": 34.516667,
         "longitude": 69.183333,
-        "dns_name": "kabul"
+        "dns_name": "kabul",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 2,
@@ -23,9 +25,11 @@
         "name": "Tirana",
         "latitude": 41.3275,
         "longitude": 19.8188889,
-        "dns_name": "tirana"
+        "dns_name": "tirana",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 3,
@@ -37,9 +41,11 @@
         "name": "Algiers",
         "latitude": 36.7630556,
         "longitude": 3.0505556,
-        "dns_name": "algiers"
+        "dns_name": "algiers",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 5,
@@ -51,9 +57,11 @@
         "name": "Andorra la Vella",
         "latitude": 42.5,
         "longitude": 1.5166667,
-        "dns_name": "andorra-la-vella"
+        "dns_name": "andorra-la-vella",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 6,
@@ -65,9 +73,11 @@
         "name": "Luanda",
         "latitude": -8.836804,
         "longitude": 13.233174,
-        "dns_name": "luanda"
+        "dns_name": "luanda",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 10,
@@ -79,9 +89,11 @@
         "name": "Buenos Aires",
         "latitude": -34.5875,
         "longitude": -58.6725,
-        "dns_name": "buenos-aires"
+        "dns_name": "buenos-aires",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 11,
@@ -93,9 +105,11 @@
         "name": "Yerevan",
         "latitude": 40.1811111,
         "longitude": 44.5136111,
-        "dns_name": "yerevan"
+        "dns_name": "yerevan",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 13,
@@ -107,35 +121,72 @@
         "name": "Adelaide",
         "latitude": -34.928661,
         "longitude": 138.598633,
-        "dns_name": "adelaide"
+        "dns_name": "adelaide",
+        "subdivision_id": 3
       },
       {
         "id": 456494,
         "name": "Brisbane",
         "latitude": -27.47101,
         "longitude": 153.024292,
-        "dns_name": "brisbane"
+        "dns_name": "brisbane",
+        "subdivision_id": 2
       },
       {
         "id": 470813,
         "name": "Melbourne",
         "latitude": -37.813938,
         "longitude": 144.963425,
-        "dns_name": "melbourne"
+        "dns_name": "melbourne",
+        "subdivision_id": 5
       },
       {
         "id": 475799,
         "name": "Perth",
         "latitude": -31.95224,
         "longitude": 115.861397,
-        "dns_name": "perth"
+        "dns_name": "perth",
+        "subdivision_id": 6
       },
       {
         "id": 479570,
         "name": "Sydney",
         "latitude": -33.861481,
         "longitude": 151.205475,
-        "dns_name": "sydney"
+        "dns_name": "sydney",
+        "subdivision_id": 1
+      }
+    ],
+    "subdivisions": [
+      {
+        "id": 1,
+        "name": "New South Wales",
+        "code": "NSW",
+        "serverCount": 126
+      },
+      {
+        "id": 2,
+        "name": "Queensland",
+        "code": "QLD",
+        "serverCount": 46
+      },
+      {
+        "id": 3,
+        "name": "South Australia",
+        "code": "SA",
+        "serverCount": 17
+      },
+      {
+        "id": 5,
+        "name": "Victoria",
+        "code": "VIC",
+        "serverCount": 70
+      },
+      {
+        "id": 6,
+        "name": "Western Australia",
+        "code": "WA",
+        "serverCount": 43
       }
     ]
   },
@@ -149,9 +200,11 @@
         "name": "Vienna",
         "latitude": 48.2,
         "longitude": 16.366667,
-        "dns_name": "vienna"
+        "dns_name": "vienna",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 15,
@@ -163,9 +216,11 @@
         "name": "Baku",
         "latitude": 40.395278,
         "longitude": 49.882222,
-        "dns_name": "baku"
+        "dns_name": "baku",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 16,
@@ -177,9 +232,11 @@
         "name": "Nassau",
         "latitude": 25.078056,
         "longitude": -77.338611,
-        "dns_name": "nassau"
+        "dns_name": "nassau",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 17,
@@ -191,9 +248,11 @@
         "name": "Manama",
         "latitude": 26.2361111,
         "longitude": 50.5830556,
-        "dns_name": "manama"
+        "dns_name": "manama",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 18,
@@ -205,9 +264,11 @@
         "name": "Dhaka",
         "latitude": 23.7230556,
         "longitude": 90.4086111,
-        "dns_name": "dhaka"
+        "dns_name": "dhaka",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 19,
@@ -219,9 +280,11 @@
         "name": "Bridgetown",
         "latitude": 13.1,
         "longitude": -59.6166667,
-        "dns_name": "bridgetown"
+        "dns_name": "bridgetown",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 21,
@@ -233,9 +296,11 @@
         "name": "Brussels",
         "latitude": 50.833333,
         "longitude": 4.333333,
-        "dns_name": "brussels"
+        "dns_name": "brussels",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 22,
@@ -247,9 +312,11 @@
         "name": "Belmopan",
         "latitude": 17.25,
         "longitude": -88.7666667,
-        "dns_name": "belmopan"
+        "dns_name": "belmopan",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 24,
@@ -261,9 +328,11 @@
         "name": "Hamilton",
         "latitude": 32.2941667,
         "longitude": -64.7838889,
-        "dns_name": "hamilton"
+        "dns_name": "hamilton",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 25,
@@ -275,9 +344,11 @@
         "name": "Thimphu",
         "latitude": 27.472222,
         "longitude": 89.636111,
-        "dns_name": "thimphu"
+        "dns_name": "thimphu",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 26,
@@ -289,9 +360,11 @@
         "name": "La Paz",
         "latitude": -16.5,
         "longitude": -68.15,
-        "dns_name": "la-paz"
+        "dns_name": "la-paz",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 27,
@@ -303,9 +376,11 @@
         "name": "Sarajevo",
         "latitude": 43.85,
         "longitude": 18.3833333,
-        "dns_name": "sarajevo"
+        "dns_name": "sarajevo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 30,
@@ -317,9 +392,11 @@
         "name": "Sao Paulo",
         "latitude": -23.533333,
         "longitude": -46.616667,
-        "dns_name": "sao-paulo"
+        "dns_name": "sao-paulo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 32,
@@ -331,9 +408,11 @@
         "name": "Bandar Seri Begawan",
         "latitude": 4.8833333,
         "longitude": 114.9333333,
-        "dns_name": "bandar-seri-begawan"
+        "dns_name": "bandar-seri-begawan",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 33,
@@ -345,9 +424,11 @@
         "name": "Sofia",
         "latitude": 42.6833333,
         "longitude": 23.3166667,
-        "dns_name": "sofia"
+        "dns_name": "sofia",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 36,
@@ -359,9 +440,11 @@
         "name": "Phnom Penh",
         "latitude": 11.55,
         "longitude": 104.9166667,
-        "dns_name": "phnom-penh"
+        "dns_name": "phnom-penh",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 38,
@@ -369,25 +452,62 @@
     "code": "CA",
     "cities": [
       {
+        "id": 1041023,
+        "name": "Calgary",
+        "latitude": 51.083333,
+        "longitude": -114.083333,
+        "dns_name": "calgary",
+        "subdivision_id": 9
+      },
+      {
         "id": 1048463,
         "name": "Montreal",
         "latitude": 45.5,
         "longitude": -73.583333,
-        "dns_name": "montreal"
+        "dns_name": "montreal",
+        "subdivision_id": 17
       },
       {
         "id": 1054250,
         "name": "Toronto",
         "latitude": 43.666667,
         "longitude": -79.416667,
-        "dns_name": "toronto"
+        "dns_name": "toronto",
+        "subdivision_id": 15
       },
       {
         "id": 1054610,
         "name": "Vancouver",
         "latitude": 49.25,
         "longitude": -123.133333,
-        "dns_name": "vancouver"
+        "dns_name": "vancouver",
+        "subdivision_id": 10
+      }
+    ],
+    "subdivisions": [
+      {
+        "id": 9,
+        "name": "Alberta",
+        "code": "AB",
+        "serverCount": 24
+      },
+      {
+        "id": 10,
+        "name": "British Columbia",
+        "code": "BC",
+        "serverCount": 107
+      },
+      {
+        "id": 15,
+        "name": "Ontario",
+        "code": "ON",
+        "serverCount": 239
+      },
+      {
+        "id": 17,
+        "name": "Quebec",
+        "code": "QC",
+        "serverCount": 177
       }
     ]
   },
@@ -401,9 +521,11 @@
         "name": "George Town",
         "latitude": 19.3,
         "longitude": -81.3833333,
-        "dns_name": "george-town"
+        "dns_name": "george-town",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 42,
@@ -415,9 +537,11 @@
         "name": "NDjamena",
         "latitude": 12.1130556,
         "longitude": 15.0491667,
-        "dns_name": "ndjamena"
+        "dns_name": "ndjamena",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 43,
@@ -429,9 +553,11 @@
         "name": "Santiago",
         "latitude": -33.45,
         "longitude": -70.666667,
-        "dns_name": "santiago"
+        "dns_name": "santiago",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 47,
@@ -443,9 +569,11 @@
         "name": "Bogota",
         "latitude": 4.649178,
         "longitude": -74.062827,
-        "dns_name": "bogota"
+        "dns_name": "bogota",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 48,
@@ -457,9 +585,11 @@
         "name": "Moroni",
         "latitude": -11.7041667,
         "longitude": 43.2402778,
-        "dns_name": "moroni"
+        "dns_name": "moroni",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 52,
@@ -471,9 +601,11 @@
         "name": "San Jose",
         "latitude": 9.893385,
         "longitude": -84.105407,
-        "dns_name": "san-jose"
+        "dns_name": "san-jose",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 53,
@@ -485,9 +617,11 @@
         "name": "Yamoussoukro",
         "latitude": 6.820548,
         "longitude": -5.276741,
-        "dns_name": "yamoussoukro"
+        "dns_name": "yamoussoukro",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 54,
@@ -499,9 +633,11 @@
         "name": "Zagreb",
         "latitude": 45.8,
         "longitude": 16.0,
-        "dns_name": "zagreb"
+        "dns_name": "zagreb",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 56,
@@ -513,9 +649,11 @@
         "name": "Nicosia",
         "latitude": 35.1666667,
         "longitude": 33.3666667,
-        "dns_name": "nicosia"
+        "dns_name": "nicosia",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 57,
@@ -527,9 +665,11 @@
         "name": "Prague",
         "latitude": 50.083333,
         "longitude": 14.466667,
-        "dns_name": "prague"
+        "dns_name": "prague",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 58,
@@ -541,9 +681,11 @@
         "name": "Copenhagen",
         "latitude": 55.666667,
         "longitude": 12.583333,
-        "dns_name": "copenhagen"
+        "dns_name": "copenhagen",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 61,
@@ -555,9 +697,11 @@
         "name": "Santo Domingo",
         "latitude": 18.4666667,
         "longitude": -69.9,
-        "dns_name": "santo-domingo"
+        "dns_name": "santo-domingo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 63,
@@ -569,9 +713,11 @@
         "name": "Quito",
         "latitude": -0.2166667,
         "longitude": -78.5,
-        "dns_name": "quito"
+        "dns_name": "quito",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 64,
@@ -583,9 +729,11 @@
         "name": "Cairo",
         "latitude": 30.05,
         "longitude": 31.25,
-        "dns_name": "cairo"
+        "dns_name": "cairo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 65,
@@ -597,9 +745,11 @@
         "name": "San Salvador",
         "latitude": 13.7086111,
         "longitude": -89.2030556,
-        "dns_name": "san-salvador"
+        "dns_name": "san-salvador",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 68,
@@ -611,9 +761,11 @@
         "name": "Tallinn",
         "latitude": 59.4338889,
         "longitude": 24.7280556,
-        "dns_name": "tallinn"
+        "dns_name": "tallinn",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 69,
@@ -625,9 +777,11 @@
         "name": "Addis Ababa",
         "latitude": 9.024325,
         "longitude": 38.749226,
-        "dns_name": "addis-ababa"
+        "dns_name": "addis-ababa",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 72,
@@ -639,9 +793,11 @@
         "name": "Suva",
         "latitude": -18.1333333,
         "longitude": 178.4166667,
-        "dns_name": "suva"
+        "dns_name": "suva",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 73,
@@ -653,9 +809,11 @@
         "name": "Helsinki",
         "latitude": 60.175556,
         "longitude": 24.934167,
-        "dns_name": "helsinki"
+        "dns_name": "helsinki",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 74,
@@ -667,30 +825,35 @@
         "name": "Bordeaux",
         "latitude": 44.840439,
         "longitude": -0.5805,
-        "dns_name": "bordeaux"
+        "dns_name": "bordeaux",
+        "subdivision_id": null
       },
       {
         "id": 2867102,
         "name": "Marseille",
         "latitude": 43.285413,
         "longitude": 5.37606,
-        "dns_name": "marseille"
+        "dns_name": "marseille",
+        "subdivision_id": null
       },
       {
         "id": 2886284,
         "name": "Paris",
         "latitude": 48.866667,
         "longitude": 2.333333,
-        "dns_name": "paris"
+        "dns_name": "paris",
+        "subdivision_id": null
       },
       {
         "id": 2929151,
         "name": "Strasbourg",
         "latitude": 48.600381,
         "longitude": 7.787355,
-        "dns_name": "strasbourg"
+        "dns_name": "strasbourg",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 80,
@@ -702,9 +865,11 @@
         "name": "Tbilisi",
         "latitude": 41.725,
         "longitude": 44.7908333,
-        "dns_name": "tbilisi"
+        "dns_name": "tbilisi",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 81,
@@ -716,21 +881,44 @@
         "name": "Berlin",
         "latitude": 52.516667,
         "longitude": 13.4,
-        "dns_name": "berlin"
+        "dns_name": "berlin",
+        "subdivision_id": 24
       },
       {
         "id": 2215709,
         "name": "Frankfurt",
         "latitude": 50.116667,
         "longitude": 8.683333,
-        "dns_name": "frankfurt"
+        "dns_name": "frankfurt",
+        "subdivision_id": 28
       },
       {
         "id": 2234906,
         "name": "Hamburg",
         "latitude": 53.55,
         "longitude": 10.0,
-        "dns_name": "hamburg"
+        "dns_name": "hamburg",
+        "subdivision_id": 27
+      }
+    ],
+    "subdivisions": [
+      {
+        "id": 24,
+        "name": "Berlin",
+        "code": "BE",
+        "serverCount": 79
+      },
+      {
+        "id": 27,
+        "name": "Hamburg",
+        "code": "HH",
+        "serverCount": 28
+      },
+      {
+        "id": 28,
+        "name": "Hesse",
+        "code": "HE",
+        "serverCount": 340
       }
     ]
   },
@@ -744,9 +932,11 @@
         "name": "Accra",
         "latitude": 5.55,
         "longitude": -0.2166667,
-        "dns_name": "accra"
+        "dns_name": "accra",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 84,
@@ -758,9 +948,11 @@
         "name": "Athens",
         "latitude": 37.9833333,
         "longitude": 23.7333333,
-        "dns_name": "athens"
+        "dns_name": "athens",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 85,
@@ -772,9 +964,11 @@
         "name": "Nuuk",
         "latitude": 64.1833333,
         "longitude": -51.75,
-        "dns_name": "nuuk"
+        "dns_name": "nuuk",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 88,
@@ -786,9 +980,11 @@
         "name": "Hagatna",
         "latitude": 13.4741667,
         "longitude": 144.7477778,
-        "dns_name": "hagatna"
+        "dns_name": "hagatna",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 89,
@@ -800,9 +996,11 @@
         "name": "Guatemala City",
         "latitude": 14.621111,
         "longitude": -90.526944,
-        "dns_name": "guatemala-city"
+        "dns_name": "guatemala-city",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 96,
@@ -814,9 +1012,11 @@
         "name": "Tegucigalpa",
         "latitude": 14.1,
         "longitude": -87.2166667,
-        "dns_name": "tegucigalpa"
+        "dns_name": "tegucigalpa",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 97,
@@ -828,9 +1028,11 @@
         "name": "Hong Kong",
         "latitude": 22.2833333,
         "longitude": 114.15,
-        "dns_name": "hong-kong"
+        "dns_name": "hong-kong",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 98,
@@ -842,9 +1044,11 @@
         "name": "Budapest",
         "latitude": 47.5,
         "longitude": 19.083333,
-        "dns_name": "budapest"
+        "dns_name": "budapest",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 99,
@@ -856,9 +1060,11 @@
         "name": "Reykjavik",
         "latitude": 64.15,
         "longitude": -21.95,
-        "dns_name": "reykjavik"
+        "dns_name": "reykjavik",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 100,
@@ -870,9 +1076,11 @@
         "name": "Mumbai",
         "latitude": 18.975,
         "longitude": 72.825833,
-        "dns_name": "mumbai"
+        "dns_name": "mumbai",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 101,
@@ -884,9 +1092,11 @@
         "name": "Jakarta",
         "latitude": -6.174444,
         "longitude": 106.829444,
-        "dns_name": "jakarta"
+        "dns_name": "jakarta",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 103,
@@ -898,9 +1108,11 @@
         "name": "Baghdad",
         "latitude": 33.3386111,
         "longitude": 44.3938889,
-        "dns_name": "baghdad"
+        "dns_name": "baghdad",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 104,
@@ -912,9 +1124,11 @@
         "name": "Dublin",
         "latitude": 53.3330556,
         "longitude": -6.2488889,
-        "dns_name": "dublin"
+        "dns_name": "dublin",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 243,
@@ -926,9 +1140,11 @@
         "name": "Douglas",
         "latitude": 54.15,
         "longitude": -4.483333,
-        "dns_name": "douglas"
+        "dns_name": "douglas",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 105,
@@ -940,9 +1156,11 @@
         "name": "Tel Aviv",
         "latitude": 32.066667,
         "longitude": 34.766667,
-        "dns_name": "tel-aviv"
+        "dns_name": "tel-aviv",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 106,
@@ -954,23 +1172,27 @@
         "name": "Milan",
         "latitude": 45.466667,
         "longitude": 9.2,
-        "dns_name": "milan"
+        "dns_name": "milan",
+        "subdivision_id": null
       },
       {
         "id": 4548074,
         "name": "Palermo",
         "latitude": 38.116667,
         "longitude": 13.366667,
-        "dns_name": "palermo"
+        "dns_name": "palermo",
+        "subdivision_id": null
       },
       {
         "id": 4555808,
         "name": "Rome",
         "latitude": 41.8902,
         "longitude": 12.4922,
-        "dns_name": "rome"
+        "dns_name": "rome",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 107,
@@ -982,9 +1204,11 @@
         "name": "Kingston",
         "latitude": 18.0,
         "longitude": -76.8,
-        "dns_name": "kingston"
+        "dns_name": "kingston",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 108,
@@ -996,16 +1220,19 @@
         "name": "Osaka",
         "latitude": 34.6937,
         "longitude": 135.5023,
-        "dns_name": "osaka"
+        "dns_name": "osaka",
+        "subdivision_id": null
       },
       {
         "id": 4633349,
         "name": "Tokyo",
         "latitude": 35.685,
         "longitude": 139.751389,
-        "dns_name": "tokyo"
+        "dns_name": "tokyo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 244,
@@ -1017,9 +1244,11 @@
         "name": "Saint Helier",
         "latitude": 49.183333,
         "longitude": -2.1,
-        "dns_name": "saint-helier"
+        "dns_name": "saint-helier",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 109,
@@ -1031,9 +1260,11 @@
         "name": "Amman",
         "latitude": 31.95,
         "longitude": 35.933333,
-        "dns_name": "amman"
+        "dns_name": "amman",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 110,
@@ -1045,9 +1276,11 @@
         "name": "Astana",
         "latitude": 51.181111,
         "longitude": 71.427778,
-        "dns_name": "astana"
+        "dns_name": "astana",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 111,
@@ -1059,9 +1292,11 @@
         "name": "Nairobi",
         "latitude": -1.2833333,
         "longitude": 36.8166667,
-        "dns_name": "nairobi"
+        "dns_name": "nairobi",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 116,
@@ -1073,9 +1308,11 @@
         "name": "Kuwait City",
         "latitude": 29.3759,
         "longitude": 47.9774,
-        "dns_name": "kuwait-city"
+        "dns_name": "kuwait-city",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 118,
@@ -1087,9 +1324,11 @@
         "name": "Vientiane",
         "latitude": 17.966667,
         "longitude": 102.6,
-        "dns_name": "vientiane"
+        "dns_name": "vientiane",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 119,
@@ -1101,9 +1340,11 @@
         "name": "Riga",
         "latitude": 56.95,
         "longitude": 24.1,
-        "dns_name": "riga"
+        "dns_name": "riga",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 120,
@@ -1115,9 +1356,11 @@
         "name": "Beirut",
         "latitude": 33.8719444,
         "longitude": 35.5097222,
-        "dns_name": "beirut"
+        "dns_name": "beirut",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 123,
@@ -1129,9 +1372,11 @@
         "name": "Tripoli",
         "latitude": 32.8925,
         "longitude": 13.18,
-        "dns_name": "tripoli"
+        "dns_name": "tripoli",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 124,
@@ -1143,9 +1388,11 @@
         "name": "Vaduz",
         "latitude": 47.1333333,
         "longitude": 9.5166667,
-        "dns_name": "vaduz"
+        "dns_name": "vaduz",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 125,
@@ -1157,9 +1404,11 @@
         "name": "Vilnius",
         "latitude": 54.6833333,
         "longitude": 25.3166667,
-        "dns_name": "vilnius"
+        "dns_name": "vilnius",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 126,
@@ -1171,9 +1420,11 @@
         "name": "Luxembourg",
         "latitude": 49.6117,
         "longitude": 6.13,
-        "dns_name": "luxembourg"
+        "dns_name": "luxembourg",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 131,
@@ -1185,9 +1436,11 @@
         "name": "Kuala Lumpur",
         "latitude": 3.166667,
         "longitude": 101.7,
-        "dns_name": "kuala-lumpur"
+        "dns_name": "kuala-lumpur",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 134,
@@ -1199,9 +1452,11 @@
         "name": "Valletta",
         "latitude": 35.899722,
         "longitude": 14.514722,
-        "dns_name": "valletta"
+        "dns_name": "valletta",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 137,
@@ -1213,9 +1468,11 @@
         "name": "Nouakchott",
         "latitude": 18.0863889,
         "longitude": -15.9752778,
-        "dns_name": "nouakchott"
+        "dns_name": "nouakchott",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 138,
@@ -1227,9 +1484,11 @@
         "name": "Port Louis",
         "latitude": -20.1619444,
         "longitude": 57.4988889,
-        "dns_name": "port-louis"
+        "dns_name": "port-louis",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 140,
@@ -1241,9 +1500,11 @@
         "name": "Mexico",
         "latitude": 19.434167,
         "longitude": -99.138611,
-        "dns_name": "mexico"
+        "dns_name": "mexico",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 142,
@@ -1255,9 +1516,11 @@
         "name": "Chisinau",
         "latitude": 47.005556,
         "longitude": 28.8575,
-        "dns_name": "chisinau"
+        "dns_name": "chisinau",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 143,
@@ -1269,9 +1532,11 @@
         "name": "Monte Carlo",
         "latitude": 43.739722,
         "longitude": 7.427222,
-        "dns_name": "monte-carlo"
+        "dns_name": "monte-carlo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 144,
@@ -1283,9 +1548,11 @@
         "name": "Ulaanbaatar",
         "latitude": 47.9166667,
         "longitude": 106.9166667,
-        "dns_name": "ulaanbaatar"
+        "dns_name": "ulaanbaatar",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 146,
@@ -1297,9 +1564,11 @@
         "name": "Podgorica",
         "latitude": 42.441111,
         "longitude": 19.263611,
-        "dns_name": "podgorica"
+        "dns_name": "podgorica",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 147,
@@ -1311,9 +1580,11 @@
         "name": "Rabat",
         "latitude": 34.013784,
         "longitude": -6.844268,
-        "dns_name": "rabat"
+        "dns_name": "rabat",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 148,
@@ -1325,9 +1596,11 @@
         "name": "Maputo",
         "latitude": -25.9652778,
         "longitude": 32.5891667,
-        "dns_name": "maputo"
+        "dns_name": "maputo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 149,
@@ -1339,9 +1612,11 @@
         "name": "Naypyidaw",
         "latitude": 19.7475,
         "longitude": 96.115,
-        "dns_name": "naypyidaw"
+        "dns_name": "naypyidaw",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 152,
@@ -1353,9 +1628,11 @@
         "name": "Kathmandu",
         "latitude": 27.7166667,
         "longitude": 85.3166667,
-        "dns_name": "kathmandu"
+        "dns_name": "kathmandu",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 153,
@@ -1367,9 +1644,11 @@
         "name": "Amsterdam",
         "latitude": 52.35,
         "longitude": 4.916667,
-        "dns_name": "amsterdam"
+        "dns_name": "amsterdam",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 156,
@@ -1381,9 +1660,11 @@
         "name": "Auckland",
         "latitude": -36.866667,
         "longitude": 174.766667,
-        "dns_name": "auckland"
+        "dns_name": "auckland",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 159,
@@ -1395,9 +1676,11 @@
         "name": "Lagos",
         "latitude": 6.453056,
         "longitude": 3.395833,
-        "dns_name": "lagos"
+        "dns_name": "lagos",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 128,
@@ -1409,9 +1692,11 @@
         "name": "Skopje",
         "latitude": 42.0,
         "longitude": 21.4333333,
-        "dns_name": "skopje"
+        "dns_name": "skopje",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 163,
@@ -1423,9 +1708,11 @@
         "name": "Oslo",
         "latitude": 59.916667,
         "longitude": 10.75,
-        "dns_name": "oslo"
+        "dns_name": "oslo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 165,
@@ -1437,9 +1724,11 @@
         "name": "Karachi",
         "latitude": 24.9056,
         "longitude": 67.0822,
-        "dns_name": "karachi"
+        "dns_name": "karachi",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 168,
@@ -1451,9 +1740,11 @@
         "name": "Panama City",
         "latitude": 8.9666667,
         "longitude": -79.5333333,
-        "dns_name": "panama-city"
+        "dns_name": "panama-city",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 169,
@@ -1465,9 +1756,11 @@
         "name": "Port Moresby",
         "latitude": -9.4647222,
         "longitude": 147.1925,
-        "dns_name": "port-moresby"
+        "dns_name": "port-moresby",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 170,
@@ -1479,9 +1772,11 @@
         "name": "Asuncion",
         "latitude": -25.3,
         "longitude": -57.633333,
-        "dns_name": "asuncion"
+        "dns_name": "asuncion",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 171,
@@ -1493,9 +1788,11 @@
         "name": "Lima",
         "latitude": -12.05,
         "longitude": -77.05,
-        "dns_name": "lima"
+        "dns_name": "lima",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 172,
@@ -1507,9 +1804,11 @@
         "name": "Manila",
         "latitude": 14.6042,
         "longitude": 120.9822,
-        "dns_name": "manila"
+        "dns_name": "manila",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 174,
@@ -1521,9 +1820,11 @@
         "name": "Warsaw",
         "latitude": 52.25,
         "longitude": 21.0,
-        "dns_name": "warsaw"
+        "dns_name": "warsaw",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 175,
@@ -1535,9 +1836,11 @@
         "name": "Lisbon",
         "latitude": 38.716667,
         "longitude": -9.133333,
-        "dns_name": "lisbon"
+        "dns_name": "lisbon",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 176,
@@ -1549,9 +1852,11 @@
         "name": "San Juan",
         "latitude": 18.406389,
         "longitude": -66.063889,
-        "dns_name": "san-juan"
+        "dns_name": "san-juan",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 177,
@@ -1563,9 +1868,11 @@
         "name": "Doha",
         "latitude": 25.286667,
         "longitude": 51.533333,
-        "dns_name": "doha"
+        "dns_name": "doha",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 179,
@@ -1577,9 +1884,11 @@
         "name": "Bucharest",
         "latitude": 44.433333,
         "longitude": 26.1,
-        "dns_name": "bucharest"
+        "dns_name": "bucharest",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 181,
@@ -1591,9 +1900,11 @@
         "name": "Kigali",
         "latitude": -1.9536111,
         "longitude": 30.0605556,
-        "dns_name": "kigali"
+        "dns_name": "kigali",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 191,
@@ -1605,9 +1916,11 @@
         "name": "Dakar",
         "latitude": 14.6708333,
         "longitude": -17.4380556,
-        "dns_name": "dakar"
+        "dns_name": "dakar",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 192,
@@ -1619,9 +1932,11 @@
         "name": "Belgrade",
         "latitude": 44.818611,
         "longitude": 20.468056,
-        "dns_name": "belgrad"
+        "dns_name": "belgrad",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 195,
@@ -1633,9 +1948,11 @@
         "name": "Singapore",
         "latitude": 1.2930556,
         "longitude": 103.8558333,
-        "dns_name": "singapore"
+        "dns_name": "singapore",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 196,
@@ -1647,9 +1964,11 @@
         "name": "Bratislava",
         "latitude": 48.15,
         "longitude": 17.1166667,
-        "dns_name": "bratislava"
+        "dns_name": "bratislava",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 197,
@@ -1661,9 +1980,11 @@
         "name": "Ljubljana",
         "latitude": 46.0552778,
         "longitude": 14.5144444,
-        "dns_name": "ljubljana"
+        "dns_name": "ljubljana",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 199,
@@ -1675,9 +1996,11 @@
         "name": "Mogadishu",
         "latitude": 2.0666667,
         "longitude": 45.3666667,
-        "dns_name": "mogadishu"
+        "dns_name": "mogadishu",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 200,
@@ -1689,9 +2012,11 @@
         "name": "Johannesburg",
         "latitude": -26.205171,
         "longitude": 28.049815,
-        "dns_name": "johannesburg"
+        "dns_name": "johannesburg",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 114,
@@ -1703,9 +2028,11 @@
         "name": "Seoul",
         "latitude": 37.5985,
         "longitude": 126.9783,
-        "dns_name": "seoul"
+        "dns_name": "seoul",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 202,
@@ -1717,16 +2044,19 @@
         "name": "Barcelona",
         "latitude": 41.398371,
         "longitude": 2.1741,
-        "dns_name": "barcelona"
+        "dns_name": "barcelona",
+        "subdivision_id": null
       },
       {
         "id": 2619989,
         "name": "Madrid",
         "latitude": 40.408566,
         "longitude": -3.69222,
-        "dns_name": "madrid"
+        "dns_name": "madrid",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 203,
@@ -1738,9 +2068,11 @@
         "name": "Colombo",
         "latitude": 6.9319444,
         "longitude": 79.8477778,
-        "dns_name": "colombo"
+        "dns_name": "colombo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 205,
@@ -1752,9 +2084,11 @@
         "name": "Paramaribo",
         "latitude": 5.8333333,
         "longitude": -55.1666667,
-        "dns_name": "paramaribo"
+        "dns_name": "paramaribo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 208,
@@ -1766,9 +2100,11 @@
         "name": "Stockholm",
         "latitude": 59.333333,
         "longitude": 18.05,
-        "dns_name": "stockholm"
+        "dns_name": "stockholm",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 209,
@@ -1780,9 +2116,11 @@
         "name": "Zurich",
         "latitude": 47.366667,
         "longitude": 8.55,
-        "dns_name": "zurich"
+        "dns_name": "zurich",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 211,
@@ -1794,9 +2132,11 @@
         "name": "Taipei",
         "latitude": 25.0391667,
         "longitude": 121.525,
-        "dns_name": "taipei"
+        "dns_name": "taipei",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 212,
@@ -1808,9 +2148,11 @@
         "name": "Dushanbe",
         "latitude": 38.56,
         "longitude": 68.7738889,
-        "dns_name": "dushanbe"
+        "dns_name": "dushanbe",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 213,
@@ -1822,9 +2164,11 @@
         "name": "Dodoma",
         "latitude": -6.1833333,
         "longitude": 35.75,
-        "dns_name": "dodoma"
+        "dns_name": "dodoma",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 214,
@@ -1836,9 +2180,11 @@
         "name": "Bangkok",
         "latitude": 13.753979,
         "longitude": 100.501444,
-        "dns_name": "bangkok"
+        "dns_name": "bangkok",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 215,
@@ -1850,9 +2196,11 @@
         "name": "Lome",
         "latitude": 6.1319444,
         "longitude": 1.2227778,
-        "dns_name": "lome"
+        "dns_name": "lome",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 218,
@@ -1864,9 +2212,11 @@
         "name": "Port of Spain",
         "latitude": 10.666667,
         "longitude": -61.516667,
-        "dns_name": "port-of-spain"
+        "dns_name": "port-of-spain",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 219,
@@ -1878,9 +2228,11 @@
         "name": "Tunis",
         "latitude": 36.806112,
         "longitude": 10.171078,
-        "dns_name": "tunis"
+        "dns_name": "tunis",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 220,
@@ -1892,9 +2244,11 @@
         "name": "Istanbul",
         "latitude": 41.018611,
         "longitude": 28.964722,
-        "dns_name": "istanbul"
+        "dns_name": "istanbul",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 225,
@@ -1906,9 +2260,11 @@
         "name": "Kyiv",
         "latitude": 50.433333,
         "longitude": 30.516667,
-        "dns_name": "kyiv"
+        "dns_name": "kyiv",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 226,
@@ -1920,16 +2276,19 @@
         "name": "Dubai",
         "latitude": 25.258172,
         "longitude": 55.304717,
-        "dns_name": "dubai"
+        "dns_name": "dubai",
+        "subdivision_id": null
       },
       {
         "id": 800,
         "name": "Fujairah",
         "latitude": 25.116412,
         "longitude": 56.341408,
-        "dns_name": "fujairah"
+        "dns_name": "fujairah",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 227,
@@ -1941,28 +2300,46 @@
         "name": "Edinburgh",
         "latitude": 55.95,
         "longitude": -3.2,
-        "dns_name": "edinburgh"
+        "dns_name": "edinburgh",
+        "subdivision_id": 39
       },
       {
         "id": 2978888,
         "name": "Glasgow",
         "latitude": 55.833333,
         "longitude": -4.25,
-        "dns_name": "glasgow"
+        "dns_name": "glasgow",
+        "subdivision_id": 39
       },
       {
         "id": 2989907,
         "name": "London",
         "latitude": 51.514125,
         "longitude": -0.093689,
-        "dns_name": "london"
+        "dns_name": "london",
+        "subdivision_id": 38
       },
       {
         "id": 2991110,
         "name": "Manchester",
         "latitude": 53.5,
         "longitude": -2.216667,
-        "dns_name": "manchester"
+        "dns_name": "manchester",
+        "subdivision_id": 38
+      }
+    ],
+    "subdivisions": [
+      {
+        "id": 38,
+        "name": "England",
+        "code": "ENG",
+        "serverCount": 1054
+      },
+      {
+        "id": 39,
+        "name": "Scotland",
+        "code": "SCT",
+        "serverCount": 96
       }
     ]
   },
@@ -1976,385 +2353,742 @@
         "name": "Albuquerque",
         "latitude": 35.0844444,
         "longitude": -106.6505556,
-        "dns_name": "albuquerque"
+        "dns_name": "albuquerque",
+        "subdivision_id": 72
       },
       {
         "id": 8736005,
         "name": "Anchorage",
         "latitude": 61.2180556,
         "longitude": -149.9002778,
-        "dns_name": "anchorage"
+        "dns_name": "anchorage",
+        "subdivision_id": 43
       },
       {
         "id": 9103211,
         "name": "Ashburn",
         "latitude": 39.0436111,
         "longitude": -77.4877778,
-        "dns_name": "ashburn"
+        "dns_name": "ashburn",
+        "subdivision_id": 87
       },
       {
         "id": 8792429,
         "name": "Atlanta",
         "latitude": 33.7488889,
         "longitude": -84.3880556,
-        "dns_name": "atlanta"
+        "dns_name": "atlanta",
+        "subdivision_id": 51
       },
       {
         "id": 8873894,
         "name": "Baltimore",
         "latitude": 39.2902778,
         "longitude": -76.6125,
-        "dns_name": "baltimore"
+        "dns_name": "baltimore",
+        "subdivision_id": 61
       },
       {
         "id": 8937212,
         "name": "Billings",
         "latitude": 45.7833333,
         "longitude": -108.5,
-        "dns_name": "billings"
+        "dns_name": "billings",
+        "subdivision_id": 67
       },
       {
         "id": 8810342,
         "name": "Boise",
         "latitude": 43.6136111,
         "longitude": -116.2025,
-        "dns_name": "boise"
+        "dns_name": "boise",
+        "subdivision_id": 53
       },
       {
         "id": 8895305,
         "name": "Boston",
         "latitude": 42.3583333,
         "longitude": -71.0602778,
-        "dns_name": "boston"
+        "dns_name": "boston",
+        "subdivision_id": 62
       },
       {
         "id": 8963153,
         "name": "Buffalo",
         "latitude": 42.8863889,
         "longitude": -78.8786111,
-        "dns_name": "buffalo"
+        "dns_name": "buffalo",
+        "subdivision_id": 73
       },
       {
         "id": 9099731,
         "name": "Burlington",
         "latitude": 44.4758333,
         "longitude": -73.2125,
-        "dns_name": "burlington"
+        "dns_name": "burlington",
+        "subdivision_id": 86
       },
       {
         "id": 9050567,
         "name": "Charleston",
         "latitude": 32.7763889,
         "longitude": -79.9311111,
-        "dns_name": "charleston"
+        "dns_name": "charleston",
+        "subdivision_id": 81
       },
       {
         "id": 8980922,
         "name": "Charlotte",
         "latitude": 35.2269444,
         "longitude": -80.8433333,
-        "dns_name": "charlotte"
+        "dns_name": "charlotte",
+        "subdivision_id": 74
       },
       {
         "id": 9147794,
         "name": "Cheyenne",
         "latitude": 41.14,
         "longitude": -104.8197222,
-        "dns_name": "cheyenne"
+        "dns_name": "cheyenne",
+        "subdivision_id": 91
       },
       {
         "id": 8815352,
         "name": "Chicago",
         "latitude": 41.85,
         "longitude": -87.65,
-        "dns_name": "chicago"
+        "dns_name": "chicago",
+        "subdivision_id": 54
       },
       {
         "id": 8997560,
         "name": "Columbus",
         "latitude": 39.9611111,
         "longitude": -82.9988889,
-        "dns_name": "columbus"
+        "dns_name": "columbus",
+        "subdivision_id": 76
       },
       {
         "id": 9080300,
         "name": "Dallas",
         "latitude": 32.7833333,
         "longitude": -96.8,
-        "dns_name": "dallas"
+        "dns_name": "dallas",
+        "subdivision_id": 84
       },
       {
         "id": 8770934,
         "name": "Denver",
         "latitude": 39.7391667,
         "longitude": -104.9841667,
-        "dns_name": "denver"
+        "dns_name": "denver",
+        "subdivision_id": 47
       },
       {
         "id": 8835473,
         "name": "Des Moines",
         "latitude": 41.6005556,
         "longitude": -93.6088889,
-        "dns_name": "des-moines"
+        "dns_name": "des-moines",
+        "subdivision_id": 56
       },
       {
         "id": 8903312,
         "name": "Detroit",
         "latitude": 42.3313889,
         "longitude": -83.0458333,
-        "dns_name": "detroit"
+        "dns_name": "detroit",
+        "subdivision_id": 63
       },
       {
         "id": 8993042,
         "name": "Fargo",
         "latitude": 46.8772222,
         "longitude": -96.7894444,
-        "dns_name": "fargo"
+        "dns_name": "fargo",
+        "subdivision_id": 75
       },
       {
         "id": 8808860,
         "name": "Honolulu",
         "latitude": 21.3069444,
         "longitude": -157.8583333,
-        "dns_name": "honolulu"
+        "dns_name": "honolulu",
+        "subdivision_id": 52
       },
       {
         "id": 9083687,
         "name": "Houston",
         "latitude": 29.7630556,
         "longitude": -95.3630556,
-        "dns_name": "houston"
+        "dns_name": "houston",
+        "subdivision_id": 84
       },
       {
         "id": 9134528,
         "name": "Huntington",
         "latitude": 38.4191667,
         "longitude": -82.4452778,
-        "dns_name": "huntington"
+        "dns_name": "huntington",
+        "subdivision_id": 89
       },
       {
         "id": 8828528,
         "name": "Indianapolis",
         "latitude": 39.7683333,
         "longitude": -86.1580556,
-        "dns_name": "indianapolis"
+        "dns_name": "indianapolis",
+        "subdivision_id": 55
       },
       {
         "id": 8920961,
         "name": "Jackson",
         "latitude": 32.2986111,
         "longitude": -90.1847222,
-        "dns_name": "jackson"
+        "dns_name": "jackson",
+        "subdivision_id": 65
       },
       {
         "id": 8930717,
         "name": "Kansas City",
         "latitude": 39.0997222,
         "longitude": -94.5783333,
-        "dns_name": "kansas-city"
+        "dns_name": "kansas-city",
+        "subdivision_id": 66
       },
       {
         "id": 8945963,
         "name": "Las Vegas",
         "latitude": 36.175,
         "longitude": -115.1363889,
-        "dns_name": "las-vegas"
+        "dns_name": "las-vegas",
+        "subdivision_id": 69
       },
       {
         "id": 8869646,
         "name": "Lewiston",
         "latitude": 44.1002778,
         "longitude": -70.2152778,
-        "dns_name": "lewiston"
+        "dns_name": "lewiston",
+        "subdivision_id": 60
       },
       {
         "id": 8749055,
         "name": "Little Rock",
         "latitude": 34.7463889,
         "longitude": -92.2894444,
-        "dns_name": "little-rock"
+        "dns_name": "little-rock",
+        "subdivision_id": 45
       },
       {
         "id": 8761958,
         "name": "Los Angeles",
         "latitude": 34.0522222,
         "longitude": -118.2427778,
-        "dns_name": "los-angeles"
+        "dns_name": "los-angeles",
+        "subdivision_id": 46
       },
       {
         "id": 8852234,
         "name": "Louisville",
         "latitude": 38.2541667,
         "longitude": -85.7594444,
-        "dns_name": "louisville"
+        "dns_name": "louisville",
+        "subdivision_id": 58
       },
       {
         "id": 9086162,
         "name": "McAllen",
         "latitude": 26.2030556,
         "longitude": -98.2297222,
-        "dns_name": "mcallen"
+        "dns_name": "mcallen",
+        "subdivision_id": 84
       },
       {
         "id": 8787782,
         "name": "Miami",
         "latitude": 25.7738889,
         "longitude": -80.1938889,
-        "dns_name": "miami"
+        "dns_name": "miami",
+        "subdivision_id": 50
       },
       {
         "id": 9144572,
         "name": "Milwaukee",
         "latitude": 43.0388889,
         "longitude": -87.9063889,
-        "dns_name": "milwaukee"
+        "dns_name": "milwaukee",
+        "subdivision_id": 90
       },
       {
         "id": 8915105,
         "name": "Minneapolis",
         "latitude": 44.98,
         "longitude": -93.2636111,
-        "dns_name": "minneapolis"
+        "dns_name": "minneapolis",
+        "subdivision_id": 64
       },
       {
         "id": 8730710,
         "name": "Montgomery",
         "latitude": 32.3666667,
         "longitude": -86.3,
-        "dns_name": "montgomery"
+        "dns_name": "montgomery",
+        "subdivision_id": 42
       },
       {
         "id": 8948549,
         "name": "Nashua",
         "latitude": 42.7652778,
         "longitude": -71.4680556,
-        "dns_name": "nashua"
+        "dns_name": "nashua",
+        "subdivision_id": 70
       },
       {
         "id": 9071273,
         "name": "Nashville",
         "latitude": 36.1658333,
         "longitude": -86.7844444,
-        "dns_name": "nashville"
+        "dns_name": "nashville",
+        "subdivision_id": 83
       },
       {
         "id": 8775974,
         "name": "New Haven",
         "latitude": 41.3080556,
         "longitude": -72.9286111,
-        "dns_name": "new-haven"
+        "dns_name": "new-haven",
+        "subdivision_id": 48
       },
       {
         "id": 8863781,
         "name": "New Orleans",
         "latitude": 29.9544444,
         "longitude": -90.075,
-        "dns_name": "new-orleans"
+        "dns_name": "new-orleans",
+        "subdivision_id": 59
       },
       {
         "id": 8971718,
         "name": "New York",
         "latitude": 40.7141667,
         "longitude": -74.0063889,
-        "dns_name": "new-york"
+        "dns_name": "new-york",
+        "subdivision_id": 73
       },
       {
         "id": 9013061,
         "name": "Oklahoma City",
         "latitude": 35.4675,
         "longitude": -97.5161111,
-        "dns_name": "oklahoma-city"
+        "dns_name": "oklahoma-city",
+        "subdivision_id": 77
       },
       {
         "id": 8943887,
         "name": "Omaha",
         "latitude": 41.2586111,
         "longitude": -95.9375,
-        "dns_name": "omaha"
+        "dns_name": "omaha",
+        "subdivision_id": 68
       },
       {
         "id": 8741960,
         "name": "Phoenix",
         "latitude": 33.4483333,
         "longitude": -112.0733333,
-        "dns_name": "phoenix"
+        "dns_name": "phoenix",
+        "subdivision_id": 44
       },
       {
         "id": 9036872,
         "name": "Pittsburgh",
         "latitude": 40.4405556,
         "longitude": -79.9961111,
-        "dns_name": "pittsburgh"
+        "dns_name": "pittsburgh",
+        "subdivision_id": 79
       },
       {
         "id": 9017738,
         "name": "Portland",
         "latitude": 45.5236111,
         "longitude": -122.675,
-        "dns_name": "portland"
+        "dns_name": "portland",
+        "subdivision_id": 78
       },
       {
         "id": 9048614,
         "name": "Providence",
         "latitude": 41.8238889,
         "longitude": -71.4133333,
-        "dns_name": "providence"
+        "dns_name": "providence",
+        "subdivision_id": 80
       },
       {
         "id": 8934551,
         "name": "Saint Louis",
         "latitude": 38.6272222,
         "longitude": -90.1977778,
-        "dns_name": "saint-louis"
+        "dns_name": "saint-louis",
+        "subdivision_id": 66
       },
       {
         "id": 9097865,
         "name": "Salt Lake City",
         "latitude": 40.7608333,
         "longitude": -111.8902778,
-        "dns_name": "salt-lake-city"
+        "dns_name": "salt-lake-city",
+        "subdivision_id": 85
       },
       {
         "id": 8766359,
         "name": "San Francisco",
         "latitude": 37.7698135,
         "longitude": -122.4660005,
-        "dns_name": "san-francisco"
+        "dns_name": "san-francisco",
+        "subdivision_id": 46
       },
       {
         "id": 9128402,
         "name": "Seattle",
         "latitude": 47.6063889,
         "longitude": -122.3308333,
-        "dns_name": "seattle"
+        "dns_name": "seattle",
+        "subdivision_id": 88
       },
       {
         "id": 9061658,
         "name": "Sioux Falls",
         "latitude": 43.55,
         "longitude": -96.7,
-        "dns_name": "sioux-falls"
+        "dns_name": "sioux-falls",
+        "subdivision_id": 82
       },
       {
         "id": 8956166,
         "name": "Trenton",
         "latitude": 40.2169444,
         "longitude": -74.7433333,
-        "dns_name": "trenton"
+        "dns_name": "trenton",
+        "subdivision_id": 71
       },
       {
         "id": 8845130,
         "name": "Wichita",
         "latitude": 37.6922222,
         "longitude": -97.3372222,
-        "dns_name": "wichita"
+        "dns_name": "wichita",
+        "subdivision_id": 57
       },
       {
         "id": 8781776,
         "name": "Wilmington",
         "latitude": 39.7458333,
         "longitude": -75.5469444,
-        "dns_name": "wilmington"
+        "dns_name": "wilmington",
+        "subdivision_id": 49
+      }
+    ],
+    "subdivisions": [
+      {
+        "id": 42,
+        "name": "Alabama",
+        "code": "AL",
+        "serverCount": 12
+      },
+      {
+        "id": 43,
+        "name": "Alaska",
+        "code": "AK",
+        "serverCount": 6
+      },
+      {
+        "id": 44,
+        "name": "Arizona",
+        "code": "AZ",
+        "serverCount": 72
+      },
+      {
+        "id": 45,
+        "name": "Arkansas",
+        "code": "AR",
+        "serverCount": 5
+      },
+      {
+        "id": 46,
+        "name": "California",
+        "code": "CA",
+        "serverCount": 428
+      },
+      {
+        "id": 47,
+        "name": "Colorado",
+        "code": "CO",
+        "serverCount": 129
+      },
+      {
+        "id": 48,
+        "name": "Connecticut",
+        "code": "CT",
+        "serverCount": 10
+      },
+      {
+        "id": 49,
+        "name": "Delaware",
+        "code": "DE",
+        "serverCount": 6
+      },
+      {
+        "id": 50,
+        "name": "Florida",
+        "code": "FL",
+        "serverCount": 248
+      },
+      {
+        "id": 51,
+        "name": "Georgia",
+        "code": "GA",
+        "serverCount": 207
+      },
+      {
+        "id": 52,
+        "name": "Hawaii",
+        "code": "HI",
+        "serverCount": 8
+      },
+      {
+        "id": 53,
+        "name": "Idaho",
+        "code": "ID",
+        "serverCount": 6
+      },
+      {
+        "id": 54,
+        "name": "Illinois",
+        "code": "IL",
+        "serverCount": 313
+      },
+      {
+        "id": 55,
+        "name": "Indiana",
+        "code": "IN",
+        "serverCount": 14
+      },
+      {
+        "id": 56,
+        "name": "Iowa",
+        "code": "IA",
+        "serverCount": 6
+      },
+      {
+        "id": 57,
+        "name": "Kansas",
+        "code": "KS",
+        "serverCount": 8
+      },
+      {
+        "id": 58,
+        "name": "Kentucky",
+        "code": "KY",
+        "serverCount": 8
+      },
+      {
+        "id": 59,
+        "name": "Louisiana",
+        "code": "LA",
+        "serverCount": 7
+      },
+      {
+        "id": 60,
+        "name": "Maine",
+        "code": "ME",
+        "serverCount": 8
+      },
+      {
+        "id": 61,
+        "name": "Maryland",
+        "code": "MD",
+        "serverCount": 15
+      },
+      {
+        "id": 62,
+        "name": "Massachusetts",
+        "code": "MA",
+        "serverCount": 81
+      },
+      {
+        "id": 63,
+        "name": "Michigan",
+        "code": "MI",
+        "serverCount": 10
+      },
+      {
+        "id": 64,
+        "name": "Minnesota",
+        "code": "MN",
+        "serverCount": 12
+      },
+      {
+        "id": 65,
+        "name": "Mississippi",
+        "code": "MS",
+        "serverCount": 5
+      },
+      {
+        "id": 66,
+        "name": "Missouri",
+        "code": "MO",
+        "serverCount": 71
+      },
+      {
+        "id": 67,
+        "name": "Montana",
+        "code": "MT",
+        "serverCount": 6
+      },
+      {
+        "id": 68,
+        "name": "Nebraska",
+        "code": "NE",
+        "serverCount": 39
+      },
+      {
+        "id": 69,
+        "name": "Nevada",
+        "code": "NV",
+        "serverCount": 10
+      },
+      {
+        "id": 70,
+        "name": "New Hampshire",
+        "code": "NH",
+        "serverCount": 8
+      },
+      {
+        "id": 71,
+        "name": "New Jersey",
+        "code": "NJ",
+        "serverCount": 14
+      },
+      {
+        "id": 72,
+        "name": "New Mexico",
+        "code": "NM",
+        "serverCount": 15
+      },
+      {
+        "id": 73,
+        "name": "New York",
+        "code": "NY",
+        "serverCount": 712
+      },
+      {
+        "id": 74,
+        "name": "North Carolina",
+        "code": "NC",
+        "serverCount": 63
+      },
+      {
+        "id": 75,
+        "name": "North Dakota",
+        "code": "ND",
+        "serverCount": 5
+      },
+      {
+        "id": 76,
+        "name": "Ohio",
+        "code": "OH",
+        "serverCount": 14
+      },
+      {
+        "id": 77,
+        "name": "Oklahoma",
+        "code": "OK",
+        "serverCount": 14
+      },
+      {
+        "id": 78,
+        "name": "Oregon",
+        "code": "OR",
+        "serverCount": 10
+      },
+      {
+        "id": 79,
+        "name": "Pennsylvania",
+        "code": "PA",
+        "serverCount": 48
+      },
+      {
+        "id": 80,
+        "name": "Rhode Island",
+        "code": "RI",
+        "serverCount": 12
+      },
+      {
+        "id": 81,
+        "name": "South Carolina",
+        "code": "SC",
+        "serverCount": 10
+      },
+      {
+        "id": 82,
+        "name": "South Dakota",
+        "code": "SD",
+        "serverCount": 5
+      },
+      {
+        "id": 83,
+        "name": "Tennessee",
+        "code": "TN",
+        "serverCount": 40
+      },
+      {
+        "id": 84,
+        "name": "Texas",
+        "code": "TX",
+        "serverCount": 317
+      },
+      {
+        "id": 85,
+        "name": "Utah",
+        "code": "UT",
+        "serverCount": 29
+      },
+      {
+        "id": 86,
+        "name": "Vermont",
+        "code": "VT",
+        "serverCount": 6
+      },
+      {
+        "id": 87,
+        "name": "Virginia",
+        "code": "VA",
+        "serverCount": 158
+      },
+      {
+        "id": 88,
+        "name": "Washington",
+        "code": "WA",
+        "serverCount": 206
+      },
+      {
+        "id": 89,
+        "name": "West Virginia",
+        "code": "WV",
+        "serverCount": 6
+      },
+      {
+        "id": 90,
+        "name": "Wisconsin",
+        "code": "WI",
+        "serverCount": 8
+      },
+      {
+        "id": 91,
+        "name": "Wyoming",
+        "code": "WY",
+        "serverCount": 4
       }
     ]
   },
@@ -2368,9 +3102,11 @@
         "name": "Montevideo",
         "latitude": -34.8580556,
         "longitude": -56.1708333,
-        "dns_name": "montevideo"
+        "dns_name": "montevideo",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 231,
@@ -2382,9 +3118,11 @@
         "name": "Tashkent",
         "latitude": 41.3166667,
         "longitude": 69.25,
-        "dns_name": "tashkent"
+        "dns_name": "tashkent",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 233,
@@ -2396,9 +3134,11 @@
         "name": "Caracas",
         "latitude": 10.5,
         "longitude": -66.9166667,
-        "dns_name": "caracas"
+        "dns_name": "caracas",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 234,
@@ -2410,16 +3150,19 @@
         "name": "Hanoi",
         "latitude": 21.033333,
         "longitude": 105.85,
-        "dns_name": "hanoi"
+        "dns_name": "hanoi",
+        "subdivision_id": null
       },
       {
         "id": 9271799,
         "name": "Ho Chi Minh City",
         "latitude": 10.75,
         "longitude": 106.666667,
-        "dns_name": "ho-chi-minh-city"
+        "dns_name": "ho-chi-minh-city",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   },
   {
     "id": 239,
@@ -2431,8 +3174,10 @@
         "name": "Sanaa",
         "latitude": 15.3547222,
         "longitude": 44.2066667,
-        "dns_name": "sanaa"
+        "dns_name": "sanaa",
+        "subdivision_id": null
       }
-    ]
+    ],
+    "subdivisions": []
   }
 ]
