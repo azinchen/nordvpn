@@ -369,6 +369,13 @@
     "code": "CA",
     "cities": [
       {
+        "id": 1041023,
+        "name": "Calgary",
+        "latitude": 51.083333,
+        "longitude": -114.083333,
+        "dns_name": "calgary"
+      },
+      {
         "id": 1048463,
         "name": "Montreal",
         "latitude": 45.5,
