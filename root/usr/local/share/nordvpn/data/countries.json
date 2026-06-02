@@ -308,6 +308,20 @@
     ]
   },
   {
+    "id": 28,
+    "name": "Botswana",
+    "code": "BW",
+    "cities": [
+      {
+        "id": 989990,
+        "name": "Gaborone",
+        "latitude": -24.6463889,
+        "longitude": 25.9119444,
+        "dns_name": "gaborone"
+      }
+    ]
+  },
+  {
     "id": 30,
     "name": "Brazil",
     "code": "BR",
@@ -350,6 +364,20 @@
     ]
   },
   {
+    "id": 34,
+    "name": "Burkina Faso",
+    "code": "BF",
+    "cities": [
+      {
+        "id": 716276,
+        "name": "Ouagadougou",
+        "latitude": 12.3702778,
+        "longitude": -1.5247222,
+        "dns_name": "ouagadougou"
+      }
+    ]
+  },
+  {
     "id": 36,
     "name": "Cambodia",
     "code": "KH",
@@ -360,6 +388,20 @@
         "latitude": 11.55,
         "longitude": 104.9166667,
         "dns_name": "phnom-penh"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Cameroon",
+    "code": "CM",
+    "cities": [
+      {
+        "id": 1257194,
+        "name": "Yaounde",
+        "latitude": 3.8666667,
+        "longitude": 11.5166667,
+        "dns_name": "yaoundã©"
       }
     ]
   },
@@ -395,6 +437,20 @@
         "latitude": 49.25,
         "longitude": -123.133333,
         "dns_name": "vancouver"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Cape Verde",
+    "code": "CV",
+    "cities": [
+      {
+        "id": 2093513,
+        "name": "Praia",
+        "latitude": 14.9166667,
+        "longitude": -23.5166667,
+        "dns_name": "praia"
       }
     ]
   },
@@ -696,6 +752,20 @@
         "latitude": 48.600381,
         "longitude": 7.787355,
         "dns_name": "strasbourg"
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "name": "Gambia",
+    "code": "GM",
+    "cities": [
+      {
+        "id": 3086063,
+        "name": "Banjul",
+        "latitude": 13.4530556,
+        "longitude": -16.5775,
+        "dns_name": "banjul"
       }
     ]
   },
@@ -1183,6 +1253,34 @@
     ]
   },
   {
+    "id": 129,
+    "name": "Madagascar",
+    "code": "MG",
+    "cities": [
+      {
+        "id": 5346515,
+        "name": "Antananarivo",
+        "latitude": -18.9166667,
+        "longitude": 47.5166667,
+        "dns_name": "antananarivo"
+      }
+    ]
+  },
+  {
+    "id": 130,
+    "name": "Malawi",
+    "code": "MW",
+    "cities": [
+      {
+        "id": 5563772,
+        "name": "Lilongwe",
+        "latitude": -13.9833333,
+        "longitude": 33.7833333,
+        "dns_name": "lilongwe"
+      }
+    ]
+  },
+  {
     "id": 131,
     "name": "Malaysia",
     "code": "MY",
@@ -1599,6 +1697,20 @@
         "latitude": -1.9536111,
         "longitude": 30.0605556,
         "dns_name": "kigali"
+      }
+    ]
+  },
+  {
+    "id": 184,
+    "name": "Saint Lucia",
+    "code": "LC",
+    "cities": [
+      {
+        "id": 5036603,
+        "name": "Castries",
+        "latitude": 14.0,
+        "longitude": -61.0,
+        "dns_name": "castries"
       }
     ]
   },
@@ -2439,6 +2551,20 @@
         "latitude": 15.3547222,
         "longitude": 44.2066667,
         "dns_name": "sanaa"
+      }
+    ]
+  },
+  {
+    "id": 240,
+    "name": "Zambia",
+    "code": "ZM",
+    "cities": [
+      {
+        "id": 9427058,
+        "name": "Lusaka",
+        "latitude": -15.4166667,
+        "longitude": 28.2833333,
+        "dns_name": "lusaka"
       }
     ]
   }
