@@ -1,4 +1,4 @@
-Last updated: 2026-05-27
+Last updated: 2026-06-02
 ---
 # List of CITIES with NordVPN servers
 
@@ -28,14 +28,18 @@ Bermuda | BM | 24 | Hamilton | 809078 | [32.2941667,-64.7838889](https://www.goo
 Bhutan | BT | 25 | Thimphu | 989699 | [27.472222,89.636111](https://www.google.com/maps?q=27.472222,89.636111)
 Bolivia | BO | 26 | La Paz | 838514 | [-16.5,-68.15](https://www.google.com/maps?q=-16.5,-68.15)
 Bosnia and Herzegovina | BA | 27 | Sarajevo | 556823 | [43.85,18.3833333](https://www.google.com/maps?q=43.85,18.3833333)
+Botswana | BW | 28 | Gaborone | 989990 | [-24.6463889,25.9119444](https://www.google.com/maps?q=-24.6463889,25.9119444)
 Brazil | BR | 30 | Sao Paulo | 890249 | [-23.533333,-46.616667](https://www.google.com/maps?q=-23.533333,-46.616667)
 Brunei Darussalam | BN | 32 | Bandar Seri Begawan | 809132 | [4.8833333,114.9333333](https://www.google.com/maps?q=4.8833333,114.9333333)
 Bulgaria | BG | 33 | Sofia | 777368 | [42.6833333,23.3166667](https://www.google.com/maps?q=42.6833333,23.3166667)
+Burkina Faso | BF | 34 | Ouagadougou | 716276 | [12.3702778,-1.5247222](https://www.google.com/maps?q=12.3702778,-1.5247222)
 Cambodia | KH | 36 | Phnom Penh | 4658987 | [11.55,104.9166667](https://www.google.com/maps?q=11.55,104.9166667)
+Cameroon | CM | 37 | Yaounde | 1257194 | [3.8666667,11.5166667](https://www.google.com/maps?q=3.8666667,11.5166667)
 Canada | CA | 38 | Calgary | 1041023 | [51.083333,-114.083333](https://www.google.com/maps?q=51.083333,-114.083333)
 Canada | CA | 38 | Montreal | 1048463 | [45.5,-73.583333](https://www.google.com/maps?q=45.5,-73.583333)
 Canada | CA | 38 | Toronto | 1054250 | [43.666667,-79.416667](https://www.google.com/maps?q=43.666667,-79.416667)
 Canada | CA | 38 | Vancouver | 1054610 | [49.25,-123.133333](https://www.google.com/maps?q=49.25,-123.133333)
+Cape Verde | CV | 39 | Praia | 2093513 | [14.9166667,-23.5166667](https://www.google.com/maps?q=14.9166667,-23.5166667)
 Cayman Islands | KY | 40 | George Town | 4922303 | [19.3,-81.3833333](https://www.google.com/maps?q=19.3,-81.3833333)
 Chad | TD | 42 | NDjamena | 8075072 | [12.1130556,15.0491667](https://www.google.com/maps?q=12.1130556,15.0491667)
 Chile | CL | 43 | Santiago | 1227092 | [-33.45,-70.666667](https://www.google.com/maps?q=-33.45,-70.666667)
@@ -59,6 +63,7 @@ France | FR | 74 | Bordeaux | 2767493 | [44.840439,-0.5805](https://www.google.c
 France | FR | 74 | Marseille | 2867102 | [43.285413,5.37606](https://www.google.com/maps?q=43.285413,5.37606)
 France | FR | 74 | Paris | 2886284 | [48.866667,2.333333](https://www.google.com/maps?q=48.866667,2.333333)
 France | FR | 74 | Strasbourg | 2929151 | [48.600381,7.787355](https://www.google.com/maps?q=48.600381,7.787355)
+Gambia | GM | 79 | Banjul | 3086063 | [13.4530556,-16.5775](https://www.google.com/maps?q=13.4530556,-16.5775)
 Georgia | GE | 80 | Tbilisi | 3032063 | [41.725,44.7908333](https://www.google.com/maps?q=41.725,44.7908333)
 Germany | DE | 81 | Berlin | 2181458 | [52.516667,13.4](https://www.google.com/maps?q=52.516667,13.4)
 Germany | DE | 81 | Frankfurt | 2215709 | [50.116667,8.683333](https://www.google.com/maps?q=50.116667,8.683333)
@@ -96,6 +101,8 @@ Libyan Arab Jamahiriya | LY | 123 | Tripoli | 5206697 | [32.8925,13.18](https://
 Liechtenstein | LI | 124 | Vaduz | 5037212 | [47.1333333,9.5166667](https://www.google.com/maps?q=47.1333333,9.5166667)
 Lithuania | LT | 125 | Vilnius | 5166932 | [54.6833333,25.3166667](https://www.google.com/maps?q=54.6833333,25.3166667)
 Luxembourg | LU | 126 | Luxembourg | 9521876 | [49.6117,6.13](https://www.google.com/maps?q=49.6117,6.13)
+Madagascar | MG | 129 | Antananarivo | 5346515 | [-18.9166667,47.5166667](https://www.google.com/maps?q=-18.9166667,47.5166667)
+Malawi | MW | 130 | Lilongwe | 5563772 | [-13.9833333,33.7833333](https://www.google.com/maps?q=-13.9833333,33.7833333)
 Malaysia | MY | 131 | Kuala Lumpur | 5820143 | [3.166667,101.7](https://www.google.com/maps?q=3.166667,101.7)
 Malta | MT | 134 | Valletta | 5554481 | [35.899722,14.514722](https://www.google.com/maps?q=35.899722,14.514722)
 Mauritania | MR | 137 | Nouakchott | 5551598 | [18.0863889,-15.9752778](https://www.google.com/maps?q=18.0863889,-15.9752778)
@@ -126,6 +133,7 @@ Puerto Rico | PR | 176 | San Juan | 9521884 | [18.406389,-66.063889](https://www
 Qatar | QA | 177 | Doha | 6940529 | [25.286667,51.533333](https://www.google.com/maps?q=25.286667,51.533333)
 Romania | RO | 179 | Bucharest | 6953096 | [44.433333,26.1](https://www.google.com/maps?q=44.433333,26.1)
 Rwanda | RW | 181 | Kigali | 7723910 | [-1.9536111,30.0605556](https://www.google.com/maps?q=-1.9536111,30.0605556)
+Saint Lucia | LC | 184 | Castries | 5036603 | [14.0,-61.0](https://www.google.com/maps?q=14.0,-61.0)
 Senegal | SN | 191 | Dakar | 7924958 | [14.6708333,-17.4380556](https://www.google.com/maps?q=14.6708333,-17.4380556)
 Serbia | RS | 192 | Belgrade | 7030907 | [44.818611,20.468056](https://www.google.com/maps?q=44.818611,20.468056)
 Singapore | SG | 195 | Singapore | 7867982 | [1.2930556,103.8558333](https://www.google.com/maps?q=1.2930556,103.8558333)
@@ -216,3 +224,4 @@ Venezuela | VE | 233 | Caracas | 9176843 | [10.5,-66.9166667](https://www.google
 Vietnam | VN | 234 | Hanoi | 9270302 | [21.033333,105.85](https://www.google.com/maps?q=21.033333,105.85)
 Vietnam | VN | 234 | Ho Chi Minh City | 9271799 | [10.75,106.666667](https://www.google.com/maps?q=10.75,106.666667)
 Yemen | YE | 239 | Sanaa | 9367184 | [15.3547222,44.2066667](https://www.google.com/maps?q=15.3547222,44.2066667)
+Zambia | ZM | 240 | Lusaka | 9427058 | [-15.4166667,28.2833333](https://www.google.com/maps?q=-15.4166667,28.2833333)
