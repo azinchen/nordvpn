@@ -1,4 +1,4 @@
-Last updated: 2026-06-02
+Last updated: 2026-06-03
 ---
 # List of CITIES with NordVPN servers
 
@@ -94,6 +94,7 @@ Jordan | JO | 109 | Amman | 4581203 | [31.95,35.933333](https://www.google.com/m
 Kazakhstan | KZ | 110 | Astana | 4925732 | [51.181111,71.427778](https://www.google.com/maps?q=51.181111,71.427778)
 Kenya | KE | 111 | Nairobi | 4646603 | [-1.2833333,36.8166667](https://www.google.com/maps?q=-1.2833333,36.8166667)
 Kuwait | KW | 116 | Kuwait City | 9521894 | [29.3759,47.9774](https://www.google.com/maps?q=29.3759,47.9774)
+Kyrgyzstan | KG | 117 | Bishkek | 4649336 | [42.8730556,74.6002778](https://www.google.com/maps?q=42.8730556,74.6002778)
 Lao People's Democratic Republic | LA | 118 | Vientiane | 5015876 | [17.966667,102.6](https://www.google.com/maps?q=17.966667,102.6)
 Latvia | LV | 119 | Riga | 5192828 | [56.95,24.1](https://www.google.com/maps?q=56.95,24.1)
 Lebanon | LB | 120 | Beirut | 5022080 | [33.8719444,35.5097222](https://www.google.com/maps?q=33.8719444,35.5097222)
@@ -104,6 +105,7 @@ Luxembourg | LU | 126 | Luxembourg | 9521876 | [49.6117,6.13](https://www.google
 Madagascar | MG | 129 | Antananarivo | 5346515 | [-18.9166667,47.5166667](https://www.google.com/maps?q=-18.9166667,47.5166667)
 Malawi | MW | 130 | Lilongwe | 5563772 | [-13.9833333,33.7833333](https://www.google.com/maps?q=-13.9833333,33.7833333)
 Malaysia | MY | 131 | Kuala Lumpur | 5820143 | [3.166667,101.7](https://www.google.com/maps?q=3.166667,101.7)
+Maldives | MV | 132 | Male | 5556524 | [4.1666667,73.5](https://www.google.com/maps?q=4.1666667,73.5)
 Malta | MT | 134 | Valletta | 5554481 | [35.899722,14.514722](https://www.google.com/maps?q=35.899722,14.514722)
 Mauritania | MR | 137 | Nouakchott | 5551598 | [18.0863889,-15.9752778](https://www.google.com/maps?q=18.0863889,-15.9752778)
 Mauritius | MU | 138 | Port Louis | 5556011 | [-20.1619444,57.4988889](https://www.google.com/maps?q=-20.1619444,57.4988889)
@@ -136,6 +138,7 @@ Rwanda | RW | 181 | Kigali | 7723910 | [-1.9536111,30.0605556](https://www.googl
 Saint Lucia | LC | 184 | Castries | 5036603 | [14.0,-61.0](https://www.google.com/maps?q=14.0,-61.0)
 Senegal | SN | 191 | Dakar | 7924958 | [14.6708333,-17.4380556](https://www.google.com/maps?q=14.6708333,-17.4380556)
 Serbia | RS | 192 | Belgrade | 7030907 | [44.818611,20.468056](https://www.google.com/maps?q=44.818611,20.468056)
+Sierra Leone | SL | 194 | Freetown | 7906196 | [8.49,-13.2341667](https://www.google.com/maps?q=8.49,-13.2341667)
 Singapore | SG | 195 | Singapore | 7867982 | [1.2930556,103.8558333](https://www.google.com/maps?q=1.2930556,103.8558333)
 Slovakia | SK | 196 | Bratislava | 7884305 | [48.15,17.1166667](https://www.google.com/maps?q=48.15,17.1166667)
 Slovenia | SI | 197 | Ljubljana | 7874306 | [46.0552778,14.5144444](https://www.google.com/maps?q=46.0552778,14.5144444)
