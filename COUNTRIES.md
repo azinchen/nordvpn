@@ -1,4 +1,4 @@
-Last updated: 2026-06-02
+Last updated: 2026-06-03
 ---
 # List of COUNTRIES with NordVPN servers
 
@@ -79,6 +79,7 @@ Jordan | JO | 109
 Kazakhstan | KZ | 110
 Kenya | KE | 111
 Kuwait | KW | 116
+Kyrgyzstan | KG | 117
 Lao People's Democratic Republic | LA | 118
 Latvia | LV | 119
 Lebanon | LB | 120
@@ -89,6 +90,7 @@ Luxembourg | LU | 126
 Madagascar | MG | 129
 Malawi | MW | 130
 Malaysia | MY | 131
+Maldives | MV | 132
 Malta | MT | 134
 Mauritania | MR | 137
 Mauritius | MU | 138
@@ -121,6 +123,7 @@ Rwanda | RW | 181
 Saint Lucia | LC | 184
 Senegal | SN | 191
 Serbia | RS | 192
+Sierra Leone | SL | 194
 Singapore | SG | 195
 Slovakia | SK | 196
 Slovenia | SI | 197
