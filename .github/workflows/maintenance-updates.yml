@@ -46,7 +46,7 @@ jobs:
         file: 
           - name: "CITIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
-            jq_filter: '[.[] | . as $parent | .cities[] | {country: $parent.name, code: $parent.code, cid: $parent.id, city: .name, cityid: .id, lat: .latitude, lon: .longitude}] | sort_by(.country, .city) | .[] | "\(.country) | \(.code) | \(.cid) | \(.city) | \(.cityid) | [\(.lat),\(.lon)](https://www.google.com/maps?q=\(.lat),\(.lon))"'
+            jq_filter: '[.[] | . as $parent | .cities[] | . as $city | {country: $parent.name, code: $parent.code, cid: $parent.id, city: ($city.name + (if ($virtual | index($city.id)) then " *" else "" end)), cityid: $city.id, lat: $city.latitude, lon: $city.longitude}] | sort_by(.country, .city) | .[] | "\(.country) | \(.code) | \(.cid) | \(.city) | \(.cityid) | [\(.lat),\(.lon)](https://www.google.com/maps?q=\(.lat),\(.lon))"'
             header: "Country | Code | ID | City | ID | Map"
           - name: "COUNTRIES"
             url: "https://api.nordvpn.com/v1/servers/countries"
@@ -69,12 +69,27 @@ jobs:
         id: update-file
         shell: bash
         run: |
+          # Build the table body. CITIES additionally marks virtual locations
+          # (cities NordVPN advertises but whose servers are physically hosted
+          # elsewhere) with a "*" and gets an explanatory legend at the top.
+          # The virtual flag lives on the /v1/servers endpoint
+          # (specifications -> virtual_location), not on /v1/servers/countries.
+          LEGEND=$'\n'
+          if [ "${{ matrix.file.name }}" == "CITIES" ]; then
+            LEGEND=$'\n> Cities marked with `*` are virtual locations: NordVPN advertises a server in that city but the physical hardware is hosted in a nearby country.\n\n'
+            # limit=0 returns the full server list (no cap); omitting limit defaults to only 100.
+            VIRTUAL_IDS=$(curl -s "https://api.nordvpn.com/v1/servers?limit=0" \
+              | jq -c '[.[] | select(any(.specifications[]?; .identifier=="virtual_location" and .values[0].value=="true")) | .locations[0].country.city.id] | unique')
+            BODY=$(curl -s "${{ matrix.file.url }}" | jq -r --argjson virtual "${VIRTUAL_IDS:-[]}" '${{ matrix.file.jq_filter }}')
+          else
+            BODY=$(curl -s "${{ matrix.file.url }}" | jq -r '${{ matrix.file.jq_filter }}')
+          fi
+
           # Generate new content without timestamp
           NEW_CONTENT="# List of ${{ matrix.file.name }} with NordVPN servers
-          
-          ${{ matrix.file.header }}
+          ${LEGEND}${{ matrix.file.header }}
           $(echo "${{ matrix.file.header }}" | sed 's/[^|]/-/g')
-          $(curl -s "${{ matrix.file.url }}" | jq -r '${{ matrix.file.jq_filter }}')"
+          ${BODY}"
           
           # Check if file exists and extract existing content without timestamp
           if [ -f "${{ matrix.file.name }}.md" ]; then
