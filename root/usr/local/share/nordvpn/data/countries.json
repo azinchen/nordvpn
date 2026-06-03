@@ -1155,6 +1155,20 @@
     ]
   },
   {
+    "id": 117,
+    "name": "Kyrgyzstan",
+    "code": "KG",
+    "cities": [
+      {
+        "id": 4649336,
+        "name": "Bishkek",
+        "latitude": 42.8730556,
+        "longitude": 74.6002778,
+        "dns_name": "bishkek"
+      }
+    ]
+  },
+  {
     "id": 118,
     "name": "Lao People's Democratic Republic",
     "code": "LA",
@@ -1291,6 +1305,20 @@
         "latitude": 3.166667,
         "longitude": 101.7,
         "dns_name": "kuala-lumpur"
+      }
+    ]
+  },
+  {
+    "id": 132,
+    "name": "Maldives",
+    "code": "MV",
+    "cities": [
+      {
+        "id": 5556524,
+        "name": "Male",
+        "latitude": 4.1666667,
+        "longitude": 73.5,
+        "dns_name": "male"
       }
     ]
   },
@@ -1739,6 +1767,20 @@
         "latitude": 44.818611,
         "longitude": 20.468056,
         "dns_name": "belgrad"
+      }
+    ]
+  },
+  {
+    "id": 194,
+    "name": "Sierra Leone",
+    "code": "SL",
+    "cities": [
+      {
+        "id": 7906196,
+        "name": "Freetown",
+        "latitude": 8.49,
+        "longitude": -13.2341667,
+        "dns_name": "freetown"
       }
     ]
   },
