@@ -77,7 +77,8 @@ jobs:
           LEGEND=$'\n'
           if [ "${{ matrix.file.name }}" == "CITIES" ]; then
             LEGEND=$'\n> Cities marked with `*` are virtual locations: NordVPN advertises a server in that city but the physical hardware is hosted in a nearby country.\n\n'
-            VIRTUAL_IDS=$(curl -s "https://api.nordvpn.com/v1/servers?limit=20000" \
+            # limit=0 returns the full server list (no cap); omitting limit defaults to only 100.
+            VIRTUAL_IDS=$(curl -s "https://api.nordvpn.com/v1/servers?limit=0" \
               | jq -c '[.[] | select(any(.specifications[]?; .identifier=="virtual_location" and .values[0].value=="true")) | .locations[0].country.city.id] | unique')
             BODY=$(curl -s "${{ matrix.file.url }}" | jq -r --argjson virtual "${VIRTUAL_IDS:-[]}" '${{ matrix.file.jq_filter }}')
           else
