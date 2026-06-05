@@ -154,11 +154,11 @@ Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki 
 [wiki-home]: https://github.com/azinchen/nordvpn/wiki
 [wiki-server]: https://github.com/azinchen/nordvpn/wiki/Server-Selection
 [wiki-reconnect]: https://github.com/azinchen/nordvpn/wiki/Automatic-Reconnection
-[wiki-security]: https://github.com/azinchen/nordvpn/wiki/Security-Model
+[wiki-security]: https://github.com/azinchen/nordvpn/wiki/Security-Model#traffic-control--kill-switch
 [wiki-network]: https://github.com/azinchen/nordvpn/wiki/Local-Network-Access
 [wiki-ipv6]: https://github.com/azinchen/nordvpn/wiki/IPv6-Configuration
 [wiki-firewall]: https://github.com/azinchen/nordvpn/wiki/Firewall-Backends
-[wiki-tech]: https://github.com/azinchen/nordvpn/wiki/Technologies
+[wiki-tech]: https://github.com/azinchen/nordvpn/wiki/Technologies#xor-obfuscated-openvpn-openvpn_xor_udp--openvpn_xor_tcp
 [wiki-compose]: https://github.com/azinchen/nordvpn/wiki/Docker-Compose-Examples
 [wiki-run]: https://github.com/azinchen/nordvpn/wiki/Docker-Run-Examples
 [wiki-troubleshoot]: https://github.com/azinchen/nordvpn/wiki/Troubleshooting
