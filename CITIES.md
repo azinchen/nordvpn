@@ -1,8 +1,8 @@
-Last updated: 2026-06-03
+Last updated: 2026-06-05
 ---
 # List of CITIES with NordVPN servers
 
-> Cities marked with `*` are virtual locations: NordVPN advertises a server in that city but the physical hardware is hosted in a nearby country.
+> Cities marked with `*` are virtual locations: NordVPN advertises a server at this location but its physical hardware is hosted elsewhere.
 
 Country | Code | ID | City | ID | Map
 --------|------|----|------|----|----
