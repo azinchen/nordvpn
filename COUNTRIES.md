@@ -1,155 +1,157 @@
-Last updated: 2026-06-03
+Last updated: 2026-06-05
 ---
 # List of COUNTRIES with NordVPN servers
 
+> Countries marked with `**` host only virtual servers (advertised by NordVPN at this location but whose physical hardware is hosted elsewhere); countries marked with `*` host a mix of virtual and physical servers. Unmarked countries host only physical servers.
+
 Country | Code | ID
 --------|------|---
-Afghanistan | AF | 1
-Albania | AL | 2
-Algeria | DZ | 3
-Andorra | AD | 5
-Angola | AO | 6
+Afghanistan ** | AF | 1
+Albania * | AL | 2
+Algeria ** | DZ | 3
+Andorra ** | AD | 5
+Angola ** | AO | 6
 Argentina | AR | 10
-Armenia | AM | 11
+Armenia ** | AM | 11
 Australia | AU | 13
 Austria | AT | 14
-Azerbaijan | AZ | 15
-Bahamas | BS | 16
-Bahrain | BH | 17
-Bangladesh | BD | 18
-Barbados | BB | 19
+Azerbaijan ** | AZ | 15
+Bahamas ** | BS | 16
+Bahrain ** | BH | 17
+Bangladesh ** | BD | 18
+Barbados ** | BB | 19
 Belgium | BE | 21
-Belize | BZ | 22
-Bermuda | BM | 24
-Bhutan | BT | 25
-Bolivia | BO | 26
-Bosnia and Herzegovina | BA | 27
-Botswana | BW | 28
+Belize ** | BZ | 22
+Bermuda ** | BM | 24
+Bhutan ** | BT | 25
+Bolivia ** | BO | 26
+Bosnia and Herzegovina ** | BA | 27
+Botswana ** | BW | 28
 Brazil | BR | 30
-Brunei Darussalam | BN | 32
+Brunei Darussalam ** | BN | 32
 Bulgaria | BG | 33
-Burkina Faso | BF | 34
-Cambodia | KH | 36
-Cameroon | CM | 37
+Burkina Faso ** | BF | 34
+Cambodia ** | KH | 36
+Cameroon ** | CM | 37
 Canada | CA | 38
-Cape Verde | CV | 39
-Cayman Islands | KY | 40
-Chad | TD | 42
+Cape Verde ** | CV | 39
+Cayman Islands ** | KY | 40
+Chad ** | TD | 42
 Chile | CL | 43
 Colombia | CO | 47
-Comoros | KM | 48
-Costa Rica | CR | 52
-Cote Divoire | CI | 53
+Comoros ** | KM | 48
+Costa Rica ** | CR | 52
+Cote Divoire ** | CI | 53
 Croatia | HR | 54
 Cyprus | CY | 56
 Czech Republic | CZ | 57
 Denmark | DK | 58
-Dominican Republic | DO | 61
-Ecuador | EC | 63
-Egypt | EG | 64
-El Salvador | SV | 65
+Dominican Republic ** | DO | 61
+Ecuador ** | EC | 63
+Egypt ** | EG | 64
+El Salvador ** | SV | 65
 Estonia | EE | 68
-Ethiopia | ET | 69
-Fiji | FJ | 72
+Ethiopia ** | ET | 69
+Fiji ** | FJ | 72
 Finland | FI | 73
 France | FR | 74
-Gambia | GM | 79
-Georgia | GE | 80
+Gambia ** | GM | 79
+Georgia ** | GE | 80
 Germany | DE | 81
-Ghana | GH | 82
+Ghana ** | GH | 82
 Greece | GR | 84
-Greenland | GL | 85
-Guam | GU | 88
-Guatemala | GT | 89
-Honduras | HN | 96
+Greenland ** | GL | 85
+Guam ** | GU | 88
+Guatemala ** | GT | 89
+Honduras ** | HN | 96
 Hong Kong | HK | 97
 Hungary | HU | 98
 Iceland | IS | 99
-India | IN | 100
+India ** | IN | 100
 Indonesia | ID | 101
-Iraq | IQ | 103
+Iraq ** | IQ | 103
 Ireland | IE | 104
-Isle of Man | IM | 243
+Isle of Man ** | IM | 243
 Israel | IL | 105
 Italy | IT | 106
-Jamaica | JM | 107
+Jamaica ** | JM | 107
 Japan | JP | 108
-Jersey | JE | 244
-Jordan | JO | 109
-Kazakhstan | KZ | 110
-Kenya | KE | 111
-Kuwait | KW | 116
-Kyrgyzstan | KG | 117
-Lao People's Democratic Republic | LA | 118
+Jersey ** | JE | 244
+Jordan ** | JO | 109
+Kazakhstan ** | KZ | 110
+Kenya ** | KE | 111
+Kuwait ** | KW | 116
+Kyrgyzstan ** | KG | 117
+Lao People's Democratic Republic ** | LA | 118
 Latvia | LV | 119
-Lebanon | LB | 120
-Libyan Arab Jamahiriya | LY | 123
-Liechtenstein | LI | 124
+Lebanon ** | LB | 120
+Libyan Arab Jamahiriya ** | LY | 123
+Liechtenstein ** | LI | 124
 Lithuania | LT | 125
 Luxembourg | LU | 126
-Madagascar | MG | 129
-Malawi | MW | 130
+Madagascar ** | MG | 129
+Malawi ** | MW | 130
 Malaysia | MY | 131
-Maldives | MV | 132
-Malta | MT | 134
-Mauritania | MR | 137
-Mauritius | MU | 138
+Maldives ** | MV | 132
+Malta ** | MT | 134
+Mauritania ** | MR | 137
+Mauritius ** | MU | 138
 Mexico | MX | 140
 Moldova | MD | 142
-Monaco | MC | 143
-Mongolia | MN | 144
-Montenegro | ME | 146
-Morocco | MA | 147
-Mozambique | MZ | 148
-Myanmar | MM | 149
-Nepal | NP | 152
+Monaco ** | MC | 143
+Mongolia ** | MN | 144
+Montenegro ** | ME | 146
+Morocco ** | MA | 147
+Mozambique ** | MZ | 148
+Myanmar ** | MM | 149
+Nepal ** | NP | 152
 Netherlands | NL | 153
 New Zealand | NZ | 156
 Nigeria | NG | 159
 North Macedonia | MK | 128
 Norway | NO | 163
-Pakistan | PK | 165
-Panama | PA | 168
-Papua New Guinea | PG | 169
-Paraguay | PY | 170
+Pakistan ** | PK | 165
+Panama ** | PA | 168
+Papua New Guinea ** | PG | 169
+Paraguay ** | PY | 170
 Peru | PE | 171
-Philippines | PH | 172
+Philippines ** | PH | 172
 Poland | PL | 174
 Portugal | PT | 175
-Puerto Rico | PR | 176
-Qatar | QA | 177
+Puerto Rico ** | PR | 176
+Qatar ** | QA | 177
 Romania | RO | 179
-Rwanda | RW | 181
-Saint Lucia | LC | 184
-Senegal | SN | 191
+Rwanda ** | RW | 181
+Saint Lucia ** | LC | 184
+Senegal ** | SN | 191
 Serbia | RS | 192
-Sierra Leone | SL | 194
+Sierra Leone ** | SL | 194
 Singapore | SG | 195
 Slovakia | SK | 196
 Slovenia | SI | 197
-Somalia | SO | 199
+Somalia ** | SO | 199
 South Africa | ZA | 200
 South Korea | KR | 114
 Spain | ES | 202
-Sri Lanka | LK | 203
-Suriname | SR | 205
+Sri Lanka ** | LK | 203
+Suriname ** | SR | 205
 Sweden | SE | 208
 Switzerland | CH | 209
 Taiwan | TW | 211
-Tajikistan | TJ | 212
-Tanzania | TZ | 213
-Thailand | TH | 214
-Togo | TG | 215
-Trinidad and Tobago | TT | 218
-Tunisia | TN | 219
+Tajikistan ** | TJ | 212
+Tanzania ** | TZ | 213
+Thailand ** | TH | 214
+Togo ** | TG | 215
+Trinidad and Tobago ** | TT | 218
+Tunisia ** | TN | 219
 Turkey | TR | 220
 Ukraine | UA | 225
 United Arab Emirates | AE | 226
 United Kingdom | GB | 227
-United States | US | 228
-Uruguay | UY | 230
-Uzbekistan | UZ | 231
-Venezuela | VE | 233
-Vietnam | VN | 234
-Yemen | YE | 239
-Zambia | ZM | 240
+United States * | US | 228
+Uruguay ** | UY | 230
+Uzbekistan ** | UZ | 231
+Venezuela ** | VE | 233
+Vietnam ** | VN | 234
+Yemen ** | YE | 239
+Zambia ** | ZM | 240
