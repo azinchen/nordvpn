@@ -64,7 +64,6 @@ Also available from GitHub Container Registry: `ghcr.io/azinchen/nordvpn`
 ## Docker Compose Example
 
 ```yaml
-version: "3.8"
 services:
   vpn:
     image: azinchen/nordvpn:latest
