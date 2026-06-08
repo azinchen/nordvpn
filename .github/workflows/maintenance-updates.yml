@@ -63,7 +63,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Update ${{ matrix.file.name }}.md
         id: update-file
@@ -196,7 +196,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Update countries.json
         id: update-countries
@@ -340,7 +340,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Update groups.json
         id: update-groups
@@ -431,7 +431,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Update technologies.json
         id: update-technologies
@@ -522,7 +522,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Update template.ovpn
         id: update-template
@@ -604,7 +604,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Update tls-auth-xor.pem
         id: update-tls-auth-xor
@@ -681,7 +681,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Check XOR scramble key
         id: check-key
@@ -760,7 +760,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Check for OpenVPN + XOR patch updates
         id: check-update
@@ -919,7 +919,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Update NordVPN's API addresses
         id: nordvpn-api-ips
@@ -967,7 +967,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Update APK package versions
         id: update-apk
@@ -1012,7 +1012,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Get latest version for ${{ matrix.repository }}
         id: get-version
@@ -1061,7 +1061,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: Determine latest Alpine version
         id: get-alpine
