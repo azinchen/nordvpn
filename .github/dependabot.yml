@@ -17,18 +17,6 @@ updates:
       - "automation"
     open-pull-requests-limit: 5
 
-  # Configuration for Dockerfile - Security-focused updates
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "daily"  # More frequent for security
-      time: "04:00"
-      timezone: "UTC"
-    commit-message:
-      prefix: "docker"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "docker"
-      - "security"
-    open-pull-requests-limit: 5
+  # Docker base image (Alpine) updates are handled by the
+  # "Update Alpine Version" job in .github/workflows/maintenance-updates.yml,
+  # so Dockerfile updates are intentionally not managed by Dependabot.
