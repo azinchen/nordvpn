@@ -4,7 +4,7 @@ ARG IMAGE_VERSION=N/A
 ARG BUILD_DATE=N/A
 
 # s6 overlay builder
-FROM alpine:3.23.4 AS s6-builder
+FROM alpine:3.24.0 AS s6-builder
 
 ARG TARGETARCH
 ARG TARGETVARIANT
@@ -15,7 +15,7 @@ ENV PACKAGEVERSION="3.2.3.0"
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
-        tar=1.35-r4 \
+        tar=1.35-r5 \
         xz=5.8.3-r0 \
         && \
     echo "**** create folders ****" && \
@@ -47,23 +47,23 @@ RUN echo "**** install security fix packages ****" && \
     tar -C /s6/ -Jxpf /tmp/s6-overlay-symlinks-arch.tar.xz
 
 # OpenVPN XOR builder
-FROM alpine:3.23.4 AS openvpn-builder
+FROM alpine:3.24.0 AS openvpn-builder
 
 ARG OPENVPN_VERSION
 ARG OPENVPN_XOR_PATCH_VERSION
 
 RUN echo "**** install build dependencies ****" && \
     apk --no-cache --no-progress add \
-        autoconf=2.72-r1 \
-        automake=1.18.1-r0 \
-        build-base=0.5-r3 \
-        curl=8.19.0-r0 \
+        autoconf=2.73-r0 \
+        automake=1.18.1-r1 \
+        build-base=0.5-r4 \
+        curl=8.20.0-r1 \
         jq=1.8.1-r0 \
-        libcap-ng-dev=0.8.5-r0 \
-        linux-headers=6.16.12-r0 \
+        libcap-ng-dev=0.8.5-r2 \
+        linux-headers=7.0.0-r1 \
         libnl3-dev=3.11.0-r0 \
-        libtool=2.5.4-r2 \
-        lz4-dev=1.10.0-r0 \
+        libtool=2.6.0-r1 \
+        lz4-dev=1.10.0-r1 \
         lzo-dev=2.10-r5 \
         openssl-dev=3.5.7-r0 \
         patch=2.8-r0 \
@@ -98,7 +98,7 @@ RUN echo "**** install build dependencies ****" && \
     cp src/openvpn/openvpn /tmp/openvpn-binary
 
 # rootfs builder
-FROM alpine:3.23.4 AS rootfs-builder
+FROM alpine:3.24.0 AS rootfs-builder
 
 ARG IMAGE_VERSION
 ARG BUILD_DATE
@@ -139,7 +139,7 @@ COPY --from=s6-builder /s6/ /rootfs/
 COPY --from=openvpn-builder /tmp/openvpn-binary /rootfs/usr/sbin/openvpn
 
 # Main image
-FROM alpine:3.23.4
+FROM alpine:3.24.0
 
 ARG TARGETPLATFORM
 ARG OPENVPN_VERSION
@@ -163,15 +163,15 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     echo "Target platform: ${TARGETPLATFORM}" && \
     apk --no-cache --no-progress add \
-        curl=8.19.0-r0 \
-        iptables=1.8.11-r1 \
-        iptables-legacy=1.8.11-r1 \
+        curl=8.20.0-r1 \
+        iptables=1.8.13-r0 \
+        iptables-legacy=1.8.13-r0 \
         jq=1.8.1-r0 \
-        shadow=4.18.0-r0 \
-        shadow-login=4.18.0-r0 \
-        libcap-ng=0.8.5-r0 \
+        shadow=4.18.0-r1 \
+        shadow-login=4.18.0-r1 \
+        libcap-ng=0.8.5-r2 \
         libnl3=3.11.0-r0 \
-        lz4-libs=1.10.0-r0 \
+        lz4-libs=1.10.0-r1 \
         lzo=2.10-r5 \
         bind-tools=9.20.23-r0 \
         && \
