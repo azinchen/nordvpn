@@ -35,8 +35,8 @@ if [ -n "$docker_network" ]; then
     # Do not restrict by port here — svc-nordvpn adds per-IP:port rules
     # into VPN-SERVER at runtime (XOR uses non-standard ports)
     run4 -N VPN-SERVER
-    run4 -A OUTPUT -p udp -j VPN-SERVER
-    run4 -A OUTPUT -p tcp -j VPN-SERVER
+    run4 -A OUTPUT -o eth0 -p udp -j VPN-SERVER
+    run4 -A OUTPUT -o eth0 -p tcp -j VPN-SERVER
 
     # NordVPN API bootstrap (TCP/443) by resolved IPs
     if [ -n "$nordvpnapi_ip" ]; then
