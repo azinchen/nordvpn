@@ -16,6 +16,12 @@ permissions:
   actions: read
   security-events: write  # Required for called security workflows to upload SARIF files
 
+# Cancel superseded in-progress runs per ref. Tags (releases) are never
+# cancelled so a publish in flight always completes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref_type != 'tag' }}
+
 env:
   # Multi-platform builds for production (master/tags)
   PLATFORMS: "linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/riscv64"
@@ -175,7 +181,10 @@ jobs:
   security-scan-built-image:
     name: 🔒 Security Scan - Built Image
     needs: build-and-deploy
-    if: ${{ always() && needs.build-and-deploy.result == 'success' }}
+    # Only scan production-ish images (master + tags); feature-branch dev
+    # images are throwaway and the daily cron already covers 'latest'.
+    if: ${{ always() && needs.build-and-deploy.result == 'success'
+            && (github.ref_name == 'master' || github.ref_type == 'tag') }}
     uses: ./.github/workflows/security-docker.yml
     with:
       image_tag: ${{ needs.build-and-deploy.outputs.image_tag }}

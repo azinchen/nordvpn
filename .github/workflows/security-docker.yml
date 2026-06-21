@@ -31,7 +31,6 @@ jobs:
   docker-security-scan:
     name: 🔍 Docker Image Security Scan
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.3
@@ -81,7 +80,7 @@ jobs:
 
       - name: Run Trivy security scan
         id: trivy-image
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.36.0
         continue-on-error: true
         with:
           image-ref: "${{ steps.config.outputs.image_ref }}"
@@ -118,20 +117,3 @@ jobs:
         with:
           sarif_file: 'grype-results.sarif'
           category: 'grype-docker-image'
-
-      - name: Run Snyk security scan
-        id: snyk-scan
-        continue-on-error: true
-        uses: snyk/actions/docker@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: "${{ steps.config.outputs.image_ref }}"
-          args: --severity-threshold=medium --file=Dockerfile --sarif-file-output=snyk-results.sarif
-
-      - name: Upload Snyk scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v4.36.2
-        if: always() && hashFiles('snyk-results.sarif') != ''
-        with:
-          sarif_file: 'snyk-results.sarif'
-          category: 'snyk-docker-image'
