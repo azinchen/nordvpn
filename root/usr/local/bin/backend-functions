@@ -24,6 +24,7 @@ recreate_vpn_cron="${RECREATE_VPN_CRON:-}"
 check_connection_cron="${CHECK_CONNECTION_CRON:-}"
 nordvpnapi_ip="${NORDVPNAPI_IP:-104.16.208.203;104.19.159.190}"
 network="${NETWORK:-}"
+forward_from="${FORWARD_FROM:-}"
 puid=${PUID:-912}
 pgid=${PGID:-912}
 

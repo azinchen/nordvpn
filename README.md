@@ -112,6 +112,7 @@ services:
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPTS** | Connection test retry count. Default: `5` |
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPT<wbr>_INTERVAL** | Seconds between retries. Default: `10` |
 | **NETWORK** | LAN/inter‑container CIDRs to allow; semicolon‑separated. Default: none |
+| **FORWARD<wbr>_FROM** | Downstream CIDRs allowed to route OUT through the tunnel (gateway mode). Traffic must arrive already SNATed into these nets. Semicolon‑ or comma‑separated. Default: none |
 | **NORDVPNAPI<wbr>_IP** | API bootstrap IPs (semicolon‑separated). Default: `104.16.208.203;104.19.159.190` |
 | **XOR<wbr>_KEY** | XOR scramble obfuscation key for `openvpn_xor_*` technologies. Default: NordVPN's built-in key |
 | **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters. |
