@@ -27,6 +27,7 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🏠 Local/LAN Access** — Allow specific CIDRs with `NETWORK=...` ([details][wiki-network])
 - **📵 IPv6 Firewall** — Built-in chains default to DROP ([details][wiki-ipv6])
 - **🧱 iptables Compatibility** — Auto-selects nft or legacy backend ([details][wiki-firewall])
+- **🚪 VPN Gateway Mode** — Route downstream networks out through the tunnel with `FORWARD_FROM=...` ([details][wiki-gateway])
 
 > **📖 [Full documentation on the Wiki][wiki-home]** — configuration guides, examples, troubleshooting, FAQ, and architecture.
 
@@ -158,6 +159,7 @@ Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki 
 [wiki-network]: https://github.com/azinchen/nordvpn/wiki/Local-Network-Access
 [wiki-ipv6]: https://github.com/azinchen/nordvpn/wiki/IPv6-Configuration
 [wiki-firewall]: https://github.com/azinchen/nordvpn/wiki/Firewall-Backends
+[wiki-gateway]: https://github.com/azinchen/nordvpn/wiki/VPN-Gateway-Mode
 [wiki-tech]: https://github.com/azinchen/nordvpn/wiki/Technologies#xor-obfuscated-openvpn-openvpn_xor_udp--openvpn_xor_tcp
 [wiki-compose]: https://github.com/azinchen/nordvpn/wiki/Docker-Compose-Examples
 [wiki-run]: https://github.com/azinchen/nordvpn/wiki/Docker-Run-Examples
