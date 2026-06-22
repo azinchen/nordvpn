@@ -155,30 +155,6 @@ getcityname()
     return 0
 }
 
-getcitycoordinates()
-{
-    input=$1
-
-    # First get the city ID using existing function
-    # `|| true` prevents `set -e` from killing the caller via command substitution
-    # when getcityid returns 1; the -z guard below handles the empty result.
-    cityid=$(getcityid "$input" || true)
-    if [ -z "$cityid" ]; then
-        return 1
-    fi
-
-    # Then get coordinates using the city ID
-    coords=$(jq -r --argjson ID "$cityid" '.[] | select(.cities[]? | .id == $ID) | .cities[] | select(.id == $ID) | "\(.latitude),\(.longitude)"' < "/usr/local/share/nordvpn/data/countries.json" | head -n 1)
-
-    printf '%s' "$coords"
-
-    if [ -z "$coords" ] || [ "$coords" = "null,null" ]; then
-        return 1
-    fi
-
-    return 0
-}
-
 getgroupid()
 {
     input=$1
@@ -477,20 +453,17 @@ if [ -n "$city" ]; then
             servers="$servers$(handle_specific_server "$value")"
         elif [ -n "$value" ]; then
             # See COUNTRY loop above for the rationale behind `|| true`.
-            coords=$(getcitycoordinates "$value" || true)
-            if [ -n "$coords" ]; then
-                latitude=$(echo "$coords" | cut -d',' -f1)
-                longitude=$(echo "$coords" | cut -d',' -f2)
-                
+            cityid=$(getcityid "$value" || true)
+            if [ -n "$cityid" ]; then
                 # Build curl parameters
-                curl_params="--data-urlencode coordinates[latitude]=$latitude --data-urlencode coordinates[longitude]=$longitude"
+                curl_params="--data-urlencode filters[country_city_id]=$cityid"
                 if [ -n "$tech_filter" ]; then
                     curl_params="$curl_params $tech_filter"
                 fi
                 if [ -n "$group_filter" ]; then
                     curl_params="$curl_params $group_filter"
                 fi
-                
+
                 # Execute curl with built parameters
                 serversincity=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
                 if [ -n "$serversincity" ]; then
@@ -501,7 +474,7 @@ if [ -n "$city" ]; then
                     log_warning "$SCRIPT_NAME" "Warning: No servers returned for city \"$value\""
                 fi
             else
-                log_warning "$SCRIPT_NAME" "Warning: Could not find coordinates for city \"$value\""
+                log_warning "$SCRIPT_NAME" "Warning: Could not find city \"$value\""
             fi
         fi
     done
