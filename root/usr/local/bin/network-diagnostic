@@ -422,8 +422,30 @@ fi
 [ -n "$CONNECTION_UPTIME" ] && echo "Connection Uptime     : $CONNECTION_UPTIME"
 echo
 
+echo "### Project configuration (effective)"
+echo "COUNTRY                 : ${country:-<unset>}"
+echo "CITY                    : ${city:-<unset>}"
+echo "GROUP                   : ${group:-<unset>}"
+echo "TECHNOLOGY              : ${technology:-<unset>}"
+echo "PORT                    : ${port:-<auto>}"
+echo "RANDOM_TOP              : ${random_top:-0}"
+echo "NETWORK                 : ${network:-<unset>}"
+echo "FORWARD_FROM            : ${forward_from:-<unset>}"
+echo "NORDVPNAPI_IP           : ${nordvpnapi_ip:-<unset>}"
+echo "OPENVPN_OPTS            : ${openvpn_opts:-<none>}"
+echo "RECREATE_VPN_CRON       : ${recreate_vpn_cron:-<disabled>}"
+echo "CHECK_CONNECTION_CRON   : ${check_connection_cron:-<disabled>}"
+echo "CHECK_CONNECTION_URL    : ${check_connection_url:-<unset>}"
+echo "NETWORK_DIAGNOSTIC      : ${network_diagnostic_enabled:-false}"
+echo "PUID/PGID               : ${puid:-912}/${pgid:-912}"
+echo
+
 echo "### ip addr show $DEV_IF"
 ip addr show "$DEV_IF" 2>/dev/null || true
+echo
+
+echo "### $DEV_IF interface stats (ip -s link)"
+ip -s link show "$DEV_IF" 2>/dev/null || echo "[info] no $DEV_IF interface"
 echo
 
 echo "### ip link (up)"
@@ -436,6 +458,14 @@ echo
 
 echo "### ip rule"
 ip rule show 2>/dev/null || true
+echo
+
+echo "### ip route show table all (every IPv4 routing table)"
+ip route show table all 2>/dev/null || true
+echo
+
+echo "### ip -6 route show table all (every IPv6 routing table)"
+ip -6 route show table all 2>/dev/null || echo "[info] no IPv6 routes"
 echo
 
 # Default route / split-default detection
@@ -522,6 +552,26 @@ echo
 
 print_dns_geo
 
+# Forward-resolution test: confirm a normal name lookup works through the tunnel.
+echo "### DNS resolution test"
+DNS_TEST_HOST="nordvpn.com"
+DNS_RES=""
+if command -v getent >/dev/null 2>&1; then
+    DNS_RES="$(getent hosts "$DNS_TEST_HOST" 2>/dev/null | awk '{print $1}' | tr '\n' ' ')"
+fi
+if [ -z "$DNS_RES" ] && command -v nslookup >/dev/null 2>&1; then
+    DNS_RES="$(nslookup "$DNS_TEST_HOST" 2>/dev/null | awk '/^Address: ?/{print $NF}' | tr '\n' ' ')"
+fi
+if [ -z "$DNS_RES" ]; then
+    DNS_RES="$(dig +timeout=3 +short "$DNS_TEST_HOST" 2>/dev/null | tr '\n' ' ')"
+fi
+if [ -n "$DNS_RES" ]; then
+    echo "[ok] $DNS_TEST_HOST resolved to: $DNS_RES"
+else
+    echo "[warn] could not resolve $DNS_TEST_HOST (DNS may be broken)"
+fi
+echo
+
 # Resolver identity (with fallbacks)
 NS_ACTIVE="$(awk '/^nameserver/ {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
 if [ -n "$NS_ACTIVE" ]; then
@@ -564,6 +614,14 @@ if [ -n "$ROUTE_DEV" ] && [ "$ROUTE_DEV" = "$DEV_IF" ]; then
     echo "[ok] Route to $PUBLIC_TEST_IPv4 goes via $DEV_IF"
 else
     echo "[warn] Route to $PUBLIC_TEST_IPv4 uses ${ROUTE_DEV:-<none>} (expected $DEV_IF)"
+fi
+
+# OpenVPN connection state (analogous to a WireGuard handshake check): the tun
+# interface can exist while the session is not actually CONNECTED.
+if [ "$VPN_STATUS" = "Connected" ]; then
+    echo "[ok] OpenVPN management state: CONNECTED${CONNECTION_UPTIME:+ (uptime $CONNECTION_UPTIME)}"
+else
+    echo "[warn] OpenVPN not CONNECTED (state=$VPN_STATUS) — session may be down or management interface unavailable"
 fi
 
 fetch_public_info
