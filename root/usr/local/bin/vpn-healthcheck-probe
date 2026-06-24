@@ -1,0 +1,39 @@
+#!/command/with-contenv sh
+# shellcheck shell=sh
+#
+# Side-effect-free liveness probe for the Docker HEALTHCHECK instruction.
+#
+# Unlike vpn-healthcheck (cron-driven active recovery that loops and triggers
+# vpn-reconnect on failure), this script ONLY reports status: it never sleeps,
+# never retries internally and never reconnects. Docker's HEALTHCHECK
+# --interval/--timeout/--retries govern retry and failure behaviour instead.
+
+set -eu
+
+. /usr/local/bin/backend-functions
+
+# Opt-in feature: the Docker HEALTHCHECK instruction is baked into the image and
+# always fires, so when it is not enabled we report healthy (exit 0) instead of
+# probing. This neutralises the healthcheck without rebuilding the image; set
+# HEALTHCHECK_ENABLED=true (or 1) to turn on the real tunnel checks below.
+case "$healthcheck_enabled" in
+    true|1) ;;
+    *) exit 0 ;;
+esac
+
+# 1) The tunnel interface must exist; fail fast if it doesn't.
+is_vpn_connected || exit 1
+
+# 2) Confirm traffic actually flows through the tunnel with a single short
+#    request (no retry loop; Docker --retries absorbs transient blips).
+oldIFS="$IFS"; IFS=',;'
+for url in $check_connection_url; do
+    [ -n "$url" ] || continue
+    code="$(curl -s --max-time 5 -o /dev/null -w '%{http_code}' -I "$url" 2>/dev/null || printf '000')"
+    case "$code" in
+        2*|3*) exit 0 ;;
+    esac
+done
+IFS="$oldIFS"
+
+exit 1
