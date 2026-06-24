@@ -52,6 +52,8 @@ FROM alpine:3.24.1 AS openvpn-builder
 ARG OPENVPN_VERSION
 ARG OPENVPN_XOR_PATCH_VERSION
 
+WORKDIR /tmp/openvpn
+
 RUN echo "**** install build dependencies ****" && \
     apk --no-cache --no-progress add \
         autoconf=2.73-r0 \
@@ -74,7 +76,6 @@ RUN echo "**** install build dependencies ****" && \
     mkdir -p /tmp/openvpn && \
     tar xf /tmp/openvpn.tar.gz -C /tmp/openvpn --strip-components=1 && \
     echo "**** apply Tunnelblick XOR patches ${OPENVPN_XOR_PATCH_VERSION} ****" && \
-    cd /tmp/openvpn && \
     PATCH_URLS=$(curl -sf "https://api.github.com/repos/Tunnelblick/Tunnelblick/contents/third_party/sources/openvpn/openvpn-${OPENVPN_XOR_PATCH_VERSION}/patches" \
         | jq -r '.[] | select(.name | contains("xorpatch")) | .download_url' | sort) && \
     [ -n "$PATCH_URLS" ] || { echo "ERROR: No XOR patches found for ${OPENVPN_XOR_PATCH_VERSION}"; exit 1; } && \
