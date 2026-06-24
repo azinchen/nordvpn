@@ -23,7 +23,21 @@ if is_mgmt_available; then
 else
     log "$SCRIPT_NAME" "Management interface not available, skipping graceful shutdown"
 fi
-sleep 5
+
+# Wait for OpenVPN to actually exit so the next service start can rebind the
+# management port (7505) and recreate tun0. OpenVPN is orphaned when run's shell
+# is signalled, so we poll its resources instead of waiting on the PID. Polling
+# (vs a fixed sleep) returns the moment it's gone, cutting reconnect downtime;
+# the loop still caps the wait so a stuck shutdown can't hang finish.
+wait_counter=0
+while is_mgmt_available || is_vpn_connected; do
+    wait_counter=$((wait_counter + 1))
+    if [ "$wait_counter" -ge 50 ]; then
+        log "$SCRIPT_NAME" "OpenVPN still shutting down after timeout, continuing"
+        break
+    fi
+    sleep 0.1
+done
 
 log "$SCRIPT_NAME" "Cleaning up VPN configuration files"
 rm -f "$ovpnfile"
