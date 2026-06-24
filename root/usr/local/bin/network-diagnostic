@@ -436,6 +436,7 @@ echo "OPENVPN_OPTS            : ${openvpn_opts:-<none>}"
 echo "RECREATE_VPN_CRON       : ${recreate_vpn_cron:-<disabled>}"
 echo "CHECK_CONNECTION_CRON   : ${check_connection_cron:-<disabled>}"
 echo "CHECK_CONNECTION_URL    : ${check_connection_url:-<unset>}"
+echo "HEALTHCHECK             : ${healthcheck_enabled:-false}"
 echo "NETWORK_DIAGNOSTIC      : ${network_diagnostic_enabled:-false}"
 echo "PUID/PGID               : ${puid:-912}/${pgid:-912}"
 echo
