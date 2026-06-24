@@ -1,4 +1,4 @@
-Last updated: 2026-06-05
+Last updated: 2026-06-24
 ---
 # List of CITIES with NordVPN servers
 
@@ -112,7 +112,7 @@ Malta | MT | 134 | Valletta * | 5554481 | [35.899722,14.514722](https://www.goog
 Mauritania | MR | 137 | Nouakchott * | 5551598 | [18.0863889,-15.9752778](https://www.google.com/maps?q=18.0863889,-15.9752778)
 Mauritius | MU | 138 | Port Louis * | 5556011 | [-20.1619444,57.4988889](https://www.google.com/maps?q=-20.1619444,57.4988889)
 Mexico | MX | 140 | Mexico | 5677037 | [19.434167,-99.138611](https://www.google.com/maps?q=19.434167,-99.138611)
-Moldova | MD | 142 | Chisinau | 5295179 | [47.005556,28.8575](https://www.google.com/maps?q=47.005556,28.8575)
+Moldova | MD | 142 | Chisinau * | 5295179 | [47.005556,28.8575](https://www.google.com/maps?q=47.005556,28.8575)
 Monaco | MC | 143 | Monte Carlo * | 5292332 | [43.739722,7.427222](https://www.google.com/maps?q=43.739722,7.427222)
 Mongolia | MN | 144 | Ulaanbaatar * | 5543669 | [47.9166667,106.9166667](https://www.google.com/maps?q=47.9166667,106.9166667)
 Montenegro | ME | 146 | Podgorica * | 5318561 | [42.441111,19.263611](https://www.google.com/maps?q=42.441111,19.263611)
