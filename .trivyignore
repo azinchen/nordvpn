@@ -1,0 +1,11 @@
+# Trivy ignore file — suppressions for findings that are accepted by design.
+#
+# DS-0002: "Image user should not be 'root'".
+# This is a VPN gateway container: its s6-overlay init (PID 1) must run as root
+# to manage iptables firewall rules (rebuilt on every reconnect), create/tear
+# down the tun0 device, and edit routing tables (NET_ADMIN + /dev/net/tun).
+# The long-running OpenVPN daemon already drops privileges to the non-root
+# "nordvpn" user (uid/gid 912). A USER directive would break container init, so
+# there is no fix that satisfies this rule without breaking the image.
+AVD-DS-0002
+DS-0002

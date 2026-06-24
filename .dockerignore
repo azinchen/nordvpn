@@ -1,0 +1,30 @@
+# Only `root/` is COPYed into the image (see Dockerfile). Everything else is
+# excluded from the build context to keep it small and to avoid sending repo
+# metadata, docs and local tooling to the daemon/build.
+
+# Version control & repo metadata
+.git
+.gitignore
+.gitmodules
+.github
+
+# Editor / agent / local tooling
+.claude
+scripts
+
+# Security scanner config (used by CI in the repo, not needed in the image)
+.trivyignore
+
+# Build/compose helpers (not used during image build)
+.dockerignore
+docker-compose.yml
+
+# Documentation & assets
+*.md
+LICENSE
+NordVpn_logo.png
+wiki
+
+# OS / misc noise
+**/.DS_Store
+**/*.log
