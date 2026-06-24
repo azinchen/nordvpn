@@ -16,6 +16,8 @@
 
 OpenVPN client docker container that routes other containers' traffic through NordVPN servers automatically.
 
+> **Prefer WireGuard?** This has a sibling project, [**azinchen/nordvpn-wg**](https://github.com/azinchen/nordvpn-wg) — the same auto-routing NordVPN container over WireGuard (NordLynx). Both share the same configuration model and feature set.
+
 ## ✨ Key Features
 
 - **🚀 Easy Setup** — Route any container's traffic through VPN with `--net=container:vpn`
