@@ -185,4 +185,10 @@ RUN echo "**** install security fix packages ****" && \
 
 COPY --from=rootfs-builder /rootfs/ /
 
+# Report container health from the VPN tunnel state: the probe checks tun0 and
+# does a single short connectivity request. start-period covers initial tunnel
+# bring-up; retries absorb transient blips and reconnects.
+HEALTHCHECK --interval=60s --timeout=15s --start-period=60s --retries=3 \
+    CMD ["/usr/local/bin/vpn-healthcheck-probe"]
+
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
