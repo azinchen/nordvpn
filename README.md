@@ -120,6 +120,7 @@ services:
 | **XOR<wbr>_KEY** | XOR scramble obfuscation key for `openvpn_xor_*` technologies. Default: NordVPN's built-in key |
 | **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters. |
 | **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable network diagnostics on connect. Default: `false` |
+| **HEALTHCHECK<wbr>_ENABLED** | Enable the Docker `HEALTHCHECK` probe (checks `tun0` + connectivity via `CHECK_CONNECTION_URL`). When `false`, the container always reports healthy. Default: `false` |
 
 ## Issues
 
