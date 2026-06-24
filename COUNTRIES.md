@@ -1,4 +1,4 @@
-Last updated: 2026-06-05
+Last updated: 2026-06-24
 ---
 # List of COUNTRIES with NordVPN servers
 
@@ -97,7 +97,7 @@ Malta ** | MT | 134
 Mauritania ** | MR | 137
 Mauritius ** | MU | 138
 Mexico | MX | 140
-Moldova | MD | 142
+Moldova ** | MD | 142
 Monaco ** | MC | 143
 Mongolia ** | MN | 144
 Montenegro ** | ME | 146
