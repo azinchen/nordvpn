@@ -9,10 +9,25 @@ SCRIPT_NAME="VPN-RECONNECT"
 
 log "$SCRIPT_NAME" "Starting VPN reconnection"
 
-log "$SCRIPT_NAME" "Stopping NordVPN service"
+# Select a new server and build the new config while the CURRENT tunnel stays
+# up. This is the slow part (NordVPN API calls + load sorting), so doing it
+# before any teardown keeps it out of the downtime window. --fail-fast makes
+# vpn-config exit (instead of blocking) on error, and its write is atomic, so a
+# failed selection leaves the existing connection and config untouched.
+log "$SCRIPT_NAME" "Selecting server and preparing new config (current tunnel stays up)"
+if ! vpn-config --fail-fast; then
+    log_error "$SCRIPT_NAME" "Server selection/config failed; keeping current connection"
+    exit 1
+fi
+
+# Preserve the freshly built config across the service stop (finish removes the
+# live config); the next service start consumes it instead of selecting again.
+cp -p "$ovpnfile" "$staged_ovpnfile"
+
+# Now restart the service to apply it. The downtime is just the OpenVPN restart
+# (TLS handshake), no longer the server selection done above.
+log "$SCRIPT_NAME" "Restarting service to apply new config"
 s6-rc stop svc-nordvpn
-sleep 2
-log "$SCRIPT_NAME" "Starting NordVPN service"
 s6-rc start svc-nordvpn
 
 log "$SCRIPT_NAME" "VPN reconnection completed"

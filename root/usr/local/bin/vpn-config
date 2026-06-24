@@ -7,6 +7,24 @@ set -eu
 
 SCRIPT_NAME="VPN-CONFIG"
 
+# Failure behavior. By default the script blocks forever on a fatal error: it
+# runs as an s6 service step, so blocking keeps the supervisor (and container)
+# alive instead of crash-looping. Called with --fail-fast (by vpn-reconnect,
+# where the current tunnel is still up) it exits non-zero instead, leaving the
+# existing connection and config untouched.
+FAIL_FAST=0
+case "${1:-}" in
+    --fail-fast) FAIL_FAST=1 ;;
+esac
+
+fail()
+{
+    if [ "$FAIL_FAST" -eq 1 ]; then
+        exit 1
+    fi
+    sleep infinity
+}
+
 log "$SCRIPT_NAME" "Starting VPN configuration"
 
 numericregex="^[0-9]+$"
@@ -508,8 +526,8 @@ if [ "$poollength" -eq 0 ]; then
         echo "$servers" | jq -r '[.name, .hostname, .load, .locations[0].country.name, .locations[0].country.city.name] | "\(.[1]): \(.[2])% load - \(.[3]), \(.[4]) (\(.[0]))"'
         poollength=$(echo "$servers" | jq -s 'unique | length')
     else
-        log_error "$SCRIPT_NAME" "CRITICAL ERROR: Failed to get fallback servers - sleeping infinite"
-        sleep infinity
+        log_error "$SCRIPT_NAME" "CRITICAL ERROR: Failed to get fallback servers"
+        fail
     fi
 fi
 
@@ -538,8 +556,8 @@ if [ "$poollength" -ne 0 ]; then
 fi
 
 if [ "$poollength" -eq 0 ]; then
-    log_error "$SCRIPT_NAME" "CRITICAL ERROR: list of selected servers is empty - sleeping infinite"
-    sleep infinity
+    log_error "$SCRIPT_NAME" "CRITICAL ERROR: list of selected servers is empty"
+    fail
 fi
 
 serverip=$(echo "$servers" | jq -r '.station' | head -n 1)
@@ -553,13 +571,18 @@ city_name=$(echo "$servers" | jq -r '.locations[0].country.city.name' | head -n 
 log "$SCRIPT_NAME" "Selected server: $name ($hostname, $country_name, $city_name)"
 
 log "$SCRIPT_NAME" "Creating VPN configuration file"
-cp "$ovpntemplatefile" "$ovpnfile"
-chmod 0600 "$ovpnfile"
-chown nordvpn:nordvpn "$ovpnfile"
+# Build into a temp file and move it into place atomically at the end, so a
+# failure here can never leave a half-written config or clobber the one a live
+# tunnel was generated from (vpn-reconnect prepares the new config while the
+# current connection is still up).
+build_file="${ovpnfile}.tmp"
+cp "$ovpntemplatefile" "$build_file"
+chmod 0600 "$build_file"
+chown nordvpn:nordvpn "$build_file"
 
 log "$SCRIPT_NAME" "Configuring VPN settings (IP: $serverip, Protocol: $protocol)"
-sed -i "s/__PROTOCOL__/$protocol/g" "$ovpnfile"
-sed -i "s/__X509_NAME__/$hostname/g" "$ovpnfile"
+sed -i "s/__PROTOCOL__/$protocol/g" "$build_file"
+sed -i "s/__X509_NAME__/$hostname/g" "$build_file"
 
 # Resolve technology identifier for port and XOR configuration
 tech_ident="$technology"
@@ -607,37 +630,41 @@ elif [ "$protocol" = "tcp" ]; then
         printf '%s\n' "remote $serverip 443" > "$remotes_tmp"
     fi
 else
-    log_error "$SCRIPT_NAME" "CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$technology\" - sleeping infinite"
-    sleep infinity
+    log_error "$SCRIPT_NAME" "CRITICAL ERROR: TECHNOLOGY environment variable contains wrong parameter \"$technology\""
+    fail
 fi
 
 # Apply remotes and scramble to config
-sed -i '/^__REMOTES__$/r '"$remotes_tmp" "$ovpnfile"
-sed -i '/^__REMOTES__$/d' "$ovpnfile"
+sed -i '/^__REMOTES__$/r '"$remotes_tmp" "$build_file"
+sed -i '/^__REMOTES__$/d' "$build_file"
 rm -f "$remotes_tmp"
 if [ -n "$scramble_line" ]; then
-    sed -i "s|^__SCRAMBLE__$|$scramble_line|" "$ovpnfile"
+    sed -i "s|^__SCRAMBLE__$|$scramble_line|" "$build_file"
 else
-    sed -i '/^__SCRAMBLE__$/d' "$ovpnfile"
+    sed -i '/^__SCRAMBLE__$/d' "$build_file"
 fi
 
 # XOR servers use a different tls-auth key than standard servers
 if contains_substring "$tech_ident" "xor"; then
     xor_tls_auth="/usr/local/share/nordvpn/data/tls-auth-xor.pem"
     if [ -f "$xor_tls_auth" ]; then
-        sed -i '/^key-direction/,/<\/tls-auth>/d' "$ovpnfile"
-        cat "$xor_tls_auth" >> "$ovpnfile"
+        sed -i '/^key-direction/,/<\/tls-auth>/d' "$build_file"
+        cat "$xor_tls_auth" >> "$build_file"
         log "$SCRIPT_NAME" "Replaced tls-auth key with XOR-specific key"
     else
         log_error "$SCRIPT_NAME" "WARNING: XOR tls-auth key file not found at $xor_tls_auth"
     fi
 fi
 
-# Verify the config file was created successfully
-if [ ! -s "$ovpnfile" ]; then
-    log_error "$SCRIPT_NAME" "CRITICAL ERROR: VPN config file was not created successfully - sleeping infinite"
-    sleep infinity
+# Verify the new config was built before swapping it in
+if [ ! -s "$build_file" ]; then
+    log_error "$SCRIPT_NAME" "CRITICAL ERROR: VPN config file was not created successfully"
+    rm -f "$build_file"
+    fail
 fi
+
+# Move into place atomically (preserves the 0600 nordvpn:nordvpn ownership)
+mv "$build_file" "$ovpnfile"
 
 log "$SCRIPT_NAME" "VPN configuration completed"
 exit 0

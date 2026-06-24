@@ -31,6 +31,9 @@ pgid=${PGID:-912}
 # Common file paths
 ovpntemplatefile="/usr/local/share/nordvpn/data/template.ovpn"
 ovpnfile="/run/xt/nordvpn.ovpn"
+# Config pre-selected by vpn-reconnect (while the current tunnel is still up)
+# and consumed by svc-nordvpn on the next start so it skips re-selection.
+staged_ovpnfile="/run/xt/nordvpn.ovpn.staged"
 authfile="/run/xt/auth"
 mgmtpwfile="/run/xt/mgmt-pw"
 

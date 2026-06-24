@@ -20,7 +20,14 @@ normalize_proto()
     esac
 }
 
-vpn-config
+# If vpn-reconnect pre-selected a server (staging the config while the previous
+# tunnel was still up), use it and skip selection; otherwise select now.
+if [ -f "$staged_ovpnfile" ]; then
+    log "$SCRIPT_NAME" "Using pre-selected config staged by reconnect"
+    mv "$staged_ovpnfile" "$ovpnfile"
+else
+    vpn-config
+fi
 
 # -------- parse remote lines and protocol --------
 [ -s "$ovpnfile" ] || { log_error "$SCRIPT_NAME" "CRITICAL ERROR: OVPN file not found: $ovpnfile - sleeping infinite" >&2; sleep infinity; }
