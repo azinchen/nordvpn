@@ -81,7 +81,7 @@ done
 if is_vpn_connected; then
     log "$SCRIPT_NAME" "VPN connection established"
     # Run network diagnostic if enabled
-    if [ "$network_diagnostic_enabled" = "true" ] || [ "$network_diagnostic_enabled" = "1" ]; then
+    if [ "$network_diagnostic_enabled" = "true" ]; then
         log "$SCRIPT_NAME" "Running network diagnostic..."
         network-diagnostic
     fi

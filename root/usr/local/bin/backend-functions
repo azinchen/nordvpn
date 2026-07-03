@@ -5,6 +5,9 @@
 [ -r /run/xt/backend.env ] && . /run/xt/backend.env
 
 # Create lowercase copies of environment variables
+# Boolean flags are normalized to "true"/"false" (accepting "true" or "1"),
+# so consumers only ever compare against "true".
+to_bool() { case "${1:-}" in true|1) echo "true" ;; *) echo "false" ;; esac; }
 country="${COUNTRY:-}"
 city="${CITY:-}"
 technology="${TECHNOLOGY:-OpenVPN UDP}"
@@ -13,11 +16,11 @@ random_top="${RANDOM_TOP:-0}"
 xor_key="${XOR_KEY:-tiecohbeengik9eiGheeshidohtai8hiegeelai3Am9Cee8eePhohRa}"
 port="${PORT:-}"
 openvpn_opts="${OPENVPN_OPTS:-}"
-network_diagnostic_enabled="${NETWORK_DIAGNOSTIC_ENABLED:-false}"
+network_diagnostic_enabled="$(to_bool "${NETWORK_DIAGNOSTIC_ENABLED:-}")"
 check_connection_attempts="${CHECK_CONNECTION_ATTEMPTS:-5}"
 check_connection_url="${CHECK_CONNECTION_URL:-https://www.google.com}"
 check_connection_attempt_interval="${CHECK_CONNECTION_ATTEMPT_INTERVAL:-10}"
-healthcheck_enabled="${HEALTHCHECK_ENABLED:-false}"
+healthcheck_enabled="$(to_bool "${HEALTHCHECK_ENABLED:-}")"
 user="${USER:-}"
 pass="${PASS:-}"
 mgmt_pw="$pass"

@@ -16,10 +16,7 @@ set -eu
 # always fires, so when it is not enabled we report healthy (exit 0) instead of
 # probing. This neutralises the healthcheck without rebuilding the image; set
 # HEALTHCHECK_ENABLED=true (or 1) to turn on the real tunnel checks below.
-case "$healthcheck_enabled" in
-    true|1) ;;
-    *) exit 0 ;;
-esac
+[ "$healthcheck_enabled" = "true" ] || exit 0
 
 # 1) The tunnel interface must exist; fail fast if it doesn't.
 is_vpn_connected || exit 1
