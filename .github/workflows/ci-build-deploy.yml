@@ -113,7 +113,7 @@ jobs:
           platforms: ${{ steps.git.outputs.platforms }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4.1.0
+        uses: docker/setup-buildx-action@v4.2.0
 
       # === BUILD AND PUSH PHASE ===
       - name: Build and push image (Development)
