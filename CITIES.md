@@ -1,4 +1,4 @@
-Last updated: 2026-06-24
+Last updated: 2026-07-14
 ---
 # List of CITIES with NordVPN servers
 
@@ -123,7 +123,7 @@ Nepal | NP | 152 | Kathmandu * | 6142175 | [27.7166667,85.3166667](https://www.g
 Netherlands | NL | 153 | Amsterdam | 6076868 | [52.35,4.916667](https://www.google.com/maps?q=52.35,4.916667)
 New Zealand | NZ | 156 | Auckland | 6144239 | [-36.866667,174.766667](https://www.google.com/maps?q=-36.866667,174.766667)
 Nigeria | NG | 159 | Lagos | 6010328 | [6.453056,3.395833](https://www.google.com/maps?q=6.453056,3.395833)
-North Macedonia | MK | 128 | Skopje | 5386019 | [42.0,21.4333333](https://www.google.com/maps?q=42.0,21.4333333)
+North Macedonia | MK | 128 | Skopje * | 5386019 | [42.0,21.4333333](https://www.google.com/maps?q=42.0,21.4333333)
 Norway | NO | 163 | Oslo | 6127364 | [59.916667,10.75](https://www.google.com/maps?q=59.916667,10.75)
 Pakistan | PK | 165 | Karachi * | 6600485 | [24.9056,67.0822](https://www.google.com/maps?q=24.9056,67.0822)
 Panama | PA | 168 | Panama City * | 6176273 | [8.9666667,-79.5333333](https://www.google.com/maps?q=8.9666667,-79.5333333)
