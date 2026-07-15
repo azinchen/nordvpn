@@ -1,0 +1,58 @@
+name: Docs - Publish Wiki
+
+on:
+  push:
+    # Publish on every release (tag) push
+    tags: [ '**' ]
+  workflow_dispatch:
+    # Manual publish from any branch or tag
+
+permissions:
+  contents: write  # Required to push to the wiki repository
+
+jobs:
+  publish-wiki:
+    name: 📚 Publish Wiki
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.0
+
+      - name: Determine published version
+        id: version
+        run: |
+          # The tag or branch the workflow runs on (push tag or dispatch ref)
+          VERSION="${{ github.ref_name }}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Publishing wiki for version: ${VERSION}"
+
+      - name: Clone wiki repository
+        run: |
+          git clone "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.wiki.git" wiki-repo
+
+      - name: Sync wiki content
+        run: |
+          # Replace/add/delete: make the wiki repo mirror the wiki/ folder exactly
+          rsync -av --delete --exclude '.git' wiki/ wiki-repo/
+
+      - name: Commit and push
+        working-directory: wiki-repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No wiki changes - pushing empty marker commit"
+            git commit --allow-empty -m "Publish wiki for ${{ steps.version.outputs.version }} (no content changes)"
+          else
+            git commit -m "Publish wiki for ${{ steps.version.outputs.version }}"
+          fi
+
+          git push origin HEAD:master
+
+      - name: Publish summary
+        run: |
+          echo "✅ Wiki published for version ${{ steps.version.outputs.version }}"
+          echo "   https://github.com/${{ github.repository }}/wiki"
