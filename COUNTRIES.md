@@ -1,4 +1,4 @@
-Last updated: 2026-06-24
+Last updated: 2026-07-14
 ---
 # List of COUNTRIES with NordVPN servers
 
@@ -108,7 +108,7 @@ Nepal ** | NP | 152
 Netherlands | NL | 153
 New Zealand | NZ | 156
 Nigeria | NG | 159
-North Macedonia | MK | 128
+North Macedonia ** | MK | 128
 Norway | NO | 163
 Pakistan ** | PK | 165
 Panama ** | PA | 168
