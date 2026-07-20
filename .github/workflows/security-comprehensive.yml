@@ -51,7 +51,7 @@ jobs:
           output: 'trivy-fs-results.sarif'
 
       - name: Upload Trivy filesystem results to Security tab
-        uses: github/codeql-action/upload-sarif@v4.37.0
+        uses: github/codeql-action/upload-sarif@v4.37.1
         if: always() && hashFiles('trivy-fs-results.sarif') != ''
         with:
           sarif_file: 'trivy-fs-results.sarif'
@@ -66,7 +66,7 @@ jobs:
           output: 'trivy-config-results.sarif'
 
       - name: Upload Trivy config results to Security tab
-        uses: github/codeql-action/upload-sarif@v4.37.0
+        uses: github/codeql-action/upload-sarif@v4.37.1
         if: always() && hashFiles('trivy-config-results.sarif') != ''
         with:
           sarif_file: 'trivy-config-results.sarif'
