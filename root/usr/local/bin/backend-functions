@@ -32,6 +32,10 @@ forward_from="${FORWARD_FROM:-}"
 puid=${PUID:-912}
 pgid=${PGID:-912}
 
+# Interfaces
+wan_if="eth0"
+tun_if="tun0"
+
 # Common file paths
 ovpntemplatefile="/usr/local/share/nordvpn/data/template.ovpn"
 ovpnfile="/run/xt/nordvpn.ovpn"
@@ -76,7 +80,7 @@ run6_critical() {
 
 # Check if VPN is connected by checking for tun interface
 is_vpn_connected() {
-    if ip link show tun0 >/dev/null 2>&1; then
+    if ip link show "$tun_if" >/dev/null 2>&1; then
         return 0
     else
         return 1
