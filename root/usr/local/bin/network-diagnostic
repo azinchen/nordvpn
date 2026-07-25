@@ -322,7 +322,7 @@ PUBLIC_TEST_IPv6="2606:4700:4700::1111"
 
 # Initialize variables with defaults
 COMMON_NAME=""
-DEV_IF="tun0"
+DEV_IF="$tun_if"
 DEV_TYPE="?"
 IFCONF_LOCAL="?"
 IFCONF_REMOTE="?"

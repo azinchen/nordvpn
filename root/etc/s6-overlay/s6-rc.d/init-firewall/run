@@ -10,13 +10,8 @@ SCRIPT_NAME="INIT-FIREWALL"
 log "$SCRIPT_NAME" "Starting firewall initialization"
 log "$SCRIPT_NAME" "Configuring firewall to route all traffic through VPN"
 
-
 # BusyBox-friendly helpers
-
-docker_network="$(ip addr show dev eth0 2>/dev/null | awk '/inet / {print $2; exit}')"
-
-# BusyBox-friendly helpers
-docker_network="$(ip addr show dev eth0 2>/dev/null | awk '/inet / {print $2; exit}')"
+docker_network="$(ip addr show dev "$wan_if" 2>/dev/null | awk '/inet / {print $2; exit}')"
 gw="$(ip route 2>/dev/null | awk '/default/ {print $3; exit}')"
 
 # ===================== IPv4 =====================
@@ -28,15 +23,15 @@ if [ -n "$docker_network" ]; then
     run4_critical -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
     # Allow outbound to VPN interfaces + NAT
-    run4_critical -A OUTPUT -o tun0 -j ACCEPT
-    run4_critical -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+    run4_critical -A OUTPUT -o "$tun_if" -j ACCEPT
+    run4_critical -t nat -A POSTROUTING -o "$tun_if" -j MASQUERADE
 
     # Create named chain for VPN Server rules
     # Do not restrict by port here — svc-nordvpn adds per-IP:port rules
     # into VPN-SERVER at runtime (XOR uses non-standard ports)
     run4 -N VPN-SERVER
-    run4 -A OUTPUT -o eth0 -p udp -j VPN-SERVER
-    run4 -A OUTPUT -o eth0 -p tcp -j VPN-SERVER
+    run4 -A OUTPUT -o "$wan_if" -p udp -j VPN-SERVER
+    run4 -A OUTPUT -o "$wan_if" -p tcp -j VPN-SERVER
 
     # NordVPN API bootstrap (TCP/443) by resolved IPs
     if [ -n "$nordvpnapi_ip" ]; then
@@ -57,12 +52,12 @@ if [ -n "$docker_network" ]; then
             [ -z "$net" ] && continue
             # Best-effort route add (if not already present)
             if [ -n "$gw" ]; then
-                ip route 2>/dev/null | grep -q " ${net} " || ip route add "$net" via "$gw" dev eth0 2>/dev/null || true
+                ip route 2>/dev/null | grep -q " ${net} " || ip route add "$net" via "$gw" dev "$wan_if" 2>/dev/null || true
             fi
             # Allow inbound from this network only
-            run4 -A INPUT -i eth0 -s "$net" -j ACCEPT
+            run4 -A INPUT -i "$wan_if" -s "$net" -j ACCEPT
             # Allow outbound to this network only
-            run4 -A OUTPUT -o eth0 -d "$net" -j ACCEPT
+            run4 -A OUTPUT -o "$wan_if" -d "$net" -j ACCEPT
         done
         IFS="$oldIFS"
     fi
@@ -77,14 +72,14 @@ if [ -n "$docker_network" ]; then
         oldIFS="$IFS"; IFS=',;'
         for net in $forward_from; do
             [ -z "$net" ] && continue
-            run4_critical -A FORWARD -s "$net" -o tun0 -j ACCEPT
-            run4_critical -A FORWARD -d "$net" -i tun0 \
+            run4_critical -A FORWARD -s "$net" -o "$tun_if" -j ACCEPT
+            run4_critical -A FORWARD -d "$net" -i "$tun_if" \
                 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
         done
         IFS="$oldIFS"
     fi
 else
-    log "$SCRIPT_NAME" "No IPv4 address on eth0, skipping IPv4 rules"
+    log "$SCRIPT_NAME" "No IPv4 address on ${wan_if}, skipping IPv4 rules"
 fi
 
 log "$SCRIPT_NAME" "Firewall initialization completed"
