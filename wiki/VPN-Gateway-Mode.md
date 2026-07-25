@@ -99,6 +99,17 @@ ip rule add from 10.20.0.0/24 lookup 100 priority 1000
 
 The routing decision happens before the downstream container's own SNAT, so the `from 10.20.0.0/24` match works; client traffic goes to the gateway, while the listener's replies and the container's own traffic stay on the bridge.
 
+## Client DNS (`GATEWAY_DNS`)
+
+By default the gateway does nothing about downstream DNS — clients must bring their own resolver and their queries route out the tunnel like any other traffic. `GATEWAY_DNS` (ported from the sibling [openconnect-client](https://github.com/azinchen/openconnect-client) image) intercepts port-53 traffic from the `FORWARD_FROM` CIDRs instead:
+
+- **`redirect`** — client DNS is DNAT-ed to the first resolver pushed by the NordVPN server and travels through the tunnel. The DNAT target is refreshed on every (re)connect by the OpenVPN up script. Clients with hardcoded resolvers are captured too; queries aimed at an address local to the gateway's own netns pass untouched, so a co-located resolver stays reachable.
+- **`local`** — **all** client port-53 traffic is DNAT-ed to the gateway itself, for a co-located resolver (AdGuard Home, Pi-hole, unbound) running in `network_mode: service:vpn`. The resolver's upstream traffic follows the tunnel and kill switch automatically.
+- **`forward`** — **all** client port-53 traffic is DNAT-ed to `GATEWAY_DNS_SERVER` (IPv4), reached **directly over the uplink, not through the tunnel** — e.g. an AdGuard Home on your LAN. The gateway pins a host route and masquerades the hairpinned queries so this keeps working while the tunnel owns the default route.
+- **`off`** (default) — no interception.
+
+All modes are plain iptables NAT — no DNS daemon runs in the image. Interception only applies to `FORWARD_FROM` sources; if `FORWARD_FROM` is unset, `GATEWAY_DNS` is ignored with a warning. With the tunnel down, redirected queries are dropped by the kill switch (nothing leaks), except in `forward` mode, where the external resolver is deliberately reached outside the tunnel.
+
 ## Security Notes
 
 - **Keep `FORWARD_FROM` as narrow as possible** — every listed CIDR may route out through the tunnel.

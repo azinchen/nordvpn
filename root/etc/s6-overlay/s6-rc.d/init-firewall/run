@@ -78,6 +78,83 @@ if [ -n "$docker_network" ]; then
         done
         IFS="$oldIFS"
     fi
+
+    # Gateway-client DNS interception (GATEWAY_DNS), ported from the sibling
+    # openconnect-client image. Applies to the FORWARD_FROM clients:
+    #   redirect  DNAT port 53 to the server-pushed resolvers, so clients
+    #             resolve through the tunnel like the container itself. The
+    #             GATEWAY-DNS chain starts empty and is refilled by
+    #             gateway-dns-update (called from the OpenVPN up script) on
+    #             every (re)connect
+    #   local     DNAT port 53 to this container, for a co-located resolver
+    #             (AdGuard Home, Pi-hole) in network_mode: service:vpn
+    #   forward   DNAT port 53 to GATEWAY_DNS_SERVER, reached directly over
+    #             the uplink (not the tunnel) - e.g. a LAN AdGuard
+    #   off       no interception (default)
+    case "$gateway_dns" in
+        redirect|local|forward|off) ;;
+        *)
+            log_error "$SCRIPT_NAME" "CRITICAL ERROR: GATEWAY_DNS must be redirect, local, forward or off (got '$gateway_dns') - sleeping infinite"
+            sleep infinity
+            ;;
+    esac
+    if [ "$gateway_dns" != "off" ] && [ -z "${forward_from:-}" ]; then
+        log_warning "$SCRIPT_NAME" "GATEWAY_DNS=$gateway_dns ignored: FORWARD_FROM is not set"
+    elif [ "$gateway_dns" != "off" ]; then
+        dns_target=""
+        if [ "$gateway_dns" = "forward" ]; then
+            dns_target="$(echo "$gateway_dns_server" | tr ',;' '\n' | grep -v ':' | head -1)"
+            if [ -z "$dns_target" ]; then
+                log_error "$SCRIPT_NAME" "CRITICAL ERROR: GATEWAY_DNS=forward requires an IPv4 GATEWAY_DNS_SERVER - sleeping infinite"
+                sleep infinity
+            fi
+        fi
+        if [ "$gateway_dns" = "redirect" ]; then
+            run4 -t nat -N GATEWAY-DNS
+        fi
+        log "$SCRIPT_NAME" "Intercepting client DNS: mode=${gateway_dns}${dns_target:+ target=$dns_target}"
+        oldIFS="$IFS"; IFS=',;'
+        for net in $forward_from; do
+            [ -z "$net" ] && continue
+            for proto in udp tcp; do
+                case "$gateway_dns" in
+                    redirect)
+                        run4_critical -t nat -A PREROUTING -i "$wan_if" -s "$net" \
+                            -p "$proto" --dport 53 -j GATEWAY-DNS
+                        ;;
+                    local)
+                        run4_critical -t nat -A PREROUTING -i "$wan_if" -s "$net" \
+                            -p "$proto" --dport 53 -j REDIRECT
+                        run4_critical -A INPUT -i "$wan_if" -s "$net" \
+                            -p "$proto" --dport 53 -j ACCEPT
+                        ;;
+                    forward)
+                        run4_critical -t nat -A PREROUTING -i "$wan_if" -s "$net" \
+                            -p "$proto" --dport 53 -j DNAT --to-destination "${dns_target}:53"
+                        run4_critical -A FORWARD -i "$wan_if" -o "$wan_if" -s "$net" \
+                            -d "$dns_target" -p "$proto" --dport 53 -j ACCEPT
+                        ;;
+                esac
+            done
+        done
+        IFS="$oldIFS"
+        if [ "$gateway_dns" = "forward" ]; then
+            # Hairpin: DNATed queries go back out the uplink; masquerade so
+            # the resolver replies to the gateway, and pin a host route so
+            # the tunnel's redirect-gateway half-defaults cannot hijack it.
+            # A directly-connected resolver needs no pin.
+            run4_critical -A FORWARD -i "$wan_if" -o "$wan_if" \
+                -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+            run4_critical -t nat -A POSTROUTING -o "$wan_if" -d "$dns_target" -j MASQUERADE
+            case "$(ip route get "$dns_target" 2>/dev/null | head -1)" in
+                *" via "*)
+                    if [ -n "$gw" ]; then
+                        ip route add "$dns_target" via "$gw" dev "$wan_if" 2>/dev/null || true
+                    fi
+                    ;;
+            esac
+        fi
+    fi
 else
     log "$SCRIPT_NAME" "No IPv4 address on ${wan_if}, skipping IPv4 rules"
 fi

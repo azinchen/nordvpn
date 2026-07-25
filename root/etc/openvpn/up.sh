@@ -21,6 +21,11 @@ while : ; do
     n=$((n + 1))
 done
 
+# Keep the GATEWAY_DNS=redirect DNAT pointed at the current resolvers
+# (no-op in the other modes; word splitting of the list is intended)
+# shellcheck disable=SC2086
+/usr/local/bin/gateway-dns-update $_nameservers || true
+
 [ -z "$_nameservers" ] && exit 0
 
 # Write new resolv.conf
