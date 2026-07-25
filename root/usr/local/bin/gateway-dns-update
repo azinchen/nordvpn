@@ -1,0 +1,42 @@
+#!/bin/sh
+# shellcheck shell=sh
+#
+# Point the GATEWAY_DNS=redirect DNAT at the current resolvers. Called by
+# the OpenVPN up script on every (re)connect with the server-pushed
+# nameservers as arguments; PREROUTING already jumps only port-53 traffic
+# from the FORWARD_FROM CIDRs into the GATEWAY-DNS chain, so this only has
+# to (re)fill the chain with the DNAT target. No-op in the other modes.
+
+. /usr/local/bin/backend-functions
+
+SCRIPT_NAME="GATEWAY-DNS"
+
+[ "$gateway_dns" = "redirect" ] && [ -n "${forward_from:-}" ] || exit 0
+
+# First IPv4 resolver wins (the images are IPv4-only behind the kill switch)
+r4=""
+for _ns in "$@"; do
+    case "$_ns" in
+        *:*) ;;
+        *)   r4="$_ns"; break ;;
+    esac
+done
+
+run4 -t nat -F GATEWAY-DNS
+if [ -z "$r4" ]; then
+    log_warning "$SCRIPT_NAME" "No IPv4 resolver pushed by the server; client DNS interception is idle"
+    exit 0
+fi
+
+# addrtype ! LOCAL: queries deliberately aimed at an address inside this
+# netns (a co-located resolver) pass untouched. Best-effort (run4, not
+# run4_critical): this runs inside OpenVPN's up script, where hanging would
+# block the connect; a skipped rule only means DNS passes unintercepted
+# through the tunnel.
+run4 -t nat -A GATEWAY-DNS -p udp -m addrtype ! --dst-type LOCAL \
+    -j DNAT --to-destination "${r4}:53"
+run4 -t nat -A GATEWAY-DNS -p tcp -m addrtype ! --dst-type LOCAL \
+    -j DNAT --to-destination "${r4}:53"
+log "$SCRIPT_NAME" "Client DNS redirected to ${r4}"
+
+exit 0
