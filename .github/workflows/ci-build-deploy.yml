@@ -38,7 +38,7 @@ jobs:
     steps:
       # === VALIDATION PHASE ===
       - name: Checkout
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
 
       - name: Validate required secrets
         shell: bash
