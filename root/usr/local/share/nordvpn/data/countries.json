@@ -252,6 +252,20 @@
     ]
   },
   {
+    "id": 23,
+    "name": "Benin",
+    "code": "BJ",
+    "cities": [
+      {
+        "id": 805649,
+        "name": "Porto Novo",
+        "latitude": 6.4833333,
+        "longitude": 2.6166667,
+        "dns_name": "porto-novo"
+      }
+    ]
+  },
+  {
     "id": 24,
     "name": "Bermuda",
     "code": "BM",
@@ -392,20 +406,6 @@
     ]
   },
   {
-    "id": 37,
-    "name": "Cameroon",
-    "code": "CM",
-    "cities": [
-      {
-        "id": 1257194,
-        "name": "Yaounde",
-        "latitude": 3.8666667,
-        "longitude": 11.5166667,
-        "dns_name": "yaoundã©"
-      }
-    ]
-  },
-  {
     "id": 38,
     "name": "Canada",
     "code": "CA",
@@ -535,20 +535,6 @@
         "latitude": 9.893385,
         "longitude": -84.105407,
         "dns_name": "san-jose"
-      }
-    ]
-  },
-  {
-    "id": 53,
-    "name": "Cote Divoire",
-    "code": "CI",
-    "cities": [
-      {
-        "id": 1212512,
-        "name": "Yamoussoukro",
-        "latitude": 6.820548,
-        "longitude": -5.276741,
-        "dns_name": "yamoussoukro"
       }
     ]
   },
@@ -882,6 +868,20 @@
     ]
   },
   {
+    "id": 92,
+    "name": "Guyana",
+    "code": "GY",
+    "cities": [
+      {
+        "id": 3230948,
+        "name": "Georgetown",
+        "latitude": 6.8,
+        "longitude": -58.1666667,
+        "dns_name": "georgetown"
+      }
+    ]
+  },
+  {
     "id": 96,
     "name": "Honduras",
     "code": "HN",
@@ -1207,6 +1207,20 @@
         "latitude": 33.8719444,
         "longitude": 35.5097222,
         "dns_name": "beirut"
+      }
+    ]
+  },
+  {
+    "id": 122,
+    "name": "Liberia",
+    "code": "LR",
+    "cities": [
+      {
+        "id": 5108189,
+        "name": "Monrovia",
+        "latitude": 6.3105556,
+        "longitude": -10.8047222,
+        "dns_name": "monrovia"
       }
     ]
   },
@@ -1715,20 +1729,6 @@
     ]
   },
   {
-    "id": 181,
-    "name": "Rwanda",
-    "code": "RW",
-    "cities": [
-      {
-        "id": 7723910,
-        "name": "Kigali",
-        "latitude": -1.9536111,
-        "longitude": 30.0605556,
-        "dns_name": "kigali"
-      }
-    ]
-  },
-  {
     "id": 184,
     "name": "Saint Lucia",
     "code": "LC",
@@ -1767,6 +1767,20 @@
         "latitude": 44.818611,
         "longitude": 20.468056,
         "dns_name": "belgrad"
+      }
+    ]
+  },
+  {
+    "id": 193,
+    "name": "Seychelles",
+    "code": "SC",
+    "cities": [
+      {
+        "id": 7750634,
+        "name": "Victoria",
+        "latitude": -4.6166667,
+        "longitude": 55.45,
+        "dns_name": "victoria"
       }
     ]
   },
@@ -1998,20 +2012,6 @@
         "latitude": 13.753979,
         "longitude": 100.501444,
         "dns_name": "bangkok"
-      }
-    ]
-  },
-  {
-    "id": 215,
-    "name": "Togo",
-    "code": "TG",
-    "cities": [
-      {
-        "id": 8091425,
-        "name": "Lome",
-        "latitude": 6.1319444,
-        "longitude": 1.2227778,
-        "dns_name": "lome"
       }
     ]
   },
