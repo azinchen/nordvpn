@@ -1,4 +1,4 @@
-Last updated: 2026-07-14
+Last updated: 2026-08-07
 ---
 # List of COUNTRIES with NordVPN servers
 
@@ -22,6 +22,7 @@ Bangladesh ** | BD | 18
 Barbados ** | BB | 19
 Belgium | BE | 21
 Belize ** | BZ | 22
+Benin ** | BJ | 23
 Bermuda ** | BM | 24
 Bhutan ** | BT | 25
 Bolivia ** | BO | 26
@@ -32,7 +33,6 @@ Brunei Darussalam ** | BN | 32
 Bulgaria | BG | 33
 Burkina Faso ** | BF | 34
 Cambodia ** | KH | 36
-Cameroon ** | CM | 37
 Canada | CA | 38
 Cape Verde ** | CV | 39
 Cayman Islands ** | KY | 40
@@ -41,7 +41,6 @@ Chile | CL | 43
 Colombia | CO | 47
 Comoros ** | KM | 48
 Costa Rica ** | CR | 52
-Cote Divoire ** | CI | 53
 Croatia | HR | 54
 Cyprus | CY | 56
 Czech Republic | CZ | 57
@@ -63,6 +62,7 @@ Greece | GR | 84
 Greenland ** | GL | 85
 Guam ** | GU | 88
 Guatemala ** | GT | 89
+Guyana ** | GY | 92
 Honduras ** | HN | 96
 Hong Kong | HK | 97
 Hungary | HU | 98
@@ -85,6 +85,7 @@ Kyrgyzstan ** | KG | 117
 Lao People's Democratic Republic ** | LA | 118
 Latvia | LV | 119
 Lebanon ** | LB | 120
+Liberia ** | LR | 122
 Libyan Arab Jamahiriya ** | LY | 123
 Liechtenstein ** | LI | 124
 Lithuania | LT | 125
@@ -121,10 +122,10 @@ Portugal | PT | 175
 Puerto Rico ** | PR | 176
 Qatar ** | QA | 177
 Romania | RO | 179
-Rwanda ** | RW | 181
 Saint Lucia ** | LC | 184
 Senegal ** | SN | 191
 Serbia | RS | 192
+Seychelles ** | SC | 193
 Sierra Leone ** | SL | 194
 Singapore | SG | 195
 Slovakia | SK | 196
@@ -141,7 +142,6 @@ Taiwan | TW | 211
 Tajikistan ** | TJ | 212
 Tanzania ** | TZ | 213
 Thailand ** | TH | 214
-Togo ** | TG | 215
 Trinidad and Tobago ** | TT | 218
 Tunisia ** | TN | 219
 Turkey | TR | 220
