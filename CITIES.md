@@ -1,4 +1,4 @@
-Last updated: 2026-07-14
+Last updated: 2026-08-07
 ---
 # List of CITIES with NordVPN servers
 
@@ -26,6 +26,7 @@ Bangladesh | BD | 18 | Dhaka * | 594935 | [23.7230556,90.4086111](https://www.go
 Barbados | BB | 19 | Bridgetown * | 567650 | [13.1,-59.6166667](https://www.google.com/maps?q=13.1,-59.6166667)
 Belgium | BE | 21 | Brussels | 654293 | [50.833333,4.333333](https://www.google.com/maps?q=50.833333,4.333333)
 Belize | BZ | 22 | Belmopan * | 1037459 | [17.25,-88.7666667](https://www.google.com/maps?q=17.25,-88.7666667)
+Benin | BJ | 23 | Porto Novo * | 805649 | [6.4833333,2.6166667](https://www.google.com/maps?q=6.4833333,2.6166667)
 Bermuda | BM | 24 | Hamilton * | 809078 | [32.2941667,-64.7838889](https://www.google.com/maps?q=32.2941667,-64.7838889)
 Bhutan | BT | 25 | Thimphu * | 989699 | [27.472222,89.636111](https://www.google.com/maps?q=27.472222,89.636111)
 Bolivia | BO | 26 | La Paz * | 838514 | [-16.5,-68.15](https://www.google.com/maps?q=-16.5,-68.15)
@@ -36,7 +37,6 @@ Brunei Darussalam | BN | 32 | Bandar Seri Begawan * | 809132 | [4.8833333,114.93
 Bulgaria | BG | 33 | Sofia | 777368 | [42.6833333,23.3166667](https://www.google.com/maps?q=42.6833333,23.3166667)
 Burkina Faso | BF | 34 | Ouagadougou * | 716276 | [12.3702778,-1.5247222](https://www.google.com/maps?q=12.3702778,-1.5247222)
 Cambodia | KH | 36 | Phnom Penh * | 4658987 | [11.55,104.9166667](https://www.google.com/maps?q=11.55,104.9166667)
-Cameroon | CM | 37 | Yaounde * | 1257194 | [3.8666667,11.5166667](https://www.google.com/maps?q=3.8666667,11.5166667)
 Canada | CA | 38 | Calgary | 1041023 | [51.083333,-114.083333](https://www.google.com/maps?q=51.083333,-114.083333)
 Canada | CA | 38 | Montreal | 1048463 | [45.5,-73.583333](https://www.google.com/maps?q=45.5,-73.583333)
 Canada | CA | 38 | Toronto | 1054250 | [43.666667,-79.416667](https://www.google.com/maps?q=43.666667,-79.416667)
@@ -48,7 +48,6 @@ Chile | CL | 43 | Santiago | 1227092 | [-33.45,-70.666667](https://www.google.co
 Colombia | CO | 47 | Bogota | 1980695 | [4.649178,-74.062827](https://www.google.com/maps?q=4.649178,-74.062827)
 Comoros | KM | 48 | Moroni * | 4698371 | [-11.7041667,43.2402778](https://www.google.com/maps?q=-11.7041667,43.2402778)
 Costa Rica | CR | 52 | San Jose * | 2062994 | [9.893385,-84.105407](https://www.google.com/maps?q=9.893385,-84.105407)
-Cote Divoire | CI | 53 | Yamoussoukro * | 1212512 | [6.820548,-5.276741](https://www.google.com/maps?q=6.820548,-5.276741)
 Croatia | HR | 54 | Zagreb | 3308120 | [45.8,16.0](https://www.google.com/maps?q=45.8,16.0)
 Cyprus | CY | 56 | Nicosia | 2099627 | [35.1666667,33.3666667](https://www.google.com/maps?q=35.1666667,33.3666667)
 Czech Republic | CZ | 57 | Prague | 2144945 | [50.083333,14.466667](https://www.google.com/maps?q=50.083333,14.466667)
@@ -75,6 +74,7 @@ Greece | GR | 84 | Athens | 3131903 | [37.9833333,23.7333333](https://www.google
 Greenland | GL | 85 | Nuuk * | 3085001 | [64.1833333,-51.75](https://www.google.com/maps?q=64.1833333,-51.75)
 Guam | GU | 88 | Hagatna * | 8808314 | [13.4741667,144.7477778](https://www.google.com/maps?q=13.4741667,144.7477778)
 Guatemala | GT | 89 | Guatemala City * | 3202463 | [14.621111,-90.526944](https://www.google.com/maps?q=14.621111,-90.526944)
+Guyana | GY | 92 | Georgetown * | 3230948 | [6.8,-58.1666667](https://www.google.com/maps?q=6.8,-58.1666667)
 Honduras | HN | 96 | Tegucigalpa * | 3270551 | [14.1,-87.2166667](https://www.google.com/maps?q=14.1,-87.2166667)
 Hong Kong | HK | 97 | Hong Kong | 3232931 | [22.2833333,114.15](https://www.google.com/maps?q=22.2833333,114.15)
 Hungary | HU | 98 | Budapest | 3348344 | [47.5,19.083333](https://www.google.com/maps?q=47.5,19.083333)
@@ -100,6 +100,7 @@ Kyrgyzstan | KG | 117 | Bishkek * | 4649336 | [42.8730556,74.6002778](https://ww
 Lao People's Democratic Republic | LA | 118 | Vientiane * | 5015876 | [17.966667,102.6](https://www.google.com/maps?q=17.966667,102.6)
 Latvia | LV | 119 | Riga | 5192828 | [56.95,24.1](https://www.google.com/maps?q=56.95,24.1)
 Lebanon | LB | 120 | Beirut * | 5022080 | [33.8719444,35.5097222](https://www.google.com/maps?q=33.8719444,35.5097222)
+Liberia | LR | 122 | Monrovia * | 5108189 | [6.3105556,-10.8047222](https://www.google.com/maps?q=6.3105556,-10.8047222)
 Libyan Arab Jamahiriya | LY | 123 | Tripoli * | 5206697 | [32.8925,13.18](https://www.google.com/maps?q=32.8925,13.18)
 Liechtenstein | LI | 124 | Vaduz * | 5037212 | [47.1333333,9.5166667](https://www.google.com/maps?q=47.1333333,9.5166667)
 Lithuania | LT | 125 | Vilnius | 5166932 | [54.6833333,25.3166667](https://www.google.com/maps?q=54.6833333,25.3166667)
@@ -136,10 +137,10 @@ Portugal | PT | 175 | Lisbon | 6906665 | [38.716667,-9.133333](https://www.googl
 Puerto Rico | PR | 176 | San Juan * | 9521884 | [18.406389,-66.063889](https://www.google.com/maps?q=18.406389,-66.063889)
 Qatar | QA | 177 | Doha * | 6940529 | [25.286667,51.533333](https://www.google.com/maps?q=25.286667,51.533333)
 Romania | RO | 179 | Bucharest | 6953096 | [44.433333,26.1](https://www.google.com/maps?q=44.433333,26.1)
-Rwanda | RW | 181 | Kigali * | 7723910 | [-1.9536111,30.0605556](https://www.google.com/maps?q=-1.9536111,30.0605556)
 Saint Lucia | LC | 184 | Castries * | 5036603 | [14.0,-61.0](https://www.google.com/maps?q=14.0,-61.0)
 Senegal | SN | 191 | Dakar * | 7924958 | [14.6708333,-17.4380556](https://www.google.com/maps?q=14.6708333,-17.4380556)
 Serbia | RS | 192 | Belgrade | 7030907 | [44.818611,20.468056](https://www.google.com/maps?q=44.818611,20.468056)
+Seychelles | SC | 193 | Victoria * | 7750634 | [-4.6166667,55.45](https://www.google.com/maps?q=-4.6166667,55.45)
 Sierra Leone | SL | 194 | Freetown * | 7906196 | [8.49,-13.2341667](https://www.google.com/maps?q=8.49,-13.2341667)
 Singapore | SG | 195 | Singapore | 7867982 | [1.2930556,103.8558333](https://www.google.com/maps?q=1.2930556,103.8558333)
 Slovakia | SK | 196 | Bratislava | 7884305 | [48.15,17.1166667](https://www.google.com/maps?q=48.15,17.1166667)
@@ -157,7 +158,6 @@ Taiwan | TW | 211 | Taipei | 8544365 | [25.0391667,121.525](https://www.google.c
 Tajikistan | TJ | 212 | Dushanbe * | 8269814 | [38.56,68.7738889](https://www.google.com/maps?q=38.56,68.7738889)
 Tanzania | TZ | 213 | Dodoma * | 8554790 | [-6.1833333,35.75](https://www.google.com/maps?q=-6.1833333,35.75)
 Thailand | TH | 214 | Bangkok * | 8121638 | [13.753979,100.501444](https://www.google.com/maps?q=13.753979,100.501444)
-Togo | TG | 215 | Lome * | 8091425 | [6.1319444,1.2227778](https://www.google.com/maps?q=6.1319444,1.2227778)
 Trinidad and Tobago | TT | 218 | Port of Spain * | 9521887 | [10.666667,-61.516667](https://www.google.com/maps?q=10.666667,-61.516667)
 Tunisia | TN | 219 | Tunis * | 8295401 | [36.806112,10.171078](https://www.google.com/maps?q=36.806112,10.171078)
 Turkey | TR | 220 | Istanbul | 8401790 | [41.018611,28.964722](https://www.google.com/maps?q=41.018611,28.964722)
