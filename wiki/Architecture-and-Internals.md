@@ -77,7 +77,7 @@ Location: `/etc/s6-overlay/s6-rc.d/svc-nordvpn/run`
 1. Calls `vpn-config` to get server configuration
 2. Extracts VPN server IP/port/protocol from the OVPN file
 3. Adds temporary firewall rules in `VPN-SERVER` chain for every `remote` line (XOR configs have multiple ports)
-4. Appends `--data-ciphers` if not already set
+4. Writes `OPENVPN_OPTS` to a config fragment OpenVPN parses directly
 5. Launches OpenVPN with auth, management port, and nordvpn group
 6. Waits for tun0 interface (up to 60 seconds)
 7. Optionally runs network diagnostics
