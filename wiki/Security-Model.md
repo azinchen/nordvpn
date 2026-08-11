@@ -10,7 +10,7 @@ This page describes the container's firewall behavior, kill switch, and network 
 
 ## Network Access Control (Exceptions)
 
-- **Local/LAN access (bidirectional, explicit):** Set `NETWORK=192.168.1.0/24` (semicolon-separated CIDRs supported) to allow access to those subnets **regardless of VPN status**.
+- **Local/LAN access (bidirectional, explicit):** Set `NETWORK=192.168.1.0/24` (`;`/`,`-separated CIDRs supported) to allow access to those subnets **regardless of VPN status**.
 - **No domain names allowed:** Use IPs in `NETWORK` for any non-VPN access you require.
 
 ## Rule Precedence

@@ -21,7 +21,7 @@ docker run -d --cap-add=NET_ADMIN --device /dev/net/tun \
 | **CITY** | Name or numeric ID | `New York`, `8971718` |
 | **Specific server** | Hostname (in COUNTRY or CITY) | `es1234`, `uk2567` |
 
-Multiple values are semicolon-separated: `COUNTRY="United States;CA;228"`
+Multiple values are separated by `;` or `,` (whitespace around separators is ignored): `COUNTRY="United States;CA;228"`
 
 ### Specific Server Hostname Format
 

@@ -20,7 +20,7 @@ Only the **`FORWARD`** chain is opened — `INPUT`/`OUTPUT` stay locked by the k
 
 ## Multiple Subnets
 
-`FORWARD_FROM` is semicolon- or comma-separated, just like `NETWORK`:
+`FORWARD_FROM` takes CIDRs separated by `;` or `,` (whitespace around separators is ignored), just like `NETWORK`:
 
 ```bash
 -e FORWARD_FROM="172.28.0.0/24;10.30.0.0/24;192.168.50.0/24"
