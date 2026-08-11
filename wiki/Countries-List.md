@@ -1,6 +1,4 @@
-Last updated: 2026-08-07
----
-# List of COUNTRIES with NordVPN servers
+_Last updated: 2026-08-07. Generated from the NordVPN API; this page reflects the server lists baked into the latest released image._
 
 > Countries marked with `**` host only virtual servers (advertised by NordVPN at this location but whose physical hardware is hosted elsewhere); countries marked with `*` host a mix of virtual and physical servers. Unmarked countries host only physical servers.
 

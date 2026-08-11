@@ -38,25 +38,29 @@ on:
 
 jobs:
   update-readme-files:
-    name: 📄 Update README Files
+    name: 📄 Update Server List Pages
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.update_type == 'all' || github.event.inputs.update_type == 'readme' || github.event.inputs.update_type == '' }}
     strategy:
       matrix:
         file: 
           - name: "CITIES"
+            path: "wiki/Cities-List.md"
             url: "https://api.nordvpn.com/v1/servers/countries"
             jq_filter: '[.[] | . as $parent | .cities[] | . as $city | {country: $parent.name, code: $parent.code, cid: $parent.id, city: ($city.name + (if ($virtual | index($city.id)) then " *" else "" end)), cityid: $city.id, lat: $city.latitude, lon: $city.longitude}] | sort_by(.country, .city) | .[] | "\(.country) | \(.code) | \(.cid) | \(.city) | \(.cityid) | [\(.lat),\(.lon)](https://www.google.com/maps?q=\(.lat),\(.lon))"'
             header: "Country | Code | ID | City | ID | Map"
           - name: "COUNTRIES"
+            path: "wiki/Countries-List.md"
             url: "https://api.nordvpn.com/v1/servers/countries"
             jq_filter: 'sort_by(.name) | .[] | . as $c | "\($c.name)\(if ($virtual | index($c.id)) then " **" elif ($partial | index($c.id)) then " *" else "" end) | \($c.code) | \($c.id)"'
             header: "Country | Code | ID"
           - name: "TECHNOLOGIES"
+            path: "wiki/Technologies-List.md"
             url: "https://api.nordvpn.com/v1/technologies"
             jq_filter: '.[] | [.name, .identifier, .id] | "\(.[0]) | \(.[1]) | \(.[2])"'
             header: "Technology | Identifier | ID"
           - name: "GROUPS"
+            path: "wiki/Groups-List.md"
             url: "https://api.nordvpn.com/v1/servers/groups"
             jq_filter: '.[] | [.title, .identifier, .id] | "\(.[0]) | \(.[1]) | \(.[2])"'
             header: "Group | Identifier | ID"
@@ -65,7 +69,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7.0.1
 
-      - name: Update ${{ matrix.file.name }}.md
+      - name: Update ${{ matrix.file.path }}
         id: update-file
         shell: bash
         run: |
@@ -74,15 +78,15 @@ jobs:
           # hosted elsewhere) and get an explanatory legend at the top. The virtual
           # flag lives on the /v1/servers endpoint (specifications ->
           # virtual_location), not on /v1/servers/countries.
-          LEGEND=$'\n'
+          LEGEND=""
           if [ "${{ matrix.file.name }}" == "CITIES" ]; then
-            LEGEND=$'\n> Cities marked with `*` are virtual locations: NordVPN advertises a server at this location but its physical hardware is hosted elsewhere.\n\n'
+            LEGEND=$'> Cities marked with `*` are virtual locations: NordVPN advertises a server at this location but its physical hardware is hosted elsewhere.\n\n'
             # limit=0 returns the full server list (no cap); omitting limit defaults to only 100.
             VIRTUAL_IDS=$(curl -s "https://api.nordvpn.com/v1/servers?limit=0" \
               | jq -c '[.[] | select(any(.specifications[]?; .identifier=="virtual_location" and .values[0].value=="true")) | .locations[0].country.city.id] | unique')
             BODY=$(curl -s "${{ matrix.file.url }}" | jq -r --argjson virtual "${VIRTUAL_IDS:-[]}" '${{ matrix.file.jq_filter }}')
           elif [ "${{ matrix.file.name }}" == "COUNTRIES" ]; then
-            LEGEND=$'\n> Countries marked with `**` host only virtual servers (advertised by NordVPN at this location but whose physical hardware is hosted elsewhere); countries marked with `*` host a mix of virtual and physical servers. Unmarked countries host only physical servers.\n\n'
+            LEGEND=$'> Countries marked with `**` host only virtual servers (advertised by NordVPN at this location but whose physical hardware is hosted elsewhere); countries marked with `*` host a mix of virtual and physical servers. Unmarked countries host only physical servers.\n\n'
             # limit=0 returns the full server list (no cap); omitting limit defaults to only 100.
             # Classify each country by whether all, some, or none of its servers are virtual.
             CLASSIFY=$(curl -s "https://api.nordvpn.com/v1/servers?limit=0" \
@@ -94,19 +98,19 @@ jobs:
             BODY=$(curl -s "${{ matrix.file.url }}" | jq -r '${{ matrix.file.jq_filter }}')
           fi
 
-          # Generate new content without timestamp
-          NEW_CONTENT="# List of ${{ matrix.file.name }} with NordVPN servers
-          ${LEGEND}${{ matrix.file.header }}
+          # Generate new content without timestamp. No H1: the wiki page title
+          # comes from the filename.
+          NEW_CONTENT="${LEGEND}${{ matrix.file.header }}
           $(echo "${{ matrix.file.header }}" | sed 's/[^|]/-/g')
           ${BODY}"
           
           # Check if file exists and extract existing content without timestamp
-          if [ -f "${{ matrix.file.name }}.md" ]; then
-            FIRST_LINE=$(head -1 "${{ matrix.file.name }}.md")
-            if [[ $FIRST_LINE == "Last updated:"* ]]; then
-              EXISTING_CONTENT=$(tail -n +3 "${{ matrix.file.name }}.md")
+          if [ -f "${{ matrix.file.path }}" ]; then
+            FIRST_LINE=$(head -1 "${{ matrix.file.path }}")
+            if [[ $FIRST_LINE == "_Last updated:"* ]]; then
+              EXISTING_CONTENT=$(tail -n +3 "${{ matrix.file.path }}")
             else
-              EXISTING_CONTENT=$(cat "${{ matrix.file.name }}.md")
+              EXISTING_CONTENT=$(cat "${{ matrix.file.path }}")
             fi
           else
             EXISTING_CONTENT=""
@@ -114,9 +118,9 @@ jobs:
           
           # Update file if content changed or force update is enabled
           if [ "${{ github.event.inputs.force_update }}" == "true" ] || [ "$NEW_CONTENT" != "$EXISTING_CONTENT" ]; then
-            echo "Last updated: $(date +%Y-%m-%d)" > "${{ matrix.file.name }}.md"
-            echo "---" >> "${{ matrix.file.name }}.md"
-            echo "$NEW_CONTENT" >> "${{ matrix.file.name }}.md"
+            echo "_Last updated: $(date +%Y-%m-%d). Generated from the NordVPN API; this page reflects the server lists baked into the latest released image._" > "${{ matrix.file.path }}"
+            echo "" >> "${{ matrix.file.path }}"
+            echo "$NEW_CONTENT" >> "${{ matrix.file.path }}"
             echo "has_changes=true" >> $GITHUB_OUTPUT
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
@@ -126,21 +130,21 @@ jobs:
           echo "update_date=${DATE}" >> $GITHUB_ENV
           echo "file_name=${{ matrix.file.name }}" >> $GITHUB_ENV
 
-      - name: Get diff summary for ${{ matrix.file.name }}.md
+      - name: Get diff summary for ${{ matrix.file.path }}
         if: steps.update-file.outputs.has_changes == 'true'
         id: diff-summary
         shell: bash
         run: |
           # Get added and removed lines
-          ADDED=$(git diff --no-color ${{ matrix.file.name }}.md | grep -E '^\+' | grep -vE '^(\+\+\+|\+Last updated:|\+---|\+# List of|\+$|\+Country \||\+Technology \||\+Group \|)' | sed 's/^+//' || true)
-          REMOVED=$(git diff --no-color ${{ matrix.file.name }}.md | grep -E '^-' | grep -vE '^(---|\-Last updated:|\----|\-# List of|\-$|\-Country \||\-Technology \||\-Group \|)' | sed 's/^-//' || true)
+          ADDED=$(git diff --no-color ${{ matrix.file.path }} | grep -E '^\+' | grep -vE '^(\+\+\+|\+_Last updated:|\+---|\+$|\+Country \||\+Technology \||\+Group \|)' | sed 's/^+//' || true)
+          REMOVED=$(git diff --no-color ${{ matrix.file.path }} | grep -E '^-' | grep -vE '^(---|\-_Last updated:|\----|\-$|\-Country \||\-Technology \||\-Group \|)' | sed 's/^-//' || true)
           
           # Count changes properly (handle empty strings)
           [ -n "$ADDED" ] && ADDED_COUNT=$(echo "$ADDED" | wc -l | tr -d ' ') || ADDED_COUNT=0
           [ -n "$REMOVED" ] && REMOVED_COUNT=$(echo "$REMOVED" | wc -l | tr -d ' ') || REMOVED_COUNT=0
           
           # Check if file has any git changes (including date)
-          HAS_GIT_CHANGES=$(git diff --quiet ${{ matrix.file.name }}.md && echo "false" || echo "true")
+          HAS_GIT_CHANGES=$(git diff --quiet ${{ matrix.file.path }} && echo "false" || echo "true")
           
           echo "changes_summary<<EOF" >> $GITHUB_OUTPUT
           if [ "$ADDED_COUNT" -gt 0 ] || [ "$REMOVED_COUNT" -gt 0 ]; then
@@ -166,22 +170,22 @@ jobs:
           fi
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Create Pull Request for ${{ matrix.file.name }}.md
+      - name: Create Pull Request for ${{ matrix.file.path }}
         if: steps.update-file.outputs.has_changes == 'true'
         uses: peter-evans/create-pull-request@v8.1.1
         with:
           branch: bot/update-${{ matrix.file.name }}-md
-          commit-message: "docs: update ${{ matrix.file.name }}.md (${{ env.update_date }})"
+          commit-message: "docs: update ${{ matrix.file.path }} (${{ env.update_date }})"
           delete-branch: true
-          title: "📄 Update ${{ matrix.file.name }}.md - ${{ env.update_date }}"
+          title: "📄 Update ${{ matrix.file.path }} - ${{ env.update_date }}"
           body: |
-            ## 📄 Automated README Update
+            ## 📄 Automated Server List Update
             
-            **File**: `${{ matrix.file.name }}.md`
+            **File**: `${{ matrix.file.path }}`
             **Date**: ${{ env.update_date }}
             **Source**: ${{ matrix.file.url }}
             
-            This PR updates the ${{ matrix.file.name }}.md file with the latest data from NordVPN API.
+            This PR updates the `${{ matrix.file.path }}` wiki source page with the latest data from NordVPN API. The published wiki picks it up at the next release.
             
             ### Changes Summary:
             ${{ steps.diff-summary.outputs.changes_summary }}
@@ -227,7 +231,7 @@ jobs:
         id: diff-summary
         shell: bash
         run: |
-          # Use git diff to detect actual line changes (like CITIES.md does)
+          # Use git diff to detect actual line changes (like the wiki server-list pages do)
           # This correctly detects ordering changes as added/removed
           
           # Get added and removed country lines from git diff

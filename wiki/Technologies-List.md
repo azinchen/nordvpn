@@ -1,6 +1,4 @@
-Last updated: 2026-03-21
----
-# List of TECHNOLOGIES with NordVPN servers
+_Last updated: 2026-03-21. Generated from the NordVPN API; this page reflects the server lists baked into the latest released image._
 
 Technology | Identifier | ID
 -----------|------------|---

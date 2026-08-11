@@ -1,6 +1,4 @@
-Last updated: 2026-08-07
----
-# List of CITIES with NordVPN servers
+_Last updated: 2026-08-07. Generated from the NordVPN API; this page reflects the server lists baked into the latest released image._
 
 > Cities marked with `*` are virtual locations: NordVPN advertises a server at this location but its physical hardware is hosted elsewhere.
 

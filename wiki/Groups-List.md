@@ -1,6 +1,4 @@
-Last updated: 2025-09-26
----
-# List of GROUPS with NordVPN servers
+_Last updated: 2025-09-26. Generated from the NordVPN API; this page reflects the server lists baked into the latest released image._
 
 Group | Identifier | ID
 ------|------------|---
