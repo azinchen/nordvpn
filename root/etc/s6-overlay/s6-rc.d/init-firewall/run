@@ -38,6 +38,7 @@ if [ -n "$docker_network" ]; then
         log "$SCRIPT_NAME" "Allowing NordVPN API access for IPs: ${nordvpnapi_ip}"
         oldIFS="$IFS"; IFS=',;'
         for ip in $nordvpnapi_ip; do
+            ip="$(trim "$ip")"
             [ -z "$ip" ] && continue
             run4 -A OUTPUT -d "$ip" -p tcp --dport 443 -j ACCEPT
         done
@@ -49,10 +50,14 @@ if [ -n "$docker_network" ]; then
         log "$SCRIPT_NAME" "Allowing access to custom networks: ${network}"
         oldIFS="$IFS"; IFS=',;'
         for net in $network; do
+            net="$(trim "$net")"
             [ -z "$net" ] && continue
-            # Best-effort route add (if not already present)
+            # Best-effort route add (if not already present); warn instead of
+            # failing so one bad value doesn't block the rest, but stays visible
             if [ -n "$gw" ]; then
-                ip route 2>/dev/null | grep -q " ${net} " || ip route add "$net" via "$gw" dev "$wan_if" 2>/dev/null || true
+                ip route 2>/dev/null | grep -q " ${net} " \
+                    || ip route add "$net" via "$gw" dev "$wan_if" 2>/dev/null \
+                    || log_warning "$SCRIPT_NAME" "Warning: failed to add route for NETWORK value \"$net\""
             fi
             # Allow inbound from this network only
             run4 -A INPUT -i "$wan_if" -s "$net" -j ACCEPT
@@ -71,6 +76,7 @@ if [ -n "$docker_network" ]; then
         log "$SCRIPT_NAME" "Allowing tunnel forwarding from: ${forward_from}"
         oldIFS="$IFS"; IFS=',;'
         for net in $forward_from; do
+            net="$(trim "$net")"
             [ -z "$net" ] && continue
             run4_critical -A FORWARD -s "$net" -o "$tun_if" -j ACCEPT
             run4_critical -A FORWARD -d "$net" -i "$tun_if" \
@@ -103,7 +109,7 @@ if [ -n "$docker_network" ]; then
     elif [ "$gateway_dns" != "off" ]; then
         dns_target=""
         if [ "$gateway_dns" = "forward" ]; then
-            dns_target="$(echo "$gateway_dns_server" | tr ',;' '\n' | grep -v ':' | head -1)"
+            dns_target="$(trim "$(echo "$gateway_dns_server" | tr ',;' '\n' | grep -v ':' | awk 'NF {print; exit}')")"
             if [ -z "$dns_target" ]; then
                 log_error "$SCRIPT_NAME" "CRITICAL ERROR: GATEWAY_DNS=forward requires an IPv4 GATEWAY_DNS_SERVER - sleeping infinite"
                 sleep infinity
@@ -115,6 +121,7 @@ if [ -n "$docker_network" ]; then
         log "$SCRIPT_NAME" "Intercepting client DNS: mode=${gateway_dns}${dns_target:+ target=$dns_target}"
         oldIFS="$IFS"; IFS=',;'
         for net in $forward_from; do
+            net="$(trim "$net")"
             [ -z "$net" ] && continue
             for proto in udp tcp; do
                 case "$gateway_dns" in

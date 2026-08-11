@@ -25,6 +25,7 @@ is_vpn_connected || exit 1
 #    request (no retry loop; Docker --retries absorbs transient blips).
 oldIFS="$IFS"; IFS=',;'
 for url in $check_connection_url; do
+    url="$(trim "$url")"
     [ -n "$url" ] || continue
     code="$(curl -s --max-time 5 -o /dev/null -w '%{http_code}' -I "$url" 2>/dev/null || printf '000')"
     case "$code" in

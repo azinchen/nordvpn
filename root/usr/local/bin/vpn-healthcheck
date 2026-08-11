@@ -23,6 +23,8 @@ while [ $counter -le "$check_connection_attempts" ]; do
     # Convert semicolon separated list to space separated
     oldIFS="$IFS"; IFS=',;'
     for url in $check_connection_url; do
+        url="$(trim "$url")"
+        [ -n "$url" ] || continue
         if httpreq "$url"; then
             log "$SCRIPT_NAME" "VPN connection is active"
             exit 0

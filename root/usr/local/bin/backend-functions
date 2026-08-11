@@ -51,6 +51,16 @@ mgmtpwfile="/run/xt/mgmt-pw"
 mgmt_host="127.0.0.1"
 mgmt_port="7505"
 
+# Strip leading/trailing whitespace from a list token. Values like
+# "10.0.0.0/16; 10.1.0.0/16" split on IFS=',;' keep the space, which then
+# breaks ip/iptables/curl silently. Pure-shell so it works under BusyBox.
+trim() {
+    _t="$1"
+    _t="${_t#"${_t%%[![:space:]]*}"}"
+    _t="${_t%"${_t##*[![:space:]]}"}"
+    printf '%s' "$_t"
+}
+
 run4() {
     if ! ${IPT} "$@" 2>/dev/null; then
         log "BACKEND" "(IPv4) skipped: $*"
