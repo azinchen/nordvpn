@@ -155,7 +155,7 @@ Open the kill‑switch firewall for LAN access and downstream routing. See [Loca
 | **NETWORK** | LAN/inter‑container CIDRs to allow. Default: none |
 | **FORWARD<wbr>_FROM** | Downstream CIDRs allowed to route OUT through the tunnel (gateway mode). Traffic must arrive already SNATed into these nets. Default: none |
 | **GATEWAY<wbr>_DNS** | DNS interception for `FORWARD_FROM` clients: `redirect` (DNAT port 53 to the server‑pushed resolvers, through the tunnel), `local` (DNAT port 53 to this container, for a co‑located resolver such as AdGuard Home), `forward` (DNAT port 53 to `GATEWAY_DNS_SERVER`, reached directly over the uplink — **not** through the tunnel), `off`. Default: `off` |
-| **GATEWAY<wbr>_DNS<wbr>_SERVER** | External IPv4 resolver for `GATEWAY_DNS=forward` (e.g. an AdGuard Home on your LAN). Default: none |
+| **GATEWAY<wbr>_DNS<wbr>_SERVER** | External IPv4 resolver(s) for `GATEWAY_DNS=forward` (e.g. an AdGuard Home on your LAN). With a list, the first resolver answering a DNS probe at startup is used. Default: none |
 
 ### Advanced
 
