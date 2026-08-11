@@ -24,12 +24,12 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🌍 Smart Server Selection** — Auto-select servers by country, city, group, or specific hostname ([details][wiki-server])
 - **⚖️ Load Balancing** — Intelligent sorting by server load when multiple locations specified
 - **🔄 Auto-Reconnection** — Periodic server switching and health monitoring ([details][wiki-reconnect])
-- **🕵️ XOR Obfuscation** — Built-in XOR patches disguise OpenVPN traffic to bypass DPI ([details][wiki-tech])
+- **🕵️ XOR Obfuscation** — Built-in XOR patches disguise OpenVPN traffic to bypass DPI ([details][wiki-xor])
 - **🛡️ Kill Switch** — Default-deny firewall blocks all traffic when VPN is down ([details][wiki-security])
 - **🏠 Local/LAN Access** — Allow specific CIDRs with `NETWORK=...` ([details][wiki-network])
 - **📵 IPv6 Firewall** — Built-in chains default to DROP ([details][wiki-ipv6])
 - **🧱 iptables Compatibility** — Auto-selects nft or legacy backend ([details][wiki-firewall])
-- **🚪 VPN Gateway Mode** — Route downstream networks out through the tunnel with `FORWARD_FROM=...` ([details][wiki-gateway])
+- **🚪 VPN Gateway Mode** — Route downstream subnets through the tunnel with `FORWARD_FROM` ([details][wiki-gateway])
 
 > **📖 [Full documentation on the Wiki][wiki-home]** — configuration guides, examples, troubleshooting, FAQ, and architecture.
 
@@ -97,32 +97,73 @@ services:
 
 ## Environment Variables
 
+> **List values** (countries, cities, CIDRs, URLs, IPs) accept `;` or `,` as separators; whitespace around separators is ignored.
+
+### Credentials
+
+NordVPN **service credentials** — see [Getting Service Credentials](#getting-service-credentials) above.
+
 | Variable | Details |
 |---|---|
 | **USER** | **Required** — NordVPN service credentials username. |
 | **PASS** | **Required** — NordVPN service credentials password. |
-| **PUID** | User ID for the nordvpn process. Default: `912` |
-| **PGID** | Group ID for the nordvpn process. Default: `912` |
-| **COUNTRY** | Filter by countries: names, codes, IDs, or server hostnames ([list][nordvpn-countries]). Semicolon‑separated. |
-| **CITY** | Filter by cities: names, IDs, or server hostnames ([list][nordvpn-cities]). Semicolon‑separated. |
+
+### Server Selection
+
+Pick which servers to connect to; filters combine to narrow the pool. See [Server Selection][wiki-server].
+
+| Variable | Details |
+|---|---|
+| **COUNTRY** | Filter by countries: names, codes, IDs, or server hostnames ([list][nordvpn-countries]). |
+| **CITY** | Filter by cities: names, IDs, or server hostnames ([list][nordvpn-cities]). |
 | **GROUP** | Filter by server group ([list][nordvpn-groups]). |
-| **TECHNOLOGY** | OpenVPN protocol ([list][nordvpn-technologies]). Default: `openvpn_udp` |
 | **RANDOM_TOP** | Randomize top N servers. Default: `0` |
+
+### OpenVPN Connection
+
+Protocol, port, and traffic obfuscation. See [Technologies][wiki-tech].
+
+| Variable | Details |
+|---|---|
+| **TECHNOLOGY** | OpenVPN protocol: name, identifier, or ID ([list][nordvpn-technologies]). Default: `openvpn_udp` |
 | **PORT** | Force a specific port for the VPN connection. Must be supported by the server. Default: auto |
+| **XOR<wbr>_KEY** | XOR scramble obfuscation key for `openvpn_xor_*` technologies ([details][wiki-xor-key]). Default: NordVPN's built-in key |
+| **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters ([details][wiki-openvpn-opts]). |
+
+### Reconnection & Health Monitoring
+
+Rotate servers on a schedule and verify the tunnel actually works. See [Automatic Reconnection][wiki-reconnect].
+
+| Variable | Details |
+|---|---|
 | **RECREATE<wbr>_VPN<wbr>_CRON** | Server switching schedule (cron). Default: disabled |
 | **CHECK<wbr>_CONNECTION<wbr>_CRON** | Health monitoring schedule (cron). Default: disabled |
-| **CHECK<wbr>_CONNECTION<wbr>_URL** | URLs to test connectivity; semicolon‑separated. Default: `https://www.google.com` |
+| **CHECK<wbr>_CONNECTION<wbr>_URL** | URLs to test connectivity. Default: `https://www.google.com` |
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPTS** | Connection test retry count. Default: `5` |
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPT<wbr>_INTERVAL** | Seconds between retries. Default: `10` |
-| **NETWORK** | LAN/inter‑container CIDRs to allow; semicolon‑separated. Default: none |
-| **FORWARD<wbr>_FROM** | Downstream CIDRs allowed to route OUT through the tunnel (gateway mode). Traffic must arrive already SNATed into these nets. Semicolon‑ or comma‑separated. Default: none |
-| **GATEWAY<wbr>_DNS** | DNS interception for `FORWARD_FROM` clients: `redirect` (DNAT port 53 to the server‑pushed resolvers, through the tunnel), `local` (DNAT port 53 to this container, for a co‑located resolver such as AdGuard Home), `forward` (DNAT port 53 to `GATEWAY_DNS_SERVER`, reached directly over the uplink — **not** through the tunnel), `off`. See [VPN Gateway Mode][wiki-gateway]. Default: `off` |
-| **GATEWAY<wbr>_DNS<wbr>_SERVER** | External IPv4 resolver for `GATEWAY_DNS=forward` (e.g. an AdGuard Home on your LAN). Default: none |
-| **NORDVPNAPI<wbr>_IP** | API bootstrap IPs (semicolon‑separated). Default: `104.16.208.203;104.19.159.190` |
-| **XOR<wbr>_KEY** | XOR scramble obfuscation key for `openvpn_xor_*` technologies. Default: NordVPN's built-in key |
-| **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters. |
-| **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable network diagnostics on connect. Default: `false` |
 | **HEALTHCHECK<wbr>_ENABLED** | Enable the Docker `HEALTHCHECK` probe (checks `tun0` + connectivity via `CHECK_CONNECTION_URL`). When `false`, the container always reports healthy. Default: `false` |
+
+### Local Network & VPN Gateway
+
+Open the kill‑switch firewall for LAN access and downstream routing. See [Local Network Access][wiki-network] and [VPN Gateway Mode][wiki-gateway].
+
+| Variable | Details |
+|---|---|
+| **NETWORK** | LAN/inter‑container CIDRs to allow. Default: none |
+| **FORWARD<wbr>_FROM** | Downstream CIDRs allowed to route OUT through the tunnel (gateway mode). Traffic must arrive already SNATed into these nets. Default: none |
+| **GATEWAY<wbr>_DNS** | DNS interception for `FORWARD_FROM` clients: `redirect` (DNAT port 53 to the server‑pushed resolvers, through the tunnel), `local` (DNAT port 53 to this container, for a co‑located resolver such as AdGuard Home), `forward` (DNAT port 53 to `GATEWAY_DNS_SERVER`, reached directly over the uplink — **not** through the tunnel), `off`. Default: `off` |
+| **GATEWAY<wbr>_DNS<wbr>_SERVER** | External IPv4 resolver for `GATEWAY_DNS=forward` (e.g. an AdGuard Home on your LAN). Default: none |
+
+### Advanced
+
+Low‑level settings; the defaults work for most setups. See [Permissions][wiki-permissions] for `PUID`/`PGID`.
+
+| Variable | Details |
+|---|---|
+| **PUID** | User ID for the nordvpn process. Default: `912` |
+| **PGID** | Group ID for the nordvpn process. Default: `912` |
+| **NORDVPNAPI<wbr>_IP** | API bootstrap IPs. Default: `104.16.208.203;104.19.159.190` |
+| **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable network diagnostics on connect ([details][wiki-diagnostics]). Default: `false` |
 
 ## Issues
 
@@ -165,7 +206,12 @@ Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki 
 [wiki-ipv6]: https://github.com/azinchen/nordvpn/wiki/IPv6-Configuration
 [wiki-firewall]: https://github.com/azinchen/nordvpn/wiki/Firewall-Backends
 [wiki-gateway]: https://github.com/azinchen/nordvpn/wiki/VPN-Gateway-Mode
-[wiki-tech]: https://github.com/azinchen/nordvpn/wiki/Technologies#xor-obfuscated-openvpn-openvpn_xor_udp--openvpn_xor_tcp
+[wiki-tech]: https://github.com/azinchen/nordvpn/wiki/Technologies
+[wiki-xor]: https://github.com/azinchen/nordvpn/wiki/Technologies#xor-obfuscated-openvpn-openvpn_xor_udp--openvpn_xor_tcp
+[wiki-xor-key]: https://github.com/azinchen/nordvpn/wiki/Technologies#xor-key-override
+[wiki-openvpn-opts]: https://github.com/azinchen/nordvpn/wiki/OpenVPN-Options
+[wiki-permissions]: https://github.com/azinchen/nordvpn/wiki/Permissions
+[wiki-diagnostics]: https://github.com/azinchen/nordvpn/wiki/Network-Diagnostics-Guide
 [wiki-compose]: https://github.com/azinchen/nordvpn/wiki/Docker-Compose-Examples
 [wiki-run]: https://github.com/azinchen/nordvpn/wiki/Docker-Run-Examples
 [wiki-troubleshoot]: https://github.com/azinchen/nordvpn/wiki/Troubleshooting
