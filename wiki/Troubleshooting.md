@@ -54,6 +54,14 @@ See [Automatic Reconnection](Automatic-Reconnection#connection-health-monitoring
 
 Docker subnets are **not** auto-allowed. If inter-container communication is needed, include Docker's subnet too.
 
+### Only some NETWORK subnets are reachable
+
+**Symptoms:** With multiple CIDRs in `NETWORK` (or `FORWARD_FROM`), only the first one works; `docker exec vpn ip route` is missing routes for the others.
+
+**Cause:** Older releases did not trim whitespace in list values, so `NETWORK="10.10.0.0/16; 10.20.0.0/16"` (note the space after `;`) silently skipped every value after the first separator. Current images ignore whitespace around separators and log a warning when a route cannot be added.
+
+**Fix:** Update to the latest image, or remove the spaces after `;`/`,`.
+
 ### DNS leaks
 
 **Symptoms:** DNS queries go through your ISP instead of the VPN tunnel.

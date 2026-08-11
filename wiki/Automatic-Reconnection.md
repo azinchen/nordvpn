@@ -68,7 +68,7 @@ Use the `CHECK_CONNECTION_*` variables for active health probing:
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `CHECK_CONNECTION_CRON` | Disabled | Cron schedule for health checks |
-| `CHECK_CONNECTION_URL` | `https://www.google.com` | URLs to probe (semicolon-separated) |
+| `CHECK_CONNECTION_URL` | `https://www.google.com` | URLs to probe (`;`/`,`-separated) |
 | `CHECK_CONNECTION_ATTEMPTS` | `5` | Number of retry attempts |
 | `CHECK_CONNECTION_ATTEMPT_INTERVAL` | `10` | Seconds between retries |
 
