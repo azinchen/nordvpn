@@ -51,8 +51,10 @@ awk '/^[[:space:]]*remote[ \t]+/ {print $2, $3}' "$ovpnfile" | while read -r r_i
     fi
 
     PIN_SPEC="-A VPN-SERVER -o ${wan_if} -p ${r_proto} -d ${r_ip} --dport ${r_port} -j ACCEPT"
-    if run4 $PIN_SPEC 2>/dev/null; then
+    if run4_check $PIN_SPEC; then
         log "$SCRIPT_NAME" "Added firewall pinhole for ${r_proto} traffic to ${r_ip}:${r_port} on interface ${wan_if}"
+    else
+        log_warning "$SCRIPT_NAME" "Warning: failed to add firewall pinhole for ${r_ip}:${r_port} - connection to this server may be blocked"
     fi
 done
 

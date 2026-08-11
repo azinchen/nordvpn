@@ -97,9 +97,20 @@ nord_api_curl()
     return "$_rc"
 }
 
+# Best-effort by design: always returns 0 so plain call sites under `set -e`
+# never abort the caller. Use run4_check when the caller needs the real status.
 run4() {
     if ! ${IPT} "$@" 2>/dev/null; then
         log "BACKEND" "(IPv4) skipped: $*"
+    fi
+}
+
+# Like run4 but propagates the iptables exit status, for callers that branch
+# on whether the rule was actually added.
+run4_check() {
+    if ! ${IPT} "$@" 2>/dev/null; then
+        log "BACKEND" "(IPv4) skipped: $*"
+        return 1
     fi
 }
 
