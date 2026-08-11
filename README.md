@@ -27,6 +27,7 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🕵️ XOR Obfuscation** — Built-in XOR patches disguise OpenVPN traffic to bypass DPI ([details][wiki-xor])
 - **🛡️ Kill Switch** — Default-deny firewall blocks all traffic when VPN is down ([details][wiki-security])
 - **🏠 Local/LAN Access** — Allow specific CIDRs with `NETWORK=...` ([details][wiki-network])
+- **🧭 Custom DNS** — Resolve through the tunnel; override with `DNS=...` ([details][wiki-custom-dns])
 - **📵 IPv6 Firewall** — Built-in chains default to DROP ([details][wiki-ipv6])
 - **🧱 iptables Compatibility** — Auto-selects nft or legacy backend ([details][wiki-firewall])
 - **🚪 VPN Gateway Mode** — Route downstream subnets through the tunnel with `FORWARD_FROM` ([details][wiki-gateway])
@@ -131,6 +132,7 @@ Protocol, port, and traffic obfuscation. See [Technologies][wiki-tech].
 |---|---|
 | **TECHNOLOGY** | OpenVPN protocol: name, identifier, or ID ([list][nordvpn-technologies]). Default: `openvpn_udp` |
 | **PORT** | Force a specific port for the VPN connection. Must be supported by the server. Default: auto |
+| **DNS** | DNS servers written to `resolv.conf`; resolution goes through the tunnel ([details][wiki-custom-dns]). `off` leaves `resolv.conf` untouched. Default: server‑pushed resolvers |
 | **XOR<wbr>_KEY** | XOR scramble obfuscation key for `openvpn_xor_*` technologies ([details][wiki-xor-key]). Default: NordVPN's built-in key |
 | **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters ([details][wiki-openvpn-opts]). |
 
@@ -155,7 +157,7 @@ Open the kill‑switch firewall for LAN access and downstream routing. See [Loca
 |---|---|
 | **NETWORK** | LAN/inter‑container CIDRs to allow. Default: none |
 | **FORWARD<wbr>_FROM** | Downstream CIDRs allowed to route OUT through the tunnel (gateway mode). Traffic must arrive already SNATed into these nets. Default: none |
-| **GATEWAY<wbr>_DNS** | DNS interception for `FORWARD_FROM` clients: `redirect` (DNAT port 53 to the server‑pushed resolvers, through the tunnel), `local` (DNAT port 53 to this container, for a co‑located resolver such as AdGuard Home), `forward` (DNAT port 53 to `GATEWAY_DNS_SERVER`, reached directly over the uplink — **not** through the tunnel), `off`. Default: `off` |
+| **GATEWAY<wbr>_DNS** | DNS interception for `FORWARD_FROM` clients: `redirect` (DNAT port 53 to the tunnel resolvers — server‑pushed, or `DNS` when set), `local` (DNAT port 53 to this container, for a co‑located resolver such as AdGuard Home), `forward` (DNAT port 53 to `GATEWAY_DNS_SERVER`, reached directly over the uplink — **not** through the tunnel), `off`. Default: `off` |
 | **GATEWAY<wbr>_DNS<wbr>_SERVER** | External IPv4 resolver(s) for `GATEWAY_DNS=forward` (e.g. an AdGuard Home on your LAN). With a list, the first resolver answering a DNS probe at startup is used. Default: none |
 
 ### Advanced
@@ -205,6 +207,7 @@ Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki 
 [wiki-reconnect]: https://github.com/azinchen/nordvpn/wiki/Automatic-Reconnection
 [wiki-security]: https://github.com/azinchen/nordvpn/wiki/Security-Model#traffic-control--kill-switch
 [wiki-network]: https://github.com/azinchen/nordvpn/wiki/Local-Network-Access
+[wiki-custom-dns]: https://github.com/azinchen/nordvpn/wiki/Custom-DNS
 [wiki-ipv6]: https://github.com/azinchen/nordvpn/wiki/IPv6-Configuration
 [wiki-firewall]: https://github.com/azinchen/nordvpn/wiki/Firewall-Backends
 [wiki-gateway]: https://github.com/azinchen/nordvpn/wiki/VPN-Gateway-Mode

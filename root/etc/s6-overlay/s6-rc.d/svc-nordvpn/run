@@ -80,6 +80,29 @@ printf '%s\n' "$openvpn_opts" \
     | sed 's/^--//' \
     | grep -v '^$' \
     > "$openvpn_extra" || true
+
+# DNS override: translate the DNS list into OpenVPN options, so the existing
+# pushed-DNS pipeline (up.sh -> resolv.conf, gateway-dns-update -> redirect
+# DNAT) handles the custom resolvers exactly like server-pushed ones.
+# DNS=off is handled in up.sh/down.sh (resolv.conf left untouched).
+if [ -n "$dns" ] && [ "$dns" != "off" ]; then
+    case "$openvpn_opts" in
+        *dhcp-option\ DNS*)
+            log_warning "$SCRIPT_NAME" "Both DNS and a manual 'dhcp-option DNS' in OPENVPN_OPTS are set - OpenVPN merges them; prefer setting DNS alone"
+            ;;
+    esac
+    {
+        printf 'pull-filter ignore "dhcp-option DNS"\n'
+        oldIFS="$IFS"; IFS=',;'
+        for _ns in $dns; do
+            _ns="$(trim "$_ns")"
+            [ -n "$_ns" ] || continue
+            printf 'dhcp-option DNS %s\n' "$_ns"
+        done
+        IFS="$oldIFS"
+    } >> "$openvpn_extra"
+    log "$SCRIPT_NAME" "Overriding tunnel DNS with: ${dns}"
+fi
 chmod 0600 "$openvpn_extra"
 
 log "$SCRIPT_NAME" "Launching OpenVPN"
