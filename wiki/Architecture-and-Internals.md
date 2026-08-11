@@ -16,7 +16,8 @@ entrypoint (container start)
   ├─ init-setupcron      Configure cron jobs from RECREATE_VPN_CRON / CHECK_CONNECTION_CRON
   │
   ├─ svc-nordvpn         Main OpenVPN service (long-running)
-  └─ svc-cron            Cron daemon (long-running)
+  └─ svc-cron            Cron daemon (long-running; starts after svc-nordvpn so
+                         scheduled jobs cannot fire before the first connect attempt)
 ```
 
 ## Key Scripts
@@ -45,13 +46,18 @@ Backend preference by kernel:
 Location: `/usr/local/bin/backend-functions`
 
 Sourced by every script. Provides:
-- `run4()` / `run6()` — Execute iptables commands with logging (non-fatal)
+- `run4()` / `run6()` — Execute iptables commands with logging (best-effort, always succeed)
+- `run4_check()` — Like `run4` but propagates the real iptables status
 - `run4_critical()` / `run6_critical()` — Execute or sleep forever on failure
 - `is_vpn_connected()` — Checks for tun0 interface
 - `nord_api_curl()` — Queries the NordVPN API via the bootstrap IPs (`NORDVPNAPI_IP`); no DNS dependency
+- `fetch_token_credentials()` — Fetches service credentials from the API using `TOKEN` and writes the auth file
+- `trim()` — Strips whitespace from list tokens (`;`/`,`-separated values)
 - `mgmt_cmd()` — Sends authenticated commands to OpenVPN management interface
 - `log()` / `log_error()` / `log_warning()` — Timestamped logging
 - `parse_cron()` — Converts cron expressions to human-readable descriptions
+
+In `TOKEN` mode the sourcing preamble also resolves `user`/`pass` from the fetched auth file, so every consumer (management password, diagnostics) sees valid credentials without `USER`/`PASS` being set.
 
 ### `vpn-config` — Server selection
 
@@ -63,7 +69,8 @@ Location: `/usr/local/bin/vpn-config`
 4. Detects specific server hostnames and gives them `load=0`
 5. Sorts by load (multi-location) or keeps API order (single location)
 6. Applies `RANDOM_TOP` if set
-7. Writes selected server's OpenVPN config to disk
+7. Writes selected server's OpenVPN config to disk (atomically, via a temp file)
+8. Publishes the selection as `/run/xt/status.json` for monitoring
 
 For XOR technologies (`openvpn_xor_*`), the script also:
 - Generates multiple `remote` lines from the XOR port list (with `remote-random`)
@@ -74,22 +81,26 @@ For XOR technologies (`openvpn_xor_*`), the script also:
 
 Location: `/etc/s6-overlay/s6-rc.d/svc-nordvpn/run`
 
-1. Calls `vpn-config` to get server configuration
-2. Extracts VPN server IP/port/protocol from the OVPN file
-3. Adds temporary firewall rules in `VPN-SERVER` chain for every `remote` line (XOR configs have multiple ports)
-4. Writes `OPENVPN_OPTS` to a config fragment OpenVPN parses directly
-5. Launches OpenVPN with auth, management port, and nordvpn group
-6. Waits for tun0 interface (up to 60 seconds)
-7. Optionally runs network diagnostics
-8. Blocks on OpenVPN process
+1. In `TOKEN` mode, refreshes the service credentials from the NordVPN API (non-fatal; cached credentials are kept on failure)
+2. Uses the config staged by `vpn-reconnect` if present, otherwise calls `vpn-config`
+3. Extracts VPN server IP/port/protocol from the OVPN file
+4. Adds temporary firewall rules in `VPN-SERVER` chain for every `remote` line (XOR configs have multiple ports)
+5. Writes `OPENVPN_OPTS` to a config fragment OpenVPN parses directly; when `DNS` is set, appends the pull-filter/dhcp-option lines implementing the [custom DNS override](Custom-DNS)
+6. Launches OpenVPN with auth, management port, and nordvpn group, recording its PID in `/run/xt/openvpn.pid`
+7. Waits for tun0 interface (up to 60 seconds)
+8. Optionally runs network diagnostics
+9. Blocks on OpenVPN process
 
 ### `svc-nordvpn/finish` — Cleanup on disconnect
 
 Location: `/etc/s6-overlay/s6-rc.d/svc-nordvpn/finish`
 
 1. Flushes `VPN-SERVER` iptables chain
-2. Sends SIGTERM via management interface (5-second timeout)
-3. Removes OVPN config file
+2. Sends SIGTERM via management interface and polls for actual teardown (5-second cap)
+3. If OpenVPN is still alive after the graceful window, escalates: SIGTERM by recorded PID, then SIGKILL (PID is validated against `/proc/<pid>/cmdline` first)
+4. Removes the OVPN config file and pidfile
+
+This is also the container's shutdown path: `docker stop` (SIGTERM to s6) runs `finish`, so the tunnel is torn down cleanly before the container exits.
 
 ### `vpn-healthcheck` — Connection monitoring
 
@@ -99,13 +110,13 @@ Location: `/usr/local/bin/vpn-healthcheck`
 2. Retries `CHECK_CONNECTION_ATTEMPTS` times with configurable interval
 3. If all fail, calls `vpn-reconnect`
 
-### `vpn-reconnect` — Service restart
+### `vpn-reconnect` — Server rotation
 
 Location: `/usr/local/bin/vpn-reconnect`
 
-1. Stops `svc-nordvpn` via s6-rc
-2. Waits 2 seconds
-3. Restarts `svc-nordvpn`
+1. Takes an atomic lock (`/run/xt/vpn-reconnect.lock`) — a concurrent invocation (overlapping cron jobs, manual run) skips with a log line; a lock whose owner died is taken over
+2. Selects the new server and builds the new config **while the current tunnel is still up** (`vpn-config --fail-fast`; a failed selection leaves the existing connection untouched)
+3. Stages the new config and restarts `svc-nordvpn` — downtime is only the OpenVPN restart, not the API-bound server selection
 
 ### `network-diagnostic` — Debug tool
 
@@ -138,6 +149,9 @@ Located in `/usr/local/share/nordvpn/data/`:
 | `/run/xt/auth` | Credentials file (0600) |
 | `/run/xt/mgmt-pw` | Management interface password |
 | `/run/xt/status.json` | Last selected server as JSON (name, hostname, ip, protocol, technology, country, city, load, selected_at) — world-readable, for monitoring, e.g. `docker exec vpn cat /run/xt/status.json` |
+| `/run/xt/openvpn.pid` | PID of the running OpenVPN process (used by `finish` for the hard-kill fallback) |
+| `/run/xt/nordvpn.ovpn.staged` | Config pre-selected by `vpn-reconnect`, consumed by the next service start |
+| `/run/xt/vpn-reconnect.lock/` | Lock directory serializing concurrent reconnections |
 
 ## OpenVPN Management Interface
 

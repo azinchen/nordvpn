@@ -121,7 +121,7 @@ Pick which servers to connect to; filters combine to narrow the pool. See [Serve
 |---|---|
 | **COUNTRY** | Filter by countries: names, codes, IDs, or server hostnames ([list][nordvpn-countries]). |
 | **CITY** | Filter by cities: names, IDs, or server hostnames ([list][nordvpn-cities]). |
-| **GROUP** | Filter by server group ([list][nordvpn-groups]). |
+| **GROUP** | Filter by server group ([list][nordvpn-groups], [details][wiki-groups]). |
 | **RANDOM_TOP** | Randomize top N servers. Default: `0` |
 
 ### OpenVPN Connection
@@ -204,6 +204,7 @@ Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki 
 <!-- Links: Wiki -->
 [wiki-home]: https://github.com/azinchen/nordvpn/wiki
 [wiki-server]: https://github.com/azinchen/nordvpn/wiki/Server-Selection
+[wiki-groups]: https://github.com/azinchen/nordvpn/wiki/Server-Groups
 [wiki-reconnect]: https://github.com/azinchen/nordvpn/wiki/Automatic-Reconnection
 [wiki-security]: https://github.com/azinchen/nordvpn/wiki/Security-Model#traffic-control--kill-switch
 [wiki-network]: https://github.com/azinchen/nordvpn/wiki/Local-Network-Access

@@ -39,10 +39,16 @@ Produces a comprehensive report covering all sections below.
 ### 1. Header & VPN Status
 
 ```
-═══════════════════════════════════════════
-  OpenVPN DIAG — 2026-03-22 16:30:00 UTC
-  VPN: CONNECTED | iptables: nft | Kernel: 6.8.0-45
-═══════════════════════════════════════════
+================================================================
+OpenVPN DIAG (full)   : 2026-08-11T22:12:02+00:00
+VPN Status            : Connected
+Data source           : management interface
+Iptables command      : iptables
+Iptables backend      : nf_tables
+Iptables version      : iptables v1.8.13 (nf_tables)
+Kernel version        : 5.15.0-187-generic
+Device                : tun0 (type=tun)
+Common Name           : us11547.nordvpn.com
 ```
 
 ### 2. Device & Connection Info
