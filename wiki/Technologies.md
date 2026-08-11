@@ -13,7 +13,7 @@ This container uses OpenVPN exclusively. The `TECHNOLOGY` environment variable s
 
 The default is `openvpn_udp`.
 
-You can also use the human-readable names from the NordVPN API (e.g., `OpenVPN UDP`, `OpenVPN TCP`). The full list is in [TECHNOLOGIES.md](https://github.com/azinchen/nordvpn/blob/master/TECHNOLOGIES.md).
+You can also use the human-readable names from the NordVPN API (e.g., `OpenVPN UDP`, `OpenVPN TCP`). The full list is in [Technologies List](Technologies-List).
 
 ## Standard OpenVPN (`openvpn_udp` / `openvpn_tcp`)
 

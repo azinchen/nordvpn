@@ -11,6 +11,12 @@
 - [OpenVPN Options](OpenVPN-Options)
 - [Custom DNS](Custom-DNS)
 
+**Server Lists**
+- [Countries](Countries-List)
+- [Cities](Cities-List)
+- [Groups](Groups-List)
+- [Technologies](Technologies-List)
+
 **Security**
 - [Security Model](Security-Model)
 - [Firewall Backends](Firewall-Backends)

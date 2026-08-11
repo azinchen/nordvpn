@@ -44,10 +44,10 @@ Specific servers are:
 **Invalid formats** (will be treated as country/city names): `usa1` (3-letter prefix), `u1` (1 letter), `us` (no digits).
 
 Reference lists:
-- [Countries](https://github.com/azinchen/nordvpn/blob/master/COUNTRIES.md)
-- [Cities](https://github.com/azinchen/nordvpn/blob/master/CITIES.md)
-- [Groups](https://github.com/azinchen/nordvpn/blob/master/GROUPS.md)
-- [Technologies](https://github.com/azinchen/nordvpn/blob/master/TECHNOLOGIES.md)
+- [Countries](Countries-List)
+- [Cities](Cities-List)
+- [Groups](Groups-List)
+- [Technologies](Technologies-List)
 
 ## Selection Behavior
 
