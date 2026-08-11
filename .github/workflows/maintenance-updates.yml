@@ -88,7 +88,7 @@ jobs:
               COUNTRIES_JSON=$(curl -s "https://api.nordvpn.com/v1/servers/countries")
               VIRTUAL_IDS=$(curl -s "https://api.nordvpn.com/v1/servers?limit=0" \
                 | jq -c '[.[] | select(any(.specifications[]?; .identifier=="virtual_location" and .values[0].value=="true")) | .locations[0].country.city.id] | unique')
-              BODY=$(echo "$COUNTRIES_JSON" | jq -r --argjson virtual "${VIRTUAL_IDS:-[]}" '[.[] | . as $parent | .cities[] | . as $city | {flag: ($parent.code | explode | map(. + 127397) | implode), country: $parent.name, code: $parent.code, city: $city.name, cityid: $city.id, virt: (if ($virtual | index($city.id)) then "🌐 Virtual" else "✅ Physical" end), lat: $city.latitude, lon: $city.longitude}] | sort_by(.country, .city) | .[] | "| \(.flag) | \(.country) | \(.code) | \(.city) | \(.cityid) | \(.virt) | [\(.lat),\(.lon)](https://www.google.com/maps?q=\(.lat),\(.lon)) |"')
+              BODY=$(echo "$COUNTRIES_JSON" | jq -r --argjson virtual "${VIRTUAL_IDS:-[]}" '[.[] | . as $parent | .cities[] | . as $city | {flag: ($parent.code | explode | map(. + 127397) | implode), country: $parent.name, code: $parent.code, city: $city.name, cityid: $city.id, virt: (if ($virtual | index($city.id)) then "🌐 Virtual" else "✅ Physical" end), lat: $city.latitude, lon: $city.longitude}] | sort_by(.country, .city) | .[] | "| \(.flag) | \(.country) | \(.code) | \(.city) | \(.cityid) | \(.virt) | [📍](https://www.google.com/maps?q=\(.lat),\(.lon)) |"')
               TOTAL=$(echo "$COUNTRIES_JSON" | jq '[.[].cities[]] | length')
               CCNT=$(echo "$COUNTRIES_JSON" | jq 'length')
               STATS="${TOTAL} cities in ${CCNT} countries"
