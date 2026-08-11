@@ -19,22 +19,29 @@ fi
 if [ -n "${check_connection_cron:-}" ]; then
     log "$SCRIPT_NAME" "Health check cron: $check_connection_cron ($(parse_cron "$check_connection_cron"))"
     
-    # Validate CHECK_CONNECTION_* variables that are used by vpn-healthcheck
-    
-    if [ -z "$check_connection_attempts" ] || [ "$check_connection_attempts" -le 0 ]; then
-        log_error "$SCRIPT_NAME" "ERROR: CHECK_CONNECTION_ATTEMPTS must be a positive integer, got: '$check_connection_attempts'"
-        exit 1
-    fi
-    
+    # Validate CHECK_CONNECTION_* variables that are used by vpn-healthcheck.
+    # Pattern check instead of [ -le 0 ]: a numeric test on a non-numeric value
+    # errors (status 2), which inside an `if` condition just evaluates as
+    # false, silently skipping the validation.
+
+    case "$check_connection_attempts" in
+        ''|0|*[!0-9]*)
+            log_error "$SCRIPT_NAME" "ERROR: CHECK_CONNECTION_ATTEMPTS must be a positive integer, got: '$check_connection_attempts'"
+            exit 1
+            ;;
+    esac
+
     if [ -z "$check_connection_url" ]; then
         log_error "$SCRIPT_NAME" "ERROR: CHECK_CONNECTION_URL must be set"
         exit 1
     fi
-    
-    if [ -z "$check_connection_attempt_interval" ] || [ "$check_connection_attempt_interval" -le 0 ]; then
-        log_error "$SCRIPT_NAME" "ERROR: CHECK_CONNECTION_ATTEMPT_INTERVAL must be a positive integer, got: '$check_connection_attempt_interval'"
-        exit 1
-    fi
+
+    case "$check_connection_attempt_interval" in
+        ''|0|*[!0-9]*)
+            log_error "$SCRIPT_NAME" "ERROR: CHECK_CONNECTION_ATTEMPT_INTERVAL must be a positive integer, got: '$check_connection_attempt_interval'"
+            exit 1
+            ;;
+    esac
     
     # Validation passed
 else
