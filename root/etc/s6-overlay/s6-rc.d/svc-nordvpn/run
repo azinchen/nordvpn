@@ -72,6 +72,10 @@ chmod 0600 "$openvpn_extra"
 log "$SCRIPT_NAME" "Launching OpenVPN"
 openvpn --group nordvpn --config "$ovpnfile" --config "$openvpn_extra" --auth-user-pass "$authfile" --auth-nocache --management "$mgmt_host" "$mgmt_port" "$mgmtpwfile" &
 
+# Record the PID so finish can hard-kill a hung OpenVPN; the process is
+# orphaned when this shell is signalled, so the pidfile is the only handle.
+echo $! > /run/xt/openvpn.pid
+
 # Wait for VPN connection
 log "$SCRIPT_NAME" "Waiting for VPN connection..."
 counter=0
