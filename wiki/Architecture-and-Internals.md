@@ -137,6 +137,7 @@ Located in `/usr/local/share/nordvpn/data/`:
 | `/run/xt/nordvpn.ovpn` | Current server's OpenVPN config |
 | `/run/xt/auth` | Credentials file (0600) |
 | `/run/xt/mgmt-pw` | Management interface password |
+| `/run/xt/status.json` | Last selected server as JSON (name, hostname, ip, protocol, technology, country, city, load, selected_at) — world-readable, for monitoring, e.g. `docker exec vpn cat /run/xt/status.json` |
 
 ## OpenVPN Management Interface
 
