@@ -12,13 +12,13 @@ This image ships **both** `iptables` (nft-backed) and `iptables-legacy` (xtables
 On newer kernels:
 ```
 [ENTRYPOINT] Kernel: 6.8.0-xx
-[ENTRYPOINT] Using IPv4 backend: iptables
+[ENTRYPOINT] Using iptables backend: iptables
 ```
 
 On older systems:
 ```
 [ENTRYPOINT] Kernel: 4.4.0-xxx
-[ENTRYPOINT] Using IPv4 backend: iptables-legacy
+[ENTRYPOINT] Using iptables backend: iptables-legacy
 ```
 
 ## Why This Matters
