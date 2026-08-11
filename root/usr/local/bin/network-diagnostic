@@ -99,7 +99,7 @@ get_openvpn_status()
         MGMT_SOURCE="management interface"
         # For client connections, try to extract from different lines
         # Look for remote server info in the status output
-        COMMON_NAME="$(printf "%s" "$MGMT_RESP" | grep -o 'TCP connection established with \[AF_INET\][0-9.]*:[0-9]*' | sed 's/.*\[\([^]]*\)\].*/\1/' | cut -d: -f1 || printf '')"
+        COMMON_NAME="$(printf "%s" "$MGMT_RESP" | grep -o 'TCP connection established with \[AF_INET\][0-9.]*:[0-9]*' | sed 's/.*\[AF_INET\]//' | cut -d: -f1 || printf '')"
         
         # Extract remote IP from status (TCP or UDP)
         TCP_LINE="$(printf "%s" "$MGMT_RESP" | grep 'TCP connection established' | head -1 || printf '')"
