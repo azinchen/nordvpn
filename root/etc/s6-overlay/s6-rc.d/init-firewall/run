@@ -109,7 +109,32 @@ if [ -n "$docker_network" ]; then
     elif [ "$gateway_dns" != "off" ]; then
         dns_target=""
         if [ "$gateway_dns" = "forward" ]; then
-            dns_target="$(trim "$(echo "$gateway_dns_server" | tr ',;' '\n' | grep -v ':' | awk 'NF {print; exit}')")"
+            # GATEWAY_DNS_SERVER may list several IPv4 resolvers; pick the
+            # first one that answers a DNS probe. The probe needs a temporary
+            # pinhole (OUTPUT is default-deny at this point); replies match
+            # the conntrack ESTABLISHED rule. If no candidate answers, fall
+            # back to the first one - it may just be booting alongside us.
+            first_candidate=""
+            oldIFS="$IFS"; IFS=',;'
+            for candidate in $gateway_dns_server; do
+                candidate="$(trim "$candidate")"
+                [ -n "$candidate" ] || continue
+                case "$candidate" in *:*) continue ;; esac    # IPv4 only
+                [ -n "$first_candidate" ] || first_candidate="$candidate"
+                run4 -I OUTPUT -o "$wan_if" -d "$candidate" -p udp --dport 53 -j ACCEPT
+                if timeout 3 nslookup nordvpn.com "$candidate" >/dev/null 2>&1; then
+                    dns_target="$candidate"
+                else
+                    log_warning "$SCRIPT_NAME" "GATEWAY_DNS_SERVER candidate $candidate did not answer a DNS probe"
+                fi
+                run4 -D OUTPUT -o "$wan_if" -d "$candidate" -p udp --dport 53 -j ACCEPT
+                [ -z "$dns_target" ] || break
+            done
+            IFS="$oldIFS"
+            if [ -z "$dns_target" ] && [ -n "$first_candidate" ]; then
+                log_warning "$SCRIPT_NAME" "No GATEWAY_DNS_SERVER candidate answered the probe - using $first_candidate anyway"
+                dns_target="$first_candidate"
+            fi
             if [ -z "$dns_target" ]; then
                 log_error "$SCRIPT_NAME" "CRITICAL ERROR: GATEWAY_DNS=forward requires an IPv4 GATEWAY_DNS_SERVER - sleeping infinite"
                 sleep infinity
