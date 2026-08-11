@@ -97,6 +97,8 @@ services:
 
 ## Environment Variables
 
+> **List values** (countries, cities, CIDRs, URLs, IPs) accept `;` or `,` as separators; whitespace around separators is ignored.
+
 ### Credentials
 
 NordVPN **service credentials** — see [Getting Service Credentials](#getting-service-credentials) above.
@@ -112,8 +114,8 @@ Pick which servers to connect to; filters combine to narrow the pool. See [Serve
 
 | Variable | Details |
 |---|---|
-| **COUNTRY** | Filter by countries: names, codes, IDs, or server hostnames ([list][nordvpn-countries]). Semicolon‑separated. |
-| **CITY** | Filter by cities: names, IDs, or server hostnames ([list][nordvpn-cities]). Semicolon‑separated. |
+| **COUNTRY** | Filter by countries: names, codes, IDs, or server hostnames ([list][nordvpn-countries]). |
+| **CITY** | Filter by cities: names, IDs, or server hostnames ([list][nordvpn-cities]). |
 | **GROUP** | Filter by server group ([list][nordvpn-groups]). |
 | **RANDOM_TOP** | Randomize top N servers. Default: `0` |
 
@@ -123,7 +125,7 @@ Protocol, port, and traffic obfuscation. See [Technologies][wiki-tech].
 
 | Variable | Details |
 |---|---|
-| **TECHNOLOGY** | OpenVPN protocol ([list][nordvpn-technologies]). Default: `openvpn_udp` |
+| **TECHNOLOGY** | OpenVPN protocol: name, identifier, or ID ([list][nordvpn-technologies]). Default: `openvpn_udp` |
 | **PORT** | Force a specific port for the VPN connection. Must be supported by the server. Default: auto |
 | **XOR<wbr>_KEY** | XOR scramble obfuscation key for `openvpn_xor_*` technologies. Default: NordVPN's built-in key |
 | **OPENVPN<wbr>_OPTS** | Additional OpenVPN parameters. |
@@ -136,7 +138,7 @@ Rotate servers on a schedule and verify the tunnel actually works. See [Automati
 |---|---|
 | **RECREATE<wbr>_VPN<wbr>_CRON** | Server switching schedule (cron). Default: disabled |
 | **CHECK<wbr>_CONNECTION<wbr>_CRON** | Health monitoring schedule (cron). Default: disabled |
-| **CHECK<wbr>_CONNECTION<wbr>_URL** | URLs to test connectivity; semicolon‑separated. Default: `https://www.google.com` |
+| **CHECK<wbr>_CONNECTION<wbr>_URL** | URLs to test connectivity. Default: `https://www.google.com` |
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPTS** | Connection test retry count. Default: `5` |
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPT<wbr>_INTERVAL** | Seconds between retries. Default: `10` |
 | **HEALTHCHECK<wbr>_ENABLED** | Enable the Docker `HEALTHCHECK` probe (checks `tun0` + connectivity via `CHECK_CONNECTION_URL`). When `false`, the container always reports healthy. Default: `false` |
@@ -147,8 +149,8 @@ Open the kill‑switch firewall for LAN access and downstream routing. See [Loca
 
 | Variable | Details |
 |---|---|
-| **NETWORK** | LAN/inter‑container CIDRs to allow; semicolon‑separated. Default: none |
-| **FORWARD<wbr>_FROM** | Downstream CIDRs allowed to route OUT through the tunnel (gateway mode). Traffic must arrive already SNATed into these nets. Semicolon‑ or comma‑separated. Default: none |
+| **NETWORK** | LAN/inter‑container CIDRs to allow. Default: none |
+| **FORWARD<wbr>_FROM** | Downstream CIDRs allowed to route OUT through the tunnel (gateway mode). Traffic must arrive already SNATed into these nets. Default: none |
 | **GATEWAY<wbr>_DNS** | DNS interception for `FORWARD_FROM` clients: `redirect` (DNAT port 53 to the server‑pushed resolvers, through the tunnel), `local` (DNAT port 53 to this container, for a co‑located resolver such as AdGuard Home), `forward` (DNAT port 53 to `GATEWAY_DNS_SERVER`, reached directly over the uplink — **not** through the tunnel), `off`. Default: `off` |
 | **GATEWAY<wbr>_DNS<wbr>_SERVER** | External IPv4 resolver for `GATEWAY_DNS=forward` (e.g. an AdGuard Home on your LAN). Default: none |
 
@@ -160,7 +162,7 @@ Low‑level settings; the defaults work for most setups.
 |---|---|
 | **PUID** | User ID for the nordvpn process. Default: `912` |
 | **PGID** | Group ID for the nordvpn process. Default: `912` |
-| **NORDVPNAPI<wbr>_IP** | API bootstrap IPs (semicolon‑separated). Default: `104.16.208.203;104.19.159.190` |
+| **NORDVPNAPI<wbr>_IP** | API bootstrap IPs. Default: `104.16.208.203;104.19.159.190` |
 | **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable network diagnostics on connect. Default: `false` |
 
 ## Issues
