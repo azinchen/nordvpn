@@ -15,19 +15,14 @@ if [ -n "${USER:-}" ] && [ -n "${PASS:-}" ]; then
     if [ -n "$token" ]; then
         log "$SCRIPT_NAME" "Both USER/PASS and TOKEN are set - using USER/PASS"
     fi
-    auth_user="$USER"
-    auth_pass="$PASS"
+    log "$SCRIPT_NAME" "Creating VPN authentication file"
+    printf '%s\n' "$USER" > "$authfile"
+    printf '%s\n' "$PASS" >> "$authfile"
+    chmod 0600 "$authfile"
+    chown nordvpn:nordvpn "$authfile"
 elif [ -n "$token" ]; then
     log "$SCRIPT_NAME" "Fetching service credentials from NordVPN API using TOKEN"
-    # Pass the token via a 0600 curl config file, not -u on the command line,
-    # so it never appears in /proc/*/cmdline or ps output
-    curlcfg="$(mktemp /run/xt/curl-auth.XXXXXX)"
-    printf 'user = "token:%s"\n' "$token" > "$curlcfg"
-    creds="$(nord_api_curl "v1/users/services/credentials" -K "$curlcfg")" || creds=""
-    rm -f "$curlcfg"
-    auth_user="$(printf '%s' "$creds" | jq -r '.username // empty' 2>/dev/null || true)"
-    auth_pass="$(printf '%s' "$creds" | jq -r '.password // empty' 2>/dev/null || true)"
-    if [ -z "$auth_user" ] || [ -z "$auth_pass" ]; then
+    if ! fetch_token_credentials; then
         log_error "$SCRIPT_NAME" "CRITICAL ERROR: Could not fetch service credentials with TOKEN (check that the token is valid and not expired) - sleeping infinite"
         sleep infinity
     fi
@@ -36,12 +31,6 @@ else
     log_error "$SCRIPT_NAME" "CRITICAL ERROR: No credentials provided - set USER/PASS or TOKEN - sleeping infinite"
     sleep infinity
 fi
-
-log "$SCRIPT_NAME" "Creating VPN authentication file"
-printf '%s\n' "$auth_user" > "$authfile"
-printf '%s\n' "$auth_pass" >> "$authfile"
-chmod 0600 "$authfile"
-chown nordvpn:nordvpn "$authfile"
 
 log "$SCRIPT_NAME" "Authentication setup completed"
 exit 0

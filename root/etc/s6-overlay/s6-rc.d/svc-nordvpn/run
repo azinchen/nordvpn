@@ -9,6 +9,19 @@ SCRIPT_NAME="SERVICE-NORDVPN"
 
 log "$SCRIPT_NAME" "Starting NordVPN service"
 
+# TOKEN mode: refresh the service credentials on every service start (initial
+# boot, cron rotations, health-check reconnects), so credentials rotated by
+# NordVPN self-heal instead of looping on the stale cached ones forever. If
+# the API is unreachable the cached credentials are kept - a refresh failure
+# must never take down a reconnect that would otherwise succeed.
+if [ -n "$token" ] && { [ -z "${USER:-}" ] || [ -z "${PASS:-}" ]; }; then
+    if fetch_token_credentials; then
+        log "$SCRIPT_NAME" "Service credentials refreshed from NordVPN API"
+    else
+        log_warning "$SCRIPT_NAME" "Could not refresh service credentials from NordVPN API - using cached credentials"
+    fi
+fi
+
 # -------- helpers --------
 normalize_proto()
 {

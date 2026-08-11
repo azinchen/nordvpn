@@ -97,6 +97,28 @@ nord_api_curl()
     return "$_rc"
 }
 
+# Fetch the OpenVPN service credentials from the NordVPN API using TOKEN and
+# write them to $authfile (0600). The token travels in a 0600 curl config file,
+# never on the command line. Returns 1 - leaving any existing authfile
+# untouched - when TOKEN is unset or the fetch/parse fails.
+fetch_token_credentials() {
+    [ -n "$token" ] || return 1
+    _curlcfg="$(mktemp /run/xt/curl-auth.XXXXXX)" || return 1
+    printf 'user = "token:%s"\n' "$token" > "$_curlcfg"
+    _creds="$(nord_api_curl "v1/users/services/credentials" -K "$_curlcfg")" || _creds=""
+    rm -f "$_curlcfg"
+    _u="$(printf '%s' "$_creds" | jq -r '.username // empty' 2>/dev/null || true)"
+    _p="$(printf '%s' "$_creds" | jq -r '.password // empty' 2>/dev/null || true)"
+    if [ -z "$_u" ] || [ -z "$_p" ]; then
+        return 1
+    fi
+    printf '%s\n' "$_u" > "$authfile"
+    printf '%s\n' "$_p" >> "$authfile"
+    chmod 0600 "$authfile"
+    chown nordvpn:nordvpn "$authfile"
+    return 0
+}
+
 # Best-effort by design: always returns 0 so plain call sites under `set -e`
 # never abort the caller. Use run4_check when the caller needs the real status.
 run4() {
