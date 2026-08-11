@@ -1,6 +1,8 @@
 This image supports multiple CPU architectures. Docker will automatically pull the correct image for your platform.
 
-## Available Architectures
+## Published Architectures
+
+The images on Docker Hub and GHCR are built for the platforms listed in the CI configuration (`PLATFORMS` in `ci-build-deploy.yml`):
 
 | Architecture | Platform |
 |--------------|----------|
@@ -10,6 +12,16 @@ This image supports multiple CPU architectures. Docker will automatically pull t
 | `arm/v7` | ARM v7 (Raspberry Pi 2/3) |
 | `arm64` | 64-bit ARM (Raspberry Pi 4/5, Apple M1) |
 | `riscv64` | 64-bit RISC-V |
+
+## Buildable Architectures
+
+The Dockerfile itself supports every platform that **both** Alpine Linux and s6-overlay provide — the published list above plus `ppc64le` and `s390x`. Those two aren't published (no known demand), but you can build them locally:
+
+```bash
+docker buildx build --platform linux/ppc64le -t nordvpn:ppc64le .
+```
+
+(`loongarch64` is excluded — Alpine ships it but s6-overlay has no binaries; big-endian `ppc64` is excluded — s6-overlay ships it but Alpine has no port.)
 
 ## Automatic Architecture Detection
 

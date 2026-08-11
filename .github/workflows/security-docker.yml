@@ -6,7 +6,7 @@ permissions:
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Run at 6 AM UTC daily to check latest production image on Docker Hub
+    - cron: '0 6 * * *'  # Run at 6 AM UTC daily to check the latest production image on GHCR (same digest as Docker Hub)
   workflow_dispatch:
     inputs:
       image_tag:
@@ -46,7 +46,7 @@ jobs:
           REGISTRY="ghcr"
           IMAGE_REF="ghcr.io/${{ github.repository }}:${IMAGE_TAG}"
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            # Cron job: Always scan latest production image on 
+            # Cron job: Always scan the latest production image on GHCR
             IMAGE_TAG="latest"
             echo "🕒 Scheduled scan: Checking latest production image on GHCR"
           elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
