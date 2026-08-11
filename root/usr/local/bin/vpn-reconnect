@@ -7,6 +7,28 @@ set -eu
 
 SCRIPT_NAME="VPN-RECONNECT"
 
+# Serialize reconnections: RECREATE_VPN_CRON, CHECK_CONNECTION_CRON (via
+# vpn-healthcheck) and manual invocations are independent and can overlap;
+# two concurrent runs would race on the shared build/staged config paths and
+# interleave s6-rc stop/start calls. mkdir is atomic, so it doubles as a lock;
+# a lock whose owner is gone (crashed mid-run) is taken over.
+lockdir="/run/xt/vpn-reconnect.lock"
+if ! mkdir "$lockdir" 2>/dev/null; then
+    holder="$(cat "$lockdir/pid" 2>/dev/null || true)"
+    if [ -n "$holder" ] && [ -d "/proc/$holder" ]; then
+        log "$SCRIPT_NAME" "Another reconnection (pid $holder) is already in progress - skipping"
+        exit 0
+    fi
+    log_warning "$SCRIPT_NAME" "Removing stale reconnection lock (owner gone)"
+    rm -rf "$lockdir"
+    if ! mkdir "$lockdir" 2>/dev/null; then
+        log "$SCRIPT_NAME" "Another reconnection grabbed the lock first - skipping"
+        exit 0
+    fi
+fi
+echo "$$" > "$lockdir/pid"
+trap 'rm -rf "$lockdir"' EXIT INT TERM
+
 log "$SCRIPT_NAME" "Starting VPN reconnection"
 
 # Select a new server and build the new config while the CURRENT tunnel stays
