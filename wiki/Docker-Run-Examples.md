@@ -12,13 +12,23 @@ docker run -d --name vpn \
 docker run -d --name app --net=container:vpn nginx
 ```
 
+With an access token instead of service credentials (see [Getting Service Credentials](https://github.com/azinchen/nordvpn#getting-service-credentials)):
+
+```bash
+docker run -d --name vpn \
+           --cap-add=NET_ADMIN \
+           --device /dev/net/tun \
+           -e TOKEN=access_token \
+           azinchen/nordvpn
+```
+
 ## Advanced Example with Port Mapping
 
 ```bash
 docker run -d --name vpn \
            --cap-add=NET_ADMIN \
            --device /dev/net/tun \
-           -p 8080:8080 \
+           -p 8080:80 \
            -p 9091:9091 \
            -e USER=service_username \
            -e PASS=service_password \
@@ -54,7 +64,7 @@ Use XOR obfuscation to bypass deep packet inspection. See [Technologies](Technol
 docker run -d --name vpn \
            --cap-add=NET_ADMIN \
            --device /dev/net/tun \
-           -p 8080:8080 \
+           -p 8080:80 \
            -e USER=service_username \
            -e PASS=service_password \
            -e TECHNOLOGY=openvpn_xor_tcp \

@@ -12,13 +12,14 @@ services:
     environment:
       - USER=service_username
       - PASS=service_password
+      # - TOKEN=access_token       # alternative to USER/PASS
       - COUNTRY=United States;CA;38
       - CITY=New York;Los Angeles;Toronto
       - RANDOM_TOP=10
       - RECREATE_VPN_CRON=0 */6 * * *
       - NETWORK=192.168.1.0/24
-    ports:
-      - "8080:8080"
+    ports:                         # host:container — use your apps' listening ports
+      - "8080:80"                  # nginx below listens on 80
       - "3000:3000"
     restart: unless-stopped
 
@@ -68,8 +69,8 @@ services:
       - CHECK_CONNECTION_URL=https://1.1.1.1;https://8.8.8.8
       - NETWORK=192.168.1.0/24;172.20.0.0/16
       - OPENVPN_OPTS=--mute-replay-warnings --ping-exit 60
-    ports:
-      - "8080:8080"
+    ports:                         # host:container — use your apps' listening ports
+      - "8080:80"                  # nginx below listens on 80
       - "3000:3000"
       - "9000:9000"
       - "6379:6379"
@@ -194,7 +195,7 @@ services:
       - CHECK_CONNECTION_CRON=*/5 * * * *
       - NETWORK=192.168.1.0/24
     ports:
-      - "8080:8080"
+      - "8080:80"                  # host:container — nginx below listens on 80
     restart: unless-stopped
 
   app:
