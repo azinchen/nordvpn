@@ -53,7 +53,7 @@ Also available from GitHub Container Registry: `ghcr.io/azinchen/nordvpn`
 ### Requirements
 
 - Docker with `--cap-add=NET_ADMIN` and `--device /dev/net/tun`
-- **NordVPN Service Credentials** (not regular account credentials)
+- **NordVPN service credentials** or an **access token** (not regular account credentials)
 
 ### Getting Service Credentials
 
@@ -63,6 +63,8 @@ Also available from GitHub Container Registry: `ghcr.io/azinchen/nordvpn`
 4. Copy the **Username** and **Password** shown there
 
 > **Note**: These are different from your regular NordVPN login credentials.
+
+**Alternative — access token:** instead of copying the service credentials, generate an access token (**Nord Account Dashboard** → **NordVPN** → **Advanced Settings** → **Generate new token**) and pass it as `TOKEN`; the container then fetches the service credentials from the NordVPN API at startup. If `USER`/`PASS` are also set, they take priority over the token.
 
 ## Docker Compose Example
 
@@ -101,12 +103,13 @@ services:
 
 ### Credentials
 
-NordVPN **service credentials** — see [Getting Service Credentials](#getting-service-credentials) above.
+NordVPN **service credentials**, set directly or fetched automatically with an access token — see [Getting Service Credentials](#getting-service-credentials) above.
 
 | Variable | Details |
 |---|---|
-| **USER** | **Required** — NordVPN service credentials username. |
-| **PASS** | **Required** — NordVPN service credentials password. |
+| **USER** | NordVPN service credentials username. **Required** unless `TOKEN` is set. |
+| **PASS** | NordVPN service credentials password. **Required** unless `TOKEN` is set. |
+| **TOKEN** | NordVPN access token; the service credentials are fetched from the NordVPN API at startup. Ignored when `USER`/`PASS` are set. |
 
 ### Server Selection
 

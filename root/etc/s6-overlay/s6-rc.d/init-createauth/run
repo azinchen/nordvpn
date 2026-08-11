@@ -9,9 +9,32 @@ SCRIPT_NAME="INIT-CREATEAUTH"
 
 log "$SCRIPT_NAME" "Starting authentication setup"
 
+# Resolve credentials: explicit USER/PASS take priority; otherwise fetch the
+# service credentials from the NordVPN API using TOKEN.
+if [ -n "${USER:-}" ] && [ -n "${PASS:-}" ]; then
+    if [ -n "$token" ]; then
+        log "$SCRIPT_NAME" "Both USER/PASS and TOKEN are set - using USER/PASS"
+    fi
+    auth_user="$USER"
+    auth_pass="$PASS"
+elif [ -n "$token" ]; then
+    log "$SCRIPT_NAME" "Fetching service credentials from NordVPN API using TOKEN"
+    creds="$(nord_api_curl "v1/users/services/credentials" -u "token:${token}")" || creds=""
+    auth_user="$(printf '%s' "$creds" | jq -r '.username // empty' 2>/dev/null || true)"
+    auth_pass="$(printf '%s' "$creds" | jq -r '.password // empty' 2>/dev/null || true)"
+    if [ -z "$auth_user" ] || [ -z "$auth_pass" ]; then
+        log_error "$SCRIPT_NAME" "CRITICAL ERROR: Could not fetch service credentials with TOKEN (check that the token is valid and not expired) - sleeping infinite"
+        sleep infinity
+    fi
+    log "$SCRIPT_NAME" "Service credentials fetched from NordVPN API"
+else
+    log_error "$SCRIPT_NAME" "CRITICAL ERROR: No credentials provided - set USER/PASS or TOKEN - sleeping infinite"
+    sleep infinity
+fi
+
 log "$SCRIPT_NAME" "Creating VPN authentication file"
-echo "$user" > "$authfile"
-echo "$pass" >> "$authfile"
+printf '%s\n' "$auth_user" > "$authfile"
+printf '%s\n' "$auth_pass" >> "$authfile"
 chmod 0600 "$authfile"
 chown nordvpn:nordvpn "$authfile"
 
