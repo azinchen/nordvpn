@@ -163,7 +163,7 @@ Low‑level settings; the defaults work for most setups.
 
 | Variable | Details |
 |---|---|
-| **NORDVPNAPI<wbr>_IP** | API bootstrap IPs. Default: `104.16.208.203;104.19.159.190` |
+| **NORDVPNAPI<wbr>_IP** | IPs used for all NordVPN API access (no DNS involved). Default: `104.16.208.203;104.19.159.190` |
 | **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable network diagnostics on connect ([details][wiki-diagnostics]). Default: `false` |
 
 ## Issues

@@ -69,39 +69,32 @@ trim() {
     printf '%s' "$_t"
 }
 
-# Query the NordVPN API: try DNS resolution first, then fall back to the
-# predefined bootstrap IPs (DNS may be unavailable under the default-deny
-# firewall). Extra arguments are passed to curl.
+# Query the NordVPN API via the predefined bootstrap IPs - the only endpoints
+# allowed through the default-deny firewall before the tunnel is up, so DNS is
+# deliberately not used. The default IPs are kept current by the maintenance
+# workflow; NORDVPNAPI_IP overrides them. Extra arguments are passed to curl.
 nord_api_curl()
 {
     _path="$1"
     shift 2>/dev/null || true
 
-    # First, try without predefined API IPs (use DNS resolution)
-    curl -sG --connect-timeout 10 --max-time 30 \
-        "https://api.nordvpn.com/${_path}" "$@"
-    _rc=$?
-    if [ $_rc -eq 0 ]; then
-        return 0
-    fi
-
-    # If failed, fallback to using predefined API IPs
+    _rc=1
     oldIFS="$IFS"; IFS=',;'
     for _ip in $nordvpnapi_ip; do
         _ip="$(trim "$_ip")"
         [ -n "$_ip" ] || continue
 
-        curl -sG --connect-timeout 10 --max-time 30 \
-             --resolve "api.nordvpn.com:443:${_ip}" \
-             "https://api.nordvpn.com/${_path}" "$@"
-        _rc=$?
-        if [ $_rc -eq 0 ]; then
+        if curl -sG --connect-timeout 10 --max-time 30 \
+                --resolve "api.nordvpn.com:443:${_ip}" \
+                "https://api.nordvpn.com/${_path}" "$@"; then
             IFS="$oldIFS"
             return 0
+        else
+            _rc=$?
         fi
     done
     IFS="$oldIFS"
-    return $_rc
+    return "$_rc"
 }
 
 run4() {

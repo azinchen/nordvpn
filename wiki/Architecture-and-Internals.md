@@ -48,7 +48,7 @@ Sourced by every script. Provides:
 - `run4()` / `run6()` — Execute iptables commands with logging (non-fatal)
 - `run4_critical()` / `run6_critical()` — Execute or sleep forever on failure
 - `is_vpn_connected()` — Checks for tun0 interface
-- `nord_api_curl()` — Queries the NordVPN API, falling back to bootstrap IPs when DNS is unavailable
+- `nord_api_curl()` — Queries the NordVPN API via the bootstrap IPs (`NORDVPNAPI_IP`); no DNS dependency
 - `mgmt_cmd()` — Sends authenticated commands to OpenVPN management interface
 - `log()` / `log_error()` / `log_warning()` — Timestamped logging
 - `parse_cron()` — Converts cron expressions to human-readable descriptions
