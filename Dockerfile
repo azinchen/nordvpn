@@ -23,13 +23,15 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** download ${PACKAGE} ****" && \
     echo "Target arch: ${TARGETARCH}${TARGETVARIANT}" && \
     # Map Docker TARGETARCH to s6-overlay architecture names
+    # All platforms supported by BOTH Alpine and s6-overlay; the published
+    # subset is defined by PLATFORMS in ci-build-deploy.yml. (loongarch64 has
+    # no s6-overlay binaries; big-endian ppc64 has no Alpine port.)
     case "${TARGETARCH}${TARGETVARIANT}" in \
         amd64)      s6_arch="x86_64" ;; \
         arm64)      s6_arch="aarch64" ;; \
         armv7)      s6_arch="arm" ;; \
         armv6)      s6_arch="armhf" ;; \
         386)        s6_arch="i686" ;; \
-        ppc64)      s6_arch="powerpc64" ;; \
         ppc64le)    s6_arch="powerpc64le" ;; \
         riscv64)    s6_arch="riscv64" ;; \
         s390x)      s6_arch="s390x" ;; \
