@@ -25,26 +25,23 @@ Multiple values are separated by `;` or `,` (whitespace around separators is ign
 
 ### Specific Server Hostname Format
 
-To connect to a specific NordVPN server, use its short hostname. The format is:
+To connect to a specific NordVPN server, use its short hostname. Four patterns are recognized (case-insensitive):
 
-```
-<2-letter country code><server number>
-```
+| Pattern | Example | Resolved hostname | Server kind |
+|---------|---------|-------------------|-------------|
+| `<cc><num>` | `us1`, `DE456` | `us1.nordvpn.com` | Standard server |
+| `<cc>-<cc><num>` | `ca-us100`, `uk-fr17` | `ca-us100.nordvpn.com` | Cross-country (Double VPN) |
+| `<cc>-onion<num>` | `nl-onion6` | `nl-onion6.nordvpn.com` | Onion Over VPN |
+| `socks-<cc><num>` | `socks-nl1` | `socks-nl1.nordvpn.com` | SOCKS proxy host |
 
-**Pattern:** Exactly 2 letters followed by 1 or more digits (case-insensitive).
-
-| Input | Resolved hostname | How it works |
-|-------|------------------|---------------|
-| `us1` | `us1.nordvpn.com` | US server #1 |
-| `DE456` | `de456.nordvpn.com` | Germany server #456 |
-| `gb42` | `gb42.nordvpn.com` | UK server #42 |
+(`<cc>` = 2-letter country code, `<num>` = one or more digits.)
 
 Specific servers are:
-- Resolved via DNS to their IP address
+- Looked up through the NordVPN API by hostname (not DNS) to obtain their address and metadata
 - Given `load=0` so they always appear first in the server list
 - Placed in either `COUNTRY` or `CITY` — both work the same way
 
-**Invalid formats** (will be treated as country/city names): `usa1` (3 letters), `u1` (1 letter), `us` (no digits).
+**Invalid formats** (will be treated as country/city names): `usa1` (3-letter prefix), `u1` (1 letter), `us` (no digits).
 
 Reference lists:
 - [Countries](https://github.com/azinchen/nordvpn/blob/master/COUNTRIES.md)
