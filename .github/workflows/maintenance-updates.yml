@@ -88,7 +88,7 @@ jobs:
               COUNTRIES_JSON=$(curl -s "https://api.nordvpn.com/v1/servers/countries")
               VIRTUAL_IDS=$(curl -s "https://api.nordvpn.com/v1/servers?limit=0" \
                 | jq -c '[.[] | select(any(.specifications[]?; .identifier=="virtual_location" and .values[0].value=="true")) | .locations[0].country.city.id] | unique')
-              BODY=$(echo "$COUNTRIES_JSON" | jq -r --argjson virtual "${VIRTUAL_IDS:-[]}" '[.[] | . as $parent | .cities[] | . as $city | {flag: ($parent.code | explode | map(. + 127397) | implode), country: $parent.name, code: $parent.code, city: $city.name, cityid: $city.id, virt: (if ($virtual | index($city.id)) then "🌐 Virtual" else "✅ Physical" end), lat: $city.latitude, lon: $city.longitude}] | sort_by(.country, .city) | .[] | "| \(.flag) | \(.country) | \(.code) | \(.city) | \(.cityid) | \(.virt) | [📍](https://www.google.com/maps?q=\(.lat),\(.lon)) |"')
+              BODY=$(echo "$COUNTRIES_JSON" | jq -r --argjson virtual "${VIRTUAL_IDS:-[]}" '[.[] | . as $parent | .cities[] | . as $city | {flag: ($parent.code | explode | map(. + 127397) | implode), country: $parent.name, code: $parent.code, city: $city.name, cityid: $city.id, virt: (if ($virtual | index($city.id)) then "🌐 Virtual" else "✅ Physical" end), lat: ($city.latitude + 0), lon: ($city.longitude + 0)}] | sort_by(.country, .city) | .[] | "| \(.flag) | \(.country) | \(.code) | \(.city) | \(.cityid) | \(.virt) | [📍](https://www.google.com/maps?q=\(.lat),\(.lon)) |"')
               TOTAL=$(echo "$COUNTRIES_JSON" | jq '[.[].cities[]] | length')
               CCNT=$(echo "$COUNTRIES_JSON" | jq 'length')
               STATS="${TOTAL} cities in ${CCNT} countries"
@@ -100,39 +100,81 @@ jobs:
             TECHNOLOGIES)
               TECH_JSON=$(curl -s "https://api.nordvpn.com/v1/technologies")
               ACTIVE=$(curl -s "https://api.nordvpn.com/v1/servers?limit=0" | jq -c '[.[].technologies[].identifier] | unique')
-              BODY=$(echo "$TECH_JSON" | jq -r --argjson active "${ACTIVE:-[]}" '.[] | .identifier as $ident | "| \(.name) | \($ident) | \(.id) | \(if ($ident | startswith("openvpn")) then (if ($active | index($ident)) then "✅" else "⚠️ No servers" end) else "—" end) |"')
+              SUPP_BODY=$(echo "$TECH_JSON" | jq -r --argjson active "${ACTIVE:-[]}" '.[] | select(.identifier as $i | ($i | startswith("openvpn")) and ($active | index($i))) | "| \(.name) | \(.identifier) | \(.id) |"')
+              OTHER_BODY=$(echo "$TECH_JSON" | jq -r --argjson active "${ACTIVE:-[]}" '.[] | select(.identifier as $i | (($i | startswith("openvpn")) and ($active | index($i))) | not) | "| \(.name) | \(.identifier) | \(.id) | \(if (.identifier | startswith("openvpn")) then "no servers in the fleet" else "non-OpenVPN" end) |"')
               TOTAL=$(echo "$TECH_JSON" | jq 'length')
               SUPP=$(echo "$TECH_JSON" | jq --argjson active "${ACTIVE:-[]}" '[.[] | select(.identifier as $i | ($i | startswith("openvpn")) and ($active | index($i)))] | length')
               STATS="${TOTAL} technologies (${SUPP} supported by this image)"
-              INTRO='Values for the `TECHNOLOGY` variable — name, identifier, or ID: `-e TECHNOLOGY=openvpn_xor_udp`'
-              NOTE='> ✅ Supported by this image · ⚠️ OpenVPN-based but currently no servers in the fleet · — not supported (non-OpenVPN). XOR and Dedicated IP technologies additionally require the matching `GROUP` — see [Technologies](Technologies).'
-              HEADER='| Technology | Identifier | ID | Supported |'
+              PAGE_BODY="Values for the \`TECHNOLOGY\` variable — name, identifier, or ID: \`-e TECHNOLOGY=openvpn_xor_udp\`
+
+          ## Supported by this image
+
+          > XOR and Dedicated IP technologies additionally require the matching \`GROUP\` — see [Technologies](Technologies).
+
+          | Technology | Identifier | ID |
+          |------------|------------|----|
+          ${SUPP_BODY}
+
+          ## Other technologies
+
+          Non-OpenVPN protocols and OpenVPN variants without servers — not usable with this image.
+
+          <details>
+          <summary>Show all ($((TOTAL - SUPP)))</summary>
+
+          | Technology | Identifier | ID | Why not |
+          |------------|------------|----|---------|
+          ${OTHER_BODY}
+
+          </details>"
               LINKS='See [Technologies](Technologies) · [Countries List](Countries-List) · [Cities List](Cities-List) · [Groups List](Groups-List)'
               ;;
             GROUPS)
               GROUPS_JSON=$(curl -s "https://api.nordvpn.com/v1/servers/groups")
-              BODY=$(echo "$GROUPS_JSON" | jq -r '.[] | "| \(.title) | \(.identifier) | \(.id) |"')
+              ACTIVE=$(curl -s "https://api.nordvpn.com/v1/servers?limit=0" | jq -c '[.[].groups[].id] | unique')
+              CAT_BODY=$(echo "$GROUPS_JSON" | jq -r --argjson act "${ACTIVE:-[]}" '.[] | select(.type.identifier=="legacy_group_category") | .id as $i | "| \(.title) | \(.identifier) | \($i) | \(if ($act | index($i)) then "✅" else "—" end) |"')
+              REG_BODY=$(echo "$GROUPS_JSON" | jq -r --argjson act "${ACTIVE:-[]}" '.[] | select(.type.identifier=="regions") | .id as $i | "| \(.title) | \(.identifier) | \($i) | \(if ($act | index($i)) then "✅" else "—" end) |"')
               TOTAL=$(echo "$GROUPS_JSON" | jq 'length')
-              STATS="${TOTAL} groups"
-              INTRO='Values for the `GROUP` variable — title, identifier, or ID: `-e GROUP="P2P"`'
-              NOTE='> XOR obfuscation requires `GROUP=legacy_obfuscated_servers`; Dedicated IP requires `GROUP=legacy_dedicated_ip`. See [Server Groups](Server-Groups).'
-              HEADER='| Group | Identifier | ID |'
+              WITH=$(echo "$GROUPS_JSON" | jq --argjson act "${ACTIVE:-[]}" '[.[] | select(.id as $i | $act | index($i))] | length')
+              STATS="${TOTAL} groups (${WITH} with servers)"
+              PAGE_BODY="Values for the \`GROUP\` variable — title, identifier, or ID: \`-e GROUP=\"P2P\"\`
+
+          > ✅ = the group currently has servers in the fleet · — = no servers (internal or retired groups).
+
+          ## Server categories
+
+          > XOR obfuscation requires \`GROUP=legacy_obfuscated_servers\`; Dedicated IP requires \`GROUP=legacy_dedicated_ip\`. See [Server Groups](Server-Groups).
+
+          | Group | Identifier | ID | Servers |
+          |-------|------------|----|---------|
+          ${CAT_BODY}
+
+          ## Regions
+
+          | Group | Identifier | ID | Servers |
+          |-------|------------|----|---------|
+          ${REG_BODY}"
               LINKS='See [Server Groups](Server-Groups) · [Countries List](Countries-List) · [Cities List](Cities-List) · [Technologies List](Technologies-List)'
               ;;
             *)
               echo "unknown page: $NAME" >&2; exit 1 ;;
           esac
 
-          SEP=$(echo "$HEADER" | sed 's/[^|]/-/g')
-
-          # Everything below the timestamp/stats line; used for change detection
-          NEW_CONTENT="${INTRO}
+          # Single-table pages assemble the standard layout; sectioned pages
+          # (GROUPS, TECHNOLOGIES) build PAGE_BODY themselves in their case branch
+          if [ -z "${PAGE_BODY:-}" ]; then
+              SEP=$(echo "$HEADER" | sed 's/[^|]/-/g')
+              PAGE_BODY="${INTRO}
 
           ${NOTE}
 
           ${HEADER}
           ${SEP}
-          ${BODY}
+          ${BODY}"
+          fi
+
+          # Everything below the timestamp/stats line; used for change detection
+          NEW_CONTENT="${PAGE_BODY}
 
           ---
           ${FOOTER}
