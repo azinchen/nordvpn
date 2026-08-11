@@ -2,6 +2,23 @@ By default, the container uses DNS servers pushed by NordVPN's OpenVPN server (t
 
 This page covers how to override the DNS servers used inside the VPN tunnel.
 
+## The `DNS` Variable (recommended)
+
+Set `DNS` to one or more resolvers (`;`/`,`-separated):
+
+```yaml
+services:
+  vpn:
+    environment:
+      - DNS=1.1.1.1;1.0.0.1
+```
+
+The server-pushed resolvers are ignored and yours are written to `/etc/resolv.conf` on every (re)connect. Resolution still goes **through the tunnel**, so the kill switch applies, and [`GATEWAY_DNS=redirect`](VPN-Gateway-Mode#client-dns-gateway_dns) clients follow the same resolvers automatically.
+
+Special value `off`: the container leaves `/etc/resolv.conf` completely untouched (no server-pushed DNS applied). Use this only together with a self-managed resolver setup — e.g. the bind-mount below — otherwise the container keeps Docker's embedded resolver, which does not work under the kill switch. (`PEER_DNS=no` is the deprecated equivalent from older versions.)
+
+Under the hood `DNS` generates `--pull-filter ignore "dhcp-option DNS"` plus one `--dhcp-option DNS <ip>` per value — the same mechanics as the manual method below, so both can't conflict silently; if you set `DNS` *and* a manual `dhcp-option DNS` in `OPENVPN_OPTS`, the container logs a warning.
+
 ## Method 1: Bind-Mount a Custom `resolv.conf`
 
 The simplest approach. Mount a custom `resolv.conf` file as read-only so OpenVPN's `up.sh` script cannot overwrite it:
@@ -25,6 +42,8 @@ services:
 The `:ro` (read-only) flag prevents OpenVPN from overwriting it with server-pushed DNS.
 
 ## Method 2: Pull-Filter with Custom DHCP Options
+
+> This is exactly what the [`DNS` variable](#the-dns-variable-recommended) does for you — use it only if you need different OpenVPN DNS options than `DNS` generates.
 
 Use OpenVPN's `--pull-filter` to block server-pushed DNS and `--dhcp-option` to inject your own. This lets the container's built-in `up.sh` script write your custom DNS to `/etc/resolv.conf` naturally:
 
