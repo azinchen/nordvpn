@@ -1,4 +1,3 @@
-init-adduser
 init-createauth
 init-createmgmtpwfile
 init-firewall

@@ -442,7 +442,6 @@ echo "CHECK_CONNECTION_ATTEMPTS         : ${check_connection_attempts:-5}"
 echo "CHECK_CONNECTION_ATTEMPT_INTERVAL : ${check_connection_attempt_interval:-10}"
 echo "HEALTHCHECK_ENABLED               : ${healthcheck_enabled}"
 echo "NETWORK_DIAGNOSTIC                : ${network_diagnostic_enabled}"
-echo "PUID/PGID                         : ${puid:-912}/${pgid:-912}"
 echo
 
 echo "### ip addr show $DEV_IF"
