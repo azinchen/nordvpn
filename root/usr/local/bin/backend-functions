@@ -185,8 +185,10 @@ mgmt_cmd() {
     if [ -f "$mgmtpwfile" ]; then
         _pw="$(cat "$mgmtpwfile" 2>/dev/null)"
     else
-        # Fallback to environment variables (user/pass from backend or USER/PASS env)
-        _pw="${user:-${USER:-}}"
+        # Fallback: the management password is set from the service-credential
+        # password (see init-createmgmtpwfile), so fall back to that - not the
+        # username, which would always fail auth
+        _pw="${pass:-${PASS:-}}"
     fi
     
     if [ -z "$_pw" ]; then
