@@ -19,7 +19,12 @@ if [ -n "${USER:-}" ] && [ -n "${PASS:-}" ]; then
     auth_pass="$PASS"
 elif [ -n "$token" ]; then
     log "$SCRIPT_NAME" "Fetching service credentials from NordVPN API using TOKEN"
-    creds="$(nord_api_curl "v1/users/services/credentials" -u "token:${token}")" || creds=""
+    # Pass the token via a 0600 curl config file, not -u on the command line,
+    # so it never appears in /proc/*/cmdline or ps output
+    curlcfg="$(mktemp /run/xt/curl-auth.XXXXXX)"
+    printf 'user = "token:%s"\n' "$token" > "$curlcfg"
+    creds="$(nord_api_curl "v1/users/services/credentials" -K "$curlcfg")" || creds=""
+    rm -f "$curlcfg"
     auth_user="$(printf '%s' "$creds" | jq -r '.username // empty' 2>/dev/null || true)"
     auth_pass="$(printf '%s' "$creds" | jq -r '.password // empty' 2>/dev/null || true)"
     if [ -z "$auth_user" ] || [ -z "$auth_pass" ]; then
