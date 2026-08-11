@@ -23,7 +23,7 @@ check_connection_attempt_interval="${CHECK_CONNECTION_ATTEMPT_INTERVAL:-10}"
 healthcheck_enabled="$(to_bool "${HEALTHCHECK_ENABLED:-}")"
 user="${USER:-}"
 pass="${PASS:-}"
-mgmt_pw="$pass"
+token="${TOKEN:-}"
 recreate_vpn_cron="${RECREATE_VPN_CRON:-}"
 check_connection_cron="${CHECK_CONNECTION_CRON:-}"
 nordvpnapi_ip="${NORDVPNAPI_IP:-104.16.208.203;104.19.159.190}"
@@ -51,6 +51,16 @@ mgmtpwfile="/run/xt/mgmt-pw"
 mgmt_host="127.0.0.1"
 mgmt_port="7505"
 
+# TOKEN mode: init-createauth fetches the service credentials from the NordVPN
+# API and stores them in $authfile; scripts running later pick them up here so
+# $user/$pass (and the management password) stay valid without USER/PASS being
+# set. USER/PASS take priority over the fetched values when both are present.
+if { [ -z "$user" ] || [ -z "$pass" ]; } && [ -s "$authfile" ]; then
+    user="$(sed -n '1p' "$authfile" 2>/dev/null || true)"
+    pass="$(sed -n '2p' "$authfile" 2>/dev/null || true)"
+fi
+mgmt_pw="$pass"
+
 # Strip leading/trailing whitespace from a list token. Values like
 # "10.0.0.0/16; 10.1.0.0/16" split on IFS=',;' keep the space, which then
 # breaks ip/iptables/curl silently. Pure-shell so it works under BusyBox.
@@ -59,6 +69,41 @@ trim() {
     _t="${_t#"${_t%%[![:space:]]*}"}"
     _t="${_t%"${_t##*[![:space:]]}"}"
     printf '%s' "$_t"
+}
+
+# Query the NordVPN API: try DNS resolution first, then fall back to the
+# predefined bootstrap IPs (DNS may be unavailable under the default-deny
+# firewall). Extra arguments are passed to curl.
+nord_api_curl()
+{
+    _path="$1"
+    shift 2>/dev/null || true
+
+    # First, try without predefined API IPs (use DNS resolution)
+    curl -sG --connect-timeout 10 --max-time 30 \
+        "https://api.nordvpn.com/${_path}" "$@"
+    _rc=$?
+    if [ $_rc -eq 0 ]; then
+        return 0
+    fi
+
+    # If failed, fallback to using predefined API IPs
+    oldIFS="$IFS"; IFS=',;'
+    for _ip in $nordvpnapi_ip; do
+        _ip="$(trim "$_ip")"
+        [ -n "$_ip" ] || continue
+
+        curl -sG --connect-timeout 10 --max-time 30 \
+             --resolve "api.nordvpn.com:443:${_ip}" \
+             "https://api.nordvpn.com/${_path}" "$@"
+        _rc=$?
+        if [ $_rc -eq 0 ]; then
+            IFS="$oldIFS"
+            return 0
+        fi
+    done
+    IFS="$oldIFS"
+    return $_rc
 }
 
 run4() {

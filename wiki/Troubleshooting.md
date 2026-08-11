@@ -5,7 +5,7 @@
 **Symptoms:** Container starts but OpenVPN never establishes a tunnel.
 
 **Check:**
-1. **Credentials:** Verify you're using **service credentials**, not regular NordVPN login. See the [Getting Service Credentials](https://github.com/azinchen/nordvpn#getting-service-credentials) section in the README.
+1. **Credentials:** Verify you're using **service credentials** (or a valid access token via `TOKEN`), not regular NordVPN login. See the [Getting Service Credentials](https://github.com/azinchen/nordvpn#getting-service-credentials) section in the README.
 2. **Logs:** `docker logs vpn` — look for auth errors or connection timeouts.
 3. **API access:** The container needs HTTPS access to NordVPN API IPs during bootstrap. If running behind a corporate proxy/firewall, ensure TCP/443 to the `NORDVPNAPI_IP` addresses is allowed.
 4. **TUN device:** Ensure `--device /dev/net/tun` is set and the device exists on the host.

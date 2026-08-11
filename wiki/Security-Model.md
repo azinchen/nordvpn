@@ -30,7 +30,7 @@ Because `NETWORK` remains open when the VPN is down, this is **not a strict kill
 
 ### Credential Exposure
 
-Credentials passed via `USER` and `PASS` environment variables are:
+Credentials passed via the `USER`, `PASS`, and `TOKEN` environment variables are:
 - Visible via `docker inspect` on the container
 - Visible in the process environment
 

@@ -6,6 +6,9 @@ No. You need **service credentials** (a separate username/password) specifically
 **Q: Where do I find my service credentials?**
 Log into [Nord Account Dashboard](https://my.nordaccount.com/) → NordVPN → Advanced Settings → Set up NordVPN manually → Service credentials tab.
 
+**Q: Can I use an access token instead of service credentials?**
+Yes. Generate a token (Nord Account Dashboard → NordVPN → Advanced Settings → Generate new token) and set it as `TOKEN` — the container fetches the service credentials from the NordVPN API at startup. If `USER`/`PASS` are also set, they take priority over the token.
+
 ## Features
 
 **Q: Does this support WireGuard?**

@@ -8,9 +8,12 @@ The container uses [s6-overlay](https://github.com/just-containers/s6-overlay) f
 entrypoint (container start)
   │
   ├─ init-adduser        Create nordvpn user/group
-  ├─ init-createauth     Write credentials file (0600, owned by nordvpn)
-  ├─ init-createmgmtpwfile  Generate management interface password
   ├─ init-firewall       Apply iptables rules (depends on entrypoint backend selection)
+  ├─ init-createauth     Write credentials file (0600, owned by nordvpn); with TOKEN,
+  │                      fetches service credentials from the NordVPN API first
+  │                      (runs after init-firewall so the API pinholes exist)
+  ├─ init-createmgmtpwfile  Generate management interface password (after init-createauth,
+  │                      so TOKEN-fetched credentials are available)
   ├─ init-setupcron      Configure cron jobs from RECREATE_VPN_CRON / CHECK_CONNECTION_CRON
   │
   ├─ svc-nordvpn         Main OpenVPN service (long-running)
@@ -46,6 +49,7 @@ Sourced by every script. Provides:
 - `run4()` / `run6()` — Execute iptables commands with logging (non-fatal)
 - `run4_critical()` / `run6_critical()` — Execute or sleep forever on failure
 - `is_vpn_connected()` — Checks for tun0 interface
+- `nord_api_curl()` — Queries the NordVPN API, falling back to bootstrap IPs when DNS is unavailable
 - `mgmt_cmd()` — Sends authenticated commands to OpenVPN management interface
 - `log()` / `log_error()` / `log_warning()` — Timestamped logging
 - `parse_cron()` — Converts cron expressions to human-readable descriptions

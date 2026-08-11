@@ -347,38 +347,6 @@ handle_specific_server()
     return 1
 }
 
-nord_api_curl()
-{
-    _path="$1"
-    shift 2>/dev/null || true
-
-    # First, try without predefined API IPs (use DNS resolution)
-    curl -sG --connect-timeout 10 --max-time 30 \
-        "https://api.nordvpn.com/${_path}" "$@"
-    _rc=$?
-    if [ $_rc -eq 0 ]; then
-        return 0
-    fi
-
-    # If failed, fallback to using predefined API IPs
-    oldIFS="$IFS"; IFS=',;'
-    for _ip in $nordvpnapi_ip; do
-        _ip="$(trim "$_ip")"
-        [ -n "$_ip" ] || continue
-
-        curl -sG --connect-timeout 10 --max-time 30 \
-             --resolve "api.nordvpn.com:443:${_ip}" \
-             "https://api.nordvpn.com/${_path}" "$@"
-        _rc=$?
-        if [ $_rc -eq 0 ]; then
-            IFS="$oldIFS"
-            return 0
-        fi
-    done
-    IFS="$oldIFS"
-    return $_rc
-}
-
 servers=""
 locations_count=0
 
