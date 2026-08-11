@@ -1,14 +1,12 @@
 The `OPENVPN_OPTS` environment variable lets you pass additional flags directly to the OpenVPN process. This page documents the default behavior and commonly useful options.
 
-## Default Cipher Configuration
+## Cipher Configuration
 
-The container automatically appends `--data-ciphers` if it's not already present in your `OPENVPN_OPTS`:
+The container does **not** modify OpenVPN's cipher negotiation — it uses the settings from NordVPN's own configuration template. If you see cipher deprecation notices in the logs (e.g. about `AES-256-CBC`), they originate from the config file and are safe to ignore; see the [FAQ](FAQ#logs--messages) for details. To customize negotiation, pass your own list via `OPENVPN_OPTS`:
 
 ```
---data-ciphers AES-256-CBC:AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305
+--data-ciphers AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305:AES-256-CBC
 ```
-
-This prevents OpenVPN cipher deprecation warnings. To override, specify your own `--data-ciphers` in `OPENVPN_OPTS` — the container won't add the default if the flag is already present.
 
 ## How OpenVPN Is Launched
 
