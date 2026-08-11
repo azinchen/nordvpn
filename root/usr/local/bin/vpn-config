@@ -394,7 +394,10 @@ if [ -n "$country" ]; then
         if is_specific_server "$value"; then
             log "$SCRIPT_NAME" "Specific server requested: $value"
             log_warning "$SCRIPT_NAME" "Warning: Ensure server $value supports TECHNOLOGY=$technology and GROUP=$group, otherwise connection will fail"
-            servers="$servers$(handle_specific_server "$value")"
+            # `|| true` so an unknown/retired hostname doesn't kill the script
+            # under `set -e`; handle_specific_server already logs the failure
+            # and the loop continues with the remaining values.
+            servers="$servers$(handle_specific_server "$value" || true)"
         elif [ -n "$value" ]; then
             # `|| true` so an unknown country (e.g. user passing a US state code)
             # doesn't silently kill the script under `set -e`; the -z branch
@@ -439,7 +442,10 @@ if [ -n "$city" ]; then
         if is_specific_server "$value"; then
             log "$SCRIPT_NAME" "Specific server requested: $value"
             log_warning "$SCRIPT_NAME" "Warning: Ensure server $value supports TECHNOLOGY=$technology and GROUP=$group, otherwise connection will fail"
-            servers="$servers$(handle_specific_server "$value")"
+            # `|| true` so an unknown/retired hostname doesn't kill the script
+            # under `set -e`; handle_specific_server already logs the failure
+            # and the loop continues with the remaining values.
+            servers="$servers$(handle_specific_server "$value" || true)"
         elif [ -n "$value" ]; then
             # See COUNTRY loop above for the rationale behind `|| true`.
             cityid=$(getcityid "$value" || true)
