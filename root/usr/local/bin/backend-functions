@@ -31,8 +31,6 @@ network="${NETWORK:-}"
 forward_from="${FORWARD_FROM:-}"
 gateway_dns="${GATEWAY_DNS:-off}"
 gateway_dns_server="${GATEWAY_DNS_SERVER:-}"
-puid=${PUID:-912}
-pgid=${PGID:-912}
 
 # Interfaces
 wan_if="eth0"

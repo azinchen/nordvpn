@@ -58,11 +58,6 @@ Every 4–8 hours is common. Use `RECREATE_VPN_CRON` for scheduled switching and
 **Q: What happens if the VPN drops?**
 The kill switch blocks all traffic except `NETWORK` CIDRs and NordVPN API IPs. If health monitoring is configured, the container will automatically reconnect. See [Security Model](Security-Model#traffic-control--kill-switch).
 
-## Permissions
-
-**Q: I'm getting permission errors on mounted volumes. How do I fix this?**
-The container runs OpenVPN as the `nordvpn` user (UID/GID `912` by default). Set `PUID` and `PGID` to match your host user's UID/GID. See [Permissions](Permissions).
-
 ## Compatibility
 
 **Q: Does this work on Raspberry Pi?**

@@ -19,6 +19,11 @@ echo "🏷️ Image Version: __IMAGE_VERSION__"
 echo "📅 Build Date: __BUILD_DATE__"
 echo "=================================================================================="
 
+# Transitional warning; remove in the next major release
+if [ -n "${PUID:-}" ] || [ -n "${PGID:-}" ]; then
+    log_warning "$SCRIPT_NAME" "PUID/PGID have been removed and have no effect (OpenVPN runs as root; no host files are written) - you can drop them from your configuration"
+fi
+
 log "$SCRIPT_NAME" "Applying security rules"
 
 # ---- helpers ---------------------------------------------------------------

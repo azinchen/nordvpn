@@ -20,7 +20,6 @@ If you're new, start with the [README](https://github.com/azinchen/nordvpn#readm
 - **[VPN Gateway Mode](VPN-Gateway-Mode)** — Route other containers' traffic out through the tunnel with `FORWARD_FROM`
 - **[OpenVPN Options](OpenVPN-Options)** — Custom OpenVPN flags, default ciphers, and reconnection tuning
 - **[Custom DNS](Custom-DNS)** — Override NordVPN's DNS servers with custom ones (Cloudflare, Google, etc.)
-- **[Permissions](Permissions)** — PUID/PGID configuration for volume permissions
 
 ### Security
 - **[Security Model](Security-Model)** — Kill switch behavior, rule precedence, and network access control

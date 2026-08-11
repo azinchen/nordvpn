@@ -10,7 +10,6 @@
 - [VPN Gateway Mode](VPN-Gateway-Mode)
 - [OpenVPN Options](OpenVPN-Options)
 - [Custom DNS](Custom-DNS)
-- [Permissions](Permissions)
 
 **Security**
 - [Security Model](Security-Model)

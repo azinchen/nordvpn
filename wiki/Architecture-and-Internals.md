@@ -7,7 +7,6 @@ The container uses [s6-overlay](https://github.com/just-containers/s6-overlay) f
 ```
 entrypoint (container start)
   │
-  ├─ init-adduser        Create nordvpn user/group
   ├─ init-firewall       Apply iptables rules (depends on entrypoint backend selection)
   ├─ init-createauth     Write credentials file (0600, owned by nordvpn); with TOKEN,
   │                      fetches service credentials from the NordVPN API first

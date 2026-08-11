@@ -159,12 +159,10 @@ Open the kill‑switch firewall for LAN access and downstream routing. See [Loca
 
 ### Advanced
 
-Low‑level settings; the defaults work for most setups. See [Permissions][wiki-permissions] for `PUID`/`PGID`.
+Low‑level settings; the defaults work for most setups.
 
 | Variable | Details |
 |---|---|
-| **PUID** | User ID for the nordvpn process. Default: `912` |
-| **PGID** | Group ID for the nordvpn process. Default: `912` |
 | **NORDVPNAPI<wbr>_IP** | API bootstrap IPs. Default: `104.16.208.203;104.19.159.190` |
 | **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable network diagnostics on connect ([details][wiki-diagnostics]). Default: `false` |
 
@@ -213,7 +211,6 @@ Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki 
 [wiki-xor]: https://github.com/azinchen/nordvpn/wiki/Technologies#xor-obfuscated-openvpn-openvpn_xor_udp--openvpn_xor_tcp
 [wiki-xor-key]: https://github.com/azinchen/nordvpn/wiki/Technologies#xor-key-override
 [wiki-openvpn-opts]: https://github.com/azinchen/nordvpn/wiki/OpenVPN-Options
-[wiki-permissions]: https://github.com/azinchen/nordvpn/wiki/Permissions
 [wiki-diagnostics]: https://github.com/azinchen/nordvpn/wiki/Network-Diagnostics-Guide
 [wiki-compose]: https://github.com/azinchen/nordvpn/wiki/Docker-Compose-Examples
 [wiki-run]: https://github.com/azinchen/nordvpn/wiki/Docker-Run-Examples
