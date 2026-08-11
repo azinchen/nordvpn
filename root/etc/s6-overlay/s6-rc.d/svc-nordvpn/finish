@@ -29,18 +29,46 @@ fi
 # is signalled, so we poll its resources instead of waiting on the PID. Polling
 # (vs a fixed sleep) returns the moment it's gone, cutting reconnect downtime;
 # the loop still caps the wait so a stuck shutdown can't hang finish.
+# True only when the recorded pid is alive AND still an openvpn process (pid
+# reuse safety); sets _pid for the kill fallback below.
+openvpn_alive() {
+    _pid="$(cat /run/xt/openvpn.pid 2>/dev/null || true)"
+    [ -n "$_pid" ] || return 1
+    case "$(tr '\0' '\n' 2>/dev/null < "/proc/$_pid/cmdline" | head -n 1)" in
+        *openvpn*) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
 wait_counter=0
 while is_mgmt_available || is_vpn_connected; do
     wait_counter=$((wait_counter + 1))
     if [ "$wait_counter" -ge 50 ]; then
-        log "$SCRIPT_NAME" "OpenVPN still shutting down after timeout, continuing"
+        # Graceful shutdown didn't finish in 5s. A lingering OpenVPN would
+        # collide with the next start on the management port and tun0, so
+        # escalate: SIGTERM by pid, then SIGKILL.
+        if openvpn_alive; then
+            log_warning "$SCRIPT_NAME" "OpenVPN (pid $_pid) still running after graceful timeout - sending SIGTERM"
+            kill -TERM "$_pid" 2>/dev/null || true
+            kill_counter=0
+            while [ -d "/proc/$_pid" ] && [ "$kill_counter" -lt 20 ]; do
+                kill_counter=$((kill_counter + 1))
+                sleep 0.1
+            done
+            if [ -d "/proc/$_pid" ]; then
+                log_warning "$SCRIPT_NAME" "OpenVPN did not exit on SIGTERM - sending SIGKILL"
+                kill -KILL "$_pid" 2>/dev/null || true
+            fi
+        else
+            log "$SCRIPT_NAME" "OpenVPN still shutting down after timeout, continuing"
+        fi
         break
     fi
     sleep 0.1
 done
 
 log "$SCRIPT_NAME" "Cleaning up VPN configuration files"
-rm -f "$ovpnfile"
+rm -f "$ovpnfile" /run/xt/openvpn.pid
 
 log "$SCRIPT_NAME" "NordVPN service stopped"
 exit 0
