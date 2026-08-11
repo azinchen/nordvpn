@@ -534,7 +534,10 @@ fi
 serverip=$(echo "$servers" | jq -r '.station' | head -n 1)
 name=$(echo "$servers" | jq -r '.name' | head -n 1)
 hostname=$(echo "$servers" | jq -r '.hostname' | head -n 1)
-protocol=$(getopenvpnprotocol "$technology")
+# `|| true` so a non-OpenVPN technology (e.g. TECHNOLOGY=Wireguard) doesn't
+# kill the script under `set -e`; the empty protocol falls through to the
+# CRITICAL ERROR + fail() branch below, which logs the actual problem.
+protocol=$(getopenvpnprotocol "$technology" || true)
 
 # Extract location information
 country_name=$(echo "$servers" | jq -r '.locations[0].country.name' | head -n 1)
