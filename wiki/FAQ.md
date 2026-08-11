@@ -31,7 +31,7 @@ The `TECHNOLOGY` variable accepts the following values:
 No. NordVPN does not support inbound port forwarding. You can only access services from your LAN by publishing ports on the VPN container and setting `NETWORK` to include your LAN CIDR.
 
 **Q: How do I know which server I'm connected to?**
-Check the container logs: `docker logs vpn | grep "Server:"`. Or run the network diagnostic: `docker exec vpn /usr/local/bin/network-diagnostic --basic`.
+Check the container logs: `docker logs vpn | grep "Selected server:"`. Or run the network diagnostic: `docker exec vpn /usr/local/bin/network-diagnostic --basic`.
 
 **Q: Can I connect to a specific server?**
 Yes. Use the server hostname in `COUNTRY` or `CITY`: `-e COUNTRY=es1234` or `-e CITY=uk2567`. Specific servers get priority with `load=0`.
@@ -64,7 +64,7 @@ The kill switch blocks all traffic except `NETWORK` CIDRs and NordVPN API IPs. I
 Yes. The image supports `arm/v6`, `arm/v7`, and `arm64`. Docker pulls the correct architecture automatically.
 
 **Q: Does this work on Synology / QNAP NAS?**
-Generally yes, but some NAS devices have older kernels or limited iptables support. The container auto-detects nft vs legacy backends. Check logs for `[ENTRYPOINT] Using IPv4 backend:` to verify.
+Generally yes, but some NAS devices have older kernels or limited iptables support. The container auto-detects nft vs legacy backends. Check logs for `[ENTRYPOINT] Using iptables backend:` to verify.
 
 **Q: What's the difference between Docker Hub and GHCR images?**
 They are identical. Use whichever registry is more convenient: `azinchen/nordvpn` (Docker Hub) or `ghcr.io/azinchen/nordvpn` (GitHub Container Registry).

@@ -87,7 +87,7 @@ Docker subnets are **not** auto-allowed. If inter-container communication is nee
 
 **Check:**
 1. **NET_ADMIN capability:** Ensure `--cap-add=NET_ADMIN` is set.
-2. **Kernel compatibility:** The container auto-detects nft vs legacy. Check logs for `[ENTRYPOINT] Using IPv4 backend:` to see which was selected.
+2. **Kernel compatibility:** The container auto-detects nft vs legacy. Check logs for `[ENTRYPOINT] Using iptables backend:` to see which was selected.
 3. **Host iptables modules:** Some minimal hosts (e.g., certain NAS devices) may lack required kernel modules.
 
 ## Technologies
@@ -153,11 +153,11 @@ Key log messages:
 
 | Log message | Meaning |
 |------------|---------|
-| `[ENTRYPOINT] Using IPv4 backend: ...` | Firewall backend selected |
-| `[VPN-CONFIG] Server: ...` | Selected VPN server |
+| `[ENTRYPOINT] Using iptables backend: ...` | Firewall backend selected |
+| `[VPN-CONFIG] Selected server: ...` | Selected VPN server |
 | `Initialization Sequence Completed` | OpenVPN connected successfully |
-| `[HEALTHCHECK] Connection check failed` | Health check triggered reconnection |
-| `[VPN-RECONNECT] Reconnecting...` | Service restarting |
+| `[VPN-HEALTHCHECK] All connection attempts failed, triggering VPN reconnection` | Health check triggered reconnection |
+| `[VPN-RECONNECT] Starting VPN reconnection` | Service restarting |
 
 ### Inspecting the Container
 
