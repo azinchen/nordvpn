@@ -1,8 +1,13 @@
 #!/bin/sh
 # shellcheck shell=sh
 
-# Reuse backend selected by entrypoint
+# Reuse backend selected by entrypoint. Default the backends afterwards so
+# scripts running under `set -u` fail with a clear log line instead of an
+# "IPT: parameter not set" abort when backend.env is missing (e.g. a manual
+# docker exec after /run was cleared).
 [ -r /run/xt/backend.env ] && . /run/xt/backend.env
+IPT="${IPT:-iptables}"
+IP6T="${IP6T:-}"
 
 # Create lowercase copies of environment variables
 # Boolean flags are normalized to "true"/"false" (accepting "true" or "1"),
