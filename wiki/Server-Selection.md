@@ -38,7 +38,7 @@ To connect to a specific NordVPN server, use its short hostname. Four patterns a
 
 Specific servers are:
 - Looked up through the NordVPN API by hostname (not DNS) to obtain their address and metadata
-- Given `load=0` so they always appear first in the server list
+- Carrying their real current load, so in a mixed pool they compete with the other filters' results — list a server as the only value to force selection
 - Placed in either `COUNTRY` or `CITY` — both work the same way
 
 **Invalid formats** (will be treated as country/city names): `usa1` (3-letter prefix), `u1` (1 letter), `us` (no digits).
@@ -51,7 +51,7 @@ Reference lists:
 
 ## Selection Behavior
 
-- **Specific servers** (e.g., `es1234`): Placed at the top of the list with `load=0`
+- **Specific servers** (e.g., `es1234`): Join the pool with their real current load; list one alone to force it
 - **Multiple locations**: Combined and sorted by server load (lowest first)
 - **Single location**: Keeps NordVPN's recommended order
 - **RANDOM_TOP=N**: After filtering and sorting, randomly picks from the top N servers
