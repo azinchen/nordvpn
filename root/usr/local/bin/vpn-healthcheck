@@ -11,9 +11,11 @@ log "$SCRIPT_NAME" "Starting VPN health check"
 
 httpreq()
 {
-    case "$(curl -s --max-time 2 -I "$1" | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
-        [23]) return 0;;
-        5) return 1;;
+    # Same probe style as vpn-healthcheck-probe: let curl report the status
+    # code directly instead of sed-parsing the raw header line (which broke
+    # on anything but a plain 'HTTP/x.y NNN' first line).
+    case "$(curl -s --max-time 2 -o /dev/null -w '%{http_code}' -I "$1" 2>/dev/null || printf '000')" in
+        2*|3*) return 0;;
         *) return 1;;
     esac
 }
