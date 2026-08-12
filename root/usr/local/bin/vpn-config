@@ -487,7 +487,9 @@ fi
 if [ "$poollength" -eq 0 ]; then
     log "$SCRIPT_NAME" "Using default recommended servers"
     
-    # Build curl parameters for fallback
+    # Build curl parameters for fallback. GROUP is kept on the first attempt:
+    # when only GROUP is set (no COUNTRY/CITY), this path IS the primary
+    # query, not a fallback.
     curl_params=""
     if [ -n "$tech_filter" ]; then
         curl_params="$tech_filter"
@@ -495,8 +497,16 @@ if [ "$poollength" -eq 0 ]; then
     if [ -n "$group_filter" ]; then
         curl_params="$curl_params $group_filter"
     fi
-    
+
     servers=$(eval "nord_api_curl \"v1/servers/recommendations\" $curl_params 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
+
+    # Second stage: a group with no servers for the selected technology yields
+    # an empty response forever - retry once without the group filter so the
+    # container still comes up on the recommended pool instead of failing hard.
+    if [ -z "$servers" ] && [ -n "$group_filter" ]; then
+        log_warning "$SCRIPT_NAME" "No servers in group \"$group\" match TECHNOLOGY=$technology - retrying without the group filter"
+        servers=$(eval "nord_api_curl \"v1/servers/recommendations\" $tech_filter 2>/dev/null | jq -c '.[]' 2>/dev/null || echo \"\"")
+    fi
     
     if [ -n "$servers" ]; then
         log "$SCRIPT_NAME" "Fetched $(echo "$servers" | jq -s 'length') default servers"
