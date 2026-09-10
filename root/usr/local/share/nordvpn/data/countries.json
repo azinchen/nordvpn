@@ -70,6 +70,20 @@
     ]
   },
   {
+    "id": 9,
+    "name": "Antigua and Barbuda",
+    "code": "AG",
+    "cities": [
+      {
+        "id": 268268,
+        "name": "Saint John",
+        "latitude": 17.1166667,
+        "longitude": -61.85,
+        "dns_name": "saint-john"
+      }
+    ]
+  },
+  {
     "id": 10,
     "name": "Argentina",
     "code": "AR",
