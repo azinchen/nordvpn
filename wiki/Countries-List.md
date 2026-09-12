@@ -1,4 +1,4 @@
-_Last updated: 2026-08-11 · 149 countries (53 physical, 2 mixed, 94 virtual-only)_
+_Last updated: 2026-09-12 · 150 countries (53 physical, 2 mixed, 95 virtual-only)_
 
 Values for the `COUNTRY` variable — name, code, or ID all work: `-e COUNTRY="United States;CA;228"`
 
@@ -11,6 +11,7 @@ Values for the `COUNTRY` variable — name, code, or ID all work: `-e COUNTRY="U
 | 🇩🇿 | Algeria | DZ | 3 | 🌐 Virtual |
 | 🇦🇩 | Andorra | AD | 5 | 🌐 Virtual |
 | 🇦🇴 | Angola | AO | 6 | 🌐 Virtual |
+| 🇦🇬 | Antigua and Barbuda | AG | 9 | 🌐 Virtual |
 | 🇦🇷 | Argentina | AR | 10 | ✅ Physical |
 | 🇦🇲 | Armenia | AM | 11 | 🌐 Virtual |
 | 🇦🇺 | Australia | AU | 13 | ✅ Physical |
