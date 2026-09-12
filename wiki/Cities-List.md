@@ -1,4 +1,4 @@
-_Last updated: 2026-08-11 · 224 cities in 149 countries_
+_Last updated: 2026-09-12 · 225 cities in 150 countries_
 
 Values for the `CITY` variable — name or ID: `-e CITY="Amsterdam;8971718"`
 
@@ -11,6 +11,7 @@ Values for the `CITY` variable — name or ID: `-e CITY="Amsterdam;8971718"`
 | 🇩🇿 | Algeria | DZ | Algiers | 2438216 | 🌐 Virtual | [📍](https://www.google.com/maps?q=36.7630556,3.0505556) |
 | 🇦🇩 | Andorra | AD | Andorra la Vella | 20 | 🌐 Virtual | [📍](https://www.google.com/maps?q=42.5,1.5166667) |
 | 🇦🇴 | Angola | AO | Luanda | 351407 | 🌐 Virtual | [📍](https://www.google.com/maps?q=-8.836804,13.233174) |
+| 🇦🇬 | Antigua and Barbuda | AG | Saint John | 268268 | 🌐 Virtual | [📍](https://www.google.com/maps?q=17.1166667,-61.85) |
 | 🇦🇷 | Argentina | AR | Buenos Aires | 384866 | ✅ Physical | [📍](https://www.google.com/maps?q=-34.5875,-58.6725) |
 | 🇦🇲 | Armenia | AM | Yerevan | 322385 | 🌐 Virtual | [📍](https://www.google.com/maps?q=40.1811111,44.5136111) |
 | 🇦🇺 | Australia | AU | Adelaide | 452717 | ✅ Physical | [📍](https://www.google.com/maps?q=-34.928661,138.598633) |
