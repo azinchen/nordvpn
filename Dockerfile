@@ -16,7 +16,7 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
         tar=1.35-r5 \
-        xz=5.8.3-r0 \
+        xz=5.8.4-r0 \
         && \
     echo "**** create folders ****" && \
     mkdir -p /s6 && \
@@ -61,15 +61,15 @@ RUN echo "**** install build dependencies ****" && \
         autoconf=2.73-r0 \
         automake=1.18.1-r1 \
         build-base=0.5-r4 \
-        curl=8.21.0-r0 \
-        jq=1.8.1-r0 \
+        curl=8.22.0-r0 \
+        jq=1.8.2-r0 \
         libcap-ng-dev=0.8.5-r2 \
         linux-headers=7.0.0-r1 \
         libnl3-dev=3.11.0-r0 \
         libtool=2.6.0-r1 \
         lz4-dev=1.10.0-r1 \
         lzo-dev=2.10-r5 \
-        openssl-dev=3.5.7-r0 \
+        openssl-dev=3.5.8-r0 \
         patch=2.8-r0 \
         && \
     echo "**** download OpenVPN ${OPENVPN_VERSION} source ****" && \
@@ -109,7 +109,7 @@ ARG BUILD_DATE
 RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     apk --no-cache --no-progress add \
-        jq=1.8.1-r0 \
+        jq=1.8.2-r0 \
         && \
     echo "**** end run statement ****"
 
@@ -166,17 +166,17 @@ RUN echo "**** install security fix packages ****" && \
     echo "**** install mandatory packages ****" && \
     echo "Target platform: ${TARGETPLATFORM}" && \
     apk --no-cache --no-progress add \
-        curl=8.21.0-r0 \
+        curl=8.22.0-r0 \
         iptables=1.8.13-r0 \
         iptables-legacy=1.8.13-r0 \
-        jq=1.8.1-r0 \
+        jq=1.8.2-r0 \
         shadow=4.18.0-r1 \
         shadow-login=4.18.0-r1 \
         libcap-ng=0.8.5-r2 \
         libnl3=3.11.0-r0 \
         lz4-libs=1.10.0-r1 \
         lzo=2.10-r5 \
-        bind-tools=9.20.26-r0 \
+        bind-tools=9.20.29-r0 \
         && \
     echo "**** create process user ****" && \
     addgroup --system --gid 912 nordvpn && \
