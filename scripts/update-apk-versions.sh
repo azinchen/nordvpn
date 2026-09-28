@@ -94,13 +94,15 @@ package_lines=$(echo "$joined_content" | grep -oP 'apk --no-cache --no-progress 
 # Filter out packages with variable references (containing ${ })
 packages=$(echo "$package_lines" | tr ' ' '\n' | sed '/^\s*$/d' | grep -v '\${')
 
-# Sort packages by line number (forward order)
+# Sort packages by line number (forward order) and drop duplicates: a package
+# pinned in several stages (e.g. curl, jq) is checked once and the sed below
+# rewrites every occurrence in one pass
 temp_pkg_file=$(mktemp)
 for pkg in $packages; do
     line_num=$(grep -n "${pkg}[[:space:]\\]" "$DOCKERFILE" | head -1 | cut -d: -f1)
     echo "$line_num:$pkg" >> "$temp_pkg_file"
 done
-packages=$(sort -n -t: -k1 "$temp_pkg_file" | cut -d: -f2)
+packages=$(sort -n -t: -k1 "$temp_pkg_file" | cut -d: -f2 | awk '!seen[$0]++')
 rm -f "$temp_pkg_file"
 
 echo "=== Package Update Check ==="
@@ -269,8 +271,8 @@ update_package_with_tracking() {
         current_version=""
     fi
 
-    # Find the line number of this package occurrence
-    line_num=$(grep -n "${pkg}=${current_version}[[:space:]\\]" "$DOCKERFILE" | head -1 | cut -d: -f1)
+    # Find every line where this package is pinned (may appear in several stages)
+    line_num=$(grep -n "${pkg}=${current_version}[[:space:]\\]" "$DOCKERFILE" | cut -d: -f1 | paste -sd, -)
     
     # First try the "main" repository.
     URL="https://pkgs.alpinelinux.org/package/v${ALPINE_BRANCH}/main/x86_64/${pkg}"
