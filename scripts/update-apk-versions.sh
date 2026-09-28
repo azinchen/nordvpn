@@ -140,6 +140,10 @@ missing_arches_for_version()
 {
     local pkg="$1" repo="$2" version="$3"
     local missing=""
+    # The caller loop runs with IFS set to newline only; restore the default
+    # so the space-separated BUILD_ARCHES list splits into individual arches
+    local saved_ifs="$IFS"
+    IFS=' '
     for arch in $BUILD_ARCHES; do
         [ "$arch" = "x86_64" ] && continue    # source of $version, already known
         local v
@@ -148,6 +152,7 @@ missing_arches_for_version()
             missing="$missing $arch"
         fi
     done
+    IFS="$saved_ifs"
     echo "$missing"
 }
 
