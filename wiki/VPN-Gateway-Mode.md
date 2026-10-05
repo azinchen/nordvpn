@@ -110,6 +110,49 @@ By default the gateway does nothing about downstream DNS — clients must bring 
 
 All modes are plain iptables NAT — no DNS daemon runs in the image. Interception only applies to `FORWARD_FROM` sources; if `FORWARD_FROM` is unset, `GATEWAY_DNS` is ignored with a warning. With the tunnel down, redirected queries are dropped by the kill switch (nothing leaks), except in `forward` mode, where the external resolver is deliberately reached outside the tunnel.
 
+## TTL Tuning (`TTL_SET` / `TTL_INC`)
+
+Every node in a multi-hop VPN cascade is an IP router: it decrements the TTL and shows up as a distinct `traceroute` hop. A client trace through an ocserv gate and this gateway therefore lists every internal hop and private subnet — the cascade depth is a fingerprint. Two optional variables, shared with the sibling [ocserv-server](https://github.com/azinchen/ocserv-server), [openconnect-client](https://github.com/azinchen/openconnect-client) and [nordvpn-wg](https://github.com/azinchen/nordvpn-wg) images, control it:
+
+| Variable | Value | What it does |
+|---|---|---|
+| `TTL_SET` | `1`–`255` | Forces the TTL of everything leaving through `tun0` to this value. |
+| `TTL_INC` | `1`–`255` | Adds this value to the TTL of traffic arriving on `eth0`. `1` per hidden node is all that is ever needed. |
+
+Both are unset by default, and an unset variable adds no rule at all. In this image the rules always bind to `eth0` (ingress, `TTL_INC`) and `tun0` (egress, `TTL_SET`).
+
+```yaml
+# terminal nordvpn egress - normalize the value the VPN exit sees
+environment:
+  - TTL_SET=64
+
+# gateway behind an ocserv gate - make this hop invisible in client traces
+environment:
+  - FORWARD_FROM=172.28.0.0/24
+  - TTL_INC=1
+```
+
+How they behave:
+
+- **`TTL_SET`** is applied in `mangle POSTROUTING`, **after** the kernel's forward decrement and its "TTL expired" check. The VPN exit and the destination see a TTL counted from this value regardless of how many hops the packet crossed before. Every traceroute probe that survives this container leaves with a fresh TTL and reaches the destination, so all hops **behind** it (the NordVPN server, the internet path) collapse out of the trace; the container itself stays visible.
+- **`TTL_INC`** is applied in `mangle PREROUTING`, **before** that check. A probe that should have expired here is forwarded instead, and the next hop answers in this container's place.
+- Both may be set together: `TTL_INC` decides whether this container is visible, `TTL_SET` decides the value the next hop sees.
+
+Notes:
+
+- `TTL_SET` matches **everything** leaving through `tun0`: forwarded `FORWARD_FROM` clients, containers sharing the network namespace (`network_mode: service:vpn`) and the container's own traffic. A `traceroute` run from any of them shows nothing between the gateway and the destination — expected, but remember it when debugging; unset the variable to trace the real path.
+- `TTL_INC` only matters for forwarded traffic. Without `FORWARD_FROM` nothing is forwarded, so it is ignored with a warning.
+- Only the **inner** packet is rewritten. The encrypted OpenVPN packet on `eth0` carries the container's own TTL, so this changes what the VPN exit and the destination see, not what your ISP sees.
+- IPv4 only: IPv6 is dropped and never forwarded by this image, so there is no hop-limit rule.
+- Must be an integer `1`–`255`. An invalid value, or a rule the kernel refuses (the `xt_TTL` target is loaded on demand from the host kernel), **stops the container** with a `CRITICAL ERROR` log line rather than silently running with the topology exposed.
+- The rules are installed once at boot and match interfaces by name, so they survive reconnects and server switches untouched.
+
+Inspect them live:
+
+```bash
+docker exec vpn iptables -t mangle -S
+```
+
 ## Security Notes
 
 - **Keep `FORWARD_FROM` as narrow as possible** — every listed CIDR may route out through the tunnel.

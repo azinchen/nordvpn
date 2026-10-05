@@ -190,6 +190,7 @@ The `init-firewall` service then:
 - Creates a `VPN-SERVER` chain for temporary per-connection rules
 - Adds NordVPN API IP exceptions (TCP/443 only) from `NORDVPNAPI_IP`
 - If `NETWORK` is set, adds static routes and bidirectional allow rules for those CIDRs
+- If `TTL_SET` / `TTL_INC` are set, adds the mangle rules that rewrite the TTL of traffic leaving via tun0 / arriving on eth0. Fatal on an invalid value or a rule the kernel refuses. See [VPN Gateway Mode](VPN-Gateway-Mode#ttl-tuning-ttl_set--ttl_inc)
 
 ### Phase 3 — svc-nordvpn (per-connection pinhole)
 

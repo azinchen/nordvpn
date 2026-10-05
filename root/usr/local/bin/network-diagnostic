@@ -433,6 +433,8 @@ echo "NETWORK                           : ${network:-<unset>}"
 echo "FORWARD_FROM                      : ${forward_from:-<unset>}"
 echo "GATEWAY_DNS                       : ${gateway_dns:-off}"
 echo "GATEWAY_DNS_SERVER                : ${gateway_dns_server:-<unset>}"
+echo "TTL_SET                           : ${ttl_set:-<unset>}"
+echo "TTL_INC                           : ${ttl_inc:-<unset>}"
 echo "NORDVPNAPI_IP                     : ${nordvpnapi_ip:-<unset>}"
 echo "OPENVPN_OPTS                      : ${openvpn_opts:-<none>}"
 echo "RECREATE_VPN_CRON                 : ${recreate_vpn_cron:-<disabled>}"
@@ -514,6 +516,14 @@ run4 -S 2>/dev/null || true
 echo
 echo "### iptables -t nat -S (IPv4 NAT)"
 run4 -t nat -S 2>/dev/null || echo "(no IPv4 NAT rules or table unavailable)"
+
+# Only when TTL tuning is on: nothing else uses the mangle table, and listing
+# it would otherwise load it for no reason
+if [ -n "${ttl_set}${ttl_inc}" ]; then
+    echo
+    echo "### iptables -t mangle -S (IPv4 mangle, TTL_SET / TTL_INC)"
+    run4 -t mangle -S 2>/dev/null || echo "(no IPv4 mangle rules or table unavailable)"
+fi
 
 # Optional counters view (comment out if too verbose)
 # echo
