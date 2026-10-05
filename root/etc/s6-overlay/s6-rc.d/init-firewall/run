@@ -14,6 +14,20 @@ log "$SCRIPT_NAME" "Configuring firewall to route all traffic through VPN"
 docker_network="$(ip addr show dev "$wan_if" 2>/dev/null | awk '/inet / {print $2; exit}')"
 gw="$(ip route 2>/dev/null | awk '/default/ {print $3; exit}')"
 
+# TTL_SET / TTL_INC take an integer 1-255. A leading zero is rejected as well:
+# iptables would parse it as octal.
+valid_ttl() {
+    case "$1" in
+        ''|0*|*[!0-9]*|????*) return 1 ;;
+    esac
+    [ "$1" -le 255 ]
+}
+
+# Append a mangle rule unless it is already there; critical like run4_critical
+mangle_rule() {
+    ${IPT} -t mangle -C "$@" 2>/dev/null || run4_critical -t mangle -A "$@"
+}
+
 # ===================== IPv4 =====================
 if [ -n "$docker_network" ]; then
     log "$SCRIPT_NAME" "Setting up IPv4 firewall rules..."
@@ -65,6 +79,43 @@ if [ -n "$docker_network" ]; then
             run4 -A OUTPUT -o "$wan_if" -d "$net" -j ACCEPT
         done
         IFS="$oldIFS"
+    fi
+
+    # TTL tuning (TTL_SET / TTL_INC), same contract as the sibling cascade
+    # images (ocserv-server, openconnect-client, nordvpn-wg):
+    #   TTL_SET   force the TTL of everything leaving through the tunnel.
+    #             POSTROUTING runs after the kernel's forward decrement, so
+    #             the next hop sees exactly this value and every traceroute
+    #             probe that survives this node reaches the destination -
+    #             all hops behind it collapse out of a client trace
+    #   TTL_INC   add to the TTL of traffic arriving on the uplink.
+    #             PREROUTING runs before the "TTL expired" check, so the
+    #             increment cancels this node's own decrement and the node
+    #             disappears from a client trace
+    # Installed before forwarding is opened below. An invalid value or a rule
+    # the kernel refuses stops startup - an exposed topology is worse than a
+    # stopped container. IPv4 only: IPv6 is policy DROP and never forwarded,
+    # so a hop-limit rule would be dead code. The mangle table is not flushed
+    # at boot, hence check-before-add.
+    if [ -n "$ttl_set" ]; then
+        if ! valid_ttl "$ttl_set"; then
+            log_error "$SCRIPT_NAME" "CRITICAL ERROR: TTL_SET must be an integer 1-255 (got '$ttl_set') - sleeping infinite"
+            sleep infinity
+        fi
+        log "$SCRIPT_NAME" "Setting TTL to ${ttl_set} on traffic leaving via ${tun_if}"
+        mangle_rule POSTROUTING -o "$tun_if" -j TTL --ttl-set "$ttl_set"
+    fi
+    if [ -n "$ttl_inc" ]; then
+        if ! valid_ttl "$ttl_inc"; then
+            log_error "$SCRIPT_NAME" "CRITICAL ERROR: TTL_INC must be an integer 1-255 (got '$ttl_inc') - sleeping infinite"
+            sleep infinity
+        fi
+        if [ -z "${forward_from:-}" ]; then
+            log_warning "$SCRIPT_NAME" "TTL_INC=$ttl_inc ignored: FORWARD_FROM is not set"
+        else
+            log "$SCRIPT_NAME" "Incrementing TTL by ${ttl_inc} on traffic arriving via ${wan_if}"
+            mangle_rule PREROUTING -i "$wan_if" -j TTL --ttl-inc "$ttl_inc"
+        fi
     fi
 
     # FORWARD_FROM rules (CIDRs). Downstream subnets allowed to route OUT through

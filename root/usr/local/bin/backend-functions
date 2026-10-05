@@ -37,6 +37,8 @@ network="${NETWORK:-}"
 forward_from="${FORWARD_FROM:-}"
 gateway_dns="${GATEWAY_DNS:-off}"
 gateway_dns_server="${GATEWAY_DNS_SERVER:-}"
+ttl_set="${TTL_SET:-}"
+ttl_inc="${TTL_INC:-}"
 
 # Interfaces
 wan_if="eth0"
