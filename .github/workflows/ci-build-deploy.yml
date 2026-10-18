@@ -51,9 +51,6 @@ jobs:
               echo "❌ DockerHub credentials not available for production build"
               exit 1
             fi
-            if [[ -z "${{ secrets.DOCKERHUB_PASSWORD }}" ]]; then
-              echo "⚠️  DockerHub password not available - repo description update will be skipped"
-            fi
           fi
           
           echo "✅ Secret validation completed"
@@ -173,7 +170,7 @@ jobs:
         uses: peter-evans/dockerhub-description@v5.0.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: ${{ github.repository }}
           short-description: ${{ github.event.repository.description }}
 
