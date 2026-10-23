@@ -4,7 +4,7 @@ ARG IMAGE_VERSION=N/A
 ARG BUILD_DATE=N/A
 
 # s6 overlay builder
-FROM alpine:3.24.2 AS s6-builder
+FROM alpine:3.24.3 AS s6-builder
 
 ARG TARGETARCH
 ARG TARGETVARIANT
@@ -49,7 +49,7 @@ RUN echo "**** install security fix packages ****" && \
     tar -C /s6/ -Jxpf /tmp/s6-overlay-symlinks-arch.tar.xz
 
 # OpenVPN XOR builder
-FROM alpine:3.24.2 AS openvpn-builder
+FROM alpine:3.24.3 AS openvpn-builder
 
 ARG OPENVPN_VERSION
 ARG OPENVPN_XOR_PATCH_VERSION
@@ -101,7 +101,7 @@ RUN echo "**** install build dependencies ****" && \
     cp src/openvpn/openvpn /tmp/openvpn-binary
 
 # rootfs builder
-FROM alpine:3.24.2 AS rootfs-builder
+FROM alpine:3.24.3 AS rootfs-builder
 
 ARG IMAGE_VERSION
 ARG BUILD_DATE
@@ -142,7 +142,7 @@ COPY --from=s6-builder /s6/ /rootfs/
 COPY --from=openvpn-builder /tmp/openvpn-binary /rootfs/usr/sbin/openvpn
 
 # Main image
-FROM alpine:3.24.2
+FROM alpine:3.24.3
 
 ARG TARGETPLATFORM
 ARG OPENVPN_VERSION
@@ -176,7 +176,7 @@ RUN echo "**** install security fix packages ****" && \
         libnl3=3.11.0-r0 \
         lz4-libs=1.10.0-r1 \
         lzo=2.10-r5 \
-        bind-tools=9.20.29-r0 \
+        bind-tools=9.20.30-r0 \
         && \
     echo "**** create process user ****" && \
     addgroup --system --gid 912 nordvpn && \
