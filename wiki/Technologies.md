@@ -38,7 +38,7 @@ XOR obfuscation disguises OpenVPN traffic using the [Tunnelblick XOR patch](http
 
 ### Configuration
 
-XOR technologies **require** the `legacy_obfuscated_servers` group:
+XOR technologies **require** the [`legacy_obfuscated_servers`](Server-Groups#obfuscated-servers-legacy_obfuscated_servers) group:
 
 ```yaml
 environment:
@@ -85,7 +85,7 @@ The port must be one the server actually listens on (see table above), otherwise
 
 ## Dedicated IP (`openvpn_dedicated_udp` / `openvpn_dedicated_tcp`)
 
-For NordVPN accounts with the [Dedicated IP add-on](https://nordvpn.com/features/dedicated-ip/). Requires the `legacy_dedicated_ip` group:
+For NordVPN accounts with the [Dedicated IP add-on](https://nordvpn.com/features/dedicated-ip/). Requires the [`legacy_dedicated_ip`](Server-Groups#dedicated-ip-legacy_dedicated_ip) group:
 
 ```yaml
 environment:

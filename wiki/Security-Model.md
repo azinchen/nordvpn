@@ -7,18 +7,22 @@ This page describes the container's firewall behavior, kill switch, and network 
 - **Kill switch:** If the VPN drops, traffic remains blocked **except** for destinations within your `NETWORK` CIDRs (e.g., local/LAN ranges you explicitly allowed) and to NordVPN's API.
 - **Container routing:** Containers using `network_mode: "service:vpn"` share the VPN container's network namespace and inherit these policies.
 - **Inbound (local/LAN only):** No connections from the host or LAN reach the stack **unless you publish ports on the VPN container**. **Public inbound via NordVPN is not supported** (no port forwarding).
+- **Gateway forwarding:** [`FORWARD_FROM`](VPN-Gateway-Mode) subnets may route **out through the tunnel** only — the `FORWARD` rules are bound to `tun0`, so nothing is forwarded while the tunnel is down. `GATEWAY_DNS=forward` is the one deliberate exception: it reaches the resolver in `GATEWAY_DNS_SERVER` directly over the uplink.
+- **IPv6:** `ip6tables` policies are `DROP` with no exceptions; IPv6 is never routed through the tunnel. See [IPv6 Configuration](IPv6-Configuration).
 
 ## Network Access Control (Exceptions)
 
-- **Local/LAN access (bidirectional, explicit):** Set `NETWORK=192.168.1.0/24` (`;`/`,`-separated CIDRs supported) to allow access to those subnets **regardless of VPN status**.
+- **Local/LAN access (bidirectional, explicit):** Set `NETWORK=192.168.1.0/24` (`;`/`,`-separated CIDRs supported) to allow access to those subnets **regardless of VPN status**. See [Local Network Access](Local-Network-Access).
 - **No domain names allowed:** Use IPs in `NETWORK` for any non-VPN access you require.
 
 ## Rule Precedence
 
 1. **Bootstrap-only (when VPN is down & before first connect):** Allow HTTPS only to the **NordVPN API IPs from `NORDVPNAPI_IP`** used by the image's bootstrap script.
 2. **Exceptions:** If destination matches `NETWORK` (CIDR), allow (bypass/LAN), regardless of VPN state.
-3. **VPN path:** If VPN is **up** and traffic is not an exception, allow only via the VPN interface.
+3. **VPN path:** If VPN is **up** and traffic is not an exception, allow only via the VPN interface. Forwarded traffic from `FORWARD_FROM` follows the same rule.
 4. **Default-deny:** Otherwise, block.
+
+The exact chain layout, and how the rules are built in stages, is in [Architecture and Internals](Architecture-and-Internals#firewall-build-phases); backend selection (nft vs legacy) is in [Firewall Backends](Firewall-Backends).
 
 ## Security Notes
 

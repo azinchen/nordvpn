@@ -15,17 +15,27 @@ The full command assembled by the container:
 ```
 openvpn --group nordvpn \
         --config /run/xt/nordvpn.ovpn \
+        --config /run/xt/openvpn-extra.conf \
         --auth-user-pass /run/xt/auth \
         --auth-nocache \
-        --management 127.0.0.1 7505 /run/xt/mgmt-pw \
-        $OPENVPN_OPTS
+        --management 127.0.0.1 7505 /run/xt/mgmt-pw
 ```
 
-Your `OPENVPN_OPTS` flags are appended at the end, so they can override settings from the `.ovpn` config.
+`OPENVPN_OPTS` is **not** appended to the command line. The container splits it on ` --`, writes one option per line into `/run/xt/openvpn-extra.conf`, and OpenVPN reads that file as a second config. This preserves quoted multi-word arguments such as `--pull-filter ignore "dhcp-option DNS"` without any `eval`. Because the fragment is parsed after `nordvpn.ovpn`, your options still override settings from the `.ovpn` template. When [`DNS`](Custom-DNS) is set, the matching `pull-filter` / `dhcp-option DNS` lines are appended to the same fragment.
+
+Inspect what OpenVPN actually received:
+
+```bash
+docker exec vpn cat /run/xt/openvpn-extra.conf
+```
+
+See [Architecture and Internals](Architecture-and-Internals#svc-nordvpnrun--openvpn-launcher) for the full launch sequence.
 
 ## Commonly Useful Options
 
 ### Reconnection Control
+
+How these interact with the container's own reconnection and health monitoring is covered in [Automatic Reconnection](Automatic-Reconnection#connection-failure-handling).
 
 | Option | Effect |
 |--------|--------|

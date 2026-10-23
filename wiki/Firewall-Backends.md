@@ -28,3 +28,5 @@ On older systems:
 - Mixing nft and legacy rules in the same namespace causes unpredictable behavior — the entrypoint prevents this
 
 No manual configuration is needed. The container handles backend selection automatically.
+
+The selected backend is exported to `/run/xt/backend.env` and reused by every other script; see [Architecture and Internals](Architecture-and-Internals#entrypoint--backend-selection--default-deny) for the probing logic.

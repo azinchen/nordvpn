@@ -22,7 +22,8 @@ OpenVPN client docker container that routes other containers' traffic through No
 
 - **🚀 Easy Setup** — Route any container's traffic through VPN with `--net=container:vpn`
 - **🌍 Smart Server Selection** — Auto-select servers by country, city, group, or specific hostname ([details][wiki-server])
-- **⚖️ Load Balancing** — Intelligent sorting by server load when multiple locations specified
+- **⚖️ Load Balancing** — Intelligent sorting by server load when multiple locations specified ([details][wiki-server-behavior])
+- **🔑 Token or Service Credentials** — Pass `TOKEN` and the container fetches service credentials itself ([details][wiki-credentials])
 - **🔄 Auto-Reconnection** — Periodic server switching and health monitoring ([details][wiki-reconnect])
 - **🕵️ XOR Obfuscation** — Built-in XOR patches disguise OpenVPN traffic to bypass DPI ([details][wiki-xor])
 - **🛡️ Kill Switch** — Default-deny firewall blocks all traffic when VPN is down ([details][wiki-security])
@@ -30,7 +31,10 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🧭 Custom DNS** — Resolve through the tunnel; override with `DNS=...` ([details][wiki-custom-dns])
 - **📵 IPv6 Firewall** — Built-in chains default to DROP ([details][wiki-ipv6])
 - **🧱 iptables Compatibility** — Auto-selects nft or legacy backend ([details][wiki-firewall])
-- **🚪 VPN Gateway Mode** — Route downstream subnets through the tunnel with `FORWARD_FROM` ([details][wiki-gateway])
+- **🚪 VPN Gateway Mode** — Route downstream subnets through the tunnel with `FORWARD_FROM`, intercept their DNS with `GATEWAY_DNS` ([details][wiki-gateway])
+- **🪜 TTL Tuning** — `TTL_SET` / `TTL_INC` hide cascade hops from client traceroutes ([details][wiki-ttl])
+- **🩺 Docker Health Status** — Opt-in `HEALTHCHECK` reports tunnel state to Docker and Compose ([details][wiki-healthcheck])
+- **🔎 Diagnostics** — Built-in network diagnostic tool and a `/run/xt/status.json` status file ([details][wiki-diagnostics])
 
 > **📖 [Full documentation on the Wiki][wiki-home]** — configuration guides, examples, troubleshooting, FAQ, and architecture.
 
@@ -147,7 +151,7 @@ Rotate servers on a schedule and verify the tunnel actually works. See [Automati
 | **CHECK<wbr>_CONNECTION<wbr>_URL** | URLs to test connectivity. Default: `https://www.google.com` |
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPTS** | Connection test retry count. Default: `5` |
 | **CHECK<wbr>_CONNECTION<wbr>_ATTEMPT<wbr>_INTERVAL** | Seconds between retries. Default: `10` |
-| **HEALTHCHECK<wbr>_ENABLED** | Enable the Docker `HEALTHCHECK` probe (checks `tun0` + connectivity via `CHECK_CONNECTION_URL`). When `false`, the container always reports healthy. Default: `false` |
+| **HEALTHCHECK<wbr>_ENABLED** | Enable the Docker `HEALTHCHECK` probe (checks `tun0` + connectivity via `CHECK_CONNECTION_URL`; [details][wiki-healthcheck]). When `false`, the container always reports healthy. Default: `false` |
 
 ### Local Network & VPN Gateway
 
@@ -175,7 +179,7 @@ Low‑level settings; the defaults work for most setups.
 
 If you have any problems with or questions about this image, please contact me through a [GitHub issue][github-issues-link] or [email][email-link].
 
-Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki pages first.
+Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki pages first. For how the container works under the hood, see **[Architecture and Internals][wiki-architecture]**.
 
 <!-- Links: Docker Hub -->
 [dockerhub-link]: https://hub.docker.com/r/azinchen/nordvpn
@@ -206,6 +210,10 @@ Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki 
 <!-- Links: Wiki -->
 [wiki-home]: https://github.com/azinchen/nordvpn/wiki
 [wiki-server]: https://github.com/azinchen/nordvpn/wiki/Server-Selection
+[wiki-server-behavior]: https://github.com/azinchen/nordvpn/wiki/Server-Selection#selection-behavior
+[wiki-credentials]: https://github.com/azinchen/nordvpn/wiki/FAQ#credentials
+[wiki-healthcheck]: https://github.com/azinchen/nordvpn/wiki/Automatic-Reconnection#docker-health-status
+[wiki-architecture]: https://github.com/azinchen/nordvpn/wiki/Architecture-and-Internals
 [wiki-groups]: https://github.com/azinchen/nordvpn/wiki/Server-Groups
 [wiki-reconnect]: https://github.com/azinchen/nordvpn/wiki/Automatic-Reconnection
 [wiki-security]: https://github.com/azinchen/nordvpn/wiki/Security-Model#traffic-control--kill-switch

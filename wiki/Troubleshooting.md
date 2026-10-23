@@ -40,7 +40,7 @@ See [Automatic Reconnection](Automatic-Reconnection#connection-health-monitoring
 
 **Check:**
 1. **VPN is up:** `docker exec vpn ip link show tun0` — if tun0 doesn't exist, the VPN isn't connected.
-2. **DNS:** `docker exec app cat /etc/resolv.conf` — the nameserver should be pushed by OpenVPN (usually `10.x.x.x`).
+2. **DNS:** `docker exec app cat /etc/resolv.conf` — the nameservers should be the tunnel resolvers pushed by OpenVPN (NordVPN's `103.86.96.100` / `103.86.99.100`) or your [`DNS`](Custom-DNS) override, not Docker's `127.0.0.11`.
 3. **Firewall:** `docker exec vpn iptables -L -n` — verify OUTPUT chain allows traffic via tun0.
 
 ### Can't access containers from LAN
@@ -68,7 +68,7 @@ Docker subnets are **not** auto-allowed. If inter-container communication is nee
 
 **Check:**
 1. Run diagnostics: `docker exec vpn /usr/local/bin/network-diagnostic`
-2. Look at the DNS section — nameservers should be VPN-provided addresses
+2. Look at the DNS section — nameservers should be the VPN-provided resolvers or your [`DNS`](Custom-DNS) override
 3. If using IPv6, it may bypass the VPN. See [IPv6 Configuration](IPv6-Configuration)
 
 ### NETWORK setting defeats the kill switch
@@ -77,7 +77,19 @@ Docker subnets are **not** auto-allowed. If inter-container communication is nee
 
 **Cause:** `NETWORK` CIDRs are always allowed, regardless of VPN state. If you set `NETWORK=0.0.0.0/0`, **all traffic bypasses the VPN**.
 
-**Fix:** Keep `NETWORK` as narrow as possible — only include your LAN subnet and any Docker networks that need direct access.
+**Fix:** Keep `NETWORK` as narrow as possible — only include your LAN subnet and any Docker networks that need direct access. See [Security Model](Security-Model#kill-switch-limitations).
+
+### Gateway clients (`FORWARD_FROM`) have no connectivity
+
+**Symptoms:** Containers routed through this one with `FORWARD_FROM` cannot reach the internet, while the VPN container itself can.
+
+**Check:**
+1. **IP forwarding:** `net.ipv4.ip_forward=1` must be set on the VPN container (`--sysctl` / `sysctls:`) **and** on the downstream container.
+2. **Source addresses:** downstream traffic must arrive already SNATed into a `FORWARD_FROM` CIDR. `docker exec vpn iptables -L FORWARD -n -v` should show the packet counter rising on the `-s <cidr> -o tun0` rule.
+3. **Client DNS:** with `GATEWAY_DNS` set, look for `[INIT-FIREWALL] Intercepting client DNS:` at startup. A `GATEWAY_DNS=... ignored: FORWARD_FROM is not set` warning means interception is off.
+4. **Fatal settings:** an invalid `GATEWAY_DNS`, `TTL_SET` or `TTL_INC` value stops the container with a `CRITICAL ERROR` log line instead of running with the topology exposed.
+
+See [VPN Gateway Mode](VPN-Gateway-Mode).
 
 ## Firewall & Permissions
 
@@ -158,6 +170,9 @@ Key log messages:
 | `Initialization Sequence Completed` | OpenVPN connected successfully |
 | `[VPN-HEALTHCHECK] All connection attempts failed, triggering VPN reconnection` | Health check triggered reconnection |
 | `[VPN-RECONNECT] Starting VPN reconnection` | Service restarting |
+| `[INIT-CREATEAUTH] CRITICAL ERROR: Could not fetch service credentials with TOKEN` | `TOKEN` is invalid or expired — generate a new one |
+| `[INIT-FIREWALL] CRITICAL ERROR: ...` | Invalid `GATEWAY_DNS`, `TTL_SET` or `TTL_INC` value; the container sleeps instead of starting |
+| `[SERVICE-NORDVPN] Using pre-selected config staged by reconnect` | Normal during a rotation — the new server was chosen while the old tunnel was still up |
 
 ### Inspecting the Container
 
@@ -166,5 +181,9 @@ docker exec vpn ip link show tun0            # check if VPN tunnel exists
 docker exec vpn ip route                     # view routing table
 docker exec vpn iptables -L -n -v            # check iptables rules
 docker exec vpn cat /run/xt/nordvpn.ovpn     # view OpenVPN config
+docker exec vpn cat /run/xt/openvpn-extra.conf  # options generated from OPENVPN_OPTS / DNS
+docker exec vpn cat /run/xt/status.json      # selected server as JSON
 docker exec vpn env | sort                   # check environment
 ```
+
+The meaning of every file under `/run/xt/` is listed in [Architecture and Internals](Architecture-and-Internals#state-files).

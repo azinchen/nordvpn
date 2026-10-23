@@ -31,10 +31,10 @@ The `TECHNOLOGY` variable accepts the following values:
 No. NordVPN does not support inbound port forwarding. You can only access services from your LAN by publishing ports on the VPN container and setting `NETWORK` to include your LAN CIDR.
 
 **Q: How do I know which server I'm connected to?**
-Check the container logs: `docker logs vpn | grep "Selected server:"`. Or run the network diagnostic: `docker exec vpn /usr/local/bin/network-diagnostic --basic`.
+Check the container logs: `docker logs vpn | grep "Selected server:"`, read the status file: `docker exec vpn cat /run/xt/status.json`, or run the network diagnostic: `docker exec vpn /usr/local/bin/network-diagnostic --basic`.
 
 **Q: Can I connect to a specific server?**
-Yes. Use the server hostname in `COUNTRY` or `CITY`: `-e COUNTRY=es1234` or `-e CITY=uk2567`. Specific servers get priority with `load=0`.
+Yes. Use the server hostname in `COUNTRY` or `CITY`: `-e COUNTRY=es1234` or `-e CITY=uk2567`. The server is looked up through the NordVPN API and joins the pool with its real current load, so list it as the only value to force it. See [Server Selection](Server-Selection#specific-server-hostname-format).
 
 ## Networking
 
@@ -57,6 +57,12 @@ Every 4–8 hours is common. Use `RECREATE_VPN_CRON` for scheduled switching and
 
 **Q: What happens if the VPN drops?**
 The kill switch blocks all traffic except `NETWORK` CIDRs and NordVPN API IPs. If health monitoring is configured, the container will automatically reconnect. See [Security Model](Security-Model#traffic-control--kill-switch).
+
+**Q: Can Docker or Compose see whether the tunnel is up?**
+Yes — set `HEALTHCHECK_ENABLED=true`. The image's `HEALTHCHECK` then checks `tun0` and a short request to `CHECK_CONNECTION_URL`, so `docker ps` shows `healthy`/`unhealthy` and Compose `depends_on: condition: service_healthy` waits for a working tunnel. It is observational only. See [Docker Health Status](Automatic-Reconnection#docker-health-status).
+
+**Q: Can other containers route through this one without sharing its network namespace?**
+Yes — gateway mode. Set `FORWARD_FROM` to the downstream subnet(s) and enable `net.ipv4.ip_forward`; optionally `GATEWAY_DNS` intercepts the clients' DNS. See [VPN Gateway Mode](VPN-Gateway-Mode).
 
 ## Compatibility
 
