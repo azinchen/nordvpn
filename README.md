@@ -23,7 +23,7 @@ OpenVPN client docker container that routes other containers' traffic through No
 - **🚀 Easy Setup** — Route any container's traffic through VPN with `--net=container:vpn`
 - **🌍 Server Selection** — Auto-select servers by country, city, group, or specific hostname ([details][wiki-server])
 - **⚖️ Load Balancing** — Sorts by server load when multiple locations are given ([details][wiki-server-behavior])
-- **🔑 Access Token** — Pass `TOKEN` instead of service credentials; the container fetches them ([details][wiki-credentials])
+- **🔑 Access Token** — Pass `TOKEN` and the container fetches the service credentials itself ([details][wiki-credentials])
 - **🔄 Automatic Reconnection** — Periodic server switching and health monitoring ([details][wiki-reconnect])
 - **🕵️ XOR Obfuscation** — Built-in XOR patches disguise OpenVPN traffic to bypass DPI ([details][wiki-xor])
 - **🛡️ Kill Switch** — Default-deny firewall blocks all traffic when VPN is down ([details][wiki-security])
