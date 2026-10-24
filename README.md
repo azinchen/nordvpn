@@ -40,7 +40,7 @@ OpenVPN client docker container that routes other containers' traffic through No
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 ```bash
 docker run -d --cap-add=NET_ADMIN --device /dev/net/tun --name vpn \
@@ -71,7 +71,7 @@ Also available from GitHub Container Registry: `ghcr.io/azinchen/nordvpn`
 
 **Alternative — access token:** instead of copying the service credentials, generate an access token (**Nord Account Dashboard** → **NordVPN** → **Advanced Settings** → **Generate new token**) and pass it as `TOKEN`; the container then fetches the service credentials from the NordVPN API at startup. If `USER`/`PASS` are also set, they take priority over the token.
 
-## Docker Compose Example
+## 🐳 Docker Compose Example
 
 ```yaml
 services:
@@ -103,7 +103,7 @@ services:
 
 > **More examples:** [Docker Compose][wiki-compose] · [Docker Run][wiki-run]
 
-## Environment Variables
+## ⚙️ Environment Variables
 
 > **List values** (countries, cities, CIDRs, URLs, IPs) accept `;` or `,` as separators; whitespace around separators is ignored.
 
@@ -175,7 +175,7 @@ Low‑level settings; the defaults work for most setups.
 | **NORDVPNAPI<wbr>_IP** | IPs used for all NordVPN API access (no DNS involved). Default: `104.16.208.203;104.19.159.190` |
 | **NETWORK<wbr>_DIAGNOSTIC<wbr>_ENABLED** | Enable network diagnostics on connect ([details][wiki-diagnostics]). Default: `false` |
 
-## Issues
+## 🐛 Issues
 
 If you have any problems with or questions about this image, please contact me through a [GitHub issue][github-issues-link] or [email][email-link].
 
