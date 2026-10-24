@@ -21,20 +21,20 @@ OpenVPN client docker container that routes other containers' traffic through No
 ## ✨ Key Features
 
 - **🚀 Easy Setup** — Route any container's traffic through VPN with `--net=container:vpn`
-- **🌍 Smart Server Selection** — Auto-select servers by country, city, group, or specific hostname ([details][wiki-server])
+- **🌍 Server Selection** — Auto-select servers by country, city, group, or specific hostname ([details][wiki-server])
 - **⚖️ Load Balancing** — Sorts by server load when multiple locations are given ([details][wiki-server-behavior])
-- **🔑 Token Auth** — Pass `TOKEN` instead of service credentials; the container fetches them ([details][wiki-credentials])
-- **🔄 Auto-Reconnection** — Periodic server switching and health monitoring ([details][wiki-reconnect])
+- **🔑 Access Token** — Pass `TOKEN` instead of service credentials; the container fetches them ([details][wiki-credentials])
+- **🔄 Automatic Reconnection** — Periodic server switching and health monitoring ([details][wiki-reconnect])
 - **🕵️ XOR Obfuscation** — Built-in XOR patches disguise OpenVPN traffic to bypass DPI ([details][wiki-xor])
 - **🛡️ Kill Switch** — Default-deny firewall blocks all traffic when VPN is down ([details][wiki-security])
-- **🏠 Local/LAN Access** — Allow specific CIDRs with `NETWORK=...` ([details][wiki-network])
+- **🏠 Local Network Access** — Allow specific CIDRs with `NETWORK=...` ([details][wiki-network])
 - **🧭 Custom DNS** — Resolve through the tunnel; override with `DNS=...` ([details][wiki-custom-dns])
-- **📵 IPv6 Firewall** — Built-in chains default to DROP ([details][wiki-ipv6])
-- **🧱 iptables Compatibility** — Auto-selects nft or legacy backend ([details][wiki-firewall])
+- **📵 IPv6 Configuration** — Built-in chains default to DROP ([details][wiki-ipv6])
+- **🧱 Firewall Backends** — Auto-selects nft or legacy backend ([details][wiki-firewall])
 - **🚪 VPN Gateway Mode** — Route downstream subnets through the tunnel with `FORWARD_FROM` ([details][wiki-gateway])
 - **🪜 TTL Tuning** — `TTL_SET` / `TTL_INC` hide cascade hops from client traceroutes ([details][wiki-ttl])
 - **🩺 Docker Health Status** — Opt-in `HEALTHCHECK` reports tunnel state to Docker ([details][wiki-healthcheck])
-- **🔎 Diagnostics** — Built-in network diagnostic tool and `status.json` status file ([details][wiki-diagnostics])
+- **🔎 Network Diagnostics** — Built-in network diagnostic tool and `status.json` status file ([details][wiki-diagnostics])
 
 > **📖 [Full documentation on the Wiki][wiki-home]** — configuration guides, examples, troubleshooting, FAQ, and architecture.
 
