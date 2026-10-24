@@ -1,5 +1,3 @@
-[![logo](https://github.com/azinchen/nordvpn/raw/master/NordVpn_logo.png)](https://www.nordvpn.com/)
-
 # NordVPN OpenVPN Docker Container
 
 [![GitHub release][github-release]][github-releases]
