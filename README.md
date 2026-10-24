@@ -170,7 +170,7 @@ Grouped by feature; every variable is one line here — the linked wiki pages ha
 
 ## 🐛 Issues
 
-If you have any problems with or questions about this image, please contact me through a [GitHub issue][github-issues-link] or [email][email-link].
+If you have any problems with or questions about this image, please open a [GitHub issue][github-issues-link].
 
 Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki pages first. For how the container works under the hood, see **[Architecture and Internals][wiki-architecture]**.
 
@@ -232,4 +232,3 @@ Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki 
 [wiki-faq]: https://github.com/azinchen/nordvpn/wiki/FAQ
 [wiki-platforms]: https://github.com/azinchen/nordvpn/wiki/Supported-Platforms
 
-[email-link]: mailto:alexander@zinchenko.com

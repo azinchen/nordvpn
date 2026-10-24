@@ -4,4 +4,4 @@
 
 Prefer WireGuard? See the sibling project **[azinchen/nordvpn-wg](https://github.com/azinchen/nordvpn-wg)** ([wiki](https://github.com/azinchen/nordvpn-wg/wiki)).
 
-Maintained by [Alexander Zinchenko](mailto:alexander@zinchenko.com) · Licensed under [AGPL-3.0](https://github.com/azinchen/nordvpn/blob/master/LICENSE)
+Maintained by [Alexander Zinchenko](https://github.com/azinchen) · Licensed under [AGPL-3.0](https://github.com/azinchen/nordvpn/blob/master/LICENSE)
