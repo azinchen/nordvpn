@@ -53,11 +53,6 @@ docker run --net=container:vpn -d your/application
 
 Also available from GitHub Container Registry: `ghcr.io/azinchen/nordvpn`
 
-### Requirements
-
-- Docker with `--cap-add=NET_ADMIN` and `--device /dev/net/tun`
-- **NordVPN service credentials** or an **access token** (not regular account credentials)
-
 ### Getting Service Credentials
 
 1. Log into your [Nord Account Dashboard](https://my.nordaccount.com/)
@@ -166,11 +161,22 @@ Grouped by feature; every variable is one line here — the linked wiki pages ha
 | `NETWORK_DIAGNOSTIC_ENABLED` | `false` | Run the built-in network diagnostic after every connect. |
 | `NORDVPNAPI_IP` | `104.16.208.203;104.19.159.190` | IPs used for all NordVPN API access (no DNS involved). |
 
+## 📋 Runtime Requirements
+
+- `--cap-add=NET_ADMIN` and `--device /dev/net/tun`
+- NordVPN **service credentials** or an **access token**, not regular account credentials — see [Getting Service Credentials](#getting-service-credentials)
+- a kernel with iptables support; the nft or legacy backend is picked automatically ([details][wiki-firewall])
+- for gateway mode: `net.ipv4.ip_forward=1` on this container and on the downstream one ([details][wiki-gateway])
+
 ## 🐛 Issues
 
 If you have any problems with or questions about this image, please contact me through a [GitHub issue][github-issues-link] or [email][email-link].
 
 Check the **[Troubleshooting][wiki-troubleshoot]** and **[FAQ][wiki-faq]** wiki pages first. For how the container works under the hood, see **[Architecture and Internals][wiki-architecture]**.
+
+## 📄 License
+
+[AGPL-3.0](LICENSE)
 
 <!-- Links: Docker Hub -->
 [dockerhub-link]: https://hub.docker.com/r/azinchen/nordvpn

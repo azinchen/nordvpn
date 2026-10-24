@@ -1,6 +1,6 @@
 #!/bin/sh
 # OpenVPN up script — apply pushed DNS to /etc/resolv.conf
-# Part of azinchen/nordvpn (MIT)
+# Part of azinchen/nordvpn (AGPL-3.0)
 
 # OpenVPN builds a fresh environment for its scripts (container env vars are
 # absent here), so re-import the ones this script and gateway-dns-update

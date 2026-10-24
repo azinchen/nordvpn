@@ -1,6 +1,6 @@
 #!/bin/sh
 # OpenVPN down script — restore /etc/resolv.conf
-# Part of azinchen/nordvpn (MIT)
+# Part of azinchen/nordvpn (AGPL-3.0)
 
 # OpenVPN scrubs the environment for scripts; re-import the container env
 # vars this script depends on from s6's container-environment store.
