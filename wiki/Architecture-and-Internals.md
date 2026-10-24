@@ -1,4 +1,4 @@
-This page describes how the container works internally. Useful for contributors, debugging, and understanding the boot sequence.
+This page describes how the container works internally. Useful for contributors, debugging, and understanding the boot sequence. How the image is built and released is covered in [Building and CI](Building-and-CI).
 
 ## Boot Sequence
 

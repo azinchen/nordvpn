@@ -257,6 +257,8 @@ jobs:
           commit-message: "docs: update ${{ matrix.file.path }} (${{ env.update_date }})"
           delete-branch: true
           title: "📄 Update ${{ matrix.file.path }} - ${{ env.update_date }}"
+          labels: |
+            data
           body: |
             ## 📄 Automated Server List Update
             
@@ -401,6 +403,8 @@ jobs:
           commit-message: "config: update countries.json (${{ env.update_date }})"
           delete-branch: true
           title: "🌍 Update countries.json - ${{ env.update_date }}"
+          labels: |
+            data
           body: |
             ## 🌍 Countries Configuration Update
             
@@ -489,6 +493,8 @@ jobs:
           commit-message: "config: update groups.json (${{ env.update_date }})"
           delete-branch: true
           title: "🏷️ Update groups.json - ${{ env.update_date }}"
+          labels: |
+            data
           body: |
             ## 🏷️ Groups Configuration Update
             
@@ -580,6 +586,8 @@ jobs:
           commit-message: "config: update technologies.json (${{ env.update_date }})"
           delete-branch: true
           title: "🔧 Update technologies.json - ${{ env.update_date }}"
+          labels: |
+            data
           body: |
             ## 🔧 Technologies Configuration Update
             
@@ -660,6 +668,8 @@ jobs:
           commit-message: "config: update OpenVPN template (${{ env.update_date }})"
           delete-branch: true
           title: "📝 Update OpenVPN template - ${{ env.update_date }}"
+          labels: |
+            data
           body: |
             ## 📝 OpenVPN Template Update
             
@@ -742,6 +752,8 @@ jobs:
           commit-message: "config: update XOR TLS auth key (${{ env.update_date }})"
           delete-branch: true
           title: "🔑 Update XOR TLS auth key - ${{ env.update_date }}"
+          labels: |
+            data
           body: |
             ## 🔑 XOR TLS Auth Key Update
             
@@ -818,6 +830,8 @@ jobs:
           commit-message: "config: update XOR scramble key (${{ env.update_date }})"
           delete-branch: true
           title: "🔐 Update XOR scramble key - ${{ env.update_date }}"
+          labels: |
+            data
           body: |
             ## 🔐 XOR Scramble Key Update
 
@@ -975,6 +989,8 @@ jobs:
           commit-message: "deps: bump OpenVPN to v${{ steps.check-update.outputs.latest_ovpn }}, XOR patches v${{ steps.check-update.outputs.latest_xor }} (${{ env.update_date }})"
           delete-branch: true
           title: "🔧 Bump OpenVPN to v${{ steps.check-update.outputs.latest_ovpn }}, XOR patches v${{ steps.check-update.outputs.latest_xor }} - ${{ env.update_date }}"
+          labels: |
+            dependencies
           body: |
             ## 🔧 OpenVPN & XOR Patches Version Update
 
@@ -1029,6 +1045,8 @@ jobs:
           commit-message: "config: update `NORDVPNAPI_IP` in backend-functions (${{ env.update_date }})"
           delete-branch: true
           title: "🌍 Update `NORDVPNAPI_IP` in backend-functions - ${{ env.update_date }}"
+          labels: |
+            data
           body: |
             ## 🌍 NORDVPNAPI_IP Update
             
@@ -1069,6 +1087,8 @@ jobs:
           commit-message: "deps: update ${{ steps.update-apk.outputs.updated_count }} APK package(s) (${{ env.update_date }})"
           delete-branch: true
           title: "📦 Update APK packages - ${{ env.update_date }}"
+          labels: |
+            dependencies
           body: |
             ## 📦 APK Package Updates
             
@@ -1122,6 +1142,8 @@ jobs:
           commit-message: "deps: bump ${{ env.repo_name }} to v${{ env.package_version }}"
           delete-branch: true
           title: "📋 Bump ${{ env.repo_name }} to v${{ env.package_version }}"
+          labels: |
+            dependencies
           body: |
             ## 📋 Package Version Update
             
@@ -1204,6 +1226,8 @@ jobs:
           commit-message: "deps: bump Alpine to v${{ steps.get-alpine.outputs.latest }} (${{ env.update_date }})"
           delete-branch: true
           title: "🐧 Bump Alpine to v${{ steps.get-alpine.outputs.latest }} - ${{ env.update_date }}"
+          labels: |
+            dependencies
           body: |
             ## 🐧 Alpine Base Image Update
 
