@@ -2,7 +2,7 @@ This image supports multiple CPU architectures. Docker will automatically pull t
 
 ## Published Architectures
 
-The images on Docker Hub and GHCR are built for the platforms listed in the CI configuration (`PLATFORMS` in `ci-build-deploy.yml`):
+The images on Docker Hub and GHCR are built for the platforms listed in the CI configuration (`PLATFORMS` in `ci-build-deploy.yml`; see [Building and CI](Building-and-CI)):
 
 | Architecture | Platform |
 |--------------|----------|

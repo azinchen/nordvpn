@@ -38,6 +38,7 @@ If you're new, start with the [README](https://github.com/azinchen/nordvpn#readm
 - **[FAQ](FAQ)** — Frequently asked questions
 - **[Supported Platforms](Supported-Platforms)** — Available architectures and Raspberry Pi notes
 - **[Architecture and Internals](Architecture-and-Internals)** — How the s6-overlay stages, scripts, OpenVPN hooks, state files, and firewall work under the hood
+- **[Building and CI](Building-and-CI)** — Local builds, the Dockerfile stages, CI workflows, image tags, and how releases are cut
 
 ### Server Lists
 
