@@ -24,3 +24,7 @@ Consider using [azinchen/update-docker-containers](https://github.com/azinchen/u
 ## Why Dependent Containers Must Restart
 
 Containers that use `network_mode: "service:vpn"` share the VPN container's network namespace. When the VPN container is recreated, a new namespace is created. Dependent containers still reference the old (now dead) namespace and lose all network connectivity until they are restarted.
+
+This applies to **recreating** the container (image update, `docker compose up --force-recreate`). A plain `docker restart vpn` keeps the namespace, and server rotations via `RECREATE_VPN_CRON` or health checks restart only OpenVPN inside it — dependent containers are unaffected by those. See [Automatic Reconnection](Automatic-Reconnection).
+
+Release notes for each version are on the [Releases](https://github.com/azinchen/nordvpn/releases) page; if something breaks after an update, start with [Troubleshooting](Troubleshooting).

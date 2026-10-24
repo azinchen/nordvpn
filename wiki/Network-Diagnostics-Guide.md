@@ -118,14 +118,24 @@ From the `state` response, the tool calculates connection uptime and extracts th
 Public IP address 185.93.1.42, location Zurich CH
 ```
 
+## Status File
+
+Independently of the diagnostic tool, `vpn-config` publishes the selected server as JSON at `/run/xt/status.json` (world-readable) on every connect and rotation — handy for monitoring scripts and dashboards:
+
+```bash
+docker exec vpn cat /run/xt/status.json
+```
+
+Fields: `name`, `hostname`, `ip`, `protocol`, `technology`, `country`, `city`, `load` and `selected_at` (UTC). The file describes the server the current (or next) connection uses; the full list of runtime files is in [Architecture and Internals](Architecture-and-Internals#state-files).
+
 ## Using Diagnostics for Troubleshooting
 
 | Symptom | What to check in diagnostic output |
 |---------|------|
 | Wrong country | Public IP geolocation — confirms which exit you're using |
-| DNS leaks | DNS section — nameservers should be VPN-provided (10.x.x.x) |
+| DNS leaks | DNS section — nameservers should be the tunnel resolvers (NordVPN's `103.86.96.100` / `103.86.99.100`) or your [`DNS`](Custom-DNS) override |
 | No connectivity | VPN status line — check if connected, verify tun0 exists |
 | Slow speeds | Connection details — check protocol (UDP vs TCP), server load |
 | Firewall issues | Iptables dump — look for missing ACCEPT rules on tun0 |
 
-See also: [Troubleshooting](Troubleshooting)
+See also: [Troubleshooting](Troubleshooting) · [Architecture and Internals](Architecture-and-Internals#network-diagnostic--debug-tool)

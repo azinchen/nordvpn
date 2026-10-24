@@ -20,6 +20,11 @@ entrypoint (container start)
                          scheduled jobs cannot fire before the first connect attempt)
 ```
 
+Two more pieces run outside the s6 service tree:
+
+- **OpenVPN script hooks** — `template.ovpn` carries `script-security 2`, `up /etc/openvpn/up.sh` and `down /etc/openvpn/down.sh`, so OpenVPN itself runs them on every (re)connect and teardown. See [`up.sh` / `down.sh`](#upsh--downsh--pushed-dns-and-resolvconf) below.
+- **Docker `HEALTHCHECK`** — the image declares `HEALTHCHECK CMD /usr/local/bin/vpn-healthcheck-probe` (every 60 s, 15 s timeout, 60 s start period, 3 retries). Docker runs it independently of s6. See [`vpn-healthcheck-probe`](#vpn-healthcheck-probe--docker-healthcheck).
+
 ## Key Scripts
 
 ### `entrypoint` — Backend selection & default-deny
@@ -32,7 +37,8 @@ Location: `/usr/local/bin/entrypoint`
 4. If legacy is selected and nft tables already contain rules, flushes nft tables to avoid mixed stacks
 5. Exports selected backends (`IPT`, `IP6T`) to `/run/xt/backend.env`
 6. Sets `INPUT`, `OUTPUT`, `FORWARD` to `DROP` on both IPv4 and IPv6
-7. Allows loopback traffic
+7. Flushes any pre-existing filter and NAT rules for both families
+8. Allows loopback traffic
 
 Backend preference by kernel:
 
@@ -50,6 +56,8 @@ Sourced by every script. Provides:
 - `run4_check()` — Like `run4` but propagates the real iptables status
 - `run4_critical()` / `run6_critical()` — Execute or sleep forever on failure
 - `is_vpn_connected()` — Checks for tun0 interface
+- `is_mgmt_available()` — Checks whether the OpenVPN management port is listening
+- `to_bool()` — Normalizes boolean variables (`true`/`1` → `true`, anything else → `false`)
 - `nord_api_curl()` — Queries the NordVPN API via the bootstrap IPs (`NORDVPNAPI_IP`); no DNS dependency
 - `fetch_token_credentials()` — Fetches service credentials from the API using `TOKEN` and writes the auth file
 - `trim()` — Strips whitespace from list tokens (`;`/`,`-separated values)
@@ -66,7 +74,7 @@ Location: `/usr/local/bin/vpn-config`
 1. Resolves COUNTRY/CITY/GROUP/TECHNOLOGY to numeric IDs using JSON data files
 2. Builds NordVPN API query URL
 3. Fetches server list using pinned API IPs (no DNS)
-4. Detects specific server hostnames and gives them `load=0`
+4. Resolves specific server hostnames (e.g. `us1234`) through the API; they join the pool with their real current load (see [Server Selection](Server-Selection#specific-server-hostname-format))
 5. Sorts by load (multi-location) or keeps API order (single location)
 6. Applies `RANDOM_TOP` if set
 7. Writes selected server's OpenVPN config to disk (atomically, via a temp file)
@@ -85,7 +93,7 @@ Location: `/etc/s6-overlay/s6-rc.d/svc-nordvpn/run`
 2. Uses the config staged by `vpn-reconnect` if present, otherwise calls `vpn-config`
 3. Extracts VPN server IP/port/protocol from the OVPN file
 4. Adds temporary firewall rules in `VPN-SERVER` chain for every `remote` line (XOR configs have multiple ports)
-5. Writes `OPENVPN_OPTS` to a config fragment OpenVPN parses directly; when `DNS` is set, appends the pull-filter/dhcp-option lines implementing the [custom DNS override](Custom-DNS)
+5. Writes `OPENVPN_OPTS` to a config fragment (`/run/xt/openvpn-extra.conf`) that OpenVPN reads as a second `--config`; when `DNS` is set, appends the pull-filter/dhcp-option lines implementing the [custom DNS override](Custom-DNS). See [OpenVPN Options](OpenVPN-Options#how-openvpn-is-launched)
 6. Launches OpenVPN with auth, management port, and nordvpn group, recording its PID in `/run/xt/openvpn.pid`
 7. Waits for tun0 interface (up to 60 seconds)
 8. Optionally runs network diagnostics
@@ -110,6 +118,20 @@ Location: `/usr/local/bin/vpn-healthcheck`
 2. Retries `CHECK_CONNECTION_ATTEMPTS` times with configurable interval
 3. If all fail, calls `vpn-reconnect`
 
+Runs from cron (`CHECK_CONNECTION_CRON`); it does not use the management interface — the tunnel is judged by real HTTP requests only.
+
+### `vpn-healthcheck-probe` — Docker HEALTHCHECK
+
+Location: `/usr/local/bin/vpn-healthcheck-probe`
+
+The command behind the image's `HEALTHCHECK` instruction. Unlike `vpn-healthcheck` it is observational only: no retry loop, no sleep, and it never calls `vpn-reconnect`.
+
+1. Exits `0` (healthy) immediately unless `HEALTHCHECK_ENABLED=true`
+2. Fails if `tun0` does not exist
+3. Sends one short HEAD request (5 s timeout) per `CHECK_CONNECTION_URL` entry; healthy on the first 2xx/3xx answer, unhealthy otherwise
+
+Docker's `--retries` absorbs transient blips. See [Docker Health Status](Automatic-Reconnection#docker-health-status).
+
 ### `vpn-reconnect` — Server rotation
 
 Location: `/usr/local/bin/vpn-reconnect`
@@ -125,6 +147,29 @@ Location: `/usr/local/bin/network-diagnostic`
 Two modes:
 - `--basic`: Public IP + geolocation only
 - `--full` (default): Complete diagnostics including interfaces, iptables rules, DNS, routes, OpenVPN status
+
+See [Network Diagnostics Guide](Network-Diagnostics-Guide).
+
+### `up.sh` / `down.sh` — Pushed DNS and resolv.conf
+
+Location: `/etc/openvpn/up.sh`, `/etc/openvpn/down.sh`
+
+OpenVPN runs `up.sh` once the tunnel is up and `down.sh` when it is torn down. OpenVPN scrubs the environment for these hooks, so both re-import `DNS`, `PEER_DNS`, `GATEWAY_DNS` and `FORWARD_FROM` from s6's `/run/s6/container_environment/` store.
+
+`up.sh`:
+1. Exits early when `DNS=off` (or the legacy `PEER_DNS=no`), leaving `/etc/resolv.conf` untouched
+2. Backs up the current `/etc/resolv.conf` to `/etc/resolv.conf.ovpn-tun0`
+3. Collects the `dhcp-option DNS` / `dhcp-option DOMAIN` values OpenVPN received — server-pushed, or injected via [`DNS`](Custom-DNS) / `OPENVPN_OPTS`
+4. Calls `gateway-dns-update` with the nameserver list (see below)
+5. Rewrites `/etc/resolv.conf` with the collected `nameserver` / `search` lines
+
+`down.sh` restores the backup in place — it writes into the existing inode, because `/etc/resolv.conf` is normally a Docker-managed bind mount that cannot be replaced.
+
+### `gateway-dns-update` — Client DNS redirect target
+
+Location: `/usr/local/bin/gateway-dns-update`
+
+Called by `up.sh` on every (re)connect. A no-op unless `GATEWAY_DNS=redirect` **and** `FORWARD_FROM` are set; otherwise it flushes the `GATEWAY-DNS` NAT chain and refills it with a DNAT to the first IPv4 resolver (`-m addrtype ! --dst-type LOCAL`, so queries aimed at a co-located resolver pass untouched). `PREROUTING` already jumps port-53 traffic from the `FORWARD_FROM` CIDRs into that chain, so this keeps [`GATEWAY_DNS=redirect`](VPN-Gateway-Mode#client-dns-gateway_dns) pointed at the current tunnel resolvers. Best-effort by design (`run4`, not `run4_critical`): it runs inside OpenVPN's up hook, where a hard failure would block the connect.
 
 ## Data Files
 
@@ -152,6 +197,9 @@ Located in `/usr/local/share/nordvpn/data/`:
 | `/run/xt/openvpn.pid` | PID of the running OpenVPN process (used by `finish` for the hard-kill fallback) |
 | `/run/xt/nordvpn.ovpn.staged` | Config pre-selected by `vpn-reconnect`, consumed by the next service start |
 | `/run/xt/vpn-reconnect.lock/` | Lock directory serializing concurrent reconnections |
+| `/run/xt/openvpn-extra.conf` | Config fragment holding `OPENVPN_OPTS` and the `DNS` override lines (0600) |
+| `/etc/resolv.conf.ovpn-tun0` | Backup of the pre-connect `resolv.conf`, restored by `down.sh` |
+| `/var/spool/cron/crontabs/root` | Crontab written by `init-setupcron` from `RECREATE_VPN_CRON` / `CHECK_CONNECTION_CRON` |
 
 ## OpenVPN Management Interface
 
@@ -164,9 +212,10 @@ The container runs an OpenVPN management interface for status queries and gracef
 | Auth | Password from `/run/xt/mgmt-pw` |
 
 Used internally by:
-- `vpn-healthcheck` — queries connection state
-- `network-diagnostic` — fetches uptime, remote IP, protocol details
-- `svc-nordvpn/finish` — sends SIGTERM for graceful shutdown
+- `network-diagnostic` — fetches uptime, remote IP, protocol details (`status`, `state`)
+- `svc-nordvpn/finish` — sends `signal SIGTERM` for graceful shutdown
+
+`vpn-healthcheck` and `vpn-healthcheck-probe` do **not** use it — they judge the tunnel by `tun0` and real HTTP requests.
 
 Authentication flow: the `mgmt_cmd()` function connects via netcat, sends the password, waits for the prompt, sends the command, then quits.
 
@@ -190,7 +239,9 @@ The `init-firewall` service then:
 - Creates a `VPN-SERVER` chain for temporary per-connection rules
 - Adds NordVPN API IP exceptions (TCP/443 only) from `NORDVPNAPI_IP`
 - If `NETWORK` is set, adds static routes and bidirectional allow rules for those CIDRs
-- If `TTL_SET` / `TTL_INC` are set, adds the mangle rules that rewrite the TTL of traffic leaving via tun0 / arriving on eth0. Fatal on an invalid value or a rule the kernel refuses. See [VPN Gateway Mode](VPN-Gateway-Mode#ttl-tuning-ttl_set--ttl_inc)
+- If `TTL_SET` / `TTL_INC` are set, adds the mangle rules that rewrite the TTL of traffic leaving via tun0 / arriving on eth0. Fatal on an invalid value or a rule the kernel refuses. See [TTL Tuning](VPN-Gateway-Mode#ttl-tuning-ttl_set--ttl_inc)
+- If `FORWARD_FROM` is set, opens `FORWARD` for those CIDRs towards tun0 (plus the `ESTABLISHED,RELATED` return rule). Nothing else is forwarded, so with the tunnel down nothing leaks. See [VPN Gateway Mode](VPN-Gateway-Mode)
+- If `GATEWAY_DNS` is not `off` (and `FORWARD_FROM` is set), adds the port-53 `PREROUTING` rules for the gateway clients: a jump into the `GATEWAY-DNS` chain (`redirect`), `REDIRECT` to this container (`local`) or `DNAT` to `GATEWAY_DNS_SERVER` (`forward`). In `forward` mode it also probes the `GATEWAY_DNS_SERVER` candidates and uses the first that answers, opens the eth0→eth0 hairpin in `FORWARD`, masquerades towards the resolver and pins a host route. An invalid mode is fatal. See [Client DNS](VPN-Gateway-Mode#client-dns-gateway_dns)
 
 ### Phase 3 — svc-nordvpn (per-connection pinhole)
 
@@ -201,12 +252,26 @@ When OpenVPN connects:
 
 ## Firewall Chain Structure
 
-```
-INPUT chain:  ACCEPT lo → ACCEPT ESTABLISHED,RELATED → [NETWORK CIDRs] → DROP
-OUTPUT chain: ACCEPT lo → ACCEPT ESTABLISHED,RELATED → VPN-SERVER → [NETWORK CIDRs] → ACCEPT tun0 → [NORDVPNAPI IPs] → DROP
-FORWARD chain: ACCEPT ESTABLISHED,RELATED → ACCEPT tun0 → DROP
+Items in `[brackets]` exist only when the corresponding variable is set.
 
-VPN-SERVER chain: [temporary rules for current VPN server IP:port(s) — one rule per remote line]
-
-NAT/POSTROUTING: MASQUERADE on tun0
 ```
+filter/INPUT:    ACCEPT lo → ACCEPT ESTABLISHED,RELATED → [NETWORK CIDRs in eth0]
+                 → [GATEWAY_DNS=local: port 53 from FORWARD_FROM] → DROP
+filter/OUTPUT:   ACCEPT lo → ACCEPT ESTABLISHED,RELATED → ACCEPT out tun0
+                 → VPN-SERVER (udp/tcp out eth0) → [NORDVPNAPI_IP tcp/443]
+                 → [NETWORK CIDRs out eth0] → DROP
+filter/FORWARD:  [FORWARD_FROM → tun0] → [tun0 → FORWARD_FROM ESTABLISHED,RELATED]
+                 → [GATEWAY_DNS=forward: eth0 → eth0 hairpin to GATEWAY_DNS_SERVER] → DROP
+
+VPN-SERVER:      temporary rules for the current VPN server IP:port(s) — one per remote line
+
+nat/PREROUTING:  [GATEWAY_DNS: port 53 from FORWARD_FROM → GATEWAY-DNS chain | REDIRECT | DNAT]
+nat/POSTROUTING: MASQUERADE out tun0 → [GATEWAY_DNS=forward: MASQUERADE towards GATEWAY_DNS_SERVER]
+GATEWAY-DNS:     [GATEWAY_DNS=redirect: DNAT to the current tunnel resolver, refilled on every connect]
+
+mangle:          [TTL_INC: PREROUTING in eth0 → TTL --ttl-inc] [TTL_SET: POSTROUTING out tun0 → TTL --ttl-set]
+
+IPv6 (when ip6tables is usable): INPUT/OUTPUT/FORWARD policy DROP, no exceptions — see IPv6 Configuration
+```
+
+See also [Security Model](Security-Model), [Firewall Backends](Firewall-Backends) and [IPv6 Configuration](IPv6-Configuration).

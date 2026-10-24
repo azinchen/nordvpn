@@ -69,6 +69,7 @@ services:
       - CHECK_CONNECTION_URL=https://1.1.1.1;https://8.8.8.8
       - NETWORK=192.168.1.0/24;172.20.0.0/16
       - OPENVPN_OPTS=--mute-replay-warnings --ping-exit 60
+      - HEALTHCHECK_ENABLED=true   # makes condition: service_healthy below wait for a working tunnel
     ports:                         # host:container — use your apps' listening ports
       - "8080:80"                  # nginx below listens on 80
       - "3000:3000"
@@ -168,7 +169,8 @@ services:
 ## Key Concepts
 
 - **Ports must be published on the VPN container**, not on application containers using `network_mode: "service:vpn"`.
-- Use `depends_on` to ensure the VPN starts before dependent services.
+- Use `depends_on` to ensure the VPN starts before dependent services. With `HEALTHCHECK_ENABLED=true`, `condition: service_healthy` additionally waits until the tunnel is actually up — see [Docker Health Status](Automatic-Reconnection#docker-health-status).
+- To route containers that keep their **own** network namespace through the tunnel, see [VPN Gateway Mode](VPN-Gateway-Mode).
 - Services that should **not** use the VPN can use `network_mode: host` or a separate Docker network.
 - When the VPN container restarts, all dependent containers must also be restarted. See [Updating and Maintenance](Updating-and-Maintenance#why-dependent-containers-must-restart).
 

@@ -15,9 +15,9 @@ If you're new, start with the [README](https://github.com/azinchen/nordvpn#readm
 - **[Server Groups](Server-Groups)** — Specialty server groups: Double VPN, Onion Over VPN, P2P, obfuscated, dedicated IP, and regional filters
 - **[Technologies](Technologies)** — Supported OpenVPN technologies including XOR obfuscation
 - **[IPv6 Configuration](IPv6-Configuration)** — Prevent IPv6 leaks with daemon, container, or host-level options
-- **[Automatic Reconnection](Automatic-Reconnection)** — Scheduled reconnection, failure handling, and health monitoring
+- **[Automatic Reconnection](Automatic-Reconnection)** — Scheduled reconnection, failure handling, health monitoring, and the Docker `HEALTHCHECK`
 - **[Local Network Access](Local-Network-Access)** — Allow LAN and inter-container traffic through the firewall
-- **[VPN Gateway Mode](VPN-Gateway-Mode)** — Route other containers' traffic out through the tunnel with `FORWARD_FROM`
+- **[VPN Gateway Mode](VPN-Gateway-Mode)** — Route other containers' traffic out through the tunnel with `FORWARD_FROM`, client DNS interception, TTL tuning
 - **[OpenVPN Options](OpenVPN-Options)** — Custom OpenVPN flags, default ciphers, and reconnection tuning
 - **[Custom DNS](Custom-DNS)** — Override NordVPN's DNS servers with custom ones (Cloudflare, Google, etc.)
 
@@ -37,7 +37,7 @@ If you're new, start with the [README](https://github.com/azinchen/nordvpn#readm
 ### Reference
 - **[FAQ](FAQ)** — Frequently asked questions
 - **[Supported Platforms](Supported-Platforms)** — Available architectures and Raspberry Pi notes
-- **[Architecture and Internals](Architecture-and-Internals)** — How the s6-overlay stages, scripts, and firewall work under the hood
+- **[Architecture and Internals](Architecture-and-Internals)** — How the s6-overlay stages, scripts, OpenVPN hooks, state files, and firewall work under the hood
 
 ### Server Lists
 

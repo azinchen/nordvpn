@@ -22,7 +22,6 @@ docker-compose.yml
 # Documentation & assets
 *.md
 LICENSE
-NordVpn_logo.png
 wiki
 
 # OS / misc noise

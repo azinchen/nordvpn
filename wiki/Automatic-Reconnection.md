@@ -29,7 +29,7 @@ This shuffles the ten best servers in the pool and picks one — a genuinely dif
 
 ### Choosing a schedule
 
-- **Server hygiene** (avoid sitting on a server that slowly degrades): daily off-peak, e.g. `0 6 * * *`, is plenty. A good default for seedboxes and gateways, since every rotation changes the exit IP and drops long-lived connections (torrent peers re-announce, sessions reset). Note the container runs on UTC unless `TZ` is set.
+- **Server hygiene** (avoid sitting on a server that slowly degrades): daily off-peak, e.g. `0 6 * * *`, is plenty. A good default for seedboxes and gateways, since every rotation changes the exit IP and drops long-lived connections (torrent peers re-announce, sessions reset). Note the container's clock is UTC: the image ships no tzdata, so a bare `TZ=Europe/...` has no effect — mount the host's `/etc/localtime:/etc/localtime:ro` (and `/etc/timezone`) to schedule in local time.
 - **IP rotation for privacy**: every few hours, e.g. `0 */6 * * *` or `0 */4 * * *`. Going below hourly gains little and constantly disturbs anything stateful.
 - **Latency-sensitive, single pinned city**: scheduled rotation can be skipped entirely — recommended-order selection already favors the best server at connect time, and failure handling plus health monitoring (below) move you off a broken one.
 
@@ -105,7 +105,7 @@ For most users, combining scheduled rotation, OpenVPN's own failure detection an
 
 ```yaml
 environment:
-  - RECREATE_VPN_CRON=0 6 * * *             # Rotate daily, off-peak (UTC unless TZ is set)
+  - RECREATE_VPN_CRON=0 6 * * *             # Rotate daily, off-peak (UTC unless /etc/localtime is mounted)
   - RANDOM_TOP=10                           # So rotation lands on a different server
   - CHECK_CONNECTION_CRON=* * * * *         # Probe every minute
   - CHECK_CONNECTION_ATTEMPTS=3
