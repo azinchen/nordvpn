@@ -1,0 +1,48 @@
+# Categories for GitHub's auto-generated release notes ("Generate release
+# notes" button / API). PRs are sorted by label into the first category that
+# matches, so the order matters: Dependabot PRs carry both "dependencies"
+# and "github-actions" and must hit the CI/CD section, while the maintenance
+# workflow's image-package bumps carry only "dependencies" and its data-file
+# and server-list refreshes carry "data". Titles match the sections in
+# RELEASE_TEMPLATE.md so the generated text seeds them directly.
+changelog:
+  exclude:
+    labels:
+      - duplicate
+      - invalid
+      - wontfix
+  categories:
+    - title: 💥 Breaking changes
+      labels:
+        - breaking
+    - title: 🔒 Security
+      labels:
+        - security
+    - title: ✨ Features
+      labels:
+        - enhancement
+        - feature
+    - title: 🐛 Bug Fixes
+      labels:
+        - bug
+        - fix
+    - title: ♻️ Refactoring
+      labels:
+        - refactor
+    - title: 🔧 CI/CD Updates
+      labels:
+        - github-actions
+        - automation
+        - ci
+    - title: 🌍 Data Updates
+      labels:
+        - data
+    - title: 📦 Package Updates
+      labels:
+        - dependencies
+    - title: 📖 Documentation
+      labels:
+        - documentation
+    - title: 🧹 Other changes
+      labels:
+        - "*"
