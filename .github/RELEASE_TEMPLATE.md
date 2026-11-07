@@ -30,7 +30,7 @@ docker pull azinchen/nordvpn:X.Y.Z
 docker pull ghcr.io/azinchen/nordvpn:X.Y.Z
 ```
 
-Multi-arch: `386`, `amd64`, `arm/v6`, `arm/v7`, `arm64`, `riscv64`. `latest` follows this release.
+Multi-arch: `386`, `amd64`, `arm/v6`, `arm/v7`, `arm64`. `latest` follows this release.
 
 ### ⬆️ Upgrade notes
 

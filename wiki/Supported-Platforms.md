@@ -11,11 +11,10 @@ The images on Docker Hub and GHCR are built for the platforms listed in the CI c
 | `arm/v6` | ARM v6 |
 | `arm/v7` | ARM v7 (Raspberry Pi 2/3) |
 | `arm64` | 64-bit ARM (Raspberry Pi 4/5, Apple M1) |
-| `riscv64` | 64-bit RISC-V |
 
 ## Buildable Architectures
 
-The Dockerfile itself supports every platform that **both** Alpine Linux and s6-overlay provide — the published list above plus `ppc64le` and `s390x`. Those two aren't published (no known demand), but you can build them locally:
+The Dockerfile itself supports every platform that **both** Alpine Linux and s6-overlay provide — the published list above plus `ppc64le`, `s390x` and `riscv64`. Those three aren't published: there is no known demand, and `riscv64` (published up to v7.4.0) was dropped because Alpine builds its riscv64 packages and the official `alpine` Docker image on slower hardware, so they land hours to days after the other architectures and repeatedly blocked the multi-arch build. You can still build them locally:
 
 ```bash
 docker buildx build --platform linux/ppc64le -t nordvpn:ppc64le .

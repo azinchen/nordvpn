@@ -62,7 +62,7 @@ OpenVPN, the XOR patches, Alpine and s6-overlay are pinned via the `ARG` / `FROM
 | `maintenance-cleanup` | weekly schedule, manual | Prunes old GHCR and Docker Hub tags with [container-registry-pruner](https://github.com/azinchen/container-registry-pruner): release tags older than a year, development tags older than 90 days, keeping the latest per minor version; dry-run by default when run manually |
 | `wiki-publish` | tag push, manual | Mirrors the repository's `wiki/` folder into the GitHub wiki, so the published wiki always matches the latest release |
 
-Dependabot keeps the GitHub Actions versions current with weekly PRs. Platform matrix for `master` and releases: `linux/386, linux/amd64, linux/arm/v6, linux/arm/v7, linux/arm64, linux/riscv64`.
+Dependabot keeps the GitHub Actions versions current with weekly PRs. Platform matrix for `master` and releases: `linux/386, linux/amd64, linux/arm/v6, linux/arm/v7, linux/arm64`.
 
 ### Bot PR labels
 
