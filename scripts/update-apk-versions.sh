@@ -55,9 +55,9 @@
 #   - The script automatically maps TARGETPLATFORM values to Alpine package repository architectures
 #
 # Example:
-#   # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 linux/riscv64=9.20.13-r0
+#   # PLATFORM_VERSIONS: bind-tools: default=9.20.15-r0 linux/arm/v6=9.20.13-r0
 #   bind_tools_version=$(case "${TARGETPLATFORM:-linux/amd64}" in \
-#       linux/riscv64)  echo "9.20.13-r0"  ;; \
+#       linux/arm/v6)   echo "9.20.13-r0"  ;; \
 #       *)              echo "9.20.15-r0" ;; esac) && \
 #   apk --no-cache --no-progress add \
 #       bind-tools=${bind_tools_version} \
@@ -133,7 +133,7 @@ extract_new_version()
 
 # Architectures the image is built for (PLATFORMS in ci-build-deploy.yml),
 # mapped to Alpine repository architecture names.
-BUILD_ARCHES="x86 x86_64 armhf armv7 aarch64 riscv64"
+BUILD_ARCHES="x86 x86_64 armhf armv7 aarch64"
 
 # Print the build architectures where pkg=version is NOT available in repo.
 # Empty output means the version exists everywhere; used to hold back updates
