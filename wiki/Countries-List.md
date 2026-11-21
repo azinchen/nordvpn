@@ -1,4 +1,4 @@
-_Last updated: 2026-09-12 · 150 countries (53 physical, 2 mixed, 95 virtual-only)_
+_Last updated: 2026-11-21 · 149 countries (52 physical, 2 mixed, 95 virtual-only)_
 
 Values for the `COUNTRY` variable — name, code, or ID all work: `-e COUNTRY="United States;CA;228"`
 
@@ -109,7 +109,6 @@ Values for the `COUNTRY` variable — name, code, or ID all work: `-e COUNTRY="U
 | 🇳🇵 | Nepal | NP | 152 | 🌐 Virtual |
 | 🇳🇱 | Netherlands | NL | 153 | ✅ Physical |
 | 🇳🇿 | New Zealand | NZ | 156 | ✅ Physical |
-| 🇳🇬 | Nigeria | NG | 159 | ✅ Physical |
 | 🇲🇰 | North Macedonia | MK | 128 | 🌐 Virtual |
 | 🇳🇴 | Norway | NO | 163 | ✅ Physical |
 | 🇵🇰 | Pakistan | PK | 165 | 🌐 Virtual |
