@@ -1,4 +1,4 @@
-_Last updated: 2026-08-11 · 19 groups (10 with servers)_
+_Last updated: 2026-11-21 · 19 groups (9 with servers)_
 
 Values for the `GROUP` variable — title, identifier, or ID: `-e GROUP="P2P"`
 
@@ -18,7 +18,7 @@ Values for the `GROUP` variable — title, identifier, or ID: `-e GROUP="P2P"`
 | Standard VPN servers | legacy_standard | 11 | ✅ |
 | Netflix USA | legacy_netflix_usa | 13 | — |
 | P2P | legacy_p2p | 15 | ✅ |
-| Obfuscated Servers | legacy_obfuscated_servers | 17 | ✅ |
+| Obfuscated Servers | legacy_obfuscated_servers | 17 | — |
 | Anycast DNS | anycast-dns | 233 | — |
 | Geo DNS | geo_dns | 236 | — |
 | Grafana | grafana | 239 | — |
