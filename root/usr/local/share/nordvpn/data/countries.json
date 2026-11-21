@@ -1547,20 +1547,6 @@
     ]
   },
   {
-    "id": 159,
-    "name": "Nigeria",
-    "code": "NG",
-    "cities": [
-      {
-        "id": 6010328,
-        "name": "Lagos",
-        "latitude": 6.453056,
-        "longitude": 3.395833,
-        "dns_name": "lagos"
-      }
-    ]
-  },
-  {
     "id": 128,
     "name": "North Macedonia",
     "code": "MK",
