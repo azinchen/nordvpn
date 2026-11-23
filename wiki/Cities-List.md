@@ -1,4 +1,4 @@
-_Last updated: 2026-09-12 · 225 cities in 150 countries_
+_Last updated: 2026-11-23 · 224 cities in 149 countries_
 
 Values for the `CITY` variable — name or ID: `-e CITY="Amsterdam;8971718"`
 
@@ -124,7 +124,6 @@ Values for the `CITY` variable — name or ID: `-e CITY="Amsterdam;8971718"`
 | 🇳🇵 | Nepal | NP | Kathmandu | 6142175 | 🌐 Virtual | [📍](https://www.google.com/maps?q=27.7166667,85.3166667) |
 | 🇳🇱 | Netherlands | NL | Amsterdam | 6076868 | ✅ Physical | [📍](https://www.google.com/maps?q=52.35,4.916667) |
 | 🇳🇿 | New Zealand | NZ | Auckland | 6144239 | ✅ Physical | [📍](https://www.google.com/maps?q=-36.866667,174.766667) |
-| 🇳🇬 | Nigeria | NG | Lagos | 6010328 | ✅ Physical | [📍](https://www.google.com/maps?q=6.453056,3.395833) |
 | 🇲🇰 | North Macedonia | MK | Skopje | 5386019 | 🌐 Virtual | [📍](https://www.google.com/maps?q=42,21.4333333) |
 | 🇳🇴 | Norway | NO | Oslo | 6127364 | ✅ Physical | [📍](https://www.google.com/maps?q=59.916667,10.75) |
 | 🇵🇰 | Pakistan | PK | Karachi | 6600485 | 🌐 Virtual | [📍](https://www.google.com/maps?q=24.9056,67.0822) |
