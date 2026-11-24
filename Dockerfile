@@ -170,8 +170,8 @@ RUN echo "**** install security fix packages ****" && \
         iptables=1.8.13-r0 \
         iptables-legacy=1.8.13-r0 \
         jq=1.8.2-r0 \
-        shadow=4.18.0-r1 \
-        shadow-login=4.18.0-r1 \
+        shadow=4.20.4-r0 \
+        shadow-login=4.20.4-r0 \
         libcap-ng=0.8.5-r2 \
         libnl3=3.11.0-r0 \
         lz4-libs=1.10.0-r1 \
