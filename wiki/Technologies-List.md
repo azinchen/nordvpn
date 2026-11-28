@@ -1,4 +1,4 @@
-_Last updated: 2026-08-11 · 24 technologies (6 supported by this image)_
+_Last updated: 2026-11-28 · 24 technologies (4 supported by this image)_
 
 Values for the `TECHNOLOGY` variable — name, identifier, or ID: `-e TECHNOLOGY=openvpn_xor_udp`
 
@@ -10,8 +10,6 @@ Values for the `TECHNOLOGY` variable — name, identifier, or ID: `-e TECHNOLOGY
 |------------|------------|----|
 | OpenVPN UDP | openvpn_udp | 3 |
 | OpenVPN TCP | openvpn_tcp | 5 |
-| OpenVPN UDP Obfuscated | openvpn_xor_udp | 15 |
-| OpenVPN TCP Obfuscated | openvpn_xor_tcp | 17 |
 | OpenVPN UDP Dedicated | openvpn_dedicated_udp | 42 |
 | OpenVPN TCP Dedicated | openvpn_dedicated_tcp | 45 |
 
@@ -20,7 +18,7 @@ Values for the `TECHNOLOGY` variable — name, identifier, or ID: `-e TECHNOLOGY
 Non-OpenVPN protocols and OpenVPN variants without servers — not usable with this image.
 
 <details>
-<summary>Show all (18)</summary>
+<summary>Show all (20)</summary>
 
 | Technology | Identifier | ID | Why not |
 |------------|------------|----|---------|
@@ -29,6 +27,8 @@ Non-OpenVPN protocols and OpenVPN variants without servers — not usable with t
 | HTTP Proxy | proxy | 9 | non-OpenVPN |
 | PPTP | pptp | 11 | non-OpenVPN |
 | L2TP/IPSec | l2tp | 13 | non-OpenVPN |
+| OpenVPN UDP Obfuscated | openvpn_xor_udp | 15 | no servers in the fleet |
+| OpenVPN TCP Obfuscated | openvpn_xor_tcp | 17 | no servers in the fleet |
 | HTTP CyberSec Proxy | proxy_cybersec | 19 | non-OpenVPN |
 | HTTP Proxy (SSL) | proxy_ssl | 21 | non-OpenVPN |
 | HTTP CyberSec Proxy (SSL) | proxy_ssl_cybersec | 23 | non-OpenVPN |
